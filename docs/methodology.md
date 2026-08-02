@@ -51,6 +51,10 @@ annual cost           = monthly cost × 12
 
 The cache buckets are subtracted before standard input is priced, so cached tokens are never counted twice. Batch is a weighted blend over the chosen batch fraction; it is not applied to an offer that does not publish a batch rule. Decimal arithmetic is used to avoid binary floating-point surprises.
 
+### Saved scenarios
+
+The calculator can save up to 12 named scenarios in the browser's local storage. A scenario contains only the workload inputs, selected offer IDs and display mode, so it can be reloaded for a local what-if comparison. Scenarios are not part of the catalog, are not sent to providers and are not synchronized to a server. If browser storage is unavailable, the calculator continues to work without persistence.
+
 ### What is deliberately not modeled
 
 The beta does not estimate currency conversion, taxes, reserved contracts, private tiers, downstream hosting, vector databases, network egress, image/audio units that are not token-equivalent, or provider-specific minimum commitments. Audio-only offers can be present with null token prices so the UI does not imply a false token quote.

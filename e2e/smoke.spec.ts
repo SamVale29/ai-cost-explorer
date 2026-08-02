@@ -34,3 +34,16 @@ test('calculator produces known estimates for selected offers', async ({ page })
   await page.getByRole('button', { name: 'annual' }).click();
   await expect(page.locator('.result-period').first()).toHaveText('per year');
 });
+
+test('calculator persists named scenarios locally', async ({ page }) => {
+  await page.goto('./calculator');
+
+  await page.getByLabel('Scenario name').fill('Support pilot');
+  await page.getByRole('button', { name: 'Save current' }).click();
+  await expect(page.getByText('Support pilot')).toBeVisible();
+
+  await page.reload();
+  await expect(page.getByText('Support pilot')).toBeVisible();
+  await page.getByRole('button', { name: 'Delete Support pilot' }).click();
+  await expect(page.getByText('Support pilot')).not.toBeVisible();
+});
