@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import type { Model, Offer, Organization, Provider, SourceReference } from '../src/types';
+import type { BenchmarkResult, Model, Offer, Organization, PriceChangeEvent, Provider, SourceReference } from '../src/types';
 
 const root = resolve(process.cwd());
 const dataPath = (name: string) => resolve(root, 'data', name, 'index.json');
@@ -14,6 +14,8 @@ const providers = await load<Provider[]>('providers');
 const models = await load<Model[]>('models');
 const offers = await load<Offer[]>('offers');
 const sources = await load<SourceReference[]>('sources');
+const benchmarks = await load<BenchmarkResult[]>('benchmarks');
+const history = await load<PriceChangeEvent[]>('history');
 
 function uniqueIds<T extends { id: string }>(items: T[], label: string) {
   const seen = new Set<string>();
@@ -45,6 +47,7 @@ uniqueSourceUrls(sources, 'sources');
 const organizationIds = new Set(organizations.map((item) => item.id));
 const providerIds = new Set(providers.map((item) => item.id));
 const modelIds = new Set(models.map((item) => item.id));
+const offerIds = new Set(offers.map((item) => item.id));
 
 for (const model of models) {
   if (!organizationIds.has(model.organizationId)) errors.push(`model ${model.id}: missing organization ${model.organizationId}`);
@@ -72,6 +75,19 @@ for (const offer of offers) {
 }
 
 for (const source of sources) checkSource(source, 'source registry');
+
+for (const benchmark of benchmarks) {
+  if (!offerIds.has(benchmark.offerId)) errors.push(`benchmark ${benchmark.id}: missing offer ${benchmark.offerId}`);
+  if (!benchmark.methodologyUrl || benchmark.concurrency < 1 || benchmark.repetitions < 5) errors.push(`benchmark ${benchmark.id}: incomplete protocol metadata`);
+  if (Number.isNaN(new Date(benchmark.measuredAt).getTime())) errors.push(`benchmark ${benchmark.id}: invalid measuredAt`);
+  try { new URL(benchmark.methodologyUrl); } catch { errors.push(`benchmark ${benchmark.id}: invalid methodology URL`); }
+}
+
+for (const event of history) {
+  if (!offerIds.has(event.offerId)) errors.push(`history ${event.id}: missing offer ${event.offerId}`);
+  checkSource(event.source, `history ${event.id}`);
+  if (Number.isNaN(new Date(event.detectedAt).getTime())) errors.push(`history ${event.id}: invalid detectedAt`);
+}
 
 if (offers.length < 40) errors.push(`catalog has ${offers.length} offers; v0.1.0 target is at least 40`);
 if (providers.filter((provider) => provider.directProvider).length < 8) errors.push('catalog has fewer than 8 direct API providers');
