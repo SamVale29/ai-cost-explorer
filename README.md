@@ -15,7 +15,7 @@ AI Cost Explorer is a small, independent, open-source decision tool for comparin
 - Shows input, cached-input, cache-write, output, context, modalities, capabilities, status and staleness.
 - Builds shareable 2–4 offer comparisons with a differences-only view and JSON export.
 - Simulates per-request, daily, monthly and annual cost with cache, cache-write, batch share, retries and long-context tiers.
-- Saves up to 12 named calculator scenarios locally in the browser for quick what-if comparisons; no scenario data is sent to a provider.
+- Saves up to 12 named calculator scenarios locally in the browser, with duplication, JSON import/export and shareable calculator links; no scenario data is sent to a provider.
 - Publishes a first-observation price history without inventing a line before the project existed.
 - Shows a workload-neutral Pareto frontier and an optional, transparent value score.
 - Keeps unknown fields as `null` / “Not verified” and links every price to an official source.
@@ -87,7 +87,7 @@ annual = monthly × 12
 
 Batch is blended only for the chosen share of requests and only when a batch rule is published. A tier is selected from the request input token count. If a used price component is unknown, the total stays “Not verified” instead of silently treating it as zero.
 
-Saved scenarios are a browser convenience, not part of the public catalog. They contain the workload inputs, selected offers and display mode in local storage. They can be loaded or deleted from `/calculator`; they are not synchronized to a server.
+Saved scenarios are a browser convenience, not part of the public catalog. They contain the workload inputs, selected offers and display mode in local storage. They can be loaded, duplicated, exported or deleted from `/calculator`; a share link encodes the current assumptions in the URL and does not contain credentials. Scenarios are not synchronized to a server.
 
 ## Routes
 

@@ -64,6 +64,34 @@
   opacity: .45;
 }
 
+.scenario-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.scenario-file-button {
+  position: relative;
+  cursor: pointer;
+}
+
+.scenario-file-button input {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.scenario-notice {
+  margin: 10px 0 0;
+  color: var(--mint);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+}
+
 .scenario-list {
   display: grid;
   gap: 7px;
@@ -109,6 +137,32 @@
   font-size: 9px;
 }
 
+.calculator-validation {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 11px 13px;
+  margin-top: 10px;
+  border: 1px solid color-mix(in srgb, var(--gold) 42%, var(--border));
+  border-radius: 8px;
+  color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.calculator-validation svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.calculator-validation ul {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding-left: 13px;
+}
+
 @media (max-width: 560px) {
   .scenario-save-row,
   .scenario-item {
@@ -117,6 +171,15 @@
   }
 
   .scenario-save-row .button {
+    align-self: flex-start;
+  }
+
+  .scenario-tools {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .scenario-tools .button {
     align-self: flex-start;
   }
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { MAX_SAVED_SCENARIOS, parseSavedScenarios } from './scenarios';
+import { MAX_SAVED_SCENARIOS, parseSavedScenarioExport, parseSavedScenarios, serializeSavedScenarios } from './scenarios';
 
 const input = {
   inputTokens: 1000,
@@ -36,5 +36,11 @@ describe('saved calculator scenarios', () => {
       mode: 'monthly',
     }));
     expect(parseSavedScenarios(JSON.stringify(records))).toHaveLength(MAX_SAVED_SCENARIOS);
+  });
+
+  it('round-trips the versioned import/export format', () => {
+    const scenarios = [{ id: 'support', name: 'Support', savedAt: '2026-08-02', input, selectedOfferIds: ['offer-a'], mode: 'monthly' as const }];
+    expect(parseSavedScenarioExport(serializeSavedScenarios(scenarios))).toEqual(scenarios);
+    expect(parseSavedScenarioExport('{"schemaVersion":2,"scenarios":[]}')).toEqual(null);
   });
 });

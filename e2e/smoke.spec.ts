@@ -40,10 +40,32 @@ test('calculator persists named scenarios locally', async ({ page }) => {
 
   await page.getByLabel('Scenario name').fill('Support pilot');
   await page.getByRole('button', { name: 'Save current' }).click();
-  await expect(page.getByText('Support pilot')).toBeVisible();
+  await expect(page.getByText('Support pilot', { exact: true })).toBeVisible();
 
   await page.reload();
-  await expect(page.getByText('Support pilot')).toBeVisible();
+  await expect(page.getByText('Support pilot', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Delete Support pilot' }).click();
-  await expect(page.getByText('Support pilot')).not.toBeVisible();
+  await expect(page.getByText('Support pilot', { exact: true })).not.toBeVisible();
+});
+
+test('calculator accepts shareable URL state and imports scenario JSON', async ({ page }) => {
+  await page.goto('./calculator?in=1000&out=200&cache=100&write=0&req=10&days=30&retry=0.02&batch=0&offers=offer-a&mode=annual');
+
+  await expect(page.locator('.number-field input').first()).toHaveValue('1000');
+  await expect(page.getByRole('button', { name: 'annual' })).toHaveClass(/active/);
+
+  const payload = JSON.stringify({
+    schemaVersion: 1,
+    scenarios: [{
+      id: 'imported-pilot',
+      name: 'Imported pilot',
+      savedAt: '2026-08-02',
+      input: { inputTokens: 1000, outputTokens: 200, cachedInputTokens: 100, cacheWriteTokens: 0, requestsPerDay: 10, daysPerMonth: 30, retryRate: 0.02, batchRate: 0 },
+      selectedOfferIds: ['offer-a'],
+      mode: 'monthly',
+    }],
+  });
+  await page.locator('input[type="file"]').setInputFiles({ name: 'scenarios.json', mimeType: 'application/json', buffer: Buffer.from(payload) });
+  await expect(page.getByText('Imported pilot')).toBeVisible();
+  await expect(page.getByRole('status')).toContainText('imported');
 });

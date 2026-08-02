@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from 'react';
 import { createContext, useContext } from 'react';
 import {
   ArrowDownUp,
@@ -10,6 +10,7 @@ import {
   ChevronDown,
   CircleHelp,
   Clipboard,
+  Copy,
   Download,
   ExternalLink,
   FileJson,
@@ -21,6 +22,7 @@ import {
   Menu,
   Moon,
   Search,
+  RotateCcw,
   Settings2,
   Share2,
   ShieldCheck,
@@ -29,6 +31,7 @@ import {
   Sun,
   Table2,
   Target,
+  Upload,
   X,
   Zap,
 } from 'lucide-react';
@@ -45,7 +48,8 @@ import { calculateAll, resultAsText } from '../lib/calculator';
 import { findOffer, hydrateOffers, loadCatalog, parseIds } from '../lib/catalog';
 import { downloadText, formatCompactNumber, formatCurrency, formatDate, formatTokens, getStaleness, stalenessLabel, toCsv } from '../lib/format';
 import { paretoFrontier, scoreOffers, type ParetoPoint } from '../lib/pareto';
-import { loadSavedScenarios, MAX_SAVED_SCENARIOS, storeSavedScenarios, type SavedScenario } from '../lib/scenarios';
+import { limitSavedScenarios, loadSavedScenarios, MAX_SAVED_SCENARIOS, parseSavedScenarioExport, serializeSavedScenarios, storeSavedScenarios, type SavedScenario } from '../lib/scenarios';
+import { parseCalculatorUrl, serializeCalculatorUrl } from '../lib/calculator-url-state';
 import { parseExplorerUrl, serializeExplorerUrl, type ExplorerUrlState } from '../lib/url-state';
 import type { CalculatorInput, Catalog, OfferView, PricingRule } from '../types';
 
@@ -304,10 +308,16 @@ type ScenarioShelfProps = {
   onNameChange: (name: string) => void;
   onSave: () => void;
   onLoad: (scenario: SavedScenario) => void;
+  onDuplicate: (scenario: SavedScenario) => void;
   onDelete: (id: string) => void;
+  onShare: () => void;
+  onReset: () => void;
+  onExport: () => void;
+  onImport: (event: ChangeEvent<HTMLInputElement>) => void;
+  notice: string | null;
 };
 
-function ScenarioShelf({ scenarios, name, onNameChange, onSave, onLoad, onDelete }: ScenarioShelfProps) {
+function ScenarioShelf({ scenarios, name, onNameChange, onSave, onLoad, onDuplicate, onDelete, onShare, onReset, onExport, onImport, notice }: ScenarioShelfProps) {
   return (
     <section className="scenario-shelf table-card" aria-labelledby="saved-scenarios-title">
       <div className="scenario-shelf-heading">
@@ -325,19 +335,39 @@ function ScenarioShelf({ scenarios, name, onNameChange, onSave, onLoad, onDelete
         </label>
         <button className="button button-primary button-small" type="button" onClick={onSave} disabled={!name.trim()}><CheckCircle2 size={15} />Save current</button>
       </div>
-      {scenarios.length > 0 ? <div className="scenario-list">{scenarios.map((scenario) => <article className="scenario-item" key={scenario.id}><div><strong>{scenario.name}</strong><small>{formatDate(scenario.savedAt)} · {scenario.selectedOfferIds.length} offers · {scenario.mode}</small></div><div className="scenario-item-actions"><button className="button button-ghost button-small" type="button" onClick={() => onLoad(scenario)}>Load</button><button className="icon-button" type="button" onClick={() => onDelete(scenario.id)} aria-label={`Delete ${scenario.name}`}><X size={14} /></button></div></article>)}</div> : <p className="scenario-empty">No saved scenarios yet. Name the current workload above to keep it.</p>}
+      <div className="scenario-tools">
+        <button className="button button-ghost button-small" type="button" onClick={onReset}><RotateCcw size={14} />Reset</button>
+        <button className="button button-ghost button-small" type="button" onClick={onShare}><Share2 size={14} />Copy share link</button>
+        <button className="button button-ghost button-small" type="button" onClick={onExport}><Download size={14} />Export JSON</button>
+        <label className="button button-ghost button-small scenario-file-button"><Upload size={14} />Import JSON<input type="file" accept="application/json,.json" onChange={onImport} /></label>
+      </div>
+      {notice && <p className="scenario-notice" role="status">{notice}</p>}
+      {scenarios.length > 0 ? <div className="scenario-list">{scenarios.map((scenario) => <article className="scenario-item" key={scenario.id}><div><strong>{scenario.name}</strong><small>{formatDate(scenario.savedAt)} · {scenario.selectedOfferIds.length} offers · {scenario.mode}</small></div><div className="scenario-item-actions"><button className="button button-ghost button-small" type="button" onClick={() => onLoad(scenario)}>Load</button><button className="icon-button" type="button" onClick={() => onDuplicate(scenario)} aria-label={`Duplicate ${scenario.name}`}><Copy size={14} /></button><button className="icon-button" type="button" onClick={() => onDelete(scenario.id)} aria-label={`Delete ${scenario.name}`}><X size={14} /></button></div></article>)}</div> : <p className="scenario-empty">No saved scenarios yet. Name the current workload above to keep it.</p>}
     </section>
   );
 }
 
+function CalculatorGuardrails({ messages }: { messages: string[] }) {
+  if (!messages.length) return null;
+  return <div className="calculator-validation" role="status"><CircleHelp size={16} /><ul>{messages.map((message) => <li key={message}>{message}</li>)}</ul></div>;
+}
+
+function createScenarioId() {
+  return typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `scenario-${Date.now()}`;
+}
+
 function CalculatorPage() {
   const { offers } = useCatalog();
-  const [input, setInput] = useState<CalculatorInput>(DEFAULT_CALCULATOR_INPUT);
-  const [preset, setPreset] = useState('support');
-  const [selectedIds, setSelectedIds] = useState<string[]>(() => offers.filter((offer) => offer.pricing[0]?.inputPrice !== null && offer.pricing[0]?.inputPrice !== undefined).slice(0, 6).map((offer) => offer.id));
-  const [mode, setMode] = useState<'request' | 'daily' | 'monthly' | 'annual'>('monthly');
+  const location = useLocation();
+  const initialUrlState = useMemo(() => parseCalculatorUrl(location.search), [location.search]);
+  const defaultOfferIds = offers.filter((offer) => offer.pricing[0]?.inputPrice !== null && offer.pricing[0]?.inputPrice !== undefined).slice(0, 6).map((offer) => offer.id);
+  const [input, setInput] = useState<CalculatorInput>(() => initialUrlState?.input ?? DEFAULT_CALCULATOR_INPUT);
+  const [preset, setPreset] = useState(() => initialUrlState ? 'custom' : 'support');
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => initialUrlState?.selectedOfferIds.filter((id) => offers.some((offer) => offer.id === id)) ?? defaultOfferIds);
+  const [mode, setMode] = useState<'request' | 'daily' | 'monthly' | 'annual'>(() => initialUrlState?.mode ?? 'monthly');
   const [savedScenarios, setSavedScenarios] = useState<SavedScenario[]>(() => loadSavedScenarios());
   const [scenarioName, setScenarioName] = useState('');
+  const [scenarioNotice, setScenarioNotice] = useState<string | null>(null);
   const selectedOffers = selectedIds.map((id) => findOffer(offers, id)).filter((offer): offer is OfferView => Boolean(offer));
   const results = calculateAll(selectedOffers, input);
   const resultById = new Map(results.map((result) => [result.offerId, result]));
@@ -345,11 +375,22 @@ function CalculatorPage() {
   const update = <K extends keyof CalculatorInput>(key: K, value: CalculatorInput[K]) => { setPreset('custom'); setInput((current) => ({ ...current, [key]: value })); };
   const selectPreset = (id: string) => { const next = PRESETS.find((item) => item.id === id); if (next) { setPreset(id); setInput(next.input); } };
   const toggleOffer = (id: string) => setSelectedIds((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]);
-  const saveScenario = () => { const name = scenarioName.trim(); if (!name) return; const id = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `scenario-${Date.now()}`; const scenario: SavedScenario = { id, name, savedAt: new Date().toISOString(), input: { ...input }, selectedOfferIds: [...selectedIds], mode }; const next = [scenario, ...savedScenarios].slice(0, MAX_SAVED_SCENARIOS); setSavedScenarios(next); storeSavedScenarios(next); setScenarioName(''); };
-  const loadScenario = (scenario: SavedScenario) => { setInput({ ...scenario.input }); setSelectedIds(scenario.selectedOfferIds.filter((id) => offers.some((offer) => offer.id === id))); setMode(scenario.mode); setPreset('custom'); };
-  const deleteScenario = (id: string) => { const next = savedScenarios.filter((scenario) => scenario.id !== id); setSavedScenarios(next); storeSavedScenarios(next); };
+  const saveScenario = () => { const name = scenarioName.trim(); if (!name) return; const scenario: SavedScenario = { id: createScenarioId(), name, savedAt: new Date().toISOString(), input: { ...input }, selectedOfferIds: [...selectedIds], mode }; const next = limitSavedScenarios([scenario, ...savedScenarios]); setSavedScenarios(next); storeSavedScenarios(next); setScenarioName(''); setScenarioNotice(`Saved “${name}”.`); };
+  const duplicateScenario = (scenario: SavedScenario) => { const duplicate: SavedScenario = { ...scenario, id: createScenarioId(), name: `${scenario.name} copy`, savedAt: new Date().toISOString(), input: { ...scenario.input }, selectedOfferIds: [...scenario.selectedOfferIds] }; const next = limitSavedScenarios([duplicate, ...savedScenarios]); setSavedScenarios(next); storeSavedScenarios(next); setScenarioName(duplicate.name); setScenarioNotice(`Duplicated “${scenario.name}”.`); };
+  const loadScenario = (scenario: SavedScenario) => { setInput({ ...scenario.input }); setSelectedIds(scenario.selectedOfferIds.filter((id) => offers.some((offer) => offer.id === id))); setMode(scenario.mode); setPreset('custom'); setScenarioNotice(`Loaded “${scenario.name}”.`); };
+  const deleteScenario = (id: string) => { const next = savedScenarios.filter((scenario) => scenario.id !== id); setSavedScenarios(next); storeSavedScenarios(next); setScenarioNotice('Scenario deleted.'); };
+  const copyShareLink = async () => { const shareUrl = `${window.location.origin}${window.location.pathname}${serializeCalculatorUrl({ input, selectedOfferIds: selectedIds, mode })}`; try { if (navigator.clipboard) await navigator.clipboard.writeText(shareUrl); else window.prompt('Copy this calculator link', shareUrl); setScenarioNotice('Share link copied.'); } catch { window.prompt('Copy this calculator link', shareUrl); setScenarioNotice('Share link ready to copy.'); } };
+  const exportScenarios = () => { downloadText('ai-cost-explorer-scenarios.json', serializeSavedScenarios(savedScenarios), 'application/json'); setScenarioNotice('Scenarios exported.'); };
+  const importScenarios = async (event: ChangeEvent<HTMLInputElement>) => { const file = event.target.files?.[0]; event.target.value = ''; if (!file) return; try { const imported = parseSavedScenarioExport(await file.text()); if (!imported) { setScenarioNotice('Could not import that file.'); return; } const next = limitSavedScenarios([...imported, ...savedScenarios]); setSavedScenarios(next); storeSavedScenarios(next); setScenarioNotice(`${imported.length} scenario${imported.length === 1 ? '' : 's'} imported.`); } catch { setScenarioNotice('Could not read that file.'); } };
+  const resetCalculator = () => { setInput({ ...DEFAULT_CALCULATOR_INPUT }); setPreset('support'); setSelectedIds(defaultOfferIds); setMode('monthly'); setScenarioNotice('Calculator reset to the default workload.'); };
+  const validationMessages = [
+    input.cachedInputTokens + input.cacheWriteTokens > input.inputTokens ? 'Cache and cache-write tokens exceed total input; the calculator caps them at the request total.' : null,
+    input.retryRate > 1 ? 'Retry rate is above 100%; reduce it to keep the estimate realistic.' : null,
+    input.batchRate > 1 ? 'Batch share is above 100%; reduce it to keep the estimate realistic.' : null,
+    input.daysPerMonth > 31 ? 'Days per month is above 31; confirm that this is intentional.' : null,
+  ].filter((message): message is string => Boolean(message));
   const inputFields: Array<{ key: keyof CalculatorInput; label: string; suffix: string; step?: number }> = [{ key: 'inputTokens', label: 'Input tokens / request', suffix: 'tokens' }, { key: 'outputTokens', label: 'Output tokens / request', suffix: 'tokens' }, { key: 'cachedInputTokens', label: 'Cached input tokens', suffix: 'tokens' }, { key: 'cacheWriteTokens', label: 'Cache-write tokens', suffix: 'tokens' }, { key: 'requestsPerDay', label: 'Requests / day', suffix: 'req' }, { key: 'daysPerMonth', label: 'Days / month', suffix: 'days' }, { key: 'retryRate', label: 'Retry rate', suffix: '%', step: 0.01 }, { key: 'batchRate', label: 'Batch share', suffix: '%', step: 0.01 }];
-  return <><PageHeader eyebrow="WORKSPACE / SIMULATOR" title="Estimate the bill before it arrives." description="Model real workloads with cache, batch, retries and long-context pricing tiers. Every total is an estimate, never a quote." actions={<><button className="button button-ghost" onClick={() => downloadText('ai-cost-estimate.json', JSON.stringify({ input, results }, null, 2), 'application/json')}><FileJson size={16} />Export JSON</button><button className="button button-primary" onClick={() => { const offer = selectedOffers[0]; const result = offer ? resultById.get(offer.id) : undefined; if (offer && result) downloadText('ai-cost-estimate.txt', resultAsText(result, offer, input)); }}><Clipboard size={16} />Copy estimate text</button></>} /><ScenarioShelf scenarios={savedScenarios} name={scenarioName} onNameChange={setScenarioName} onSave={saveScenario} onLoad={loadScenario} onDelete={deleteScenario} /><div className="calculator-layout"><section className="calculator-form-card table-card"><div className="calculator-section-heading"><div><span className="eyebrow">01 / WORKLOAD</span><h2>Shape the scenario</h2></div><Badge tone="gold">Estimate</Badge></div><div className="preset-grid">{PRESETS.map((item) => <button key={item.id} className={`preset-card ${preset === item.id ? 'active' : ''}`} onClick={() => selectPreset(item.id)}><span className="preset-icon">{item.id === 'custom' ? <Settings2 size={16} /> : <Sparkles size={16} />}</span><span><strong>{item.label}</strong><small>{item.description}</small></span>{preset === item.id && <CheckCircle2 className="preset-check" size={16} />}</button>)}</div><div className="form-grid">{inputFields.map((field) => <label key={field.key} className="number-field"><span>{field.label}</span><div><input type="number" min="0" step={field.step ?? 1} value={field.key === 'retryRate' || field.key === 'batchRate' ? Number(input[field.key] ?? 0) * 100 : Number(input[field.key] ?? 0)} onChange={(event) => { const value = Number(event.target.value); update(field.key, (field.key === 'retryRate' || field.key === 'batchRate' ? value / 100 : value) as never); }} /><em>{field.suffix}</em></div></label>)}</div><div className="calculator-callout"><CircleHelp size={17} /><div><strong>Cache tokens are not counted twice.</strong><p>Standard input is calculated as total input minus cached input minus cache writes. Batch pricing blends only the chosen fraction of requests.</p></div></div></section><section className="offer-pick-card table-card"><div className="calculator-section-heading"><div><span className="eyebrow">02 / OFFERS</span><h2>Compare this workload</h2></div><span className="toolbar-note">{selectedOffers.length} selected</span></div><div className="offer-pick-list">{offers.map((offer) => { const selected = selectedIds.includes(offer.id); const rule = StandardRule({ offer }); return <label className={`offer-pick-row ${selected ? 'selected' : ''}`} key={offer.id}><input type="checkbox" checked={selected} onChange={() => toggleOffer(offer.id)} /><span className="fake-check"><Check size={12} /></span><span className="offer-pick-name"><strong>{offer.model.name}</strong><small>{offer.provider.name}</small></span><span className="offer-pick-price"><Price value={rule?.inputPrice} /><small>input / 1M</small></span></label>; })}</div></section></div><section className="results-section"><div className="results-heading"><div><div className="eyebrow">03 / RESULTS</div><h2>Monthly cost by offer</h2><p>Sorted from lowest to highest known monthly estimate.</p></div><div className="mode-toggle" role="group" aria-label="Cost display mode">{(['request', 'daily', 'monthly', 'annual'] as const).map((item) => <button key={item} className={mode === item ? 'active' : ''} onClick={() => setMode(item)}>{item}</button>)}</div></div>{results.length === 0 ? <EmptyState title="Select at least one offer" description="Choose offers above to calculate the workload." /> : <><div className="result-cards">{results.map((result, index) => { const offer = findOffer(offers, result.offerId); if (!offer) return null; const value = mode === 'request' ? result.costPerRequest : mode === 'daily' ? result.dailyCost : mode === 'annual' ? result.annualCost : result.monthlyCost; const isCheapest = value !== null && (mode === 'monthly' ? result.monthlyCost === cheapest : index === 0); return <div className={`result-card ${isCheapest ? 'best' : ''}`} key={result.offerId}><div className="result-card-top"><span className="rank-pill">{String(index + 1).padStart(2, '0')}</span><StalenessBadge value={offer.lastVerifiedAt} /></div><Link to={`/model/${offer.model.id}`} className="result-model">{offer.model.name}</Link><span className="result-provider">{offer.provider.name}</span><strong className="result-price">{value === null ? 'Not verified' : formatCurrency(value, mode === 'request' ? 6 : 2)}</strong><span className="result-period">{mode === 'request' ? 'per request' : mode === 'daily' ? 'per day' : mode === 'annual' ? 'per year' : 'per month'}</span>{isCheapest && <Badge tone="mint">Lowest known estimate</Badge>}<div className="result-breakdown"><span>Input <b>{result.breakdown.standardInput === null ? '—' : formatCurrency(result.breakdown.standardInput, 4)}</b></span><span>Cache <b>{result.breakdown.cachedInput === null ? '—' : formatCurrency((result.breakdown.cachedInput ?? 0) + (result.breakdown.cacheWrite ?? 0), 4)}</b></span><span>Output <b>{result.breakdown.output === null ? '—' : formatCurrency(result.breakdown.output, 4)}</b></span></div>{result.warnings.length > 0 && <span className="warning-note"><CircleHelp size={13} />{result.warnings[0]}</span>}</div>; })}</div><div className="formula-card"><div><span className="eyebrow">CALCULATION MEMORY</span><h3>What the simulator applied</h3></div><code>standard input = (input − cached − writes) ÷ 1M × input rate<br />cached input = cached ÷ 1M × cache-hit rate<br />output = output ÷ 1M × output rate<br />{`monthly = request cost × requests/day × (1 + retry rate) × days/month`}</code><span className="formula-note">Batch share is blended only where the offer publishes a batch rule. Long-context tiers switch when the request input crosses the provider threshold.</span></div></>}</section><p className="disclaimer">{DISCLAIMER}</p></>;
+  return <><PageHeader eyebrow="WORKSPACE / SIMULATOR" title="Estimate the bill before it arrives." description="Model real workloads with cache, batch, retries and long-context pricing tiers. Every total is an estimate, never a quote." actions={<><button className="button button-ghost" onClick={() => downloadText('ai-cost-estimate.json', JSON.stringify({ input, results }, null, 2), 'application/json')}><FileJson size={16} />Export JSON</button><button className="button button-primary" onClick={() => { const offer = selectedOffers[0]; const result = offer ? resultById.get(offer.id) : undefined; if (offer && result) downloadText('ai-cost-estimate.txt', resultAsText(result, offer, input)); }}><Clipboard size={16} />Copy estimate text</button></>} /><ScenarioShelf scenarios={savedScenarios} name={scenarioName} onNameChange={setScenarioName} onSave={saveScenario} onLoad={loadScenario} onDuplicate={duplicateScenario} onDelete={deleteScenario} onShare={copyShareLink} onReset={resetCalculator} onExport={exportScenarios} onImport={importScenarios} notice={scenarioNotice} /><div className="calculator-layout"><section className="calculator-form-card table-card"><div className="calculator-section-heading"><div><span className="eyebrow">01 / WORKLOAD</span><h2>Shape the scenario</h2></div><Badge tone="gold">Estimate</Badge></div><div className="preset-grid">{PRESETS.map((item) => <button key={item.id} className={`preset-card ${preset === item.id ? 'active' : ''}`} onClick={() => selectPreset(item.id)}><span className="preset-icon">{item.id === 'custom' ? <Settings2 size={16} /> : <Sparkles size={16} />}</span><span><strong>{item.label}</strong><small>{item.description}</small></span>{preset === item.id && <CheckCircle2 className="preset-check" size={16} />}</button>)}</div><div className="form-grid">{inputFields.map((field) => <label key={field.key} className="number-field"><span>{field.label}</span><div><input type="number" min="0" max={field.key === 'retryRate' || field.key === 'batchRate' ? 100 : undefined} step={field.step ?? 1} value={field.key === 'retryRate' || field.key === 'batchRate' ? Number(input[field.key] ?? 0) * 100 : Number(input[field.key] ?? 0)} onChange={(event) => { const value = Number(event.target.value); update(field.key, (field.key === 'retryRate' || field.key === 'batchRate' ? value / 100 : value) as never); }} /><em>{field.suffix}</em></div></label>)}</div><div className="calculator-callout"><CircleHelp size={17} /><div><strong>Cache tokens are not counted twice.</strong><p>Standard input is calculated as total input minus cached input minus cache writes. Batch pricing blends only the chosen fraction of requests.</p></div></div><CalculatorGuardrails messages={validationMessages} /></section><section className="offer-pick-card table-card"><div className="calculator-section-heading"><div><span className="eyebrow">02 / OFFERS</span><h2>Compare this workload</h2></div><span className="toolbar-note">{selectedOffers.length} selected</span></div><div className="offer-pick-list">{offers.map((offer) => { const selected = selectedIds.includes(offer.id); const rule = StandardRule({ offer }); return <label className={`offer-pick-row ${selected ? 'selected' : ''}`} key={offer.id}><input type="checkbox" checked={selected} onChange={() => toggleOffer(offer.id)} /><span className="fake-check"><Check size={12} /></span><span className="offer-pick-name"><strong>{offer.model.name}</strong><small>{offer.provider.name}</small></span><span className="offer-pick-price"><Price value={rule?.inputPrice} /><small>input / 1M</small></span></label>; })}</div></section></div><section className="results-section"><div className="results-heading"><div><div className="eyebrow">03 / RESULTS</div><h2>Monthly cost by offer</h2><p>Sorted from lowest to highest known monthly estimate.</p></div><div className="mode-toggle" role="group" aria-label="Cost display mode">{(['request', 'daily', 'monthly', 'annual'] as const).map((item) => <button key={item} className={mode === item ? 'active' : ''} onClick={() => setMode(item)}>{item}</button>)}</div></div>{results.length === 0 ? <EmptyState title="Select at least one offer" description="Choose offers above to calculate the workload." /> : <><div className="result-cards">{results.map((result, index) => { const offer = findOffer(offers, result.offerId); if (!offer) return null; const value = mode === 'request' ? result.costPerRequest : mode === 'daily' ? result.dailyCost : mode === 'annual' ? result.annualCost : result.monthlyCost; const isCheapest = value !== null && (mode === 'monthly' ? result.monthlyCost === cheapest : index === 0); return <div className={`result-card ${isCheapest ? 'best' : ''}`} key={result.offerId}><div className="result-card-top"><span className="rank-pill">{String(index + 1).padStart(2, '0')}</span><StalenessBadge value={offer.lastVerifiedAt} /></div><Link to={`/model/${offer.model.id}`} className="result-model">{offer.model.name}</Link><span className="result-provider">{offer.provider.name}</span><strong className="result-price">{value === null ? 'Not verified' : formatCurrency(value, mode === 'request' ? 6 : 2)}</strong><span className="result-period">{mode === 'request' ? 'per request' : mode === 'daily' ? 'per day' : mode === 'annual' ? 'per year' : 'per month'}</span>{isCheapest && <Badge tone="mint">Lowest known estimate</Badge>}<div className="result-breakdown"><span>Input <b>{result.breakdown.standardInput === null ? '—' : formatCurrency(result.breakdown.standardInput, 4)}</b></span><span>Cache <b>{result.breakdown.cachedInput === null ? '—' : formatCurrency((result.breakdown.cachedInput ?? 0) + (result.breakdown.cacheWrite ?? 0), 4)}</b></span><span>Output <b>{result.breakdown.output === null ? '—' : formatCurrency(result.breakdown.output, 4)}</b></span></div>{result.warnings.length > 0 && <span className="warning-note"><CircleHelp size={13} />{result.warnings[0]}</span>}</div>; })}</div><div className="formula-card"><div><span className="eyebrow">CALCULATION MEMORY</span><h3>What the simulator applied</h3></div><code>standard input = (input − cached − writes) ÷ 1M × input rate<br />cached input = cached ÷ 1M × cache-hit rate<br />output = output ÷ 1M × output rate<br />{`monthly = request cost × requests/day × (1 + retry rate) × days/month`}</code><span className="formula-note">Batch share is blended only where the offer publishes a batch rule. Long-context tiers switch when the request input crosses the provider threshold.</span></div></>}</section><p className="disclaimer">{DISCLAIMER}</p></>;
 }
 
 function HistoryPage() {

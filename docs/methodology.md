@@ -53,7 +53,7 @@ The cache buckets are subtracted before standard input is priced, so cached toke
 
 ### Saved scenarios
 
-The calculator can save up to 12 named scenarios in the browser's local storage. A scenario contains only the workload inputs, selected offer IDs and display mode, so it can be reloaded for a local what-if comparison. Scenarios are not part of the catalog, are not sent to providers and are not synchronized to a server. If browser storage is unavailable, the calculator continues to work without persistence.
+The calculator can save up to 12 named scenarios in the browser's local storage. A scenario contains only the workload inputs, selected offer IDs and display mode, so it can be reloaded for a local what-if comparison. Scenarios can also be duplicated or exported/imported as a versioned JSON file. A share link encodes the current assumptions and selected offer IDs in the URL; it does not contain credentials or provider responses. Scenarios are not part of the catalog, are not sent to providers and are not synchronized to a server. If browser storage is unavailable, the calculator continues to work without persistence.
 
 ### What is deliberately not modeled
 
