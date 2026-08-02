@@ -6,6 +6,7 @@
   "author": "Sam Vale",
   "license": "MIT",
   "type": "module",
+  "packageManager": "pnpm@11.6.0",
   "engines": {
     "node": ">=22.13"
   },
@@ -18,6 +19,7 @@
     "typecheck": "tsc --noEmit",
     "data:validate": "tsx scripts/validate-data.ts",
     "data:build": "tsx scripts/build-catalog.ts",
+    "data:health": "tsx scripts/catalog-health.ts",
     "data:check-sources": "tsx scripts/check-sources.ts",
     "data:diff": "tsx scripts/create-snapshot.ts --diff",
     "data:snapshot": "tsx scripts/create-snapshot.ts",
@@ -27,6 +29,7 @@
     "generate:og": "tsx scripts/generate-og-image.ts",
     "generate:screenshots": "tsx scripts/capture-screenshots.ts",
     "benchmark": "tsx scripts/benchmark.ts",
+    "benchmark:check-empty": "tsx scripts/benchmark-contract.ts",
     "pricing:watch": "tsx scripts/pricing-watch.ts"
   },
   "dependencies": {
@@ -34,7 +37,7 @@
     "lucide-react": "^0.468.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^6.30.1",
+    "react-router-dom": "^7.18.2",
     "zod": "^3.25.76"
   },
   "devDependencies": {

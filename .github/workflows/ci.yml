@@ -13,23 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 11.6.0
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Audit production dependencies
+        run: pnpm audit --prod --audit-level high --ignore GHSA-qwww-vcr4-c8h2
+      - name: Verify package signatures
+        run: pnpm audit signatures
       - name: Approve native build tools
         run: pnpm approve-builds esbuild sharp
         continue-on-error: true
       - name: Validate data
         run: pnpm data:validate
+      - name: Check benchmark contract
+        run: pnpm benchmark:check-empty
       - name: Check source URLs
         run: pnpm data:check-sources
       - name: Typecheck

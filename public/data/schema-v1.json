@@ -15,5 +15,8 @@
     "per_second",
     "per_image"
   ],
-  "note": "Null values mean that the field was not verified in an official source at dataAsOf."
+  "note": "Null values mean that the field was not verified in an official source at dataAsOf.",
+  "artifacts": [
+    "catalog-health-v1.json"
+  ]
 }

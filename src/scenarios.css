@@ -1,0 +1,189 @@
+.scenario-shelf {
+  padding: 20px 23px;
+  margin-bottom: 15px;
+}
+
+.scenario-shelf-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.scenario-shelf-heading h2 {
+  margin-top: 8px;
+}
+
+.scenario-shelf-heading p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.scenario-save-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.scenario-name-field {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.scenario-name-field input {
+  width: 100%;
+  height: 32px;
+  padding: 0 9px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  outline: 0;
+  color: var(--text);
+  background: var(--panel-soft);
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  text-transform: none;
+}
+
+.scenario-name-field input:focus {
+  border-color: var(--mint);
+}
+
+.scenario-name-field input::placeholder {
+  color: var(--muted-2);
+}
+
+.scenario-save-row .button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+.scenario-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.scenario-file-button {
+  position: relative;
+  cursor: pointer;
+}
+
+.scenario-file-button input {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.scenario-notice {
+  margin: 10px 0 0;
+  color: var(--mint);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+}
+
+.scenario-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.scenario-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-soft);
+}
+
+.scenario-item strong,
+.scenario-item small {
+  display: block;
+}
+
+.scenario-item strong {
+  font-size: 10px;
+}
+
+.scenario-item small {
+  margin-top: 4px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+}
+
+.scenario-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.scenario-empty {
+  margin: 14px 0 0;
+  color: var(--muted-2);
+  font-size: 9px;
+}
+
+.calculator-validation {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 11px 13px;
+  margin-top: 10px;
+  border: 1px solid color-mix(in srgb, var(--gold) 42%, var(--border));
+  border-radius: 8px;
+  color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.calculator-validation svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.calculator-validation ul {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding-left: 13px;
+}
+
+@media (max-width: 560px) {
+  .scenario-save-row,
+  .scenario-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .scenario-save-row .button {
+    align-self: flex-start;
+  }
+
+  .scenario-tools {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .scenario-tools .button {
+    align-self: flex-start;
+  }
+
+  .scenario-item-actions {
+    justify-content: flex-end;
+  }
+}

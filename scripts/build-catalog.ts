@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { calculateCatalogHealth } from '../src/lib/catalog-health';
 import type { BenchmarkResult, Catalog, Model, Offer, Organization, PriceChangeEvent, Provider, SourceReference } from '../src/types';
 
 const root = resolve(process.cwd());
@@ -40,11 +41,13 @@ await mkdir(publicData, { recursive: true });
 await writeFile(resolve(publicData, 'catalog-v1.json'), `${JSON.stringify(catalog, null, 2)}\n`);
 await writeFile(resolve(publicData, 'history-v1.json'), `${JSON.stringify(history, null, 2)}\n`);
 await writeFile(resolve(publicData, 'benchmarks-v1.json'), `${JSON.stringify(benchmarks, null, 2)}\n`);
+await writeFile(resolve(publicData, 'catalog-health-v1.json'), `${JSON.stringify(calculateCatalogHealth(catalog), null, 2)}\n`);
 await writeFile(resolve(publicData, 'schema-v1.json'), `${JSON.stringify({
   schemaVersion: 'v1',
   entities: ['organizations', 'providers', 'models', 'offers', 'benchmarks', 'history', 'sources'],
   pricingUnits: ['per_million_tokens', 'per_request', 'per_second', 'per_image'],
   note: 'Null values mean that the field was not verified in an official source at dataAsOf.',
+  artifacts: ['catalog-health-v1.json'],
 }, null, 2)}\n`);
 
 const organizationMap = new Map(organizations.map((item) => [item.id, item.name]));

@@ -5,7 +5,7 @@ import type { BenchmarkResult, Offer } from '../src/types';
 const WARMUPS = 2;
 const REPETITIONS = 5;
 const PROMPT = 'Reply with one short sentence explaining why caching repeated context can reduce API cost.';
-const METHODOLOGY_URL = 'https://github.com/omentordotrader-afk/ai-cost-explorer/blob/main/docs/benchmark-submission.md';
+const METHODOLOGY_URL = 'https://github.com/samvale29/ai-cost-explorer/blob/main/docs/benchmark-submission.md';
 const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
 
 type BenchmarkArgs = {
@@ -13,6 +13,7 @@ type BenchmarkArgs = {
   model: string;
   suite: string;
   execute: boolean;
+  dryRun: boolean;
   write: boolean;
   region: string;
 };
@@ -40,6 +41,7 @@ function parseArgs(argv: string[]): BenchmarkArgs {
     model: values.get('model') || 'gpt-4.1',
     suite: values.get('suite') || 'standard-v1',
     execute: argv.includes('--execute'),
+    dryRun: argv.includes('--dry-run') || !argv.includes('--execute'),
     write: argv.includes('--write'),
     region: values.get('region') || 'provider-global',
   };
@@ -164,9 +166,11 @@ const apiKeyName = apiKeyEnv[args.provider];
 
 console.log(`Benchmark harness configured for ${args.provider}/${args.model} (${args.suite}).`);
 console.log(`Protocol: ${WARMUPS} warmups, ${REPETITIONS} measured repetitions, concurrency 1, streaming for TTFT, UTC timestamp, P50/P95.`);
+if (args.execute && args.dryRun) throw new Error('Choose either --dry-run or --execute, not both.');
 
-if (!args.execute) {
-  console.log('No paid benchmark was executed. Add --execute in a local environment to run one measurement.');
+if (args.dryRun) {
+  console.log('Dry-run: no network request, provider key read or benchmark file write was performed.');
+  if (args.write) console.log('Ignored --write because execution was not enabled.');
   process.exit(0);
 }
 if (!apiKeyName) throw new Error(`Provider ${args.provider} is not implemented by the safe local runner.`);

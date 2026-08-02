@@ -2,7 +2,7 @@
 
 AI Cost Explorer is a small, independent, open-source decision tool for comparing AI API offers before a workload becomes a bill. It keeps model identity, provider identity, commercial offer, pricing rules, official sources, historical observations and measured benchmarks as separate, inspectable data.
 
-**Live app:** [omentordotrader-afk.github.io/ai-cost-explorer](https://omentordotrader-afk.github.io/ai-cost-explorer/)
+**Live app:** [samvale29.github.io/ai-cost-explorer](https://samvale29.github.io/ai-cost-explorer/)
 
 **Author & maintainer:** Sam Vale
 
@@ -15,6 +15,7 @@ AI Cost Explorer is a small, independent, open-source decision tool for comparin
 - Shows input, cached-input, cache-write, output, context, modalities, capabilities, status and staleness.
 - Builds shareable 2–4 offer comparisons with a differences-only view and JSON export.
 - Simulates per-request, daily, monthly and annual cost with cache, cache-write, batch share, retries and long-context tiers.
+- Saves up to 12 named calculator scenarios locally in the browser, with duplication, JSON import/export and shareable calculator links; no scenario data is sent to a provider.
 - Publishes a first-observation price history without inventing a line before the project existed.
 - Shows a workload-neutral Pareto frontier and an optional, transparent value score.
 - Keeps unknown fields as `null` / “Not verified” and links every price to an official source.
@@ -44,7 +45,9 @@ pnpm build
 pnpm test:e2e
 ```
 
-The E2E suite starts a production preview and covers the landing page, catalog explorer, shareable comparison and workload simulator. Paid provider benchmarks are never called by CI.
+The E2E suite starts a production preview and covers the landing page, catalog explorer, shareable comparison, workload simulator and the mobile navigation/keyboard path. Paid provider benchmarks are never called by CI.
+
+CI also audits production dependencies, verifies package signatures and checks source/data contracts. See [`SECURITY.md`](SECURITY.md) for the narrowly scoped React Router RSC advisory exception.
 
 ## Data model
 
@@ -67,6 +70,7 @@ The generated, public artifacts are in [`public/data/`](public/data/):
 - [`catalog-v1.csv`](public/data/catalog-v1.csv) — spreadsheet-friendly offer rows.
 - [`history-v1.json`](public/data/history-v1.json) — project price observations.
 - [`benchmarks-v1.json`](public/data/benchmarks-v1.json) — currently an honest empty set.
+- [`catalog-health-v1.json`](public/data/catalog-health-v1.json) — field coverage, source freshness and benchmark status.
 - [`schema-v1.json`](public/data/schema-v1.json) — schema version, entities and null-value policy.
 
 `dataAsOf` is `2026-08-02`. The 22 registered URLs in [`data/sources/index.json`](data/sources/index.json) are the provenance registry. Every price is stored at offer/pricing-rule level, not as an unattributed model label.
@@ -85,6 +89,8 @@ annual = monthly × 12
 ```
 
 Batch is blended only for the chosen share of requests and only when a batch rule is published. A tier is selected from the request input token count. If a used price component is unknown, the total stays “Not verified” instead of silently treating it as zero.
+
+Saved scenarios are a browser convenience, not part of the public catalog. They contain the workload inputs, selected offers and display mode in local storage. They can be loaded, duplicated, exported or deleted from `/calculator`; a share link encodes the current assumptions in the URL and does not contain credentials. Scenarios are not synchronized to a server.
 
 ## Routes
 
@@ -114,11 +120,13 @@ See [`docs/methodology.md`](docs/methodology.md), [`docs/data-contract.md`](docs
 | --- | --- |
 | `pnpm data:validate` | Checks entity references, source fields, prices, tiers and release targets. |
 | `pnpm data:build` | Joins `data/` into public JSON/CSV artifacts. |
+| `pnpm data:health` | Reports field coverage, source freshness and benchmark status without network calls. |
 | `pnpm data:check-sources` | Checks source URL shape; `CHECK_SOURCES_NETWORK=1` also performs a non-mutating network check. |
 | `pnpm data:snapshot` | Writes an immutable dated catalog snapshot. |
 | `pnpm generate:og` | Rebuilds the social preview image. |
 | `pnpm generate:screenshots` | Captures landing/explorer launch screenshots from a local preview. |
-| `pnpm benchmark` | Prints the safe benchmark protocol; execution is opt-in. Local OpenAI runs use `pnpm benchmark -- --provider openai --model gpt-4.1 --execute --write`. |
+| `pnpm benchmark` | Runs a no-network dry-run by default; execution is opt-in. Use `pnpm benchmark -- --provider openai --model gpt-4.1 --execute --write` only in a local environment with explicit provider credentials. |
+| `pnpm benchmark:check-empty` | Confirms the source and public benchmark artifacts are synchronized and still empty. |
 
 ## Contributing
 
