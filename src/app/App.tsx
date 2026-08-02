@@ -119,7 +119,7 @@ function AppShell() {
           <div className="topbar-actions"><span className="updated-label"><span className="pulse-dot" />Catalog checked {formatDate(catalog.dataAsOf)}</span><button className="icon-button" onClick={toggleTheme} aria-label="Toggle theme">{theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}</button><a className="icon-button" href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="Open GitHub"><Github size={17} /></a></div>
         </header>
         <div className="page-frame"><Routes><Route path="/" element={<LandingPage />} /><Route path="/explore" element={<ExplorerPage />} /><Route path="/compare" element={<ComparePage />} /><Route path="/calculator" element={<CalculatorPage />} /><Route path="/history" element={<HistoryPage />} /><Route path="/value" element={<ValuePage />} /><Route path="/methodology" element={<MethodologyPage />} /><Route path="/model/:modelId" element={<ModelPage />} /><Route path="*" element={<NotFoundPage />} /></Routes></div>
-        <footer className="site-footer"><span>AI Cost Explorer · Independent open-source project</span><span><a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a><span className="footer-separator">·</span><Link to="/methodology">Methodology</Link><span className="footer-separator">·</span>MIT License</span></footer>
+        <footer className="site-footer"><span>AI Cost Explorer · Independent open-source project · Built by Sam Vale</span><span><a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a><span className="footer-separator">·</span><Link to="/methodology">Methodology</Link><span className="footer-separator">·</span>MIT License</span></footer>
       </main>
     </div>
   );

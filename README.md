@@ -4,6 +4,8 @@ AI Cost Explorer is a small, independent, open-source decision tool for comparin
 
 **Live app:** [omentordotrader-afk.github.io/ai-cost-explorer](https://omentordotrader-afk.github.io/ai-cost-explorer/)
 
+**Author & maintainer:** Sam Vale
+
 ![AI Cost Explorer social preview](public/brand/social-preview.png)
 
 ## What it does
@@ -121,3 +123,5 @@ See [`docs/methodology.md`](docs/methodology.md), [`docs/data-contract.md`](docs
 ## Contributing
 
 Corrections, new providers, official pricing sources, accessibility improvements and reproducible benchmark submissions are welcome. Start with [`CONTRIBUTING.md`](CONTRIBUTING.md) and use the issue templates. The project is licensed under the [MIT License](LICENSE).
+
+See [`AUTHORS.md`](AUTHORS.md) for project attribution.

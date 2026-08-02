@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Compare LLM pricing, context windows, capabilities and observed performance with transparent data sources.",
+  "author": "Sam Vale",
   "license": "MIT",
   "type": "module",
   "engines": {
