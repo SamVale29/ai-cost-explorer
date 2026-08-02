@@ -49,7 +49,7 @@ import { loadSavedScenarios, MAX_SAVED_SCENARIOS, storeSavedScenarios, type Save
 import { parseExplorerUrl, serializeExplorerUrl, type ExplorerUrlState } from '../lib/url-state';
 import type { CalculatorInput, Catalog, OfferView, PricingRule } from '../types';
 
-const GITHUB_URL = 'https://github.com/omentordotrader-afk/ai-cost-explorer';
+const GITHUB_URL = 'https://github.com/samvale29/ai-cost-explorer';
 const DISCLAIMER = 'AI Cost Explorer is an independent open-source project and is not affiliated with the model providers listed. Prices and capabilities may change. Always verify critical purchasing decisions with the provider’s official documentation.';
 
 type CatalogContextValue = { catalog: Catalog; offers: OfferView[] };

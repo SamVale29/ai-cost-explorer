@@ -5,7 +5,7 @@ import type { BenchmarkResult, Offer } from '../src/types';
 const WARMUPS = 2;
 const REPETITIONS = 5;
 const PROMPT = 'Reply with one short sentence explaining why caching repeated context can reduce API cost.';
-const METHODOLOGY_URL = 'https://github.com/omentordotrader-afk/ai-cost-explorer/blob/main/docs/benchmark-submission.md';
+const METHODOLOGY_URL = 'https://github.com/samvale29/ai-cost-explorer/blob/main/docs/benchmark-submission.md';
 const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
 
 type BenchmarkArgs = {

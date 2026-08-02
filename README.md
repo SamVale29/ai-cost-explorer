@@ -2,7 +2,7 @@
 
 AI Cost Explorer is a small, independent, open-source decision tool for comparing AI API offers before a workload becomes a bill. It keeps model identity, provider identity, commercial offer, pricing rules, official sources, historical observations and measured benchmarks as separate, inspectable data.
 
-**Live app:** [omentordotrader-afk.github.io/ai-cost-explorer](https://omentordotrader-afk.github.io/ai-cost-explorer/)
+**Live app:** [samvale29.github.io/ai-cost-explorer](https://samvale29.github.io/ai-cost-explorer/)
 
 **Author & maintainer:** Sam Vale
 
