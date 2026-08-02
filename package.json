@@ -29,6 +29,7 @@
     "generate:og": "tsx scripts/generate-og-image.ts",
     "generate:screenshots": "tsx scripts/capture-screenshots.ts",
     "benchmark": "tsx scripts/benchmark.ts",
+    "benchmark:check-empty": "tsx scripts/benchmark-contract.ts",
     "pricing:watch": "tsx scripts/pricing-watch.ts"
   },
   "dependencies": {

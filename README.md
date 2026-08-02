@@ -125,7 +125,8 @@ See [`docs/methodology.md`](docs/methodology.md), [`docs/data-contract.md`](docs
 | `pnpm data:snapshot` | Writes an immutable dated catalog snapshot. |
 | `pnpm generate:og` | Rebuilds the social preview image. |
 | `pnpm generate:screenshots` | Captures landing/explorer launch screenshots from a local preview. |
-| `pnpm benchmark` | Prints the safe benchmark protocol; execution is opt-in. Local OpenAI runs use `pnpm benchmark -- --provider openai --model gpt-4.1 --execute --write`. |
+| `pnpm benchmark` | Runs a no-network dry-run by default; execution is opt-in. Use `pnpm benchmark -- --provider openai --model gpt-4.1 --execute --write` only in a local environment with explicit provider credentials. |
+| `pnpm benchmark:check-empty` | Confirms the source and public benchmark artifacts are synchronized and still empty. |
 
 ## Contributing
 

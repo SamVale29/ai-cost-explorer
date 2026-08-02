@@ -36,6 +36,8 @@ jobs:
         continue-on-error: true
       - name: Validate data
         run: pnpm data:validate
+      - name: Check benchmark contract
+        run: pnpm benchmark:check-empty
       - name: Check source URLs
         run: pnpm data:check-sources
       - name: Typecheck
