@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://omentordotrader-afk.github.io/ai-cost-explorer/sitemap.xml

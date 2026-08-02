@@ -1,0 +1,22 @@
+name: Data correction
+description: Suggest a verified correction to a model, offer, capability or price.
+title: "data: "
+labels: [data, needs-review]
+body:
+  - type: input
+    id: official_source
+    attributes:
+      label: Official source URL
+    validations:
+      required: true
+  - type: textarea
+    id: field
+    attributes:
+      label: Field and proposed value
+      description: Include the provider, API model ID, exact field and current/proposed value.
+    validations:
+      required: true
+  - type: textarea
+    id: effective_date
+    attributes:
+      label: Effective date or context

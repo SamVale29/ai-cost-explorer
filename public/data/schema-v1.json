@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "v1",
+  "entities": [
+    "organizations",
+    "providers",
+    "models",
+    "offers",
+    "benchmarks",
+    "history",
+    "sources"
+  ],
+  "pricingUnits": [
+    "per_million_tokens",
+    "per_request",
+    "per_second",
+    "per_image"
+  ],
+  "note": "Null values mean that the field was not verified in an official source at dataAsOf."
+}

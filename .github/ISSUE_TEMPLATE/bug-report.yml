@@ -1,0 +1,22 @@
+name: Bug report
+description: Report a reproducible problem in the app or public artifacts.
+title: "bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: What did you do, and what happened?
+    validations:
+      required: true
+  - type: input
+    id: route
+    attributes:
+      label: Route or artifact
+      placeholder: /calculator or public/data/catalog-v1.json
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS and any relevant screen size.

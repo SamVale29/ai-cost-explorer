@@ -1,0 +1,110 @@
+[
+  {
+    "id": "initial-observation-deepseek-v4-flash",
+    "offerId": "offer-deepseek-v4-flash",
+    "detectedAt": "2026-08-02",
+    "effectiveAt": null,
+    "previousPricing": [],
+    "currentPricing": [
+      {
+        "id": "deepseek-v4-flash-standard",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "standard",
+        "inputPrice": 0.14,
+        "outputPrice": 0.28,
+        "cachedInputPrice": 0.0028,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://api-docs.deepseek.com/quick_start/pricing",
+            "title": "DeepSeek API models and pricing",
+            "publisher": "DeepSeek",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-08-02"
+          }
+        ]
+      }
+    ],
+    "source": {
+      "url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "title": "DeepSeek API models and pricing",
+      "publisher": "DeepSeek",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-08-02"
+    },
+    "notes": "Initial project observation. No earlier price line is inferred."
+  },
+  {
+    "id": "initial-observation-gemini-2-5-flash",
+    "offerId": "offer-google-gemini-2-5-flash",
+    "detectedAt": "2026-08-02",
+    "effectiveAt": null,
+    "previousPricing": [],
+    "currentPricing": [
+      {
+        "id": "google-gemini-2-5-flash-standard",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "standard",
+        "inputPrice": 0.3,
+        "outputPrice": 2.5,
+        "cachedInputPrice": 0.03,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://ai.google.dev/gemini-api/docs/pricing",
+            "title": "Gemini Developer API pricing",
+            "publisher": "Google",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-08-02"
+          }
+        ]
+      }
+    ],
+    "source": {
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "title": "Gemini Developer API pricing",
+      "publisher": "Google",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-08-02"
+    },
+    "notes": "Initial project observation. No earlier price line is inferred."
+  },
+  {
+    "id": "initial-observation-groq-gpt-oss-20b",
+    "offerId": "offer-groq-gpt-oss-20b",
+    "detectedAt": "2026-08-02",
+    "effectiveAt": null,
+    "previousPricing": [],
+    "currentPricing": [
+      {
+        "id": "groq-gpt-oss-20b-standard",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "standard",
+        "inputPrice": 0.075,
+        "outputPrice": 0.3,
+        "cachedInputPrice": null,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://console.groq.com/docs/models",
+            "title": "GroqCloud supported models",
+            "publisher": "Groq",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-08-02"
+          }
+        ]
+      }
+    ],
+    "source": {
+      "url": "https://console.groq.com/docs/models",
+      "title": "GroqCloud supported models",
+      "publisher": "Groq",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-08-02"
+    },
+    "notes": "Initial project observation. No earlier price line is inferred."
+  }
+]

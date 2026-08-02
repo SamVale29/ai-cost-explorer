@@ -1,0 +1,22 @@
+name: Benchmark submission
+description: Submit reproducible observed performance evidence.
+title: "benchmark: "
+labels: [benchmark, needs-review]
+body:
+  - type: input
+    id: offer
+    attributes:
+      label: Offer ID / API model ID
+    validations:
+      required: true
+  - type: textarea
+    id: protocol
+    attributes:
+      label: Protocol
+      description: Include prompts, token counts, warmups, repetitions, concurrency, region, timestamp and measurements.
+    validations:
+      required: true
+  - type: input
+    id: artifact
+    attributes:
+      label: Reproducible artifact or methodology URL

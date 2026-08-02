@@ -1,0 +1,9 @@
+{
+  "name": "AI Cost Explorer",
+  "short_name": "Cost Explorer",
+  "start_url": "/ai-cost-explorer/",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#0b1020",
+  "icons": [{"src":"/ai-cost-explorer/favicon.svg","sizes":"any","type":"image/svg+xml"}]
+}

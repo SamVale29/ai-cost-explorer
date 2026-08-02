@@ -1,0 +1,13 @@
+[
+  {"id":"openai","name":"OpenAI","website":"https://openai.com","country":"United States"},
+  {"id":"anthropic","name":"Anthropic","website":"https://www.anthropic.com","country":"United States"},
+  {"id":"google","name":"Google","website":"https://ai.google.dev","country":"United States"},
+  {"id":"mistral","name":"Mistral AI","website":"https://mistral.ai","country":"France"},
+  {"id":"cohere","name":"Cohere","website":"https://cohere.com","country":"Canada"},
+  {"id":"xai","name":"xAI","website":"https://x.ai","country":"United States"},
+  {"id":"deepseek","name":"DeepSeek","website":"https://www.deepseek.com","country":"China"},
+  {"id":"meta","name":"Meta","website":"https://ai.meta.com","country":"United States"},
+  {"id":"qwen","name":"Qwen","website":"https://qwenlm.github.io","country":"China"},
+  {"id":"moonshot","name":"Moonshot AI","website":"https://www.moonshot.ai","country":"China"},
+  {"id":"zai","name":"Z.ai","website":"https://z.ai","country":"China"}
+]
