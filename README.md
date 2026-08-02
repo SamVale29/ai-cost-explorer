@@ -45,7 +45,7 @@ pnpm build
 pnpm test:e2e
 ```
 
-The E2E suite starts a production preview and covers the landing page, catalog explorer, shareable comparison and workload simulator. Paid provider benchmarks are never called by CI.
+The E2E suite starts a production preview and covers the landing page, catalog explorer, shareable comparison, workload simulator and the mobile navigation/keyboard path. Paid provider benchmarks are never called by CI.
 
 ## Data model
 
