@@ -47,6 +47,8 @@ pnpm test:e2e
 
 The E2E suite starts a production preview and covers the landing page, catalog explorer, shareable comparison, workload simulator and the mobile navigation/keyboard path. Paid provider benchmarks are never called by CI.
 
+CI also audits production dependencies, verifies package signatures and checks source/data contracts. See [`SECURITY.md`](SECURITY.md) for the narrowly scoped React Router RSC advisory exception.
+
 ## Data model
 
 The source-of-truth files live under [`data/`](data/):
