@@ -68,6 +68,7 @@ The generated, public artifacts are in [`public/data/`](public/data/):
 - [`catalog-v1.csv`](public/data/catalog-v1.csv) — spreadsheet-friendly offer rows.
 - [`history-v1.json`](public/data/history-v1.json) — project price observations.
 - [`benchmarks-v1.json`](public/data/benchmarks-v1.json) — currently an honest empty set.
+- [`catalog-health-v1.json`](public/data/catalog-health-v1.json) — field coverage, source freshness and benchmark status.
 - [`schema-v1.json`](public/data/schema-v1.json) — schema version, entities and null-value policy.
 
 `dataAsOf` is `2026-08-02`. The 22 registered URLs in [`data/sources/index.json`](data/sources/index.json) are the provenance registry. Every price is stored at offer/pricing-rule level, not as an unattributed model label.
@@ -117,6 +118,7 @@ See [`docs/methodology.md`](docs/methodology.md), [`docs/data-contract.md`](docs
 | --- | --- |
 | `pnpm data:validate` | Checks entity references, source fields, prices, tiers and release targets. |
 | `pnpm data:build` | Joins `data/` into public JSON/CSV artifacts. |
+| `pnpm data:health` | Reports field coverage, source freshness and benchmark status without network calls. |
 | `pnpm data:check-sources` | Checks source URL shape; `CHECK_SOURCES_NETWORK=1` also performs a non-mutating network check. |
 | `pnpm data:snapshot` | Writes an immutable dated catalog snapshot. |
 | `pnpm generate:og` | Rebuilds the social preview image. |

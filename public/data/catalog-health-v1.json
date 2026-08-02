@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "v1",
+  "generatedAt": "2026-08-02T00:00:00Z",
+  "dataAsOf": "2026-08-02",
+  "totals": {
+    "organizations": 11,
+    "providers": 9,
+    "directProviders": 9,
+    "models": 43,
+    "offers": 44,
+    "sources": 22,
+    "historyEvents": 3,
+    "benchmarks": 0
+  },
+  "coverage": {
+    "offersWithStandardInputPrice": 93,
+    "offersWithStandardOutputPrice": 93,
+    "offersWithSources": 100,
+    "modelsWithContextWindow": 93,
+    "modelsWithMaxOutput": 37,
+    "modelsWithVerifiedCapability": 100
+  },
+  "freshness": {
+    "freshSources": 22,
+    "agingSources": 0,
+    "staleSources": 0,
+    "unknownSources": 0
+  },
+  "benchmarkStatus": "empty"
+}

@@ -98,6 +98,8 @@ official page → reviewed data edit → validation → snapshot → build → C
 
 The weekly pricing-watch job checks the source registry and validates the catalog. It reports unavailable URLs without mutating data. A human review is still required for a price edit, history event or benchmark submission.
 
+The generated [`catalog-health-v1.json`](../public/data/catalog-health-v1.json) records how much of the reviewed snapshot is known: pricing-field coverage, model-field coverage, source freshness and whether measured benchmarks exist. Coverage is descriptive, not a provider quality score; an unknown field remains unknown in the catalog.
+
 ## Limitations
 
 - Provider pages can change outside the watch schedule or block automated requests.
