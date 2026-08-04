@@ -24,7 +24,7 @@ The project is not affiliated with any listed provider. Prices and capabilities 
 
 ## Quick start
 
-Requirements: Node.js 20+, pnpm 11 and a current browser.
+Requirements: Node.js 22.13+, pnpm 11 and a current browser.
 
 ```bash
 pnpm install
@@ -33,12 +33,13 @@ pnpm data:build
 pnpm dev
 ```
 
-Open `http://localhost:5173/`. The production build uses the `/ai-cost-explorer/` base path used by GitHub Pages.
+Open `http://localhost:4173/`. The production build uses the `/ai-cost-explorer/` base path used by GitHub Pages.
 
 ## Quality gates
 
 ```bash
 pnpm typecheck
+pnpm format:check
 pnpm lint
 pnpm test
 pnpm build
@@ -53,16 +54,16 @@ CI also audits production dependencies, verifies package signatures and checks s
 
 The source-of-truth files live under [`data/`](data/):
 
-| Entity | Role |
-| --- | --- |
-| Organization | Canonical company or model owner. |
-| Model | Canonical model identity, context, modalities and capabilities. |
-| Provider | API surface, including direct provider status and pricing/docs links. |
-| Offer | A provider + API model ID + commercial availability. |
-| PricingRule | Unit, mode, tier, input/cache/output prices and provenance. |
-| SourceReference | Official URL, publisher, source type and verification date. |
-| BenchmarkResult | Measured performance evidence only; empty until reproducibly run. |
-| PriceChangeEvent | Reviewed, dated observation or price change; no synthetic backfill. |
+| Entity           | Role                                                                  |
+| ---------------- | --------------------------------------------------------------------- |
+| Organization     | Canonical company or model owner.                                     |
+| Model            | Canonical model identity, context, modalities and capabilities.       |
+| Provider         | API surface, including direct provider status and pricing/docs links. |
+| Offer            | A provider + API model ID + commercial availability.                  |
+| PricingRule      | Unit, mode, tier, input/cache/output prices and provenance.           |
+| SourceReference  | Official URL, publisher, source type and verification date.           |
+| BenchmarkResult  | Measured performance evidence only; empty until reproducibly run.     |
+| PriceChangeEvent | Reviewed, dated observation or price change; no synthetic backfill.   |
 
 The generated, public artifacts are in [`public/data/`](public/data/):
 
@@ -116,17 +117,17 @@ See [`docs/methodology.md`](docs/methodology.md), [`docs/data-contract.md`](docs
 
 ## Scripts
 
-| Command | Purpose |
-| --- | --- |
-| `pnpm data:validate` | Checks entity references, source fields, prices, tiers and release targets. |
-| `pnpm data:build` | Joins `data/` into public JSON/CSV artifacts. |
-| `pnpm data:health` | Reports field coverage, source freshness and benchmark status without network calls. |
-| `pnpm data:check-sources` | Checks source URL shape; `CHECK_SOURCES_NETWORK=1` also performs a non-mutating network check. |
-| `pnpm data:snapshot` | Writes an immutable dated catalog snapshot. |
-| `pnpm generate:og` | Rebuilds the social preview image. |
-| `pnpm generate:screenshots` | Captures landing/explorer launch screenshots from a local preview. |
-| `pnpm benchmark` | Runs a no-network dry-run by default; execution is opt-in. Use `pnpm benchmark -- --provider openai --model gpt-4.1 --execute --write` only in a local environment with explicit provider credentials. |
-| `pnpm benchmark:check-empty` | Confirms the source and public benchmark artifacts are synchronized and still empty. |
+| Command                      | Purpose                                                                                                                                                                                                |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm data:validate`         | Checks entity references, source fields, prices, tiers and release targets.                                                                                                                            |
+| `pnpm data:build`            | Joins `data/` into public JSON/CSV artifacts.                                                                                                                                                          |
+| `pnpm data:health`           | Reports field coverage, source freshness and benchmark status without network calls.                                                                                                                   |
+| `pnpm data:check-sources`    | Checks source URL shape; `CHECK_SOURCES_NETWORK=1` also performs a non-mutating network check.                                                                                                         |
+| `pnpm data:snapshot`         | Writes an immutable dated catalog snapshot.                                                                                                                                                            |
+| `pnpm generate:og`           | Rebuilds the social preview image.                                                                                                                                                                     |
+| `pnpm generate:screenshots`  | Captures landing/explorer launch screenshots from a local preview.                                                                                                                                     |
+| `pnpm benchmark`             | Runs a no-network dry-run by default; execution is opt-in. Use `pnpm benchmark -- --provider openai --model gpt-4.1 --execute --write` only in a local environment with explicit provider credentials. |
+| `pnpm benchmark:check-empty` | Confirms the source and public benchmark artifacts are synchronized and still empty.                                                                                                                   |
 
 ## Contributing
 

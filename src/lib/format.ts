@@ -20,7 +20,9 @@ export function formatCurrency(value: number | null | undefined, digits = 2): st
 
 export function formatCompactNumber(value: number | null | undefined): string {
   if (value === null || value === undefined || Number.isNaN(value)) return 'Not verified';
-  return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+  return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(
+    value,
+  );
 }
 
 export function formatTokens(value: number | null | undefined): string {
@@ -32,21 +34,32 @@ export function formatDate(value: string | null | undefined): string {
   if (!value) return 'Not verified';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return 'Not verified';
-  return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date);
 }
 
-export function getStaleness(value: string | null | undefined, now = new Date('2026-08-02T12:00:00Z')): Staleness {
+export function getStaleness(value: string | null | undefined, now = new Date()): Staleness {
   if (!value) return 'unknown';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return 'unknown';
   const ageDays = Math.floor((now.getTime() - date.getTime()) / 86_400_000);
+  if (ageDays < 0) return 'unknown';
   if (ageDays <= 30) return 'fresh';
   if (ageDays <= 60) return 'aging';
   return 'stale';
 }
 
 export function stalenessLabel(value: Staleness): string {
-  return value === 'fresh' ? 'Fresh' : value === 'aging' ? 'Aging' : value === 'stale' ? 'Stale' : 'Unknown';
+  return value === 'fresh'
+    ? 'Fresh'
+    : value === 'aging'
+      ? 'Aging'
+      : value === 'stale'
+        ? 'Stale'
+        : 'Unknown';
 }
 
 export function primaryPricing(offer: OfferView) {
@@ -74,5 +87,8 @@ export function toCsv(rows: Array<Record<string, unknown>>): string {
     const stringValue = value === null || value === undefined ? '' : String(value);
     return /[",\n]/.test(stringValue) ? `"${stringValue.replaceAll('"', '""')}"` : stringValue;
   };
-  return [headers.join(','), ...rows.map((row) => headers.map((header) => escape(row[header])).join(','))].join('\n');
+  return [
+    headers.join(','),
+    ...rows.map((row) => headers.map((header) => escape(row[header])).join(',')),
+  ].join('\n');
 }

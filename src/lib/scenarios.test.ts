@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { MAX_SAVED_SCENARIOS, parseSavedScenarioExport, parseSavedScenarios, serializeSavedScenarios } from './scenarios';
+import {
+  MAX_SAVED_SCENARIOS,
+  parseSavedScenarioExport,
+  parseSavedScenarios,
+  serializeSavedScenarios,
+} from './scenarios';
 
 const input = {
   inputTokens: 1000,
@@ -15,9 +20,30 @@ const input = {
 describe('saved calculator scenarios', () => {
   it('keeps valid scenarios and ignores malformed records', () => {
     const serialized = JSON.stringify([
-      { id: 'valid', name: 'Support', savedAt: '2026-08-02T12:00:00.000Z', input, selectedOfferIds: ['offer-a'], mode: 'monthly' },
-      { id: 'broken', name: '', savedAt: '2026-08-02', input, selectedOfferIds: [], mode: 'monthly' },
-      { id: 'wrong-mode', name: 'Wrong mode', savedAt: '2026-08-02', input, selectedOfferIds: [], mode: 'hourly' },
+      {
+        id: 'valid',
+        name: 'Support',
+        savedAt: '2026-08-02T12:00:00.000Z',
+        input,
+        selectedOfferIds: ['offer-a'],
+        mode: 'monthly',
+      },
+      {
+        id: 'broken',
+        name: '',
+        savedAt: '2026-08-02',
+        input,
+        selectedOfferIds: [],
+        mode: 'monthly',
+      },
+      {
+        id: 'wrong-mode',
+        name: 'Wrong mode',
+        savedAt: '2026-08-02',
+        input,
+        selectedOfferIds: [],
+        mode: 'hourly',
+      },
     ]);
 
     expect(parseSavedScenarios(serialized)).toHaveLength(1);
@@ -39,7 +65,16 @@ describe('saved calculator scenarios', () => {
   });
 
   it('round-trips the versioned import/export format', () => {
-    const scenarios = [{ id: 'support', name: 'Support', savedAt: '2026-08-02', input, selectedOfferIds: ['offer-a'], mode: 'monthly' as const }];
+    const scenarios = [
+      {
+        id: 'support',
+        name: 'Support',
+        savedAt: '2026-08-02',
+        input,
+        selectedOfferIds: ['offer-a'],
+        mode: 'monthly' as const,
+      },
+    ];
     expect(parseSavedScenarioExport(serializeSavedScenarios(scenarios))).toEqual(scenarios);
     expect(parseSavedScenarioExport('{"schemaVersion":2,"scenarios":[]}')).toEqual(null);
   });

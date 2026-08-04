@@ -1,5 +1,6 @@
 export type Status = 'active' | 'preview' | 'deprecated' | 'retired';
-export type SourceType = 'official-pricing' | 'official-documentation' | 'official-release' | 'benchmark' | 'community';
+export type SourceType =
+  'official-pricing' | 'official-documentation' | 'official-release' | 'benchmark' | 'community';
 export type PricingMode = 'standard' | 'batch' | 'priority' | 'flex' | 'fast' | 'realtime';
 export type PricingUnit = 'per_million_tokens' | 'per_request' | 'per_second' | 'per_image';
 

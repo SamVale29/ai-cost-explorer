@@ -1,6 +1,6 @@
 name: Benchmark submission
 description: Submit reproducible observed performance evidence.
-title: "benchmark: "
+title: 'benchmark: '
 labels: [benchmark, needs-review]
 body:
   - type: input

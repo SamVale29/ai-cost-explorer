@@ -35,7 +35,10 @@ function countPercent(count: number, total: number): number {
   return total === 0 ? 0 : Math.round((count / total) * 100);
 }
 
-function freshness(value: string | undefined, dataAsOf: string): 'fresh' | 'aging' | 'stale' | 'unknown' {
+function freshness(
+  value: string | undefined,
+  dataAsOf: string,
+): 'fresh' | 'aging' | 'stale' | 'unknown' {
   if (!value) return 'unknown';
   const date = Date.parse(value);
   const asOf = Date.parse(dataAsOf);
@@ -47,13 +50,20 @@ function freshness(value: string | undefined, dataAsOf: string): 'fresh' | 'agin
 }
 
 export function calculateCatalogHealth(catalog: Catalog): CatalogHealth {
-  const standardRules = catalog.offers.map((offer) => offer.pricing.find((rule) => rule.mode === 'standard'));
-  const sourcesByFreshness = catalog.sources.reduce((counts, source) => {
-    const key = `${freshness(source.checkedAt, catalog.dataAsOf)}Sources` as keyof typeof counts;
-    counts[key] += 1;
-    return counts;
-  }, { freshSources: 0, agingSources: 0, staleSources: 0, unknownSources: 0 });
-  const modelsWithVerifiedCapability = catalog.models.filter((model) => Object.values(model.capabilities).some((value) => value !== null && value !== undefined)).length;
+  const standardRules = catalog.offers.map((offer) =>
+    offer.pricing.find((rule) => rule.mode === 'standard'),
+  );
+  const sourcesByFreshness = catalog.sources.reduce(
+    (counts, source) => {
+      const key = `${freshness(source.checkedAt, catalog.dataAsOf)}Sources` as keyof typeof counts;
+      counts[key] += 1;
+      return counts;
+    },
+    { freshSources: 0, agingSources: 0, staleSources: 0, unknownSources: 0 },
+  );
+  const modelsWithVerifiedCapability = catalog.models.filter((model) =>
+    Object.values(model.capabilities).some((value) => value !== null && value !== undefined),
+  ).length;
 
   return {
     schemaVersion: 'v1',
@@ -70,12 +80,37 @@ export function calculateCatalogHealth(catalog: Catalog): CatalogHealth {
       benchmarks: catalog.benchmarks.length,
     },
     coverage: {
-      offersWithStandardInputPrice: countPercent(standardRules.filter((rule) => rule?.inputPrice !== null && rule?.inputPrice !== undefined).length, catalog.offers.length),
-      offersWithStandardOutputPrice: countPercent(standardRules.filter((rule) => rule?.outputPrice !== null && rule?.outputPrice !== undefined).length, catalog.offers.length),
-      offersWithSources: countPercent(catalog.offers.filter((offer) => offer.sources.length > 0).length, catalog.offers.length),
-      modelsWithContextWindow: countPercent(catalog.models.filter((model) => model.contextWindowTokens !== null && model.contextWindowTokens !== undefined).length, catalog.models.length),
-      modelsWithMaxOutput: countPercent(catalog.models.filter((model) => model.maxOutputTokens !== null && model.maxOutputTokens !== undefined).length, catalog.models.length),
-      modelsWithVerifiedCapability: countPercent(modelsWithVerifiedCapability, catalog.models.length),
+      offersWithStandardInputPrice: countPercent(
+        standardRules.filter((rule) => rule?.inputPrice !== null && rule?.inputPrice !== undefined)
+          .length,
+        catalog.offers.length,
+      ),
+      offersWithStandardOutputPrice: countPercent(
+        standardRules.filter(
+          (rule) => rule?.outputPrice !== null && rule?.outputPrice !== undefined,
+        ).length,
+        catalog.offers.length,
+      ),
+      offersWithSources: countPercent(
+        catalog.offers.filter((offer) => offer.sources.length > 0).length,
+        catalog.offers.length,
+      ),
+      modelsWithContextWindow: countPercent(
+        catalog.models.filter(
+          (model) => model.contextWindowTokens !== null && model.contextWindowTokens !== undefined,
+        ).length,
+        catalog.models.length,
+      ),
+      modelsWithMaxOutput: countPercent(
+        catalog.models.filter(
+          (model) => model.maxOutputTokens !== null && model.maxOutputTokens !== undefined,
+        ).length,
+        catalog.models.length,
+      ),
+      modelsWithVerifiedCapability: countPercent(
+        modelsWithVerifiedCapability,
+        catalog.models.length,
+      ),
     },
     freshness: sourcesByFreshness,
     benchmarkStatus: catalog.benchmarks.length === 0 ? 'empty' : 'populated',

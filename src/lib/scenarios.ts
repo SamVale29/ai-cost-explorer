@@ -25,7 +25,11 @@ const REQUIRED_INPUT_KEYS: Array<keyof CalculatorInput> = [
   'retryRate',
   'batchRate',
 ];
-const OPTIONAL_INPUT_KEYS: Array<keyof CalculatorInput> = ['users', 'conversationsPerUser', 'messagesPerConversation'];
+const OPTIONAL_INPUT_KEYS: Array<keyof CalculatorInput> = [
+  'users',
+  'conversationsPerUser',
+  'messagesPerConversation',
+];
 const MODES: ScenarioMode[] = ['request', 'daily', 'monthly', 'annual'];
 
 function isFiniteNumber(value: unknown): value is number {
@@ -36,10 +40,13 @@ export function isCalculatorInput(value: unknown): value is CalculatorInput {
   if (!value || typeof value !== 'object') return false;
   const input = value as Record<string, unknown>;
   if (!REQUIRED_INPUT_KEYS.every((key) => isFiniteNumber(input[key]))) return false;
-  if (!OPTIONAL_INPUT_KEYS.every((key) => input[key] === undefined || isFiniteNumber(input[key]))) return false;
+  if (!OPTIONAL_INPUT_KEYS.every((key) => input[key] === undefined || isFiniteNumber(input[key])))
+    return false;
   if (REQUIRED_INPUT_KEYS.some((key) => (input[key] as number) < 0)) return false;
   if ((input.retryRate as number) > 1 || (input.batchRate as number) > 1) return false;
-  return OPTIONAL_INPUT_KEYS.every((key) => input[key] === undefined || (input[key] as number) >= 0);
+  return OPTIONAL_INPUT_KEYS.every(
+    (key) => input[key] === undefined || (input[key] as number) >= 0,
+  );
 }
 
 function isSavedScenario(value: unknown): value is SavedScenario {
@@ -63,7 +70,9 @@ export function parseSavedScenarios(serialized: string | null): SavedScenario[] 
   if (!serialized) return [];
   try {
     const parsed: unknown = JSON.parse(serialized);
-    return Array.isArray(parsed) ? parsed.filter(isSavedScenario).slice(0, MAX_SAVED_SCENARIOS) : [];
+    return Array.isArray(parsed)
+      ? parsed.filter(isSavedScenario).slice(0, MAX_SAVED_SCENARIOS)
+      : [];
   } catch {
     return [];
   }
@@ -76,13 +85,25 @@ export function limitSavedScenarios(scenarios: SavedScenario[]): SavedScenario[]
 }
 
 export function serializeSavedScenarios(scenarios: SavedScenario[]): string {
-  return JSON.stringify({ schemaVersion: SCENARIO_EXPORT_VERSION, scenarios: limitSavedScenarios(scenarios) }, null, 2);
+  return JSON.stringify(
+    { schemaVersion: SCENARIO_EXPORT_VERSION, scenarios: limitSavedScenarios(scenarios) },
+    null,
+    2,
+  );
 }
 
 export function parseSavedScenarioExport(serialized: string): SavedScenario[] | null {
   try {
     const parsed: unknown = JSON.parse(serialized);
-    const records = Array.isArray(parsed) ? parsed : parsed && typeof parsed === 'object' && 'schemaVersion' in parsed && parsed.schemaVersion === SCENARIO_EXPORT_VERSION && 'scenarios' in parsed ? parsed.scenarios : null;
+    const records = Array.isArray(parsed)
+      ? parsed
+      : parsed &&
+          typeof parsed === 'object' &&
+          'schemaVersion' in parsed &&
+          parsed.schemaVersion === SCENARIO_EXPORT_VERSION &&
+          'scenarios' in parsed
+        ? parsed.scenarios
+        : null;
     return Array.isArray(records) ? limitSavedScenarios(records.filter(isSavedScenario)) : null;
   } catch {
     return null;
@@ -101,7 +122,10 @@ export function loadSavedScenarios(): SavedScenario[] {
 export function storeSavedScenarios(scenarios: SavedScenario[]): void {
   if (typeof window === 'undefined') return;
   try {
-    window.localStorage.setItem(SCENARIO_STORAGE_KEY, JSON.stringify(limitSavedScenarios(scenarios)));
+    window.localStorage.setItem(
+      SCENARIO_STORAGE_KEY,
+      JSON.stringify(limitSavedScenarios(scenarios)),
+    );
   } catch {
     // Local persistence is best effort; calculator use should never fail when storage is blocked.
   }

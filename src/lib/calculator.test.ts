@@ -106,6 +106,58 @@ describe('calculator', () => {
 
     expect(result.monthlyCost).toBeNull();
     expect(result.warnings).toContain('Output price is not verified for this offer.');
-    expect(result.warnings).toContain('Monthly totals are unavailable until every used price component is verified.');
+    expect(result.warnings).toContain(
+      'Monthly totals are unavailable until every used price component is verified.',
+    );
+  });
+
+  it('does not require prices for zero-token cache components', () => {
+    const rule: PricingRule = {
+      ...standardAndBatch[0],
+      cachedInputPrice: null,
+      cacheWritePrice: null,
+    };
+    const result = calculateOfferCost(makeOffer([rule]), {
+      ...baseInput,
+      cachedInputTokens: 0,
+      cacheWriteTokens: 0,
+      batchRate: 0,
+    });
+
+    expect(result.monthlyCost).toBe(1980);
+    expect(result.breakdown.cachedInput).toBe(0);
+    expect(result.breakdown.cacheWrite).toBe(0);
+    expect(result.warnings).toEqual([]);
+  });
+
+  it('ignores expired and future pricing rules', () => {
+    const now = new Date('2026-08-04T12:00:00Z');
+    const rules: PricingRule[] = [
+      { ...standardAndBatch[0], id: 'expired', effectiveUntil: '2026-08-03T23:59:59Z' },
+      { ...standardAndBatch[0], id: 'future', effectiveFrom: '2026-08-05T00:00:00Z' },
+      {
+        ...standardAndBatch[0],
+        id: 'current',
+        inputPrice: 3,
+        effectiveFrom: '2026-08-04T00:00:00Z',
+      },
+    ];
+
+    expect(choosePricingRule(rules, 'standard', 1_000_000, now)?.id).toBe('current');
+  });
+
+  it('does not simulate non-token pricing as token pricing', () => {
+    const rule: PricingRule = {
+      ...standardAndBatch[0],
+      unit: 'per_request',
+      inputPrice: 2,
+      outputPrice: 8,
+    };
+    const result = calculateOfferCost(makeOffer([rule]), baseInput);
+
+    expect(result.monthlyCost).toBeNull();
+    expect(result.warnings).toContain(
+      'This offer uses non-token pricing and cannot be simulated by token inputs.',
+    );
   });
 });

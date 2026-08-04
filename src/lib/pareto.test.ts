@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { OfferView } from '../types';
-import { paretoFrontier } from './pareto';
+import { paretoFrontier, scoreOffers } from './pareto';
 
 function offer(id: string): OfferView {
   return {
@@ -36,5 +36,47 @@ describe('pareto frontier', () => {
     ];
 
     expect(paretoFrontier(points).map((point) => point.offer.id)).toEqual(['best', 'cheap']);
+  });
+
+  it('scores only fields with verified measurements', () => {
+    const first = {
+      ...offer('first'),
+      pricing: [
+        {
+          id: 'batch',
+          currency: 'USD' as const,
+          unit: 'per_million_tokens' as const,
+          mode: 'batch' as const,
+          inputPrice: 100,
+          sources: [],
+        },
+        {
+          id: 'standard',
+          currency: 'USD' as const,
+          unit: 'per_million_tokens' as const,
+          mode: 'standard' as const,
+          inputPrice: 1,
+          sources: [],
+        },
+      ],
+    };
+    const second = {
+      ...offer('second'),
+      pricing: [
+        {
+          id: 'standard',
+          currency: 'USD' as const,
+          unit: 'per_million_tokens' as const,
+          mode: 'standard' as const,
+          inputPrice: 2,
+          sources: [],
+        },
+      ],
+    };
+    const ranked = scoreOffers([first, second], { cost: 100, context: 0, resources: 0 });
+
+    expect(ranked[0]?.offer.id).toBe('first');
+    expect(ranked[0]?.score).toBe(0.5);
+    expect(ranked[0]?.knownFields).toBe(2);
   });
 });

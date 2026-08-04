@@ -13,7 +13,9 @@ export async function loadCatalog(): Promise<Catalog> {
 export function hydrateOffers(catalog: Catalog): OfferView[] {
   const models = new Map(catalog.models.map((model) => [model.id, model]));
   const providers = new Map(catalog.providers.map((provider) => [provider.id, provider]));
-  const organizations = new Map(catalog.organizations.map((organization) => [organization.id, organization]));
+  const organizations = new Map(
+    catalog.organizations.map((organization) => [organization.id, organization]),
+  );
   return catalog.offers.flatMap((offer) => {
     const model = models.get(offer.modelId);
     const provider = providers.get(offer.providerId);
@@ -31,5 +33,10 @@ export function joinIds(ids: string[]): string {
 }
 
 export function parseIds(value: string | null): string[] {
-  return value ? value.split(',').map((item) => item.trim()).filter(Boolean) : [];
+  return value
+    ? value
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean)
+    : [];
 }

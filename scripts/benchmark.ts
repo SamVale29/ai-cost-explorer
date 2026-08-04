@@ -4,8 +4,10 @@ import type { BenchmarkResult, Offer } from '../src/types';
 
 const WARMUPS = 2;
 const REPETITIONS = 5;
-const PROMPT = 'Reply with one short sentence explaining why caching repeated context can reduce API cost.';
-const METHODOLOGY_URL = 'https://github.com/samvale29/ai-cost-explorer/blob/main/docs/benchmark-submission.md';
+const PROMPT =
+  'Reply with one short sentence explaining why caching repeated context can reduce API cost.';
+const METHODOLOGY_URL =
+  'https://github.com/samvale29/ai-cost-explorer/blob/main/docs/benchmark-submission.md';
 const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
 
 type BenchmarkArgs = {
@@ -65,7 +67,10 @@ function parseSseBlock(block: string): { delta: string; usage: Usage | null } {
     .trim();
   if (!data || data === '[DONE]') return { delta: '', usage: null };
   try {
-    const payload = JSON.parse(data) as { choices?: Array<{ delta?: { content?: string } }>; usage?: Usage | null };
+    const payload = JSON.parse(data) as {
+      choices?: Array<{ delta?: { content?: string } }>;
+      usage?: Usage | null;
+    };
     return { delta: payload.choices?.[0]?.delta?.content ?? '', usage: payload.usage ?? null };
   } catch {
     return { delta: '', usage: null };
@@ -124,17 +129,32 @@ async function runOpenAiMeasurement(model: string, apiKey: string): Promise<Meas
   };
 }
 
-function medianTokenCount(measurements: Measurement[], key: 'inputTokens' | 'outputTokens'): number | undefined {
-  const values = measurements.map((measurement) => measurement[key]).filter((value): value is number => value !== null);
+function medianTokenCount(
+  measurements: Measurement[],
+  key: 'inputTokens' | 'outputTokens',
+): number | undefined {
+  const values = measurements
+    .map((measurement) => measurement[key])
+    .filter((value): value is number => value !== null);
   const median = percentile(values, 0.5);
   return median === null ? undefined : Math.round(median);
 }
 
-function makeBenchmarkResult(args: BenchmarkArgs, offer: Offer, measurements: Measurement[]): BenchmarkResult {
-  const ttft = measurements.map((measurement) => measurement.timeToFirstTokenMs).filter((value): value is number => value !== null);
+function makeBenchmarkResult(
+  args: BenchmarkArgs,
+  offer: Offer,
+  measurements: Measurement[],
+): BenchmarkResult {
+  const ttft = measurements
+    .map((measurement) => measurement.timeToFirstTokenMs)
+    .filter((value): value is number => value !== null);
   const latency = measurements.map((measurement) => measurement.totalLatencyMs);
   const outputRates = measurements
-    .map((measurement) => measurement.outputTokens === null ? null : measurement.outputTokens / (measurement.totalLatencyMs / 1_000))
+    .map((measurement) =>
+      measurement.outputTokens === null
+        ? null
+        : measurement.outputTokens / (measurement.totalLatencyMs / 1_000),
+    )
     .filter((value): value is number => value !== null && Number.isFinite(value));
   const timestamp = new Date().toISOString();
   const stamp = timestamp.replaceAll(/[-:.TZ]/g, '').slice(0, 14);
@@ -165,21 +185,32 @@ const apiKeyEnv: Record<string, string> = { openai: 'OPENAI_API_KEY' };
 const apiKeyName = apiKeyEnv[args.provider];
 
 console.log(`Benchmark harness configured for ${args.provider}/${args.model} (${args.suite}).`);
-console.log(`Protocol: ${WARMUPS} warmups, ${REPETITIONS} measured repetitions, concurrency 1, streaming for TTFT, UTC timestamp, P50/P95.`);
+console.log(
+  `Protocol: ${WARMUPS} warmups, ${REPETITIONS} measured repetitions, concurrency 1, streaming for TTFT, UTC timestamp, P50/P95.`,
+);
 if (args.execute && args.dryRun) throw new Error('Choose either --dry-run or --execute, not both.');
 
 if (args.dryRun) {
-  console.log('Dry-run: no network request, provider key read or benchmark file write was performed.');
+  console.log(
+    'Dry-run: no network request, provider key read or benchmark file write was performed.',
+  );
   if (args.write) console.log('Ignored --write because execution was not enabled.');
   process.exit(0);
 }
-if (!apiKeyName) throw new Error(`Provider ${args.provider} is not implemented by the safe local runner.`);
+if (!apiKeyName)
+  throw new Error(`Provider ${args.provider} is not implemented by the safe local runner.`);
 const apiKey = process.env[apiKeyName];
-if (!apiKey) throw new Error(`${apiKeyName} is required for --execute and is never written to disk.`);
+if (!apiKey)
+  throw new Error(`${apiKeyName} is required for --execute and is never written to disk.`);
 
-const offers = JSON.parse(await readFile(resolve(process.cwd(), 'data', 'offers', 'index.json'), 'utf8')) as Offer[];
-const offer = offers.find((item) => item.providerId === args.provider && item.apiModelId === args.model);
-if (!offer) throw new Error(`No catalog offer matches provider=${args.provider} and model=${args.model}.`);
+const offers = JSON.parse(
+  await readFile(resolve(process.cwd(), 'data', 'offers', 'index.json'), 'utf8'),
+) as Offer[];
+const offer = offers.find(
+  (item) => item.providerId === args.provider && item.apiModelId === args.model,
+);
+if (!offer)
+  throw new Error(`No catalog offer matches provider=${args.provider} and model=${args.model}.`);
 
 const measurements: Measurement[] = [];
 try {
@@ -190,10 +221,14 @@ try {
   for (let repetition = 1; repetition <= REPETITIONS; repetition += 1) {
     const measurement = await runOpenAiMeasurement(args.model, apiKey);
     measurements.push(measurement);
-    console.log(`Measurement ${repetition}/${REPETITIONS}: TTFT ${measurement.timeToFirstTokenMs?.toFixed(1) ?? 'n/a'} ms; total ${measurement.totalLatencyMs.toFixed(1)} ms.`);
+    console.log(
+      `Measurement ${repetition}/${REPETITIONS}: TTFT ${measurement.timeToFirstTokenMs?.toFixed(1) ?? 'n/a'} ms; total ${measurement.totalLatencyMs.toFixed(1)} ms.`,
+    );
   }
 } catch (error) {
-  console.error(`Benchmark failed before a complete result was produced: ${error instanceof Error ? error.message : String(error)}`);
+  console.error(
+    `Benchmark failed before a complete result was produced: ${error instanceof Error ? error.message : String(error)}`,
+  );
   process.exit(1);
 }
 
@@ -204,7 +239,9 @@ if (args.write) {
   const benchmarkPath = resolve(process.cwd(), 'data', 'benchmarks', 'index.json');
   const current = JSON.parse(await readFile(benchmarkPath, 'utf8')) as BenchmarkResult[];
   await writeFile(benchmarkPath, `${JSON.stringify([...current, result], null, 2)}\n`);
-  console.log(`Wrote ${result.id} to data/benchmarks/index.json. Run pnpm data:build before committing.`);
+  console.log(
+    `Wrote ${result.id} to data/benchmarks/index.json. Run pnpm data:build before committing.`,
+  );
 } else {
   console.log('Result not written. Add --write only after reviewing the output.');
 }

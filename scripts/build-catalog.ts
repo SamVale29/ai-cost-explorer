@@ -1,7 +1,16 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { calculateCatalogHealth } from '../src/lib/catalog-health';
-import type { BenchmarkResult, Catalog, Model, Offer, Organization, PriceChangeEvent, Provider, SourceReference } from '../src/types';
+import type {
+  BenchmarkResult,
+  Catalog,
+  Model,
+  Offer,
+  Organization,
+  PriceChangeEvent,
+  Provider,
+  SourceReference,
+} from '../src/types';
 
 const root = resolve(process.cwd());
 const dataPath = (name: string) => resolve(root, 'data', name, 'index.json');
@@ -40,15 +49,36 @@ const catalog: Catalog = {
 await mkdir(publicData, { recursive: true });
 await writeFile(resolve(publicData, 'catalog-v1.json'), `${JSON.stringify(catalog, null, 2)}\n`);
 await writeFile(resolve(publicData, 'history-v1.json'), `${JSON.stringify(history, null, 2)}\n`);
-await writeFile(resolve(publicData, 'benchmarks-v1.json'), `${JSON.stringify(benchmarks, null, 2)}\n`);
-await writeFile(resolve(publicData, 'catalog-health-v1.json'), `${JSON.stringify(calculateCatalogHealth(catalog), null, 2)}\n`);
-await writeFile(resolve(publicData, 'schema-v1.json'), `${JSON.stringify({
-  schemaVersion: 'v1',
-  entities: ['organizations', 'providers', 'models', 'offers', 'benchmarks', 'history', 'sources'],
-  pricingUnits: ['per_million_tokens', 'per_request', 'per_second', 'per_image'],
-  note: 'Null values mean that the field was not verified in an official source at dataAsOf.',
-  artifacts: ['catalog-health-v1.json'],
-}, null, 2)}\n`);
+await writeFile(
+  resolve(publicData, 'benchmarks-v1.json'),
+  `${JSON.stringify(benchmarks, null, 2)}\n`,
+);
+await writeFile(
+  resolve(publicData, 'catalog-health-v1.json'),
+  `${JSON.stringify(calculateCatalogHealth(catalog), null, 2)}\n`,
+);
+await writeFile(
+  resolve(publicData, 'schema-v1.json'),
+  `${JSON.stringify(
+    {
+      schemaVersion: 'v1',
+      entities: [
+        'organizations',
+        'providers',
+        'models',
+        'offers',
+        'benchmarks',
+        'history',
+        'sources',
+      ],
+      pricingUnits: ['per_million_tokens', 'per_request', 'per_second', 'per_image'],
+      note: 'Null values mean that the field was not verified in an official source at dataAsOf.',
+      artifacts: ['catalog-health-v1.json'],
+    },
+    null,
+    2,
+  )}\n`,
+);
 
 const organizationMap = new Map(organizations.map((item) => [item.id, item.name]));
 const providerMap = new Map(providers.map((item) => [item.id, item.name]));
@@ -59,7 +89,7 @@ const rows = offers.map((offer) => {
   return {
     offerId: offer.id,
     model: model?.name ?? '',
-    organization: model ? organizationMap.get(model.organizationId) ?? '' : '',
+    organization: model ? (organizationMap.get(model.organizationId) ?? '') : '',
     provider: providerMap.get(offer.providerId) ?? '',
     apiModelId: offer.apiModelId,
     status: offer.availability.status,
@@ -76,7 +106,14 @@ const rows = offers.map((offer) => {
   };
 });
 const headers = Object.keys(rows[0] ?? {});
-const csv = [headers.join(','), ...rows.map((row) => headers.map((header) => csvValue(row[header as keyof typeof row])).join(','))].join('\n');
+const csv = [
+  headers.join(','),
+  ...rows.map((row) =>
+    headers.map((header) => csvValue(row[header as keyof typeof row])).join(','),
+  ),
+].join('\n');
 await writeFile(resolve(publicData, 'catalog-v1.csv'), `${csv}\n`);
 
-console.log(`Built public catalog: ${offers.length} offers, ${providers.length} providers, ${sources.length} registered sources.`);
+console.log(
+  `Built public catalog: ${offers.length} offers, ${providers.length} providers, ${sources.length} registered sources.`,
+);
