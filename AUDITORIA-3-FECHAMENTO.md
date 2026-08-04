@@ -4,6 +4,8 @@
 **Estado auditado:** commit `0e9a00f` — *fix: complete audit hardening*
 **Referências:** [`AUDITORIA.md`](AUDITORIA.md) (1ª passagem) · [`AUDITORIA-2-REVERIFICACAO.md`](AUDITORIA-2-REVERIFICACAO.md) (2ª passagem)
 
+> **Confirmação em `9a63e40`** — *chore: add font license and normalize line endings*: os dois itens de higiene abaixo (H1 e H2) foram corrigidos e verificados. Veja [Confirmação final](#confirmação-final-commit-9a63e40) no fim do documento. Resta apenas o merge para `main`.
+
 ---
 
 ## Veredito
@@ -123,6 +125,62 @@ Um detalhe a decidir: `AUDITORIA.md` e `AUDITORIA-2-REVERIFICACAO.md` entraram n
 
 ---
 
+## Confirmação final (commit `9a63e40`)
+
+*chore: add font license and normalize line endings* — H1 e H2 corrigidos. Verificação:
+
+### H1 — licença OFL: resolvido
+
+`src/assets/fonts/OFL.txt` (4.447 B, 92 linhas) contém o texto completo da SIL Open Font License 1.1 — as quatro seções (`DEFINITIONS`, `PERMISSION & CONDITIONS`, `TERMINATION`, `DISCLAIMER`) estão presentes — precedido das duas linhas de copyright corretas:
+
+```
+Copyright 2019 The Manrope Project Authors
+Copyright 2014 The DM Mono Project Authors
+```
+
+O `README.md` das fontes foi atualizado e aponta para o arquivo. Requisito de redistribuição da OFL agora cumprido, tanto no repositório quanto no site publicado.
+
+### H2 — finais de linha: resolvido
+
+O `.gitattributes` foi criado exatamente como sugerido e está em vigor. Confirmado com `git check-attr`:
+
+| Caminho | `text` | `eol` |
+|---|---|---|
+| `data/sources/index.json` | `auto` | `lf` |
+| `src/assets/fonts/manrope-latin.woff2` | `unset` (binário) | — |
+| `public/brand/social-preview.png` | `unset` (binário) | — |
+
+Os blobs armazenados no Git estão normalizados em **LF**, e `git status` está **limpo**. Vale explicar um detalhe que pode confundir: os arquivos em `data/` continuam com CRLF no disco, porque o OneDrive/Windows os reescreve assim. Isso não é problema — o filtro de limpeza do Git converte para LF no momento do commit, então o diff fantasma de 4.779 linhas desapareceu, que era o objetivo.
+
+### Verificação de integridade após o `--renormalize`
+
+Esta era a checagem crítica: normalizar finais de linha pode corromper binários que o Git classifique errado. Comparei os três WOFF2 entre disco e blob:
+
+| Arquivo | Disco | Blob no Git | Assinatura | Comparação |
+|---|---|---|---|---|
+| `dm-mono-400.woff2` | 14.820 B | 14.820 B | `wOF2` | **idêntico** |
+| `dm-mono-500.woff2` | 14.988 B | 14.988 B | `wOF2` | **idêntico** |
+| `manrope-latin.woff2` | 24.836 B | 24.836 B | `wOF2` | **idêntico** |
+
+Nenhuma corrupção. As marcações `*.woff2 binary` e `*.png binary` no `.gitattributes` fizeram o trabalho.
+
+### Estado geral revalidado
+
+```
+Suíte de testes:              20 testes | 20 passaram | 0 falharam
+Provas empíricas A1/A2/A3/M1/M3/M4:  todas OK
+Guarda de regressão do A1:    OK (cache usado sem preço continua null)
+JSON de dados:                7 arquivos válidos, 44 ofertas / 43 modelos / 22 fontes
+data/ vs public/data:         sincronizados
+Working tree:                 limpo
+```
+
+### Único item restante
+
+`codex/saved-calculator-scenarios` está **9 commits à frente e 1 atrás** de `origin/main`, e o `pages.yml` só publica em push para `main`. Todo o trabalho está correto e commitado — só não está no ar.
+
+---
+
 ## Fontes
 
-Verificação sobre `C:\Users\r2m9\OneDrive\Documentos\AI Cost Explorer` no commit `0e9a00f`. Arquivos centrais desta passagem: `src/assets/fonts/*.woff2`, `src/assets/fonts/README.md`, `src/styles.css`, `index.html`, `src/lib/pricing.ts`, `src/lib/pricing.test.ts`, `src/lib/*.test.ts`, `.prettierignore`, `.editorconfig`, `data/*/index.json`, `public/data/catalog-v1.json`.
+Verificação sobre `C:\Users\r2m9\OneDrive\Documentos\AI Cost Explorer` nos commits `0e9a00f` e `9a63e40`. Arquivos centrais desta passagem: `src/assets/fonts/*.woff2`, `src/assets/fonts/README.md`, `src/styles.css`, `index.html`, `src/lib/pricing.ts`, `src/lib/pricing.test.ts`, `src/lib/*.test.ts`, `.prettierignore`, `.editorconfig`, `data/*/index.json`, `public/data/catalog-v1.json`.
