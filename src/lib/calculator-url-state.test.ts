@@ -21,7 +21,15 @@ describe('calculator URL state', () => {
 
   it('rejects incomplete or unsafe query state', () => {
     expect(parseCalculatorUrl('?mode=monthly&in=100')).toBeNull();
-    expect(parseCalculatorUrl('?in=-1&out=1&cache=0&write=0&req=1&days=30&retry=0&batch=0&offers=x&mode=monthly')).toBeNull();
-    expect(parseCalculatorUrl('?in=1&out=1&cache=0&write=0&req=1&days=30&retry=0&batch=0&offers=x&mode=hourly')).toBeNull();
+    expect(
+      parseCalculatorUrl(
+        '?in=-1&out=1&cache=0&write=0&req=1&days=30&retry=0&batch=0&offers=x&mode=monthly',
+      ),
+    ).toBeNull();
+    expect(
+      parseCalculatorUrl(
+        '?in=1&out=1&cache=0&write=0&req=1&days=30&retry=0&batch=0&offers=x&mode=hourly',
+      ),
+    ).toBeNull();
   });
 });

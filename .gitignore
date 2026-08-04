@@ -8,3 +8,6 @@ test-results/
 coverage/
 *.log
 .DS_Store
+
+# Generated promotional exports; keep the reproducible render script, not binaries.
+/promo/

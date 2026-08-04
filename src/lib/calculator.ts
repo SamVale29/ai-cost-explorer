@@ -2,6 +2,7 @@ import Decimal from 'decimal.js';
 import type { CalculatorInput, CalculatorResult, OfferView, PricingRule } from '../types';
 
 const MILLION = new Decimal(1_000_000);
+const TOKEN_PRICING_UNIT = 'per_million_tokens' as const;
 
 function inRange(rule: PricingRule, inputTokens: number): boolean {
   const minimum = rule.minimumInputTokens ?? 0;
@@ -9,15 +10,37 @@ function inRange(rule: PricingRule, inputTokens: number): boolean {
   return inputTokens >= minimum && inputTokens <= maximum;
 }
 
-export function choosePricingRule(rules: PricingRule[], mode: PricingRule['mode'], inputTokens: number): PricingRule | null {
+function isEffective(rule: PricingRule, now: Date): boolean {
+  const effectiveFrom = rule.effectiveFrom ? new Date(rule.effectiveFrom) : null;
+  const effectiveUntil = rule.effectiveUntil ? new Date(rule.effectiveUntil) : null;
+  if (effectiveFrom && Number.isNaN(effectiveFrom.getTime())) return false;
+  if (effectiveUntil && Number.isNaN(effectiveUntil.getTime())) return false;
+  return (!effectiveFrom || effectiveFrom <= now) && (!effectiveUntil || effectiveUntil >= now);
+}
+
+export function choosePricingRule(
+  rules: PricingRule[],
+  mode: PricingRule['mode'],
+  inputTokens: number,
+  now = new Date(),
+): PricingRule | null {
   return (
     rules
-      .filter((rule) => rule.mode === mode && inRange(rule, inputTokens))
+      .filter(
+        (rule) =>
+          rule.unit === TOKEN_PRICING_UNIT &&
+          rule.mode === mode &&
+          inRange(rule, inputTokens) &&
+          isEffective(rule, now),
+      )
       .sort((a, b) => (b.minimumInputTokens ?? 0) - (a.minimumInputTokens ?? 0))[0] ?? null
   );
 }
 
-function priceFor(rule: PricingRule | null, key: 'inputPrice' | 'cachedInputPrice' | 'cacheWritePrice' | 'outputPrice') {
+function priceFor(
+  rule: PricingRule | null,
+  key: 'inputPrice' | 'cachedInputPrice' | 'cacheWritePrice' | 'outputPrice',
+) {
   return rule?.[key] ?? null;
 }
 
@@ -36,6 +59,7 @@ function mixedPrice(
 }
 
 function tokenCost(tokens: number, price: Decimal | null): Decimal | null {
+  if (tokens === 0) return new Decimal(0);
   if (price === null) return null;
   return new Decimal(tokens).div(MILLION).mul(price);
 }
@@ -59,17 +83,30 @@ export function calculateOfferCost(offer: OfferView, input: CalculatorInput): Ca
   const batchRate = new Decimal(Math.min(1, Math.max(0, input.batchRate)));
   const standardRule = choosePricingRule(offer.pricing, 'standard', tokenTotal);
   const batchRule = choosePricingRule(offer.pricing, 'batch', tokenTotal);
-  if (!standardRule) warnings.push('No standard token pricing rule is available for this input size.');
-  if (input.batchRate > 0 && !batchRule) warnings.push('Batch share requested, but no batch pricing rule is available.');
+  if (!standardRule) {
+    const hasNonTokenStandardPricing = offer.pricing.some(
+      (rule) => rule.mode === 'standard' && rule.unit !== TOKEN_PRICING_UNIT,
+    );
+    warnings.push(
+      hasNonTokenStandardPricing
+        ? 'This offer uses non-token pricing and cannot be simulated by token inputs.'
+        : 'No standard token pricing rule is available for this input size.',
+    );
+  }
+  if (input.batchRate > 0 && !batchRule)
+    warnings.push('Batch share requested, but no batch pricing rule is available.');
 
   const inputPrice = mixedPrice(standardRule, batchRule, 'inputPrice', batchRate);
   const cachedInputPrice = mixedPrice(standardRule, batchRule, 'cachedInputPrice', batchRate);
   const cacheWritePrice = mixedPrice(standardRule, batchRule, 'cacheWritePrice', batchRate);
   const outputPrice = mixedPrice(standardRule, batchRule, 'outputPrice', batchRate);
 
-  if (input.inputTokens > 0 && input.outputTokens > 0 && outputPrice === null) warnings.push('Output price is not verified for this offer.');
-  if (cachedTokens > 0 && cachedInputPrice === null) warnings.push('Cached input price is not verified; cached tokens were not priced.');
-  if (cacheWriteTokens > 0 && cacheWritePrice === null) warnings.push('Cache-write price is not verified; cache writes were not priced.');
+  if (input.outputTokens > 0 && outputPrice === null)
+    warnings.push('Output price is not verified for this offer.');
+  if (cachedTokens > 0 && cachedInputPrice === null)
+    warnings.push('Cached input price is not verified; cached tokens were not priced.');
+  if (cacheWriteTokens > 0 && cacheWritePrice === null)
+    warnings.push('Cache-write price is not verified; cache writes were not priced.');
 
   const breakdown = {
     standardInput: tokenCost(standardTokens, inputPrice),
@@ -77,15 +114,27 @@ export function calculateOfferCost(offer: OfferView, input: CalculatorInput): Ca
     cacheWrite: tokenCost(cacheWriteTokens, cacheWritePrice),
     output: tokenCost(Math.max(0, input.outputTokens), outputPrice),
   };
-  const total = addNullable([breakdown.standardInput, breakdown.cachedInput, breakdown.cacheWrite, breakdown.output]);
-  if (total === null) warnings.push('Monthly totals are unavailable until every used price component is verified.');
+  const total = addNullable([
+    breakdown.standardInput,
+    breakdown.cachedInput,
+    breakdown.cacheWrite,
+    breakdown.output,
+  ]);
+  if (total === null)
+    warnings.push('Monthly totals are unavailable until every used price component is verified.');
 
   const directRequests = Math.max(0, input.requestsPerDay);
   const derivedRequests =
-    (input.users ?? 0) > 0 && (input.conversationsPerUser ?? 0) > 0 && (input.messagesPerConversation ?? 0) > 0
-      ? (input.users ?? 0) * (input.conversationsPerUser ?? 0) * (input.messagesPerConversation ?? 0)
+    (input.users ?? 0) > 0 &&
+    (input.conversationsPerUser ?? 0) > 0 &&
+    (input.messagesPerConversation ?? 0) > 0
+      ? (input.users ?? 0) *
+        (input.conversationsPerUser ?? 0) *
+        (input.messagesPerConversation ?? 0)
       : directRequests;
-  const adjustedRequestsPerDay = new Decimal(derivedRequests).mul(new Decimal(1).add(Math.max(0, input.retryRate))).toNumber();
+  const adjustedRequestsPerDay = new Decimal(derivedRequests)
+    .mul(new Decimal(1).add(Math.max(0, input.retryRate)))
+    .toNumber();
   const daily = total?.mul(adjustedRequestsPerDay) ?? null;
   const monthly = daily?.mul(Math.max(0, input.daysPerMonth)) ?? null;
   const annual = monthly?.mul(12) ?? null;
@@ -110,10 +159,16 @@ export function calculateOfferCost(offer: OfferView, input: CalculatorInput): Ca
 }
 
 export function calculateAll(offers: OfferView[], input: CalculatorInput): CalculatorResult[] {
-  return offers.map((offer) => calculateOfferCost(offer, input)).sort((a, b) => (a.monthlyCost ?? Infinity) - (b.monthlyCost ?? Infinity));
+  return offers
+    .map((offer) => calculateOfferCost(offer, input))
+    .sort((a, b) => (a.monthlyCost ?? Infinity) - (b.monthlyCost ?? Infinity));
 }
 
-export function resultAsText(result: CalculatorResult, offer: OfferView, input: CalculatorInput): string {
+export function resultAsText(
+  result: CalculatorResult,
+  offer: OfferView,
+  input: CalculatorInput,
+): string {
   return [
     `AI Cost Explorer estimate — ${offer.model.name} via ${offer.provider.name}`,
     `Input ${input.inputTokens.toLocaleString()} / output ${input.outputTokens.toLocaleString()} tokens per request`,

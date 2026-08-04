@@ -1,6 +1,6 @@
 name: Data correction
 description: Suggest a verified correction to a model, offer, capability or price.
-title: "data: "
+title: 'data: '
 labels: [data, needs-review]
 body:
   - type: input

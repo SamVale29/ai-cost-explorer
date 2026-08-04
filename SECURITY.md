@@ -14,4 +14,4 @@ The site is a static client-side app. It does not collect provider credentials, 
 
 ## Automated dependency checks
 
-CI audits production dependencies and verifies registry signatures. The current audit exception for `GHSA-qwww-vcr4-c8h2` is limited to React Router's unstable RSC APIs; this repository uses declarative `BrowserRouter`/`Routes` only and has no RSC runtime. Remove the exception when the deployed dependency line is upgraded to a release that includes the RSC fix, or if the application adopts RSC APIs.
+CI audits production dependencies and verifies registry signatures. The current audit exception for `GHSA-qwww-vcr4-c8h2` is limited to React Router's unstable RSC APIs; this repository uses declarative `BrowserRouter`/`Routes` only and has no RSC runtime. Review this exception by **2026-09-01**, then remove it when the deployed dependency line is upgraded to a release that includes the RSC fix, or if the application adopts RSC APIs.

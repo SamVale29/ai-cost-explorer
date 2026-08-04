@@ -4,16 +4,16 @@ The public contract is generated at [`public/data/schema-v1.json`](../public/dat
 
 ## Required entities
 
-| Entity | Stable key | Required relationship |
-| --- | --- | --- |
-| Organization | `id` | Referenced by `Model.organizationId`. |
-| Provider | `id` | Referenced by `Offer.providerId`. |
-| Model | `id` | Referenced by `Offer.modelId`. |
-| Offer | `id` | Has one provider, one model and at least one source. |
-| PricingRule | `id` | Nested under an offer; has currency, unit, mode and sources. |
-| SourceReference | `url` | Must be an HTTP(S) URL with publisher, type and check date. |
-| BenchmarkResult | `id` | References an offer and a reproducible methodology URL. |
-| PriceChangeEvent | `id` | References an offer, source, previous pricing and current pricing. |
+| Entity           | Stable key | Required relationship                                              |
+| ---------------- | ---------- | ------------------------------------------------------------------ |
+| Organization     | `id`       | Referenced by `Model.organizationId`.                              |
+| Provider         | `id`       | Referenced by `Offer.providerId`.                                  |
+| Model            | `id`       | Referenced by `Offer.modelId`.                                     |
+| Offer            | `id`       | Has one provider, one model and at least one source.               |
+| PricingRule      | `id`       | Nested under an offer; has currency, unit, mode and sources.       |
+| SourceReference  | `url`      | Must be an HTTP(S) URL with publisher, type and check date.        |
+| BenchmarkResult  | `id`       | References an offer and a reproducible methodology URL.            |
+| PriceChangeEvent | `id`       | References an offer, source, previous pricing and current pricing. |
 
 ## Null policy
 

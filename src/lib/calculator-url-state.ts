@@ -28,7 +28,9 @@ function readNumber(params: URLSearchParams, key: string): number | null {
 
 export function parseCalculatorUrl(search: string): CalculatorUrlState | null {
   const params = new URLSearchParams(search);
-  const values = Object.fromEntries(Object.entries(INPUT_PARAMS).map(([key, param]) => [key, readNumber(params, param)]));
+  const values = Object.fromEntries(
+    Object.entries(INPUT_PARAMS).map(([key, param]) => [key, readNumber(params, param)]),
+  );
   if (Object.values(values).some((value) => value === null)) return null;
   const input = values as CalculatorInput;
   const mode = params.get('mode') as ScenarioMode | null;
@@ -42,7 +44,8 @@ export function parseCalculatorUrl(search: string): CalculatorUrlState | null {
 
 export function serializeCalculatorUrl(state: CalculatorUrlState): string {
   const params = new URLSearchParams();
-  for (const [key, param] of Object.entries(INPUT_PARAMS)) params.set(param, String(state.input[key as keyof typeof INPUT_PARAMS]));
+  for (const [key, param] of Object.entries(INPUT_PARAMS))
+    params.set(param, String(state.input[key as keyof typeof INPUT_PARAMS]));
   params.set('offers', state.selectedOfferIds.join(','));
   params.set('mode', state.mode);
   return `?${params.toString()}`;
