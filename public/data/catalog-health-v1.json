@@ -1,14 +1,14 @@
 {
   "schemaVersion": "v1",
-  "generatedAt": "2026-08-02T00:00:00Z",
-  "dataAsOf": "2026-08-02",
+  "generatedAt": "2026-08-06T00:00:00Z",
+  "dataAsOf": "2026-08-06",
   "totals": {
     "organizations": 11,
     "providers": 9,
     "directProviders": 9,
     "models": 43,
     "offers": 44,
-    "sources": 22,
+    "sources": 23,
     "historyEvents": 3,
     "benchmarks": 0
   },
@@ -21,7 +21,7 @@
     "modelsWithVerifiedCapability": 100
   },
   "freshness": {
-    "freshSources": 22,
+    "freshSources": 23,
     "agingSources": 0,
     "staleSources": 0,
     "unknownSources": 0

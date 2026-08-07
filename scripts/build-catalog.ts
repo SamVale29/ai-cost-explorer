@@ -35,8 +35,8 @@ const sources = await load<SourceReference[]>('sources');
 
 const catalog: Catalog = {
   schemaVersion: 'v1',
-  generatedAt: '2026-08-02T00:00:00Z',
-  dataAsOf: '2026-08-02',
+  generatedAt: '2026-08-06T00:00:00Z',
+  dataAsOf: '2026-08-06',
   organizations,
   providers,
   models,

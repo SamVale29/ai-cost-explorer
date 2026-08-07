@@ -1,7 +1,7 @@
 {
   "schemaVersion": "v1",
-  "generatedAt": "2026-08-02T00:00:00Z",
-  "dataAsOf": "2026-08-02",
+  "generatedAt": "2026-08-06T00:00:00Z",
+  "dataAsOf": "2026-08-06",
   "organizations": [
     {
       "id": "openai",
@@ -1995,7 +1995,7 @@
               "title": "OpenAI API models",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -2006,10 +2006,10 @@
           "title": "OpenAI API models",
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     },
     {
       "id": "offer-openai-gpt-5-6-terra",
@@ -2025,9 +2025,9 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 2.5,
-          "outputPrice": 15,
-          "cachedInputPrice": null,
+          "inputPrice": 2,
+          "outputPrice": 12,
+          "cachedInputPrice": 0.2,
           "cacheWritePrice": null,
           "sources": [
             {
@@ -2035,7 +2035,14 @@
               "title": "OpenAI API models",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
+            },
+            {
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+              "title": "GPT-5.6 Luna model card",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -2046,10 +2053,17 @@
           "title": "OpenAI API models",
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+          "title": "GPT-5.6 Luna model card",
+          "publisher": "OpenAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     },
     {
       "id": "offer-openai-gpt-5-6-luna",
@@ -2065,31 +2079,31 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 1,
-          "outputPrice": 6,
-          "cachedInputPrice": null,
+          "inputPrice": 0.2,
+          "outputPrice": 1.2,
+          "cachedInputPrice": 0.02,
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://developers.openai.com/api/docs/models",
-              "title": "OpenAI API models",
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+              "title": "GPT-5.6 Luna model card",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         }
       ],
       "sources": [
         {
-          "url": "https://developers.openai.com/api/docs/models",
-          "title": "OpenAI API models",
+          "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+          "title": "GPT-5.6 Luna model card",
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     },
     {
       "id": "offer-openai-gpt-4-1",
@@ -2348,14 +2362,14 @@
           "cachedInputPrice": 0.2,
           "cacheWritePrice": 2.5,
           "effectiveUntil": "2026-08-31",
-          "notes": "Introductory pricing is listed as valid through August 31, 2026.",
+          "notes": "Introductory pricing published as valid through August 31, 2026; the successor rule starts on September 1, 2026.",
           "sources": [
             {
               "url": "https://platform.claude.com/docs/en/about-claude/pricing",
               "title": "Claude API pricing",
               "publisher": "Anthropic",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         },
@@ -2375,7 +2389,48 @@
               "title": "Claude API pricing",
               "publisher": "Anthropic",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
+            }
+          ]
+        },
+        {
+          "id": "anthropic-sonnet-5-standard-from-2026-09",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 3,
+          "outputPrice": 15,
+          "cachedInputPrice": 0.3,
+          "cacheWritePrice": 3.75,
+          "effectiveFrom": "2026-09-01",
+          "notes": "Standard pricing published by Anthropic as taking effect on September 1, 2026.",
+          "sources": [
+            {
+              "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+              "title": "Claude API pricing",
+              "publisher": "Anthropic",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
+            }
+          ]
+        },
+        {
+          "id": "anthropic-sonnet-5-batch-from-2026-09",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": 1.5,
+          "outputPrice": 7.5,
+          "cachedInputPrice": 0.15,
+          "cacheWritePrice": 1.875,
+          "effectiveFrom": "2026-09-01",
+          "sources": [
+            {
+              "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+              "title": "Claude API pricing",
+              "publisher": "Anthropic",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -2386,10 +2441,10 @@
           "title": "Claude API pricing",
           "publisher": "Anthropic",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     },
     {
       "id": "offer-anthropic-claude-sonnet-4-6",
@@ -4044,17 +4099,17 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 2.5,
-          "outputPrice": 7.5,
+          "inputPrice": 1.25,
+          "outputPrice": 3.75,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
           "sources": [
             {
               "url": "https://docs.together.ai/docs/serverless/models",
-              "title": "Together AI serverless model catalog",
+              "title": "Together serverless models",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         },
@@ -4070,11 +4125,11 @@
           "notes": "Together documents up to 50% batch discounts for eligible serverless models.",
           "sources": [
             {
-              "url": "https://docs.together.ai/docs/inference/pricing",
-              "title": "Together AI inference pricing",
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together serverless models",
               "publisher": "Together AI",
-              "sourceType": "official-documentation",
-              "checkedAt": "2026-08-02"
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -4082,13 +4137,13 @@
       "sources": [
         {
           "url": "https://docs.together.ai/docs/serverless/models",
-          "title": "Together AI serverless model catalog",
+          "title": "Together serverless models",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     },
     {
       "id": "offer-together-qwen-3-5-397b",
@@ -4096,7 +4151,7 @@
       "providerId": "together",
       "apiModelId": "Qwen/Qwen3.5-397B-A17B",
       "availability": {
-        "status": "active"
+        "status": "retired"
       },
       "pricing": [
         {
@@ -4111,10 +4166,10 @@
           "sources": [
             {
               "url": "https://docs.together.ai/docs/serverless/models",
-              "title": "Together AI serverless model catalog",
+              "title": "Together serverless models",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         },
@@ -4129,11 +4184,11 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.together.ai/docs/inference/pricing",
-              "title": "Together AI inference pricing",
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together serverless models",
               "publisher": "Together AI",
-              "sourceType": "official-documentation",
-              "checkedAt": "2026-08-02"
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -4141,13 +4196,13 @@
       "sources": [
         {
           "url": "https://docs.together.ai/docs/serverless/models",
-          "title": "Together AI serverless model catalog",
+          "title": "Together serverless models",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     },
     {
       "id": "offer-together-qwen-3-6-plus",
@@ -4222,17 +4277,17 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 0.1,
-          "outputPrice": 0.15,
+          "inputPrice": 0.17,
+          "outputPrice": 0.25,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
           "sources": [
             {
               "url": "https://docs.together.ai/docs/serverless/models",
-              "title": "Together AI serverless model catalog",
+              "title": "Together serverless models",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         },
@@ -4247,11 +4302,11 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.together.ai/docs/inference/pricing",
-              "title": "Together AI inference pricing",
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together serverless models",
               "publisher": "Together AI",
-              "sourceType": "official-documentation",
-              "checkedAt": "2026-08-02"
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -4259,13 +4314,13 @@
       "sources": [
         {
           "url": "https://docs.together.ai/docs/serverless/models",
-          "title": "Together AI serverless model catalog",
+          "title": "Together serverless models",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     },
     {
       "id": "offer-together-deepseek-v4-pro",
@@ -4281,17 +4336,17 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 2.1,
-          "outputPrice": 4.4,
+          "inputPrice": 1.74,
+          "outputPrice": 3.48,
           "cachedInputPrice": 0.2,
           "cacheWritePrice": null,
           "sources": [
             {
               "url": "https://docs.together.ai/docs/serverless/models",
-              "title": "Together AI serverless model catalog",
+              "title": "Together serverless models",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         },
@@ -4306,11 +4361,11 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.together.ai/docs/inference/pricing",
-              "title": "Together AI inference pricing",
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together serverless models",
               "publisher": "Together AI",
-              "sourceType": "official-documentation",
-              "checkedAt": "2026-08-02"
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -4318,13 +4373,13 @@
       "sources": [
         {
           "url": "https://docs.together.ai/docs/serverless/models",
-          "title": "Together AI serverless model catalog",
+          "title": "Together serverless models",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     }
   ],
   "benchmarks": [],
@@ -4444,8 +4499,16 @@
       "title": "OpenAI API models",
       "publisher": "OpenAI",
       "sourceType": "official-documentation",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Current model catalog and per-model input/output prices."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+      "title": "GPT-5.6 Luna model card",
+      "publisher": "OpenAI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-08-06",
+      "notes": "Publishes the cached-input prices for the GPT-5.6 offers."
     },
     {
       "url": "https://developers.openai.com/api/docs/models/gpt-4.1",
@@ -4460,7 +4523,7 @@
       "title": "Claude API pricing",
       "publisher": "Anthropic",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "First-party API pricing, cache writes, cache hits and batch pricing."
     },
     {
@@ -4468,7 +4531,7 @@
       "title": "Gemini Developer API pricing",
       "publisher": "Google",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Current paid-tier, batch, flex and priority prices."
     },
     {
@@ -4476,7 +4539,7 @@
       "title": "Mistral Small 4 model card",
       "publisher": "Mistral AI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Model card with context, price and capabilities."
     },
     {
@@ -4484,7 +4547,7 @@
       "title": "Mistral Medium 3.5 model card",
       "publisher": "Mistral AI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Model card with context, price and capabilities."
     },
     {
@@ -4524,7 +4587,7 @@
       "title": "Command A model card",
       "publisher": "Cohere",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Input/output price, context, max output and capabilities."
     },
     {
@@ -4564,7 +4627,7 @@
       "title": "xAI API pricing",
       "publisher": "xAI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Short/long context input, cache and output prices."
     },
     {
@@ -4572,7 +4635,7 @@
       "title": "DeepSeek API models and pricing",
       "publisher": "DeepSeek",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Current V4 Flash and V4 Pro prices, cache-hit prices and limits."
     },
     {
@@ -4580,7 +4643,7 @@
       "title": "GroqCloud supported models",
       "publisher": "Groq",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Model IDs, prices, rate limits, context, max completion and observed token speed shown by Groq."
     },
     {
@@ -4588,7 +4651,7 @@
       "title": "Together AI serverless model catalog",
       "publisher": "Together AI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Model-level input, cached input, output prices, context and capability columns."
     },
     {

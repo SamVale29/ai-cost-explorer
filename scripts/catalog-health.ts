@@ -20,8 +20,8 @@ async function load<T>(name: string): Promise<T> {
 
 const catalog: Catalog = {
   schemaVersion: 'v1',
-  generatedAt: '2026-08-02T00:00:00Z',
-  dataAsOf: '2026-08-02',
+  generatedAt: '2026-08-06T00:00:00Z',
+  dataAsOf: '2026-08-06',
   organizations: await load<Organization[]>('organizations'),
   providers: await load<Provider[]>('providers'),
   models: await load<Model[]>('models'),
