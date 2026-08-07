@@ -146,6 +146,19 @@ describe('calculator', () => {
     expect(choosePricingRule(rules, 'standard', 1_000_000, now)?.id).toBe('current');
   });
 
+  it('keeps a date-only effectiveUntil valid through the end of that day', () => {
+    const rules: PricingRule[] = [
+      { ...standardAndBatch[0], id: 'introductory', effectiveUntil: '2026-08-31' },
+      { ...standardAndBatch[0], id: 'successor', inputPrice: 3, effectiveFrom: '2026-09-01' },
+    ];
+    const at = (iso: string) => choosePricingRule(rules, 'standard', 1_000_000, new Date(iso))?.id;
+
+    expect(at('2026-08-31T00:00:00Z')).toBe('introductory');
+    expect(at('2026-08-31T23:59:59Z')).toBe('introductory');
+    expect(at('2026-09-01T00:00:00Z')).toBe('successor');
+    expect(at('2026-09-15T12:00:00Z')).toBe('successor');
+  });
+
   it('does not simulate non-token pricing as token pricing', () => {
     const rule: PricingRule = {
       ...standardAndBatch[0],

@@ -10,9 +10,20 @@ function inRange(rule: PricingRule, inputTokens: number): boolean {
   return inputTokens >= minimum && inputTokens <= maximum;
 }
 
+const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
+
+/**
+ * A date without a time is a whole calendar day, so `effectiveUntil: "2026-08-31"`
+ * means the rule is still valid at 23:59 on August 31, not that it expired at midnight.
+ */
+function parseBoundary(value: string, edge: 'start' | 'end'): Date {
+  if (!DATE_ONLY.test(value)) return new Date(value);
+  return new Date(`${value}T${edge === 'start' ? '00:00:00.000Z' : '23:59:59.999Z'}`);
+}
+
 function isEffective(rule: PricingRule, now: Date): boolean {
-  const effectiveFrom = rule.effectiveFrom ? new Date(rule.effectiveFrom) : null;
-  const effectiveUntil = rule.effectiveUntil ? new Date(rule.effectiveUntil) : null;
+  const effectiveFrom = rule.effectiveFrom ? parseBoundary(rule.effectiveFrom, 'start') : null;
+  const effectiveUntil = rule.effectiveUntil ? parseBoundary(rule.effectiveUntil, 'end') : null;
   if (effectiveFrom && Number.isNaN(effectiveFrom.getTime())) return false;
   if (effectiveUntil && Number.isNaN(effectiveUntil.getTime())) return false;
   return (!effectiveFrom || effectiveFrom <= now) && (!effectiveUntil || effectiveUntil >= now);
