@@ -44,4 +44,4 @@ The public contract is generated at [`public/data/schema-v1.json`](../public/dat
 }
 ```
 
-Every price change should preserve the old rule in a reviewed history event rather than silently overwriting a displayed history line. Every generated file should be reproducible from the source-of-truth JSON and the fixed dataset date recorded by the build script.
+Every price change should preserve the old rule in a reviewed history event rather than silently overwriting a displayed history line. Every generated file should be reproducible from the source-of-truth JSON and the snapshot date derived by the build script from the latest source verification date.

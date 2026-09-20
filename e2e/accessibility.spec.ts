@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 test('mobile navigation and calculator controls expose accessible state', async ({ browser }) => {
@@ -31,5 +32,23 @@ test('mobile navigation and calculator controls expose accessible state', async 
     await expect(page.getByRole('link', { name: 'Skip to content' })).toBeVisible();
   } finally {
     await context.close();
+  }
+});
+
+test('methodology passes automated color contrast checks in both themes', async ({ page }) => {
+  await page.goto('./methodology');
+  const themeButton = page.getByRole('button', { name: /Switch to .* theme/ }).first();
+  await expect(themeButton).toBeVisible();
+
+  for (const theme of ['dark', 'light'] as const) {
+    const currentTheme = await page.locator('html').getAttribute('data-theme');
+    if (currentTheme !== theme)
+      await page
+        .getByRole('button', { name: `Switch to ${theme} theme` })
+        .first()
+        .click();
+
+    const results = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
+    expect(results.violations, `${theme} theme contrast violations`).toEqual([]);
   }
 });

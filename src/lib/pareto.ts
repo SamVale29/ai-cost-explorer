@@ -1,4 +1,5 @@
 import type { OfferView } from '../types';
+import { standardRule } from './pricing';
 
 export type ParetoPoint = {
   offer: OfferView;
@@ -22,17 +23,19 @@ export function paretoFrontier(points: ParetoPoint[]): ParetoPoint[] {
 export function scoreOffers(
   offers: OfferView[],
   weights: { cost: number; context: number; resources: number },
+  options: { inputTokens?: number; asOf?: Date } = {},
 ) {
-  const maxContext = Math.max(...offers.map((offer) => offer.model.contextWindowTokens ?? 0), 1);
+  const knownContexts = offers
+    .map((offer) => offer.model.contextWindowTokens)
+    .filter((value): value is number => value !== null && value !== undefined);
+  const maxContext = Math.max(...knownContexts, 1);
   const maxInputPrice = Math.max(
-    ...offers.map(
-      (offer) => offer.pricing.find((pricing) => pricing.mode === 'standard')?.inputPrice ?? 0,
-    ),
+    ...offers.map((offer) => standardRule({ offer }, options)?.inputPrice ?? 0),
     1,
   );
   return offers
     .map((offer) => {
-      const rule = offer.pricing.find((pricing) => pricing.mode === 'standard');
+      const rule = standardRule({ offer }, options);
       const costScore =
         rule?.inputPrice === null || rule?.inputPrice === undefined
           ? null
@@ -40,23 +43,32 @@ export function scoreOffers(
       const contextScore = offer.model.contextWindowTokens
         ? offer.model.contextWindowTokens / maxContext
         : null;
+      const resourceValues = [
+        offer.model.capabilities.functionCalling,
+        offer.model.capabilities.structuredOutputs,
+        offer.model.capabilities.promptCaching,
+      ];
+      const knownResourceValues = resourceValues.filter(
+        (value): value is boolean => value !== null && value !== undefined,
+      );
       const resourceScore =
-        [
-          offer.model.capabilities.functionCalling,
-          offer.model.capabilities.structuredOutputs,
-          offer.model.capabilities.promptCaching,
-        ].filter((value) => value === true).length / 3;
+        knownResourceValues.length === 0
+          ? null
+          : knownResourceValues.filter(Boolean).length / knownResourceValues.length;
       const knownScores = [costScore, contextScore, resourceScore].filter(
         (value): value is number => value !== null,
       );
-      const denominator = weights.cost + weights.context + weights.resources;
+      const weightedScores: Array<[number, number]> = [];
+      if (costScore !== null && weights.cost > 0) weightedScores.push([costScore, weights.cost]);
+      if (contextScore !== null && weights.context > 0)
+        weightedScores.push([contextScore, weights.context]);
+      if (resourceScore !== null && weights.resources > 0)
+        weightedScores.push([resourceScore, weights.resources]);
+      const denominator = weightedScores.reduce((sum, [, weight]) => sum + weight, 0);
       const score =
         denominator === 0
           ? null
-          : ((costScore ?? 0) * weights.cost +
-              (contextScore ?? 0) * weights.context +
-              resourceScore * weights.resources) /
-            denominator;
+          : weightedScores.reduce((sum, [value, weight]) => sum + value * weight, 0) / denominator;
       return { offer, score, knownFields: knownScores.length };
     })
     .sort((a, b) => (b.score ?? -1) - (a.score ?? -1));

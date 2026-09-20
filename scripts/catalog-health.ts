@@ -20,8 +20,6 @@ async function load<T>(name: string): Promise<T> {
 
 const catalog: Catalog = {
   schemaVersion: 'v1',
-  generatedAt: '2026-08-02T00:00:00Z',
-  dataAsOf: '2026-08-02',
   organizations: await load<Organization[]>('organizations'),
   providers: await load<Provider[]>('providers'),
   models: await load<Model[]>('models'),
@@ -29,7 +27,16 @@ const catalog: Catalog = {
   benchmarks: await load<BenchmarkResult[]>('benchmarks'),
   history: await load<PriceChangeEvent[]>('history'),
   sources: await load<SourceReference[]>('sources'),
+  generatedAt: '',
+  dataAsOf: '',
 };
+catalog.dataAsOf =
+  catalog.sources
+    .map((source) => source.checkedAt)
+    .sort()
+    .at(-1) ?? '';
+if (!catalog.dataAsOf) throw new Error('Cannot calculate health without checked source dates.');
+catalog.generatedAt = `${catalog.dataAsOf}T00:00:00Z`;
 
 const health = calculateCatalogHealth(catalog);
 if (process.argv.includes('--json')) {

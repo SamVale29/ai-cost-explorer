@@ -77,6 +77,14 @@ describe('pareto frontier', () => {
 
     expect(ranked[0]?.offer.id).toBe('first');
     expect(ranked[0]?.score).toBe(0.5);
-    expect(ranked[0]?.knownFields).toBe(2);
+    expect(ranked[0]?.knownFields).toBe(1);
+  });
+
+  it('does not score unknown resources as a known zero', () => {
+    const unknown = offer('unknown');
+    const ranked = scoreOffers([unknown], { cost: 50, context: 30, resources: 20 });
+
+    expect(ranked[0]?.score).toBeNull();
+    expect(ranked[0]?.knownFields).toBe(0);
   });
 });

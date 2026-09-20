@@ -1,12 +1,12 @@
 offerId,model,organization,provider,apiModelId,status,inputPriceUsdPerMillion,cachedInputPriceUsdPerMillion,outputPriceUsdPerMillion,contextWindowTokens,maxOutputTokens,functionCalling,structuredOutputs,promptCaching,batchApi,lastVerifiedAt
-offer-openai-gpt-5-6-sol,GPT-5.6 Sol,OpenAI,OpenAI API,gpt-5.6-sol,active,5,,30,1050000,128000,true,true,true,true,2026-08-02
-offer-openai-gpt-5-6-terra,GPT-5.6 Terra,OpenAI,OpenAI API,gpt-5.6-terra,active,2.5,,15,1050000,128000,true,true,true,true,2026-08-02
-offer-openai-gpt-5-6-luna,GPT-5.6 Luna,OpenAI,OpenAI API,gpt-5.6-luna,active,1,,6,1050000,128000,true,true,true,true,2026-08-02
+offer-openai-gpt-5-6-sol,GPT-5.6 Sol,OpenAI,OpenAI API,gpt-5.6-sol,active,4,0.4,20,1050000,128000,true,true,true,true,2026-09-19
+offer-openai-gpt-5-6-terra,GPT-5.6 Terra,OpenAI,OpenAI API,gpt-5.6-terra,active,2,0.2,12,1050000,128000,true,true,true,true,2026-09-19
+offer-openai-gpt-5-6-luna,GPT-5.6 Luna,OpenAI,OpenAI API,gpt-5.6-luna,active,0.2,0.02,1.2,1050000,128000,true,true,true,true,2026-09-19
 offer-openai-gpt-4-1,GPT-4.1,OpenAI,OpenAI API,gpt-4.1,active,2,0.5,8,1047576,32768,true,true,true,true,2026-08-02
 offer-openai-gpt-4-1-mini,GPT-4.1 mini,OpenAI,OpenAI API,gpt-4.1-mini,active,0.4,0.1,1.6,1047576,32768,true,true,true,true,2026-08-02
 offer-anthropic-claude-fable-5,Claude Fable 5,Anthropic,Anthropic API,claude-fable-5,active,10,1,50,200000,,true,true,true,true,2026-08-02
 offer-anthropic-claude-opus-5,Claude Opus 5,Anthropic,Anthropic API,claude-opus-5,active,5,0.5,25,200000,,true,true,true,true,2026-08-02
-offer-anthropic-claude-sonnet-5,Claude Sonnet 5,Anthropic,Anthropic API,claude-sonnet-5,active,2,0.2,10,200000,,true,true,true,true,2026-08-02
+offer-anthropic-claude-sonnet-5,Claude Sonnet 5,Anthropic,Anthropic API,claude-sonnet-5,active,2,0.2,10,200000,,true,true,true,true,2026-09-19
 offer-anthropic-claude-sonnet-4-6,Claude Sonnet 4.6,Anthropic,Anthropic API,claude-sonnet-4-6,active,3,0.3,15,200000,,true,true,true,true,2026-08-02
 offer-anthropic-claude-haiku-4-5,Claude Haiku 4.5,Anthropic,Anthropic API,claude-haiku-4-5,active,1,0.1,5,200000,,true,true,true,true,2026-08-02
 offer-google-gemini-3-1-pro,Gemini 3.1 Pro Preview,Google,Google AI Studio API,gemini-3.1-pro-preview,preview,2,0.2,12,1048576,,true,true,true,true,2026-08-02
@@ -32,14 +32,14 @@ offer-xai-grok-4-20-reasoning,Grok 4.20 Reasoning,xAI,xAI API,grok-4.20-0309-rea
 offer-xai-grok-4-20-non-reasoning,Grok 4.20 Non-reasoning,xAI,xAI API,grok-4.20-0309-non-reasoning,active,1.25,0.2,2.5,1000000,,true,true,true,true,2026-08-02
 offer-deepseek-v4-flash,DeepSeek V4 Flash,DeepSeek,DeepSeek API,deepseek-v4-flash,active,0.14,0.0028,0.28,1000000,384000,true,true,true,,2026-08-02
 offer-deepseek-v4-pro,DeepSeek V4 Pro,DeepSeek,DeepSeek API,deepseek-v4-pro,active,0.435,0.003625,0.87,1000000,384000,true,true,true,,2026-08-02
-offer-groq-llama-3-1-8b,Llama 3.1 8B,Meta,GroqCloud API,llama-3.1-8b-instant,active,0.05,,0.08,131072,131072,,,,true,2026-08-02
-offer-groq-llama-3-3-70b,Llama 3.3 70B,Meta,GroqCloud API,llama-3.3-70b-versatile,active,0.59,,0.79,131072,32768,,,,true,2026-08-02
+offer-groq-llama-3-1-8b,Llama 3.1 8B,Meta,GroqCloud API,llama-3.1-8b-instant,active,,,,131072,131072,,,,true,2026-09-19
+offer-groq-llama-3-3-70b,Llama 3.3 70B,Meta,GroqCloud API,llama-3.3-70b-versatile,active,,,,131072,32768,,,,true,2026-09-19
 offer-groq-gpt-oss-120b,GPT OSS 120B,OpenAI,GroqCloud API,openai/gpt-oss-120b,active,0.15,,0.6,131072,65536,true,true,,true,2026-08-02
 offer-groq-gpt-oss-20b,GPT OSS 20B,OpenAI,GroqCloud API,openai/gpt-oss-20b,active,0.075,,0.3,131072,65536,true,true,,true,2026-08-02
 offer-groq-whisper-large-v3,Whisper Large V3,OpenAI,GroqCloud API,whisper-large-v3,active,,,,,,,,,true,2026-08-02
 offer-groq-whisper-large-v3-turbo,Whisper Large V3 Turbo,OpenAI,GroqCloud API,whisper-large-v3-turbo,active,,,,,,,,,true,2026-08-02
-offer-together-qwen-3-7-max,Qwen3.7 Max,Qwen,Together AI,Qwen/Qwen3.7-Max,active,2.5,,7.5,,,,,,true,2026-08-02
-offer-together-qwen-3-5-397b,Qwen3.5 397B A17B,Qwen,Together AI,Qwen/Qwen3.5-397B-A17B,active,0.6,,3.6,262144,,true,true,,true,2026-08-02
+offer-together-qwen-3-7-max,Qwen3.7 Max,Qwen,Together AI,Qwen/Qwen3.7-Max,active,1.25,,3.75,,,,,,true,2026-08-06
+offer-together-qwen-3-5-397b,Qwen3.5 397B A17B,Qwen,Together AI,Qwen/Qwen3.5-397B-A17B,retired,0.6,,3.6,262144,,true,true,,true,2026-08-06
 offer-together-qwen-3-6-plus,Qwen3.6 Plus,Qwen,Together AI,Qwen/Qwen3.6-Plus,active,0.5,,3,1000000,,,,,true,2026-08-02
-offer-together-qwen-3-5-9b,Qwen3.5 9B,Qwen,Together AI,Qwen/Qwen3.5-9B,active,0.1,,0.15,262144,,true,true,,true,2026-08-02
-offer-together-deepseek-v4-pro,DeepSeek V4 Pro,DeepSeek,Together AI,deepseek-ai/DeepSeek-V4-Pro,active,2.1,0.2,4.4,1000000,384000,true,true,true,,2026-08-02
+offer-together-qwen-3-5-9b,Qwen3.5 9B,Qwen,Together AI,Qwen/Qwen3.5-9B,active,0.17,,0.25,262144,,true,true,,true,2026-09-19
+offer-together-deepseek-v4-pro,DeepSeek V4 Pro,DeepSeek,Together AI,deepseek-ai/DeepSeek-V4-Pro,active,1.74,0.2,3.48,1000000,384000,true,true,true,,2026-08-06

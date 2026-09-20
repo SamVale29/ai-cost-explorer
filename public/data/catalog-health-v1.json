@@ -1,28 +1,28 @@
 {
   "schemaVersion": "v1",
-  "generatedAt": "2026-08-02T00:00:00Z",
-  "dataAsOf": "2026-08-02",
+  "generatedAt": "2026-09-19T00:00:00Z",
+  "dataAsOf": "2026-09-19",
   "totals": {
     "organizations": 11,
     "providers": 9,
     "directProviders": 9,
     "models": 43,
     "offers": 44,
-    "sources": 22,
-    "historyEvents": 3,
+    "sources": 23,
+    "historyEvents": 7,
     "benchmarks": 0
   },
   "coverage": {
-    "offersWithStandardInputPrice": 93,
-    "offersWithStandardOutputPrice": 93,
+    "offersWithStandardInputPrice": 89,
+    "offersWithStandardOutputPrice": 89,
     "offersWithSources": 100,
     "modelsWithContextWindow": 93,
     "modelsWithMaxOutput": 37,
     "modelsWithVerifiedCapability": 100
   },
   "freshness": {
-    "freshSources": 22,
-    "agingSources": 0,
+    "freshSources": 4,
+    "agingSources": 19,
     "staleSources": 0,
     "unknownSources": 0
   },

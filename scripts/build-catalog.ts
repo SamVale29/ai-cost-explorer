@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { calculateCatalogHealth } from '../src/lib/catalog-health';
+import { choosePricingRule } from '../src/lib/pricing';
 import type {
   BenchmarkResult,
   Catalog,
@@ -32,11 +33,16 @@ const offers = await load<Offer[]>('offers');
 const benchmarks = await load<BenchmarkResult[]>('benchmarks');
 const history = await load<PriceChangeEvent[]>('history');
 const sources = await load<SourceReference[]>('sources');
+const dataAsOf = sources
+  .map((source) => source.checkedAt)
+  .sort()
+  .at(-1);
+if (!dataAsOf) throw new Error('Cannot build a catalog without checked source dates.');
 
 const catalog: Catalog = {
   schemaVersion: 'v1',
-  generatedAt: '2026-08-02T00:00:00Z',
-  dataAsOf: '2026-08-02',
+  generatedAt: `${dataAsOf}T00:00:00Z`,
+  dataAsOf,
   organizations,
   providers,
   models,
@@ -85,7 +91,12 @@ const providerMap = new Map(providers.map((item) => [item.id, item.name]));
 const modelMap = new Map(models.map((item) => [item.id, item]));
 const rows = offers.map((offer) => {
   const model = modelMap.get(offer.modelId);
-  const standard = offer.pricing.find((rule) => rule.mode === 'standard');
+  const standard = choosePricingRule(
+    offer.pricing,
+    'standard',
+    0,
+    new Date(`${dataAsOf}T23:59:59.999Z`),
+  );
   return {
     offerId: offer.id,
     model: model?.name ?? '',

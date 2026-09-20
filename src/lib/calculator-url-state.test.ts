@@ -19,6 +19,21 @@ describe('calculator URL state', () => {
     expect(parseCalculatorUrl(serializeCalculatorUrl(state))).toEqual(state);
   });
 
+  it('preserves derived workload dimensions used by the calculator', () => {
+    const state = {
+      input: {
+        ...input,
+        users: 100,
+        conversationsPerUser: 2,
+        messagesPerConversation: 3,
+      },
+      selectedOfferIds: ['offer-a'],
+      mode: 'monthly' as const,
+    };
+
+    expect(parseCalculatorUrl(serializeCalculatorUrl(state))).toEqual(state);
+  });
+
   it('rejects incomplete or unsafe query state', () => {
     expect(parseCalculatorUrl('?mode=monthly&in=100')).toBeNull();
     expect(

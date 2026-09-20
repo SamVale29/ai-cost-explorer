@@ -1,7 +1,7 @@
 {
   "schemaVersion": "v1",
-  "generatedAt": "2026-08-02T00:00:00Z",
-  "dataAsOf": "2026-08-02",
+  "generatedAt": "2026-09-19T00:00:00Z",
+  "dataAsOf": "2026-09-19",
   "organizations": [
     {
       "id": "openai",
@@ -75,7 +75,7 @@
       "id": "openai",
       "name": "OpenAI API",
       "website": "https://openai.com",
-      "pricingPage": "https://developers.openai.com/api/docs/models",
+      "pricingPage": "https://developers.openai.com/api/docs/pricing",
       "documentationPage": "https://developers.openai.com/api/docs",
       "directProvider": true
     },
@@ -179,14 +179,15 @@
       },
       "sources": [
         {
-          "url": "https://developers.openai.com/api/docs/models",
-          "title": "OpenAI API models",
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "title": "OpenAI API pricing",
           "publisher": "OpenAI",
-          "sourceType": "official-documentation",
-          "checkedAt": "2026-08-02"
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "gpt-5-6-terra",
@@ -222,14 +223,15 @@
       },
       "sources": [
         {
-          "url": "https://developers.openai.com/api/docs/models",
-          "title": "OpenAI API models",
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "title": "OpenAI API pricing",
           "publisher": "OpenAI",
-          "sourceType": "official-documentation",
-          "checkedAt": "2026-08-02"
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "gpt-5-6-luna",
@@ -265,14 +267,15 @@
       },
       "sources": [
         {
-          "url": "https://developers.openai.com/api/docs/models",
-          "title": "OpenAI API models",
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "title": "OpenAI API pricing",
           "publisher": "OpenAI",
-          "sourceType": "official-documentation",
-          "checkedAt": "2026-08-02"
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "gpt-4-1",
@@ -482,10 +485,10 @@
           "title": "Claude API pricing",
           "publisher": "Anthropic",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "claude-sonnet-4-6",
@@ -1595,10 +1598,10 @@
           "title": "GroqCloud supported models",
           "publisher": "Groq",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "llama-3-3-70b",
@@ -1636,10 +1639,10 @@
           "title": "GroqCloud supported models",
           "publisher": "Groq",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "gpt-oss-120b",
@@ -1964,10 +1967,10 @@
           "title": "Together AI serverless model catalog",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     }
   ],
   "offers": [
@@ -1985,31 +1988,57 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 5,
-          "outputPrice": 30,
-          "cachedInputPrice": null,
-          "cacheWritePrice": null,
+          "inputPrice": 4,
+          "cachedInputPrice": 0.4,
+          "cacheWritePrice": 5,
+          "outputPrice": 20,
+          "maximumInputTokens": 272000,
+          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
           "sources": [
             {
-              "url": "https://developers.openai.com/api/docs/models",
-              "title": "OpenAI API models",
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-sol-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 8,
+          "cachedInputPrice": 0.8,
+          "cacheWritePrice": 10,
+          "outputPrice": 30,
+          "minimumInputTokens": 272001,
+          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
             }
           ]
         }
       ],
       "sources": [
         {
-          "url": "https://developers.openai.com/api/docs/models",
-          "title": "OpenAI API models",
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "title": "OpenAI API pricing",
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19",
+          "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "offer-openai-gpt-5-6-terra",
@@ -2025,31 +2054,57 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 2.5,
-          "outputPrice": 15,
-          "cachedInputPrice": null,
-          "cacheWritePrice": null,
+          "inputPrice": 2,
+          "cachedInputPrice": 0.2,
+          "cacheWritePrice": 2.5,
+          "outputPrice": 12,
+          "maximumInputTokens": 272000,
+          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
           "sources": [
             {
-              "url": "https://developers.openai.com/api/docs/models",
-              "title": "OpenAI API models",
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-terra-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 4,
+          "cachedInputPrice": 0.4,
+          "cacheWritePrice": 5,
+          "outputPrice": 18,
+          "minimumInputTokens": 272001,
+          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
             }
           ]
         }
       ],
       "sources": [
         {
-          "url": "https://developers.openai.com/api/docs/models",
-          "title": "OpenAI API models",
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "title": "OpenAI API pricing",
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19",
+          "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "offer-openai-gpt-5-6-luna",
@@ -2065,31 +2120,57 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 1,
-          "outputPrice": 6,
-          "cachedInputPrice": null,
-          "cacheWritePrice": null,
+          "inputPrice": 0.2,
+          "cachedInputPrice": 0.02,
+          "cacheWritePrice": 0.25,
+          "outputPrice": 1.2,
+          "maximumInputTokens": 272000,
+          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
           "sources": [
             {
-              "url": "https://developers.openai.com/api/docs/models",
-              "title": "OpenAI API models",
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-luna-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.4,
+          "cachedInputPrice": 0.04,
+          "cacheWritePrice": 0.5,
+          "outputPrice": 1.8,
+          "minimumInputTokens": 272001,
+          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
             }
           ]
         }
       ],
       "sources": [
         {
-          "url": "https://developers.openai.com/api/docs/models",
-          "title": "OpenAI API models",
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "title": "OpenAI API pricing",
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19",
+          "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "offer-openai-gpt-4-1",
@@ -2347,15 +2428,14 @@
           "outputPrice": 10,
           "cachedInputPrice": 0.2,
           "cacheWritePrice": 2.5,
-          "effectiveUntil": "2026-08-31",
-          "notes": "Introductory pricing is listed as valid through August 31, 2026.",
+          "notes": "Anthropic kept the introductory $2/$10 pricing as the standard rate; the scheduled September increase was cancelled.",
           "sources": [
             {
               "url": "https://platform.claude.com/docs/en/about-claude/pricing",
               "title": "Claude API pricing",
               "publisher": "Anthropic",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19"
             }
           ]
         },
@@ -2368,14 +2448,13 @@
           "outputPrice": 5,
           "cachedInputPrice": 0.1,
           "cacheWritePrice": 1.25,
-          "effectiveUntil": "2026-08-31",
           "sources": [
             {
               "url": "https://platform.claude.com/docs/en/about-claude/pricing",
               "title": "Claude API pricing",
               "publisher": "Anthropic",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19"
             }
           ]
         }
@@ -2386,10 +2465,10 @@
           "title": "Claude API pricing",
           "publisher": "Anthropic",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "offer-anthropic-claude-sonnet-4-6",
@@ -3729,8 +3808,8 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 0.05,
-          "outputPrice": 0.08,
+          "inputPrice": null,
+          "outputPrice": null,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
           "sources": [
@@ -3739,27 +3818,28 @@
               "title": "GroqCloud supported models",
               "publisher": "Groq",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19"
             }
-          ]
+          ],
+          "notes": "Groq lists this model as Enterprise / Contact Sales; no public token price is verified for this rule."
         },
         {
           "id": "groq-llama-3-1-8b-batch",
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "batch",
-          "inputPrice": 0.025,
-          "outputPrice": 0.04,
+          "inputPrice": null,
+          "outputPrice": null,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
-          "notes": "Groq documents a 50% batch discount for eligible models.",
+          "notes": "Groq lists this model as Enterprise / Contact Sales; no public token price is verified for this rule.",
           "sources": [
             {
               "url": "https://console.groq.com/docs/batch",
               "title": "Groq Batch API",
               "publisher": "Groq",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19"
             }
           ]
         }
@@ -3770,10 +3850,10 @@
           "title": "GroqCloud supported models",
           "publisher": "Groq",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "offer-groq-llama-3-3-70b",
@@ -3789,8 +3869,8 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 0.59,
-          "outputPrice": 0.79,
+          "inputPrice": null,
+          "outputPrice": null,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
           "sources": [
@@ -3799,17 +3879,18 @@
               "title": "GroqCloud supported models",
               "publisher": "Groq",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19"
             }
-          ]
+          ],
+          "notes": "Groq lists this model as Enterprise / Contact Sales; no public token price is verified for this rule."
         },
         {
           "id": "groq-llama-3-3-70b-batch",
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "batch",
-          "inputPrice": 0.295,
-          "outputPrice": 0.395,
+          "inputPrice": null,
+          "outputPrice": null,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
           "sources": [
@@ -3818,9 +3899,10 @@
               "title": "Groq Batch API",
               "publisher": "Groq",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19"
             }
-          ]
+          ],
+          "notes": "Groq lists this model as Enterprise / Contact Sales; no public token price is verified for this rule."
         }
       ],
       "sources": [
@@ -3829,10 +3911,10 @@
           "title": "GroqCloud supported models",
           "publisher": "Groq",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "offer-groq-gpt-oss-120b",
@@ -4044,17 +4126,17 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 2.5,
-          "outputPrice": 7.5,
+          "inputPrice": 1.25,
+          "outputPrice": 3.75,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
           "sources": [
             {
               "url": "https://docs.together.ai/docs/serverless/models",
-              "title": "Together AI serverless model catalog",
+              "title": "Together serverless models",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         },
@@ -4070,11 +4152,11 @@
           "notes": "Together documents up to 50% batch discounts for eligible serverless models.",
           "sources": [
             {
-              "url": "https://docs.together.ai/docs/inference/pricing",
-              "title": "Together AI inference pricing",
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together serverless models",
               "publisher": "Together AI",
-              "sourceType": "official-documentation",
-              "checkedAt": "2026-08-02"
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -4082,13 +4164,13 @@
       "sources": [
         {
           "url": "https://docs.together.ai/docs/serverless/models",
-          "title": "Together AI serverless model catalog",
+          "title": "Together serverless models",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     },
     {
       "id": "offer-together-qwen-3-5-397b",
@@ -4096,7 +4178,7 @@
       "providerId": "together",
       "apiModelId": "Qwen/Qwen3.5-397B-A17B",
       "availability": {
-        "status": "active"
+        "status": "retired"
       },
       "pricing": [
         {
@@ -4111,10 +4193,10 @@
           "sources": [
             {
               "url": "https://docs.together.ai/docs/serverless/models",
-              "title": "Together AI serverless model catalog",
+              "title": "Together serverless models",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         },
@@ -4129,11 +4211,11 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.together.ai/docs/inference/pricing",
-              "title": "Together AI inference pricing",
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together serverless models",
               "publisher": "Together AI",
-              "sourceType": "official-documentation",
-              "checkedAt": "2026-08-02"
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -4141,13 +4223,13 @@
       "sources": [
         {
           "url": "https://docs.together.ai/docs/serverless/models",
-          "title": "Together AI serverless model catalog",
+          "title": "Together serverless models",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     },
     {
       "id": "offer-together-qwen-3-6-plus",
@@ -4222,17 +4304,17 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 0.1,
-          "outputPrice": 0.15,
+          "inputPrice": 0.17,
+          "outputPrice": 0.25,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
           "sources": [
             {
               "url": "https://docs.together.ai/docs/serverless/models",
-              "title": "Together AI serverless model catalog",
+              "title": "Together serverless models",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-19"
             }
           ]
         },
@@ -4241,31 +4323,32 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "batch",
-          "inputPrice": 0.05,
-          "outputPrice": 0.075,
+          "inputPrice": null,
+          "outputPrice": null,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.together.ai/docs/inference/pricing",
-              "title": "Together AI inference pricing",
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together serverless models",
               "publisher": "Together AI",
-              "sourceType": "official-documentation",
-              "checkedAt": "2026-08-02"
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19"
             }
-          ]
+          ],
+          "notes": "Together documents batch processing, but no model-specific Qwen3.5 9B batch price is verified in the current catalog source."
         }
       ],
       "sources": [
         {
           "url": "https://docs.together.ai/docs/serverless/models",
-          "title": "Together AI serverless model catalog",
+          "title": "Together serverless models",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-19"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "offer-together-deepseek-v4-pro",
@@ -4281,17 +4364,17 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 2.1,
-          "outputPrice": 4.4,
+          "inputPrice": 1.74,
+          "outputPrice": 3.48,
           "cachedInputPrice": 0.2,
           "cacheWritePrice": null,
           "sources": [
             {
               "url": "https://docs.together.ai/docs/serverless/models",
-              "title": "Together AI serverless model catalog",
+              "title": "Together serverless models",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-08-06"
             }
           ]
         },
@@ -4306,11 +4389,11 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.together.ai/docs/inference/pricing",
-              "title": "Together AI inference pricing",
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together serverless models",
               "publisher": "Together AI",
-              "sourceType": "official-documentation",
-              "checkedAt": "2026-08-02"
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
             }
           ]
         }
@@ -4318,13 +4401,13 @@
       "sources": [
         {
           "url": "https://docs.together.ai/docs/serverless/models",
-          "title": "Together AI serverless model catalog",
+          "title": "Together serverless models",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-08-06"
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-06"
     }
   ],
   "benchmarks": [],
@@ -4436,16 +4519,416 @@
         "checkedAt": "2026-08-02"
       },
       "notes": "Initial project observation. No earlier price line is inferred."
+    },
+    {
+      "id": "offer-openai-gpt-5-6-sol-pricing-review-2026-09-19",
+      "offerId": "offer-openai-gpt-5-6-sol",
+      "detectedAt": "2026-09-19",
+      "effectiveAt": null,
+      "previousPricing": [
+        {
+          "id": "openai-gpt-5-6-sol-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 5,
+          "outputPrice": 30,
+          "cachedInputPrice": null,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/models",
+              "title": "OpenAI API models",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "openai-gpt-5-6-sol-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 4,
+          "cachedInputPrice": 0.4,
+          "cacheWritePrice": 5,
+          "outputPrice": 20,
+          "maximumInputTokens": 272000,
+          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-sol-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 8,
+          "cachedInputPrice": 0.8,
+          "cacheWritePrice": 10,
+          "outputPrice": 30,
+          "minimumInputTokens": 272001,
+          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        }
+      ],
+      "source": {
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "title": "OpenAI API pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-19",
+        "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+      },
+      "notes": "Reviewed against the current OpenAI pricing table; added the 272k long-context tier and cache-write prices."
+    },
+    {
+      "id": "offer-openai-gpt-5-6-terra-pricing-review-2026-09-19",
+      "offerId": "offer-openai-gpt-5-6-terra",
+      "detectedAt": "2026-09-19",
+      "effectiveAt": null,
+      "previousPricing": [
+        {
+          "id": "openai-gpt-5-6-terra-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 2,
+          "outputPrice": 12,
+          "cachedInputPrice": 0.2,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/models",
+              "title": "OpenAI API models",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
+            },
+            {
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+              "title": "GPT-5.6 Luna model card",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "openai-gpt-5-6-terra-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 2,
+          "cachedInputPrice": 0.2,
+          "cacheWritePrice": 2.5,
+          "outputPrice": 12,
+          "maximumInputTokens": 272000,
+          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-terra-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 4,
+          "cachedInputPrice": 0.4,
+          "cacheWritePrice": 5,
+          "outputPrice": 18,
+          "minimumInputTokens": 272001,
+          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        }
+      ],
+      "source": {
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "title": "OpenAI API pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-19",
+        "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+      },
+      "notes": "Reviewed against the current OpenAI pricing table; added the 272k long-context tier and cache-write prices."
+    },
+    {
+      "id": "offer-openai-gpt-5-6-luna-pricing-review-2026-09-19",
+      "offerId": "offer-openai-gpt-5-6-luna",
+      "detectedAt": "2026-09-19",
+      "effectiveAt": null,
+      "previousPricing": [
+        {
+          "id": "openai-gpt-5-6-luna-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.2,
+          "outputPrice": 1.2,
+          "cachedInputPrice": 0.02,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+              "title": "GPT-5.6 Luna model card",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "openai-gpt-5-6-luna-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.2,
+          "cachedInputPrice": 0.02,
+          "cacheWritePrice": 0.25,
+          "outputPrice": 1.2,
+          "maximumInputTokens": 272000,
+          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-luna-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.4,
+          "cachedInputPrice": 0.04,
+          "cacheWritePrice": 0.5,
+          "outputPrice": 1.8,
+          "minimumInputTokens": 272001,
+          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        }
+      ],
+      "source": {
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "title": "OpenAI API pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-19",
+        "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+      },
+      "notes": "Reviewed against the current OpenAI pricing table; added the 272k long-context tier and cache-write prices."
+    },
+    {
+      "id": "offer-anthropic-claude-sonnet-5-pricing-review-2026-09-19",
+      "offerId": "offer-anthropic-claude-sonnet-5",
+      "detectedAt": "2026-09-19",
+      "effectiveAt": "2026-09-01",
+      "previousPricing": [
+        {
+          "id": "anthropic-sonnet-5-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 2,
+          "outputPrice": 10,
+          "cachedInputPrice": 0.2,
+          "cacheWritePrice": 2.5,
+          "effectiveUntil": "2026-08-31",
+          "notes": "Introductory pricing published as valid through August 31, 2026; the successor rule starts on September 1, 2026.",
+          "sources": [
+            {
+              "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+              "title": "Claude API pricing",
+              "publisher": "Anthropic",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
+            }
+          ]
+        },
+        {
+          "id": "anthropic-sonnet-5-batch",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": 1,
+          "outputPrice": 5,
+          "cachedInputPrice": 0.1,
+          "cacheWritePrice": 1.25,
+          "effectiveUntil": "2026-08-31",
+          "sources": [
+            {
+              "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+              "title": "Claude API pricing",
+              "publisher": "Anthropic",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
+            }
+          ]
+        },
+        {
+          "id": "anthropic-sonnet-5-standard-from-2026-09",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 3,
+          "outputPrice": 15,
+          "cachedInputPrice": 0.3,
+          "cacheWritePrice": 3.75,
+          "effectiveFrom": "2026-09-01",
+          "notes": "Standard pricing published by Anthropic as taking effect on September 1, 2026.",
+          "sources": [
+            {
+              "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+              "title": "Claude API pricing",
+              "publisher": "Anthropic",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
+            }
+          ]
+        },
+        {
+          "id": "anthropic-sonnet-5-batch-from-2026-09",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": 1.5,
+          "outputPrice": 7.5,
+          "cachedInputPrice": 0.15,
+          "cacheWritePrice": 1.875,
+          "effectiveFrom": "2026-09-01",
+          "sources": [
+            {
+              "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+              "title": "Claude API pricing",
+              "publisher": "Anthropic",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-06"
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "anthropic-sonnet-5-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 2,
+          "outputPrice": 10,
+          "cachedInputPrice": 0.2,
+          "cacheWritePrice": 2.5,
+          "notes": "Anthropic kept the introductory $2/$10 pricing as the standard rate; the scheduled September increase was cancelled.",
+          "sources": [
+            {
+              "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+              "title": "Claude API pricing",
+              "publisher": "Anthropic",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19"
+            }
+          ]
+        },
+        {
+          "id": "anthropic-sonnet-5-batch",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": 1,
+          "outputPrice": 5,
+          "cachedInputPrice": 0.1,
+          "cacheWritePrice": 1.25,
+          "sources": [
+            {
+              "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+              "title": "Claude API pricing",
+              "publisher": "Anthropic",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19"
+            }
+          ]
+        }
+      ],
+      "source": {
+        "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "title": "Claude API pricing",
+        "publisher": "Anthropic",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-19"
+      },
+      "notes": "Anthropic cancelled the previously scheduled September increase; Sonnet 5 remains at $2/$10 standard and $1/$5 batch."
     }
   ],
   "sources": [
     {
-      "url": "https://developers.openai.com/api/docs/models",
-      "title": "OpenAI API models",
+      "url": "https://developers.openai.com/api/docs/pricing",
+      "title": "OpenAI API pricing",
       "publisher": "OpenAI",
-      "sourceType": "official-documentation",
-      "checkedAt": "2026-08-02",
-      "notes": "Current model catalog and per-model input/output prices."
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-09-19",
+      "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+      "title": "GPT-5.6 Luna model card",
+      "publisher": "OpenAI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-08-06",
+      "notes": "Publishes the cached-input prices for the GPT-5.6 offers."
     },
     {
       "url": "https://developers.openai.com/api/docs/models/gpt-4.1",
@@ -4460,15 +4943,15 @@
       "title": "Claude API pricing",
       "publisher": "Anthropic",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
-      "notes": "First-party API pricing, cache writes, cache hits and batch pricing."
+      "checkedAt": "2026-09-19",
+      "notes": "First-party API pricing, cache writes, cache hits and batch pricing; Sonnet 5 remains at its introductory rate."
     },
     {
       "url": "https://ai.google.dev/gemini-api/docs/pricing",
       "title": "Gemini Developer API pricing",
       "publisher": "Google",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Current paid-tier, batch, flex and priority prices."
     },
     {
@@ -4476,7 +4959,7 @@
       "title": "Mistral Small 4 model card",
       "publisher": "Mistral AI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Model card with context, price and capabilities."
     },
     {
@@ -4484,7 +4967,7 @@
       "title": "Mistral Medium 3.5 model card",
       "publisher": "Mistral AI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Model card with context, price and capabilities."
     },
     {
@@ -4524,7 +5007,7 @@
       "title": "Command A model card",
       "publisher": "Cohere",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Input/output price, context, max output and capabilities."
     },
     {
@@ -4564,7 +5047,7 @@
       "title": "xAI API pricing",
       "publisher": "xAI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Short/long context input, cache and output prices."
     },
     {
@@ -4572,7 +5055,7 @@
       "title": "DeepSeek API models and pricing",
       "publisher": "DeepSeek",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-08-06",
       "notes": "Current V4 Flash and V4 Pro prices, cache-hit prices and limits."
     },
     {
@@ -4580,15 +5063,15 @@
       "title": "GroqCloud supported models",
       "publisher": "Groq",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
-      "notes": "Model IDs, prices, rate limits, context, max completion and observed token speed shown by Groq."
+      "checkedAt": "2026-09-19",
+      "notes": "Groq now lists Llama 3.1 8B and Llama 3.3 70B as Enterprise / Contact Sales; public token prices are not verified."
     },
     {
       "url": "https://docs.together.ai/docs/serverless/models",
       "title": "Together AI serverless model catalog",
       "publisher": "Together AI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-02",
+      "checkedAt": "2026-09-19",
       "notes": "Model-level input, cached input, output prices, context and capability columns."
     },
     {

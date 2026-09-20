@@ -48,7 +48,7 @@ pnpm test:e2e
 
 The E2E suite starts a production preview and covers the landing page, catalog explorer, shareable comparison, workload simulator and the mobile navigation/keyboard path. Paid provider benchmarks are never called by CI.
 
-CI also audits production dependencies, verifies package signatures and checks source/data contracts. See [`SECURITY.md`](SECURITY.md) for the narrowly scoped React Router RSC advisory exception.
+CI also audits production and development dependencies, verifies package signatures and checks source/data contracts. The dependency audit runs on every pull request so workflow- and documentation-only changes receive the required check too. See [`SECURITY.md`](SECURITY.md) for the maintenance policy.
 
 ## Data model
 
@@ -74,14 +74,14 @@ The generated, public artifacts are in [`public/data/`](public/data/):
 - [`catalog-health-v1.json`](public/data/catalog-health-v1.json) — field coverage, source freshness and benchmark status.
 - [`schema-v1.json`](public/data/schema-v1.json) — schema version, entities and null-value policy.
 
-`dataAsOf` is `2026-08-02`. The 22 registered URLs in [`data/sources/index.json`](data/sources/index.json) are the provenance registry. Every price is stored at offer/pricing-rule level, not as an unattributed model label.
+The current generated catalog has `dataAsOf` `2026-09-19`; `pnpm data:build` derives that date from the latest `checkedAt` in the 23-URL provenance registry at [`data/sources/index.json`](data/sources/index.json). Individual offers retain their own verification date, so an older field is intentionally shown as aging or stale until it is rechecked. Every price is stored at offer/pricing-rule level, not as an unattributed model label.
 
 ## Calculator contract
 
 The simulator uses decimal arithmetic:
 
 ```text
-standard input = max(0, input − cached − cache writes)
+standard input = max(0, input − normalized cached − normalized cache writes)
 token cost = tokens / 1,000,000 × applicable price
 request cost = standard input + cached input + cache write + output
 adjusted requests/day = base requests × (1 + retry rate)
@@ -89,7 +89,7 @@ monthly = request cost × adjusted requests/day × days/month
 annual = monthly × 12
 ```
 
-Batch is blended only for the chosen share of requests and only when a batch rule is published. A tier is selected from the request input token count. If a used price component is unknown, the total stays “Not verified” instead of silently treating it as zero.
+Batch is blended only for the chosen share of requests and only when a batch rule is published. A tier is selected from the request input token count. If cache and cache-write tokens exceed the request input, cache hits take precedence and cache writes use the remaining tokens. If a used price component is unknown, the total stays “Not verified” instead of silently treating it as zero.
 
 Saved scenarios are a browser convenience, not part of the public catalog. They contain the workload inputs, selected offers and display mode in local storage. They can be loaded, duplicated, exported or deleted from `/calculator`; a share link encodes the current assumptions in the URL and does not contain credentials. Scenarios are not synchronized to a server.
 

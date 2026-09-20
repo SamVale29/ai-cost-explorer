@@ -1,4 +1,5 @@
 import type { Catalog } from '../types';
+import { choosePricingRule } from './pricing';
 
 export type CatalogHealth = {
   schemaVersion: 'v1';
@@ -50,8 +51,9 @@ function freshness(
 }
 
 export function calculateCatalogHealth(catalog: Catalog): CatalogHealth {
+  const asOf = new Date(`${catalog.dataAsOf}T23:59:59.999Z`);
   const standardRules = catalog.offers.map((offer) =>
-    offer.pricing.find((rule) => rule.mode === 'standard'),
+    choosePricingRule(offer.pricing, 'standard', 0, asOf),
   );
   const sourcesByFreshness = catalog.sources.reduce(
     (counts, source) => {
