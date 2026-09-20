@@ -1,4 +1,4 @@
-import type { Model, Offer, PricingRule } from '../types';
+import type { Model, Offer, PricingMode, PricingRule } from '../types';
 
 export type PricingSignalComponent =
   | 'input'
@@ -16,16 +16,45 @@ export type PricingSignal = {
   modelId: string;
   modelName: string | null;
   apiModelId: string;
-  mode: PricingRule['mode'];
+  mode: PricingMode;
   component: PricingSignalComponent;
   value: number;
+  minimumInputTokens: number | null;
+  maximumInputTokens: number | null;
+  inputModality?: string | null;
+  outputModality?: string | null;
 };
 
-export type PricingSignalStatus = 'present' | 'missing';
+export type PricingSignalStatus = 'present' | 'missing' | 'ambiguous';
 
 export type PricingSignalEvidence = {
   signal: PricingSignal;
   status: PricingSignalStatus;
+};
+
+type ComponentDescriptor = {
+  component: PricingSignalComponent;
+  mode: PricingMode | null;
+  range: PricingRange | null;
+};
+
+type PricingRange = 'base' | 'short' | 'long';
+
+type PricingRecord = {
+  cells: string[];
+  headers: string[];
+  text: string;
+  mode: PricingMode | null;
+  range: PricingRange | null;
+};
+
+type CellPrice = number | 'ambiguous' | null;
+
+type NumericMatch = {
+  value: number;
+  start: number;
+  end: number;
+  currency: boolean;
 };
 
 const priceFields: Array<readonly [PricingSignalComponent, keyof PricingRule]> = [
@@ -64,6 +93,10 @@ export function pricingSignalsFor(offers: Offer[], models: Model[], url: string)
           mode: rule.mode,
           component,
           value,
+          minimumInputTokens: rule.minimumInputTokens ?? null,
+          maximumInputTokens: rule.maximumInputTokens ?? null,
+          inputModality: model?.modalities?.input?.[0] ?? null,
+          outputModality: model?.modalities?.output?.[0] ?? null,
         });
       }
     }
@@ -74,93 +107,434 @@ export function pricingSignalsFor(offers: Offer[], models: Model[], url: string)
   );
 }
 
-function visibleText(body: string): string {
-  return body
+function stripMarkup(value: string): string {
+  return value
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
     .replace(/<!--[\s\S]*?-->/g, ' ')
     .replace(/<br\s*\/?\s*>/gi, '\n')
     .replace(/<\/(?:tr|li|p|div|section|article|h[1-6]|td|th)>/gi, '\n')
-    .replace(/<[^>]+>/g, ' ')
+    .replace(/<\/?[a-z][^>]*>/gi, ' ')
     .replace(/&nbsp;/gi, ' ')
     .replace(/&amp;/gi, '&')
     .replace(/&quot;/gi, '"')
     .replace(/&#39;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>');
+}
+
+function visibleText(body: string): string {
+  return stripMarkup(body)
     .replace(/\r/g, '')
     .replace(/[ \t]+/g, ' ')
     .replace(/\n[ \t]+/g, '\n')
     .replace(/\n{2,}/g, '\n')
-    .trim()
-    .toLocaleLowerCase();
+    .trim();
+}
+
+function normalized(value: string): string {
+  return value.toLocaleLowerCase().replace(/\s+/g, ' ').trim();
 }
 
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function numberVariants(value: number): string[] {
-  return [...new Set([String(value), value.toFixed(2), value.toFixed(3)])];
+function parseNumericCell(cell: string): CellPrice {
+  const values = numericMatches(cell).map((match) => match.value);
+  if (values.length === 0) return null;
+  if (values.length > 1) return 'ambiguous';
+  return values[0];
 }
 
-function containsPricingValue(body: string, value: number): boolean {
-  return numberVariants(value).some((variant) => {
-    const pattern = new RegExp(`(?<![\\d.])(?:\\$|USD\\s*)?${escapeRegExp(variant)}(?![\\d.])`);
-    return pattern.test(body);
-  });
+function numericMatches(cell: string): NumericMatch[] {
+  return Array.from(cell.matchAll(/(?<![\w.])(?:USD\s*)?\$?\d+(?:[.,]\d+)?(?![\w.])/gi))
+    .map((match) => {
+      const numeric = match[0]
+        .replace(/^USD\s*/i, '')
+        .replace(/^\$/, '')
+        .replace(',', '.');
+      return {
+        value: Number(numeric),
+        start: match.index ?? 0,
+        end: (match.index ?? 0) + match[0].length,
+        currency: /\$|^USD\b/i.test(match[0]),
+      };
+    })
+    .filter((match) => Number.isFinite(match.value));
+}
+
+type NumericContext = {
+  before: string;
+  after: string;
+};
+
+function numericContext(
+  cell: string,
+  match: NumericMatch,
+  index: number,
+  matches: NumericMatch[],
+): NumericContext {
+  const previousEnd = matches[index - 1]?.end ?? 0;
+  const beforeStart = index === 0 ? Math.max(0, match.start - 40) : previousEnd;
+  const afterEnd = matches[index + 1]?.start ?? cell.length;
+  return {
+    before: cell.slice(beforeStart, match.start),
+    after: cell.slice(match.end, afterEnd),
+  };
+}
+
+function numericMatchesRange(context: NumericContext, expected: PricingRange): boolean {
+  const afterRange = rangeFromText(context.after);
+  return (afterRange ?? rangeFromText(context.before)) === expected;
+}
+
+function modeFromText(value: string): PricingMode | null {
+  const text = normalized(value);
+  if (/\b(batch|bulk)\b/.test(text)) return 'batch';
+  if (/\b(priority)\b/.test(text)) return 'priority';
+  if (/\b(flex)\b/.test(text)) return 'flex';
+  if (/\b(realtime|real-time)\b/.test(text)) return 'realtime';
+  if (/\b(fast)\b/.test(text)) return 'fast';
+  if (/\b(standard|on[ -]?demand|pay[ -]?as[ -]?you[ -]?go)\b/.test(text)) return 'standard';
+  return null;
+}
+
+function rangeFromText(value: string): PricingRange | null {
+  const text = normalized(value);
+  const long =
+    /\b(long|extended)\s+context\b|\babove\b|\bover\b|\bgreater than\b|(?:>|>=)\s*\d/.test(text);
+  const short =
+    /\b(short|regular)\s+context\b|\bup to\b|\bbelow\b|\bless than\b|(?:<|<=)\s*\d/.test(text);
+  if (long && short) return null;
+  if (long) {
+    return 'long';
+  }
+  if (short) {
+    return 'short';
+  }
+  return null;
+}
+
+function componentDescriptor(value: string): ComponentDescriptor | null {
+  const text = normalized(value);
+  const range = rangeFromText(text);
+  const mode = modeFromText(text);
+  if (/cache\s*(write|creation)|write\s*cache/.test(text)) {
+    return { component: 'cacheWrite', mode, range };
+  }
+  if (/cached|context\s+caching|cache\s*(hit|read)/.test(text)) {
+    return { component: 'cachedInput', mode, range };
+  }
+  if (/audio\s*(input|in)|input\s*(audio|minutes?)/.test(text)) {
+    return { component: 'audioInput', mode, range };
+  }
+  if (/audio\s*(output|out)|output\s*(audio|minutes?)/.test(text)) {
+    return { component: 'audioOutput', mode, range };
+  }
+  if (/image\s*(input|in)|input\s*(image|megapixel)/.test(text)) {
+    return { component: 'imageInput', mode, range };
+  }
+  if (/image\s*(output|out)|output\s*(image|megapixel)/.test(text)) {
+    return { component: 'imageOutput', mode, range };
+  }
+  if (/\b(output|completion|generated)\b/.test(text)) {
+    return { component: 'output', mode, range };
+  }
+  if (/\b(input|prompt)\b/.test(text)) {
+    return { component: 'input', mode, range };
+  }
+  return null;
+}
+
+function rowIsHeader(cells: string[], headerFlags: boolean[]): boolean {
+  const descriptors = cells.filter((cell) => componentDescriptor(cell) !== null).length;
+  const headerText = normalized(cells.join(' '));
+  return (
+    headerFlags.some(Boolean) &&
+    (descriptors > 0 || /\b(model|mode|free|paid|price|pricing|tier|context)\b/.test(headerText))
+  );
+}
+
+type HtmlRow = {
+  cells: string[];
+  headerFlags: boolean[];
+  colSpans: number[];
+};
+
+function expandedCells(row: HtmlRow): string[] {
+  return row.cells.flatMap((cell, index) =>
+    Array.from({ length: row.colSpans[index] ?? 1 }, () => cell),
+  );
+}
+
+function htmlRows(body: string): PricingRecord[] {
+  const records: PricingRecord[] = [];
+  const tables = Array.from(body.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi));
+  for (const table of tables) {
+    const rows: Array<HtmlRow & { index: number }> = Array.from(
+      table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi),
+    ).map((row, index) => {
+      const cells = Array.from(row[1].matchAll(/<(th|td)\b([^>]*)>([\s\S]*?)<\/\1>/gi));
+      return {
+        index,
+        cells: cells.map((cell) =>
+          stripMarkup(cell[3])
+            .replace(/[ \t]+/g, ' ')
+            .trim(),
+        ),
+        headerFlags: cells.map((cell) => cell[1].toLocaleLowerCase() === 'th'),
+        colSpans: cells.map((cell) =>
+          Number(cell[2].match(/\bcolspan\s*=\s*["']?(\d+)/i)?.[1] ?? 1),
+        ),
+      };
+    });
+    const headerRows = rows.filter((row) => rowIsHeader(row.cells, row.headerFlags));
+    if (headerRows.length === 0) continue;
+    const columnHeader = [...headerRows].sort(
+      (left, right) =>
+        expandedCells(right).filter((cell) => componentDescriptor(cell) !== null).length -
+        expandedCells(left).filter((cell) => componentDescriptor(cell) !== null).length,
+    )[0];
+    const baseHeaders = expandedCells(columnHeader);
+    const groupHeaders = headerRows
+      .filter((row) => row.index !== columnHeader.index)
+      .map((row) => expandedCells(row));
+    const headers = baseHeaders.map((header, columnIndex) => {
+      const groups = groupHeaders
+        .map((group) => group[columnIndex])
+        .filter(
+          (group) => group && (rangeFromText(group) !== null || modeFromText(group) !== null),
+        );
+      return [...groups, header].filter(Boolean).join(' ');
+    });
+    const beforeTable = body.slice(0, table.index ?? 0);
+    const headings = Array.from(beforeTable.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)).map(
+      (heading) => ({
+        level: Number(heading[1]),
+        text: stripMarkup(heading[2]).replace(/\s+/g, ' ').trim(),
+      }),
+    );
+    let modelHeadingIndex = -1;
+    for (let index = headings.length - 1; index >= 0; index -= 1) {
+      if (headings[index].level <= 2) {
+        modelHeadingIndex = index;
+        break;
+      }
+    }
+    const modelHeading = headings[modelHeadingIndex];
+    const modeHeading = headings.slice(modelHeadingIndex < 0 ? 0 : modelHeadingIndex + 1).at(-1);
+    const context = [modelHeading?.text, modeHeading?.text].filter(Boolean).join(' | ');
+    const firstDataIndex = Math.max(...headerRows.map((row) => row.index)) + 1;
+    for (const row of rows.filter((candidate) => candidate.index >= firstDataIndex)) {
+      if (row.cells.length === 0 || rowIsHeader(row.cells, row.headerFlags)) continue;
+      const rowText = row.cells.join(' | ');
+      const text = [context, rowText].filter(Boolean).join(' | ');
+      records.push({
+        cells: row.cells,
+        headers,
+        text,
+        mode: modeFromText(text),
+        range: rangeFromText(text),
+      });
+    }
+  }
+  return records;
+}
+
+function splitTableLine(line: string): string[] {
+  return line
+    .trim()
+    .replace(/^\|/, '')
+    .replace(/\|$/, '')
+    .split('|')
+    .map((cell) => cell.trim());
+}
+
+function markdownRows(body: string): PricingRecord[] {
+  const lines = visibleText(body)
+    .split('\n')
+    .map((line) => line.trim());
+  const records: PricingRecord[] = [];
+  for (let index = 0; index < lines.length - 2; index += 1) {
+    if (!lines[index].includes('|') || !/^\|?\s*:?-{2,}/.test(lines[index + 1])) continue;
+    const headers = splitTableLine(lines[index]);
+    for (
+      let rowIndex = index + 2;
+      rowIndex < lines.length && lines[rowIndex].includes('|');
+      rowIndex += 1
+    ) {
+      const cells = splitTableLine(lines[rowIndex]);
+      if (cells.length === 0) continue;
+      const text = cells.join(' | ');
+      records.push({
+        cells,
+        headers,
+        text,
+        mode: modeFromText(text),
+        range: rangeFromText(text),
+      });
+    }
+    index += 1;
+  }
+  return records;
 }
 
 function modelTokens(signal: PricingSignal): string[] {
   return [signal.modelName, signal.apiModelId, signal.apiModelId.split('/').at(-1), signal.modelId]
     .filter((token): token is string => Boolean(token && token.trim().length >= 3))
-    .map((token) => token.toLocaleLowerCase().replace(/\s+/g, ' ').trim())
+    .map(normalized)
     .filter((token, index, tokens) => tokens.indexOf(token) === index)
     .sort((left, right) => right.length - left.length);
 }
 
-function findAll(haystack: string, needle: string): number[] {
-  const positions: number[] = [];
-  let fromIndex = 0;
-  while (fromIndex < haystack.length) {
-    const position = haystack.indexOf(needle, fromIndex);
-    if (position < 0) break;
-    positions.push(position);
-    fromIndex = position + Math.max(needle.length, 1);
-  }
-  return positions;
+function containsToken(text: string, token: string): boolean {
+  const pattern = new RegExp(`(^|[^a-z0-9])${escapeRegExp(token)}([^a-z0-9]|$)`, 'i');
+  return pattern.test(text);
 }
 
-type ModelMarker = { start: number; end: number; token: string };
-
-function modelMarkers(body: string, signals: PricingSignal[]): ModelMarker[] {
+function labeledTextRecords(body: string, signals: PricingSignal[]): PricingRecord[] {
+  const lines = visibleText(body)
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean);
   const tokens = [...new Set(signals.flatMap(modelTokens))];
-  const markers = tokens.flatMap((token) =>
-    findAll(body, token).map((start) => ({ start, end: start + token.length, token })),
-  );
+  const labelPattern =
+    /cache\s*(?:write|creation)|cached(?:\s+input)?|audio\s*(?:input|output)|image\s*(?:input|output)|input|prompt|output|completion/gi;
+  const records: PricingRecord[] = [];
 
-  return markers
-    .sort((left, right) => left.start - right.start || right.end - left.end)
-    .filter(
-      (marker, index, all) =>
-        index === 0 || marker.start !== all[index - 1].start || marker.end > all[index - 1].end,
-    );
+  for (const line of lines) {
+    const lower = normalized(line);
+    if (!tokens.some((token) => containsToken(lower, token))) continue;
+    const labels = Array.from(line.matchAll(labelPattern));
+    if (labels.length === 0) continue;
+    const cells: string[] = [];
+    const headers: string[] = [];
+    labels.forEach((label, index) => {
+      const end = labels[index + 1]?.index ?? line.length;
+      const header = label[0];
+      const cell = line.slice(label.index! + header.length, end).trim();
+      if (parseNumericCell(cell) === null) return;
+      headers.push(header);
+      cells.push(cell);
+    });
+    if (cells.length === 0) continue;
+    records.push({
+      cells,
+      headers,
+      text: line,
+      mode: modeFromText(line),
+      range: rangeFromText(line),
+    });
+  }
+  return records;
 }
 
-function signalEvidence(
-  body: string,
+function pricingRecords(body: string, signals: PricingSignal[]): PricingRecord[] {
+  const structured = htmlRows(body);
+  if (structured.length > 0) return structured;
+  const markdown = markdownRows(body);
+  if (markdown.length > 0) return markdown;
+  return labeledTextRecords(body, signals);
+}
+
+function signalRange(signal: PricingSignal): PricingRange {
+  if (signal.minimumInputTokens !== null && signal.minimumInputTokens !== undefined) return 'long';
+  if (signal.maximumInputTokens !== null && signal.maximumInputTokens !== undefined) return 'short';
+  return 'base';
+}
+
+function recordMatchesSignal(record: PricingRecord, signal: PricingSignal): boolean {
+  const text = normalized(record.text);
+  return modelTokens(signal).some((token) => containsToken(text, token));
+}
+
+function modeMatches(
   signal: PricingSignal,
-  markers: ModelMarker[],
-): PricingSignalStatus {
-  const ownTokens = new Set(modelTokens(signal));
-  const ownMarkers = markers.filter((marker) => ownTokens.has(marker.token));
-  if (ownMarkers.length === 0) return 'missing';
+  descriptor: ComponentDescriptor,
+  record: PricingRecord,
+): boolean {
+  const mode = descriptor.mode ?? record.mode;
+  if (mode !== null) return mode === signal.mode;
+  return signal.mode === 'standard';
+}
 
-  for (const marker of ownMarkers) {
-    const nextMarker = markers.find((candidate) => candidate.start > marker.end);
-    const end = Math.min(nextMarker?.start ?? body.length, marker.start + 1600);
-    const start = Math.max(0, marker.start - 220);
-    if (containsPricingValue(body.slice(start, end), signal.value)) return 'present';
+function rangeMatches(
+  signal: PricingSignal,
+  descriptor: ComponentDescriptor,
+  record: PricingRecord,
+  cell: string,
+): boolean {
+  const range = descriptor.range ?? record.range;
+  const expected = signalRange(signal);
+  if (range !== null) return range === expected;
+  if (expected === 'base') return true;
+  const matches = numericMatches(cell);
+  return matches.some((match, index) => {
+    const context = numericContext(cell, match, index, matches);
+    return numericMatchesRange(context, expected);
+  });
+}
+
+function signalModality(signal: PricingSignal): string | null {
+  if (signal.component === 'audioInput' || signal.component === 'audioOutput') return 'audio';
+  if (signal.component === 'imageInput' || signal.component === 'imageOutput') return 'image';
+  if (signal.component === 'output') return signal.outputModality ?? null;
+  return signal.inputModality ?? null;
+}
+
+function cellPriceForSignal(cell: string, signal: PricingSignal): CellPrice {
+  const parsed = parseNumericCell(cell);
+  if (parsed !== 'ambiguous') return parsed;
+  const expected = signalRange(signal);
+  const modality = signalModality(signal);
+  const modalityPattern = /\b(?:text|audio|image|video)\b/i;
+  const allMatches = numericMatches(cell);
+  const priceMatches = allMatches.some((match) => match.currency)
+    ? allMatches.filter((match) => match.currency)
+    : allMatches;
+  const matches = priceMatches.filter((match, index) => {
+    const context = numericContext(cell, match, index, priceMatches);
+    if (/\bstorage\s+price\b/i.test(context.after)) return false;
+    const rangeMatches = expected === 'base' || numericMatchesRange(context, expected);
+    const afterHasModality = modalityPattern.test(context.after);
+    const cellHasModality = modalityPattern.test(cell);
+    const modalityMatches =
+      !modality ||
+      !cellHasModality ||
+      new RegExp(`\\b${escapeRegExp(modality)}\\b`, 'i').test(context.after) ||
+      (!afterHasModality &&
+        new RegExp(`\\b${escapeRegExp(modality)}\\b`, 'i').test(context.before));
+    return rangeMatches && modalityMatches;
+  });
+  if (matches.length === 0) return null;
+  if (matches.length > 1) return 'ambiguous';
+  return matches[0].value;
+}
+
+function signalCellStatus(record: PricingRecord, signal: PricingSignal): PricingSignalStatus {
+  const candidates: CellPrice[] = [];
+  const rowLabel = componentDescriptor(record.cells[0] ?? '');
+  for (let index = 0; index < record.cells.length; index += 1) {
+    const header = record.headers[index] ?? '';
+    const descriptor =
+      componentDescriptor(header) ??
+      (index > 0 && rowLabel
+        ? { ...rowLabel, mode: rowLabel.mode ?? record.mode, range: rowLabel.range ?? record.range }
+        : null);
+    if (!descriptor || descriptor.component !== signal.component) continue;
+    if (
+      !modeMatches(signal, descriptor, record) ||
+      !rangeMatches(signal, descriptor, record, record.cells[index])
+    )
+      continue;
+    candidates.push(cellPriceForSignal(record.cells[index], signal));
   }
-
+  if (candidates.length === 0) return 'ambiguous';
+  if (candidates.includes('ambiguous')) return 'ambiguous';
+  if (candidates.some((candidate) => typeof candidate === 'number' && candidate === signal.value)) {
+    return 'present';
+  }
   return 'missing';
 }
 
@@ -168,13 +542,26 @@ export function pricingSignalEvidence(
   body: string,
   signals: PricingSignal[],
 ): PricingSignalEvidence[] {
-  const compact = visibleText(body);
-  const markers = modelMarkers(compact, signals);
-  return signals.map((signal) => ({ signal, status: signalEvidence(compact, signal, markers) }));
+  const records = pricingRecords(body, signals);
+  return signals.map((signal) => {
+    const matchingRecords = records.filter((record) => recordMatchesSignal(record, signal));
+    const statuses = matchingRecords.map((record) => signalCellStatus(record, signal));
+    if (statuses.includes('present')) return { signal, status: 'present' };
+    if (statuses.includes('missing')) return { signal, status: 'missing' };
+    return { signal, status: 'ambiguous' };
+  });
 }
 
 export function pricingSignalKey(signal: PricingSignal): string {
-  return [signal.offerId, signal.ruleId, signal.mode, signal.component, signal.value].join('|');
+  return [
+    signal.offerId,
+    signal.ruleId,
+    signal.mode,
+    signal.component,
+    signal.value,
+    signal.minimumInputTokens ?? '',
+    signal.maximumInputTokens ?? '',
+  ].join('|');
 }
 
 export function pricingFingerprint(body: string, signals: PricingSignal[]): string {
