@@ -120,6 +120,24 @@ describe('pricing watch semantic evidence', () => {
     expect(pricingFingerprint(before, signals)).not.toBe(pricingFingerprint(after, signals));
   });
 
+  it('rejects a changed numeric context threshold when the boundary is in a row cell', () => {
+    const signals = [
+      signal({
+        ruleId: 'model-a-standard-long',
+        value: 1,
+        minimumInputTokens: 200001,
+      }),
+    ];
+    const before =
+      '<table><tr><th>Model</th><th>Context</th><th>Input</th></tr><tr><td>Model A</td><td>long context &gt; 200000 tokens</td><td>$1.00</td></tr></table>';
+    const after =
+      '<table><tr><th>Model</th><th>Context</th><th>Input</th></tr><tr><td>Model A</td><td>long context &gt; 300000 tokens</td><td>$1.00</td></tr></table>';
+
+    expect(pricingSignalEvidence(before, signals)[0].status).toBe('present');
+    expect(pricingSignalEvidence(after, signals)[0].status).not.toBe('present');
+    expect(pricingFingerprint(before, signals)).not.toBe(pricingFingerprint(after, signals));
+  });
+
   it('aligns grouped HTML headers with leading model and context columns', () => {
     const signals = [
       signal({ value: 1, maximumInputTokens: 199999 }),
