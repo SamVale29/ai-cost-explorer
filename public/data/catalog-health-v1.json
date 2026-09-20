@@ -6,23 +6,23 @@
     "organizations": 11,
     "providers": 9,
     "directProviders": 9,
-    "models": 43,
-    "offers": 45,
-    "sources": 23,
+    "models": 46,
+    "offers": 48,
+    "sources": 26,
     "historyEvents": 10,
     "benchmarks": 0
   },
   "coverage": {
-    "offersWithStandardInputPrice": 89,
-    "offersWithStandardOutputPrice": 89,
+    "offersWithStandardInputPrice": 90,
+    "offersWithStandardOutputPrice": 90,
     "offersWithSources": 100,
     "modelsWithContextWindow": 93,
     "modelsWithMaxOutput": 37,
     "modelsWithVerifiedCapability": 100
   },
   "freshness": {
-    "freshSources": 4,
-    "agingSources": 19,
+    "freshSources": 8,
+    "agingSources": 18,
     "staleSources": 0,
     "unknownSources": 0
   },

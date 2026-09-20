@@ -91,7 +91,7 @@ describe('pricing watch semantic evidence', () => {
       signal({
         ruleId: 'model-a-standard-long',
         value: 2,
-        minimumInputTokens: 272001,
+        minimumInputTokens: 200001,
         inputModality: 'text',
       }),
     ];
@@ -99,6 +99,99 @@ describe('pricing watch semantic evidence', () => {
       '<h2>Model A</h2><h3>Standard</h3><table><tr><th></th><th>Free Tier</th><th>Paid Tier</th></tr><tr><td>Input price</td><td>Free</td><td>$1.25, prompts <= 200k tokens<br>$2.00, prompts > 200k tokens</td></tr></table>';
 
     expect(countPricingSignals(body, signals)).toBe(2);
+  });
+
+  it('rejects a changed numeric context threshold instead of treating it as the same range', () => {
+    const signals = [
+      signal({
+        ruleId: 'model-a-standard-long',
+        value: 1,
+        minimumInputTokens: 200001,
+        inputModality: 'text',
+      }),
+    ];
+    const before =
+      '<h2>Model A</h2><h3>Standard</h3><table><tr><th>Model</th><th>Input long context &gt; 200000 tokens</th></tr><tr><td>Model A</td><td>$1.00</td></tr></table>';
+    const after =
+      '<h2>Model A</h2><h3>Standard</h3><table><tr><th>Model</th><th>Input long context &gt; 300000 tokens</th></tr><tr><td>Model A</td><td>$1.00</td></tr></table>';
+
+    expect(pricingSignalEvidence(before, signals)[0].status).toBe('present');
+    expect(pricingSignalEvidence(after, signals)[0].status).not.toBe('present');
+    expect(pricingFingerprint(before, signals)).not.toBe(pricingFingerprint(after, signals));
+  });
+
+  it('aligns grouped HTML headers with leading model and context columns', () => {
+    const signals = [
+      signal({ value: 1, maximumInputTokens: 199999 }),
+      signal({ component: 'cachedInput', value: 0.5, maximumInputTokens: 199999 }),
+      signal({ component: 'output', value: 2, maximumInputTokens: 199999 }),
+      signal({ ruleId: 'model-a-long', value: 2, minimumInputTokens: 200000 }),
+      signal({
+        ruleId: 'model-a-long-cache',
+        component: 'cachedInput',
+        value: 1,
+        minimumInputTokens: 200000,
+      }),
+      signal({
+        ruleId: 'model-a-long-output',
+        component: 'output',
+        value: 4,
+        minimumInputTokens: 200000,
+      }),
+    ];
+    const body =
+      '<table><tr><th rowspan="2">Model</th><th rowspan="2">Context</th><th colspan="3">Short context</th><th colspan="3">Long context</th></tr><tr><th>Input</th><th>Cached</th><th>Output</th><th>Input</th><th>Cached</th><th>Output</th></tr><tr><td>Model A</td><td>500k</td><td>$1.00</td><td>$0.50</td><td>$2.00</td><td>$2.00</td><td>$1.00</td><td>$4.00</td></tr></table>';
+
+    expect(countPricingSignals(body, signals)).toBe(6);
+  });
+
+  it('reads xAI Batch prices from the official embedded model payload', () => {
+    const signals = [
+      signal({
+        ruleId: 'model-a-batch-short',
+        mode: 'batch',
+        value: 1,
+        maximumInputTokens: 199999,
+      }),
+      signal({
+        ruleId: 'model-a-batch-short-cache',
+        mode: 'batch',
+        component: 'cachedInput',
+        value: 0.16,
+        maximumInputTokens: 199999,
+      }),
+      signal({
+        ruleId: 'model-a-batch-short-output',
+        mode: 'batch',
+        component: 'output',
+        value: 2,
+        maximumInputTokens: 199999,
+      }),
+      signal({
+        ruleId: 'model-a-batch-long',
+        mode: 'batch',
+        value: 2,
+        minimumInputTokens: 200000,
+      }),
+      signal({
+        ruleId: 'model-a-batch-long-cache',
+        mode: 'batch',
+        component: 'cachedInput',
+        value: 0.32,
+        minimumInputTokens: 200000,
+      }),
+      signal({
+        ruleId: 'model-a-batch-long-output',
+        mode: 'batch',
+        component: 'output',
+        value: 4,
+        minimumInputTokens: 200000,
+      }),
+    ];
+    const body =
+      '<script>globalThis.__XAI_PUBLIC_MODELS__={"clusterConfigs":[{"languageModels":[{"name":"Model A","promptTextTokenPrice":"12500","promptTextTokenPriceLongContext":"25000","cachedPromptTokenPrice":"2000","cachedPromptTokenPriceLongContext":"4000","completionTextTokenPrice":"25000","completionTokenPriceLongContext":"50000","batchDiscountPercent":20,"batchEnabled":true}]}]};</script>';
+
+    expect(countPricingSignals(body, signals)).toBe(6);
   });
 
   it('binds a multi-value cell to the signal modality', () => {

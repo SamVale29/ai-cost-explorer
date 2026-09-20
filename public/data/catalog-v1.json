@@ -278,6 +278,56 @@
       "lastVerifiedAt": "2026-09-19"
     },
     {
+      "id": "gpt-6-astra",
+      "organizationId": "openai",
+      "name": "GPT-6 Astra",
+      "family": "GPT-6",
+      "status": "active",
+      "releaseDate": null,
+      "knowledgeCutoff": "2026-04-30",
+      "contextWindowTokens": 1050000,
+      "maxOutputTokens": 128000,
+      "modalities": {
+        "input": [
+          "text",
+          "image"
+        ],
+        "output": [
+          "text"
+        ]
+      },
+      "capabilities": {
+        "reasoning": true,
+        "functionCalling": true,
+        "structuredOutputs": true,
+        "promptCaching": true,
+        "batchApi": true,
+        "fineTuning": false,
+        "embeddings": false,
+        "realtime": null,
+        "webSearch": true,
+        "computerUse": true
+      },
+      "sources": [
+        {
+          "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+          "title": "GPT-6 Astra model card",
+          "publisher": "OpenAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Model ID, modalities, context window, max output and token pricing."
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "title": "OpenAI API pricing",
+          "publisher": "OpenAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19"
+        }
+      ],
+      "lastVerifiedAt": "2026-09-19"
+    },
+    {
       "id": "gpt-4-1",
       "organizationId": "openai",
       "name": "GPT-4.1",
@@ -1481,6 +1531,108 @@
       "lastVerifiedAt": "2026-08-02"
     },
     {
+      "id": "grok-4-6",
+      "organizationId": "xai",
+      "name": "Grok 4.6",
+      "family": "Grok 4",
+      "status": "active",
+      "releaseDate": null,
+      "knowledgeCutoff": "2026-02-01",
+      "contextWindowTokens": 500000,
+      "maxOutputTokens": null,
+      "modalities": {
+        "input": [
+          "text",
+          "image"
+        ],
+        "output": [
+          "text"
+        ]
+      },
+      "capabilities": {
+        "reasoning": true,
+        "functionCalling": true,
+        "structuredOutputs": true,
+        "promptCaching": true,
+        "batchApi": false,
+        "fineTuning": null,
+        "embeddings": false,
+        "realtime": null,
+        "webSearch": true,
+        "computerUse": null
+      },
+      "sources": [
+        {
+          "url": "https://docs.x.ai/developers/grok-4-6",
+          "title": "Grok 4.6 model page",
+          "publisher": "xAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Model ID, 500k context, modalities and capabilities."
+        },
+        {
+          "url": "https://docs.x.ai/developers/pricing",
+          "title": "xAI API pricing",
+          "publisher": "xAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Current token, long-context and Batch API pricing for Grok models."
+        }
+      ],
+      "lastVerifiedAt": "2026-09-19"
+    },
+    {
+      "id": "grok-4-20-multi-agent-0309",
+      "organizationId": "xai",
+      "name": "Grok 4.20 Multi-Agent Beta",
+      "family": "Grok 4.20",
+      "status": "preview",
+      "releaseDate": null,
+      "knowledgeCutoff": null,
+      "contextWindowTokens": 1000000,
+      "maxOutputTokens": null,
+      "modalities": {
+        "input": [
+          "text",
+          "image"
+        ],
+        "output": [
+          "text"
+        ]
+      },
+      "capabilities": {
+        "reasoning": true,
+        "functionCalling": true,
+        "structuredOutputs": true,
+        "promptCaching": true,
+        "batchApi": true,
+        "fineTuning": null,
+        "embeddings": false,
+        "realtime": null,
+        "webSearch": true,
+        "computerUse": null
+      },
+      "sources": [
+        {
+          "url": "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309",
+          "title": "Grok 4.20 Multi-Agent model page",
+          "publisher": "xAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Model ID, 1M context, modalities and Batch API availability."
+        },
+        {
+          "url": "https://docs.x.ai/developers/pricing",
+          "title": "xAI API pricing",
+          "publisher": "xAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Current token, long-context and Batch API pricing for Grok models."
+        }
+      ],
+      "lastVerifiedAt": "2026-09-19"
+    },
+    {
       "id": "deepseek-v4-flash",
       "organizationId": "deepseek",
       "name": "DeepSeek V4 Flash",
@@ -2169,6 +2321,69 @@
           "sourceType": "official-pricing",
           "checkedAt": "2026-09-19",
           "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+        }
+      ],
+      "lastVerifiedAt": "2026-09-19"
+    },
+    {
+      "id": "offer-openai-gpt-6-astra",
+      "modelId": "gpt-6-astra",
+      "providerId": "openai",
+      "apiModelId": "gpt-6-astra",
+      "availability": {
+        "status": "active"
+      },
+      "pricing": [
+        {
+          "id": "openai-gpt-6-astra-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 10,
+          "outputPrice": 50,
+          "cachedInputPrice": 1,
+          "cacheWritePrice": 12.5,
+          "maximumInputTokens": 272000,
+          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19"
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-6-astra-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 20,
+          "outputPrice": 75,
+          "cachedInputPrice": 2,
+          "cacheWritePrice": 25,
+          "minimumInputTokens": 272001,
+          "notes": "Prompts above 272k input tokens are charged at 2x input/cache rates and 1.5x output for the full request.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19"
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "title": "OpenAI API pricing",
+          "publisher": "OpenAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19"
         }
       ],
       "lastVerifiedAt": "2026-09-19"
@@ -3714,6 +3929,190 @@
         }
       ],
       "lastVerifiedAt": "2026-08-02"
+    },
+    {
+      "id": "offer-xai-grok-4-6",
+      "modelId": "grok-4-6",
+      "providerId": "xai",
+      "apiModelId": "grok-4.6",
+      "availability": {
+        "status": "active"
+      },
+      "pricing": [
+        {
+          "id": "xai-grok-4-6-short",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 2,
+          "outputPrice": 6,
+          "cachedInputPrice": 0.5,
+          "cacheWritePrice": null,
+          "maximumInputTokens": 199999,
+          "notes": "Standard pricing applies below 200k prompt tokens.",
+          "sources": [
+            {
+              "url": "https://docs.x.ai/developers/pricing",
+              "title": "xAI API pricing",
+              "publisher": "xAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Current token, long-context and Batch API pricing for Grok models."
+            }
+          ]
+        },
+        {
+          "id": "xai-grok-4-6-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 4,
+          "outputPrice": 12,
+          "cachedInputPrice": 1,
+          "cacheWritePrice": null,
+          "minimumInputTokens": 200000,
+          "notes": "Long-context pricing applies at 200k prompt tokens or more.",
+          "sources": [
+            {
+              "url": "https://docs.x.ai/developers/pricing",
+              "title": "xAI API pricing",
+              "publisher": "xAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Current token, long-context and Batch API pricing for Grok models."
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://docs.x.ai/developers/pricing",
+          "title": "xAI API pricing",
+          "publisher": "xAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Current token, long-context and Batch API pricing for Grok models."
+        }
+      ],
+      "lastVerifiedAt": "2026-09-19"
+    },
+    {
+      "id": "offer-xai-grok-4-20-multi-agent-0309",
+      "modelId": "grok-4-20-multi-agent-0309",
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-multi-agent-0309",
+      "availability": {
+        "status": "preview"
+      },
+      "pricing": [
+        {
+          "id": "xai-grok-4-20-multi-agent-0309-standard-short",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 1.25,
+          "outputPrice": 2.5,
+          "cachedInputPrice": 0.2,
+          "cacheWritePrice": null,
+          "maximumInputTokens": 199999,
+          "notes": "Standard pricing applies below 200k prompt tokens.",
+          "sources": [
+            {
+              "url": "https://docs.x.ai/developers/pricing",
+              "title": "xAI API pricing",
+              "publisher": "xAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Current token, long-context and Batch API pricing for Grok models."
+            }
+          ]
+        },
+        {
+          "id": "xai-grok-4-20-multi-agent-0309-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 2.5,
+          "outputPrice": 5,
+          "cachedInputPrice": 0.4,
+          "cacheWritePrice": null,
+          "minimumInputTokens": 200000,
+          "notes": "Long-context pricing applies at 200k prompt tokens or more.",
+          "sources": [
+            {
+              "url": "https://docs.x.ai/developers/pricing",
+              "title": "xAI API pricing",
+              "publisher": "xAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Current token, long-context and Batch API pricing for Grok models."
+            }
+          ]
+        },
+        {
+          "id": "xai-grok-4-20-multi-agent-0309-batch-short",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": 1,
+          "outputPrice": 2,
+          "cachedInputPrice": 0.16,
+          "cacheWritePrice": null,
+          "maximumInputTokens": 199999,
+          "notes": "xAI documents a 20% Batch API discount for this model.",
+          "sources": [
+            {
+              "url": "https://docs.x.ai/developers/pricing",
+              "title": "xAI API pricing",
+              "publisher": "xAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Current token, long-context and Batch API pricing for Grok models."
+            }
+          ]
+        },
+        {
+          "id": "xai-grok-4-20-multi-agent-0309-batch-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": 2,
+          "outputPrice": 4,
+          "cachedInputPrice": 0.32,
+          "cacheWritePrice": null,
+          "minimumInputTokens": 200000,
+          "notes": "xAI documents a 20% Batch API discount for this model.",
+          "sources": [
+            {
+              "url": "https://docs.x.ai/developers/pricing",
+              "title": "xAI API pricing",
+              "publisher": "xAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Current token, long-context and Batch API pricing for Grok models."
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://docs.x.ai/developers/pricing",
+          "title": "xAI API pricing",
+          "publisher": "xAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Current token, long-context and Batch API pricing for Grok models."
+        },
+        {
+          "url": "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309",
+          "title": "Grok 4.20 Multi-Agent model page",
+          "publisher": "xAI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-19",
+          "notes": "Model ID, 1M context, modalities and Batch API availability."
+        }
+      ],
+      "lastVerifiedAt": "2026-09-19"
     },
     {
       "id": "offer-deepseek-v4-flash",
@@ -5332,8 +5731,8 @@
       "title": "xAI API pricing",
       "publisher": "xAI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-06",
-      "notes": "Short/long context input, cache and output prices."
+      "checkedAt": "2026-09-19",
+      "notes": "Current token, long-context and Batch API pricing for Grok models."
     },
     {
       "url": "https://api-docs.deepseek.com/quick_start/pricing",
@@ -5382,6 +5781,30 @@
       "sourceType": "official-release",
       "checkedAt": "2026-08-02",
       "notes": "V4 model availability, 1M context and API model IDs."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+      "title": "GPT-6 Astra model card",
+      "publisher": "OpenAI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-09-19",
+      "notes": "Model ID, modalities, context window, max output and token pricing."
+    },
+    {
+      "url": "https://docs.x.ai/developers/grok-4-6",
+      "title": "Grok 4.6 model page",
+      "publisher": "xAI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-09-19",
+      "notes": "Model ID, 500k context, modalities and capabilities."
+    },
+    {
+      "url": "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309",
+      "title": "Grok 4.20 Multi-Agent model page",
+      "publisher": "xAI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-09-19",
+      "notes": "Model ID, 1M context, modalities and Batch API availability."
     }
   ]
 }

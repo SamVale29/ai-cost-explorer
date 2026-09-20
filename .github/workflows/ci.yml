@@ -36,6 +36,8 @@ jobs:
         continue-on-error: true
       - name: Validate data
         run: pnpm data:validate
+      - name: Check model coverage manifest
+        run: pnpm data:check-model-coverage
       - name: Check benchmark contract
         run: pnpm benchmark:check-empty
       - name: Check source URLs
