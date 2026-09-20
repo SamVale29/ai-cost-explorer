@@ -23,6 +23,7 @@
     "data:build": "tsx scripts/build-catalog.ts",
     "data:health": "tsx scripts/catalog-health.ts",
     "data:check-sources": "tsx scripts/check-sources.ts",
+    "data:check-model-coverage": "tsx scripts/check-model-coverage.ts",
     "data:diff": "tsx scripts/create-snapshot.ts --diff",
     "data:snapshot": "tsx scripts/create-snapshot.ts",
     "test": "vitest run",

@@ -15,7 +15,7 @@ import {
   ExternalLink,
   FileJson,
   Filter,
-  Github,
+  Code2,
   History,
   LayoutGrid,
   Lightbulb,
@@ -189,7 +189,7 @@ function AppShell() {
             target="_blank"
             rel="noreferrer"
           >
-            <Github size={17} />
+            <Code2 size={17} />
             <span>Contribute</span>
             <ExternalLink size={13} className="nav-external" />
           </a>
@@ -258,7 +258,7 @@ function AppShell() {
               rel="noreferrer"
               aria-label="Open GitHub"
             >
-              <Github size={17} />
+              <Code2 size={17} />
             </a>
           </div>
         </header>
@@ -2996,7 +2996,7 @@ function MethodologyPage() {
             <h2>{catalog.sources.length} official pages checked</h2>
           </div>
           <a href={`${GITHUB_URL}/tree/main/data/sources`} target="_blank" rel="noreferrer">
-            <Github size={18} />
+            <Code2 size={18} />
           </a>
         </div>
         <div className="source-registry-grid">

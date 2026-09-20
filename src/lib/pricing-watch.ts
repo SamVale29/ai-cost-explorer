@@ -36,9 +36,15 @@ type ComponentDescriptor = {
   component: PricingSignalComponent;
   mode: PricingMode | null;
   range: PricingRange | null;
+  boundaries: RangeBoundary[];
 };
 
 type PricingRange = 'base' | 'short' | 'long';
+
+type RangeBoundary = {
+  operator: '<' | '<=' | '>' | '>=';
+  tokens: number;
+};
 
 type PricingRecord = {
   cells: string[];
@@ -46,6 +52,19 @@ type PricingRecord = {
   text: string;
   mode: PricingMode | null;
   range: PricingRange | null;
+  boundaries: RangeBoundary[];
+};
+
+type XaiLanguageModel = {
+  name?: string;
+  promptTextTokenPrice?: string | number;
+  promptTextTokenPriceLongContext?: string | number;
+  cachedPromptTokenPrice?: string | number;
+  cachedPromptTokenPriceLongContext?: string | number;
+  completionTextTokenPrice?: string | number;
+  completionTokenPriceLongContext?: string | number;
+  batchDiscountPercent?: string | number;
+  batchEnabled?: boolean;
 };
 
 type CellPrice = number | 'ambiguous' | null;
@@ -216,33 +235,102 @@ function rangeFromText(value: string): PricingRange | null {
   return null;
 }
 
+function parseTokenCount(raw: string, suffix?: string): number | null {
+  const normalizedNumber =
+    raw.includes(',') && raw.includes('.')
+      ? raw.replace(/,/g, '')
+      : /,\d{3}$/.test(raw)
+        ? raw.replace(/,/g, '')
+        : raw.replace(',', '.');
+  const value = Number(normalizedNumber);
+  if (!Number.isFinite(value)) return null;
+  const multiplier = /^(?:k|thousand)$/i.test(suffix ?? '')
+    ? 1_000
+    : /^(?:m|million)$/i.test(suffix ?? '')
+      ? 1_000_000
+      : 1;
+  const tokens = value * multiplier;
+  return Number.isSafeInteger(tokens) ? tokens : null;
+}
+
+function rangeBoundariesFromText(value: string): RangeBoundary[] {
+  const boundaries: RangeBoundary[] = [];
+  const addBoundary = (operator: RangeBoundary['operator'], raw: string, suffix?: string) => {
+    const tokens = parseTokenCount(raw, suffix);
+    if (tokens === null) return;
+    if (
+      !boundaries.some((boundary) => boundary.operator === operator && boundary.tokens === tokens)
+    ) {
+      boundaries.push({ operator, tokens });
+    }
+  };
+  const directPattern =
+    /(?:^|[^\w])([<>]=?)\s*([\d]+(?:[.,][\d]+)?)\s*(k|m|thousand|million)?(?:\s+tokens?)?/gi;
+  for (const match of value.matchAll(directPattern)) {
+    addBoundary(match[1] as RangeBoundary['operator'], match[2], match[3]);
+  }
+  const phrasePatterns: Array<[RegExp, RangeBoundary['operator']]> = [
+    [/(?:above|over|greater than)\s*([\d]+(?:[.,][\d]+)?)\s*(k|m|thousand|million)?/gi, '>'],
+    [/(?:up to|below|less than)\s*([\d]+(?:[.,][\d]+)?)\s*(k|m|thousand|million)?/gi, '<'],
+  ];
+  for (const [pattern, operator] of phrasePatterns) {
+    for (const match of value.matchAll(pattern)) addBoundary(operator, match[1], match[2]);
+  }
+  return boundaries;
+}
+
+function rangeBoundaryMatchesSignal(signal: PricingSignal, boundary: RangeBoundary): boolean {
+  if (signal.minimumInputTokens !== null && signal.minimumInputTokens !== undefined) {
+    return (
+      (boundary.operator === '>' && boundary.tokens === signal.minimumInputTokens - 1) ||
+      (boundary.operator === '>=' && boundary.tokens === signal.minimumInputTokens)
+    );
+  }
+  if (signal.maximumInputTokens !== null && signal.maximumInputTokens !== undefined) {
+    return (
+      (boundary.operator === '<' && boundary.tokens === signal.maximumInputTokens + 1) ||
+      (boundary.operator === '<=' && boundary.tokens === signal.maximumInputTokens)
+    );
+  }
+  return false;
+}
+
+function numericMatchesSignalRange(context: NumericContext, signal: PricingSignal): boolean {
+  const boundary =
+    rangeBoundariesFromText(context.after)[0] ?? rangeBoundariesFromText(context.before)[0];
+  return boundary
+    ? rangeBoundaryMatchesSignal(signal, boundary)
+    : signalRange(signal) === 'base' || numericMatchesRange(context, signalRange(signal));
+}
+
 function componentDescriptor(value: string): ComponentDescriptor | null {
   const text = normalized(value);
   const range = rangeFromText(text);
   const mode = modeFromText(text);
+  const boundaries = rangeBoundariesFromText(text);
   if (/cache\s*(write|creation)|write\s*cache/.test(text)) {
-    return { component: 'cacheWrite', mode, range };
+    return { component: 'cacheWrite', mode, range, boundaries };
   }
   if (/cached|context\s+caching|cache\s*(hit|read)/.test(text)) {
-    return { component: 'cachedInput', mode, range };
+    return { component: 'cachedInput', mode, range, boundaries };
   }
   if (/audio\s*(input|in)|input\s*(audio|minutes?)/.test(text)) {
-    return { component: 'audioInput', mode, range };
+    return { component: 'audioInput', mode, range, boundaries };
   }
   if (/audio\s*(output|out)|output\s*(audio|minutes?)/.test(text)) {
-    return { component: 'audioOutput', mode, range };
+    return { component: 'audioOutput', mode, range, boundaries };
   }
   if (/image\s*(input|in)|input\s*(image|megapixel)/.test(text)) {
-    return { component: 'imageInput', mode, range };
+    return { component: 'imageInput', mode, range, boundaries };
   }
   if (/image\s*(output|out)|output\s*(image|megapixel)/.test(text)) {
-    return { component: 'imageOutput', mode, range };
+    return { component: 'imageOutput', mode, range, boundaries };
   }
   if (/\b(output|completion|generated)\b/.test(text)) {
-    return { component: 'output', mode, range };
+    return { component: 'output', mode, range, boundaries };
   }
   if (/\b(input|prompt)\b/.test(text)) {
-    return { component: 'input', mode, range };
+    return { component: 'input', mode, range, boundaries };
   }
   return null;
 }
@@ -300,7 +388,15 @@ function htmlRows(body: string): PricingRecord[] {
     const groupHeaders = headerRows
       .filter((row) => row.index !== columnHeader.index)
       .map((row) => expandedCells(row));
-    const headers = baseHeaders.map((header, columnIndex) => {
+    const leadingHeaderColumns = Math.max(
+      0,
+      ...groupHeaders.map((group) => group.length - baseHeaders.length),
+    );
+    const alignedBaseHeaders = [
+      ...Array.from({ length: leadingHeaderColumns }, () => ''),
+      ...baseHeaders,
+    ];
+    const headers = alignedBaseHeaders.map((header, columnIndex) => {
       const groups = groupHeaders
         .map((group) => group[columnIndex])
         .filter(
@@ -336,6 +432,7 @@ function htmlRows(body: string): PricingRecord[] {
         text,
         mode: modeFromText(text),
         range: rangeFromText(text),
+        boundaries: rangeBoundariesFromText(text),
       });
     }
   }
@@ -373,6 +470,7 @@ function markdownRows(body: string): PricingRecord[] {
         text,
         mode: modeFromText(text),
         range: rangeFromText(text),
+        boundaries: rangeBoundariesFromText(text),
       });
     }
     index += 1;
@@ -425,6 +523,7 @@ function labeledTextRecords(body: string, signals: PricingSignal[]): PricingReco
       text: line,
       mode: modeFromText(line),
       range: rangeFromText(line),
+      boundaries: rangeBoundariesFromText(line),
     });
   }
   return records;
@@ -432,10 +531,104 @@ function labeledTextRecords(body: string, signals: PricingSignal[]): PricingReco
 
 function pricingRecords(body: string, signals: PricingSignal[]): PricingRecord[] {
   const structured = htmlRows(body);
-  if (structured.length > 0) return structured;
+  const xaiBatch = xaiBatchRecords(body);
+  if (structured.length > 0) return [...structured, ...xaiBatch];
   const markdown = markdownRows(body);
-  if (markdown.length > 0) return markdown;
-  return labeledTextRecords(body, signals);
+  if (markdown.length > 0) return [...markdown, ...xaiBatch];
+  return [...labeledTextRecords(body, signals), ...xaiBatch];
+}
+
+function embeddedJsonObject(body: string, marker: string): unknown | null {
+  const markerIndex = body.indexOf(marker);
+  if (markerIndex < 0) return null;
+  const start = body.indexOf('{', markerIndex + marker.length);
+  if (start < 0) return null;
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+  for (let index = start; index < body.length; index += 1) {
+    const character = body[index];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (character === '\\') escaped = true;
+      else if (character === '"') inString = false;
+      continue;
+    }
+    if (character === '"') {
+      inString = true;
+      continue;
+    }
+    if (character === '{') depth += 1;
+    if (character === '}') {
+      depth -= 1;
+      if (depth === 0) {
+        try {
+          return JSON.parse(body.slice(start, index + 1));
+        } catch {
+          return null;
+        }
+      }
+    }
+  }
+  return null;
+}
+
+function xaiBatchValue(value: string | number | undefined, discount: number): string | null {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return null;
+  const discounted = (numeric / 10_000) * (1 - discount / 100);
+  return '$' + Number(discounted.toFixed(8));
+}
+
+function xaiBatchRecords(body: string): PricingRecord[] {
+  const root = embeddedJsonObject(body, 'globalThis.__XAI_PUBLIC_MODELS__=');
+  if (!root || typeof root !== 'object') return [];
+  const configs = (root as { clusterConfigs?: unknown }).clusterConfigs;
+  if (!Array.isArray(configs)) return [];
+  const languageModels = configs.flatMap((config) => {
+    if (!config || typeof config !== 'object') return [];
+    const models = (config as { languageModels?: unknown }).languageModels;
+    return Array.isArray(models) ? (models as XaiLanguageModel[]) : [];
+  });
+  const records: PricingRecord[] = [];
+  for (const model of languageModels) {
+    const discount = Number(model.batchDiscountPercent);
+    if (!model.name || !model.batchEnabled || !Number.isFinite(discount) || discount <= 0) continue;
+    const ranges = [
+      {
+        label: 'short context',
+        input: model.promptTextTokenPrice,
+        cached: model.cachedPromptTokenPrice,
+        output: model.completionTextTokenPrice,
+      },
+      {
+        label: 'long context',
+        input: model.promptTextTokenPriceLongContext,
+        cached: model.cachedPromptTokenPriceLongContext,
+        output: model.completionTokenPriceLongContext,
+      },
+    ];
+    for (const range of ranges) {
+      const input = xaiBatchValue(range.input, discount);
+      const cached = xaiBatchValue(range.cached, discount);
+      const output = xaiBatchValue(range.output, discount);
+      if (!input || !cached || !output) continue;
+      records.push({
+        cells: [model.name, input, cached, output],
+        headers: [
+          'Model',
+          'Input ' + range.label,
+          'Cached ' + range.label,
+          'Output ' + range.label,
+        ],
+        text: model.name + ' batch ' + range.label,
+        mode: 'batch',
+        range: range.label === 'short context' ? 'short' : 'long',
+        boundaries: [],
+      });
+    }
+  }
+  return records;
 }
 
 function signalRange(signal: PricingSignal): PricingRange {
@@ -465,14 +658,27 @@ function rangeMatches(
   record: PricingRecord,
   cell: string,
 ): boolean {
+  if (descriptor.boundaries.length > 0) {
+    return descriptor.boundaries.some((boundary) => rangeBoundaryMatchesSignal(signal, boundary));
+  }
   const range = descriptor.range ?? record.range;
   const expected = signalRange(signal);
   if (range !== null) return range === expected;
-  if (expected === 'base') return true;
   const matches = numericMatches(cell);
+  const cellBoundaries = matches.flatMap((match, index) => {
+    const context = numericContext(cell, match, index, matches);
+    return [...rangeBoundariesFromText(context.after), ...rangeBoundariesFromText(context.before)];
+  });
+  if (cellBoundaries.length > 0) {
+    return cellBoundaries.some((boundary) => rangeBoundaryMatchesSignal(signal, boundary));
+  }
+  if (record.boundaries.length === 1) {
+    return rangeBoundaryMatchesSignal(signal, record.boundaries[0]);
+  }
+  if (expected === 'base') return true;
   return matches.some((match, index) => {
     const context = numericContext(cell, match, index, matches);
-    return numericMatchesRange(context, expected);
+    return numericMatchesSignalRange(context, signal);
   });
 }
 
@@ -486,7 +692,6 @@ function signalModality(signal: PricingSignal): string | null {
 function cellPriceForSignal(cell: string, signal: PricingSignal): CellPrice {
   const parsed = parseNumericCell(cell);
   if (parsed !== 'ambiguous') return parsed;
-  const expected = signalRange(signal);
   const modality = signalModality(signal);
   const modalityPattern = /\b(?:text|audio|image|video)\b/i;
   const allMatches = numericMatches(cell);
@@ -496,7 +701,7 @@ function cellPriceForSignal(cell: string, signal: PricingSignal): CellPrice {
   const matches = priceMatches.filter((match, index) => {
     const context = numericContext(cell, match, index, priceMatches);
     if (/\bstorage\s+price\b/i.test(context.after)) return false;
-    const rangeMatches = expected === 'base' || numericMatchesRange(context, expected);
+    const rangeMatches = numericMatchesSignalRange(context, signal);
     const afterHasModality = modalityPattern.test(context.after);
     const cellHasModality = modalityPattern.test(cell);
     const modalityMatches =
@@ -520,7 +725,11 @@ function signalCellStatus(record: PricingRecord, signal: PricingSignal): Pricing
     const descriptor =
       componentDescriptor(header) ??
       (index > 0 && rowLabel
-        ? { ...rowLabel, mode: rowLabel.mode ?? record.mode, range: rowLabel.range ?? record.range }
+        ? {
+            ...rowLabel,
+            mode: rowLabel.mode ?? record.mode,
+            range: rowLabel.range ?? record.range,
+          }
         : null);
     if (!descriptor || descriptor.component !== signal.component) continue;
     if (

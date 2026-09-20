@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "v1",
+  "checkedAt": "2026-09-19",
+  "entries": [
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-6-astra",
+      "catalogModelId": "gpt-6-astra",
+      "status": "tracked",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra"
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.6",
+      "catalogModelId": "grok-4-6",
+      "status": "tracked",
+      "sourceUrl": "https://docs.x.ai/developers/grok-4-6"
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-multi-agent-0309",
+      "catalogModelId": "grok-4-20-multi-agent-0309",
+      "status": "tracked",
+      "sourceUrl": "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309"
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-image-2.0",
+      "status": "deferred-non-token",
+      "sourceUrl": "https://docs.x.ai/developers/pricing",
+      "reason": "Pricing is per image with resolution and quality dimensions; the token calculator must support image units before an offer is published."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-video-1.5",
+      "status": "deferred-non-token",
+      "sourceUrl": "https://docs.x.ai/developers/pricing",
+      "reason": "Pricing is per image input and per second of video output; the catalog must represent mixed media units before an offer is published."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-voice-think-fast-2.0",
+      "status": "deferred-non-token",
+      "sourceUrl": "https://docs.x.ai/developers/pricing",
+      "reason": "Pricing is per audio minute plus text input; the calculator must support audio duration and mixed billing units before an offer is published."
+    }
+  ]
+}

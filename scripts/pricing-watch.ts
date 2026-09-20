@@ -16,12 +16,15 @@ type WatchBaseline = Record<
   {
     sha256: string;
     checkedAt: string;
+    signalKeyVersion?: number;
     expectedSignals: number;
     pricingSignals: number;
     missingSignals: number;
     signalStates?: Record<string, PricingSignalStatus>;
   }
 >;
+
+const PRICING_SIGNAL_KEY_VERSION = 2;
 
 const root = resolve(process.cwd());
 const sources = JSON.parse(
@@ -41,6 +44,12 @@ const updateBaseline = process.argv.includes('--update-baseline') || Boolean(bas
 
 function digest(fingerprint: string): string {
   return createHash('sha256').update(fingerprint).digest('hex');
+}
+
+function inferredSignalKeyVersion(entry: WatchBaseline[string]): number {
+  if (entry.signalKeyVersion !== undefined) return entry.signalKeyVersion;
+  const keys = Object.keys(entry.signalStates ?? {});
+  return keys.length > 0 && keys.every((key) => key.split('|').length >= 7) ? 2 : 1;
 }
 
 async function loadBaseline(): Promise<WatchBaseline> {
@@ -119,6 +128,7 @@ for (const result of results) {
   nextBaseline[source.url] = {
     sha256: result.sha256,
     checkedAt: new Date().toISOString(),
+    signalKeyVersion: PRICING_SIGNAL_KEY_VERSION,
     expectedSignals: result.expectedSignals,
     pricingSignals: result.pricingSignals,
     missingSignals: result.missingSignals,
@@ -126,8 +136,18 @@ for (const result of results) {
   };
   if (!updateBaseline) {
     const previous = baseline[source.url];
-    if (!previous) failures.push(`${source.publisher}: no baseline for ${source.url}`);
-    else if (previous.sha256 !== result.sha256) {
+    if (!previous && result.expectedSignals > 0)
+      failures.push(`${source.publisher}: no baseline for ${source.url}`);
+    else if (
+      previous &&
+      result.expectedSignals > 0 &&
+      Object.keys(previous.signalStates ?? {}).length > 0 &&
+      inferredSignalKeyVersion(previous) !== PRICING_SIGNAL_KEY_VERSION
+    ) {
+      reviews.push(
+        `${source.publisher}: pricing signal baseline schema v${inferredSignalKeyVersion(previous)} needs migration before semantic comparison at ${source.url}`,
+      );
+    } else if (previous && previous.sha256 !== result.sha256) {
       const regressions = previous.signalStates
         ? Object.entries(result.signalStates).filter(
             ([key, status]) => status !== 'present' && previous.signalStates?.[key] === 'present',
@@ -179,6 +199,11 @@ if (failures.length > 0) {
   console.error(`Pricing watch failed with ${failures.length} actionable signal(s):`);
   for (const failure of failures) console.error(`- ${failure}`);
   process.exitCode = 1;
+} else if (reviews.length > 0) {
+  console.error(
+    `Pricing watch is inconclusive: ${reviews.length} evidence or baseline review(s) require manual action; no unchanged-price claim was made.`,
+  );
+  process.exitCode = 2;
 } else {
   console.log(
     updateBaseline
