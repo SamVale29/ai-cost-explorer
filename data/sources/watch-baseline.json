@@ -1,117 +1,392 @@
 {
   "https://developers.openai.com/api/docs/pricing": {
-    "sha256": "12f77cea1f55c03928db126db1cec609117650da72941b31b9e9335ab01dcb42",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 19
+    "sha256": "6f06c155deca509b190c52df94ba73b1d442553f3f84128c66650402abc11883",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 24,
+    "pricingSignals": 24,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|cachedInput|0.04": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|cacheWrite|0.5": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|input|0.4": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|output|1.8": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|cachedInput|0.02": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|cacheWrite|0.25": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|input|0.2": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|output|1.2": "present",
+      "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard-long|standard|cachedInput|0.8": "present",
+      "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard-long|standard|cacheWrite|10": "present",
+      "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard-long|standard|input|8": "present",
+      "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard-long|standard|output|30": "present",
+      "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard|standard|cachedInput|0.4": "present",
+      "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard|standard|cacheWrite|5": "present",
+      "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard|standard|input|4": "present",
+      "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard|standard|output|20": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|cachedInput|0.4": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|cacheWrite|5": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|input|4": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|output|18": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|cachedInput|0.2": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|cacheWrite|2.5": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|input|2": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|output|12": "present"
+    }
   },
   "https://developers.openai.com/api/docs/models/gpt-5.6-luna": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 0
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 0,
+    "pricingSignals": 0,
+    "missingSignals": 0,
+    "signalStates": {}
   },
   "https://developers.openai.com/api/docs/models/gpt-4.1": {
-    "sha256": "cdf12184ce66b96b7ec0a2321fdab7231a03c1ddf3335f684e46cadb3ba89ef0",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 3
+    "sha256": "2681e5f2487289bdc6606e419d52515b47baee38656b97f9e443687c31dbbab7",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 3,
+    "pricingSignals": 3,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-openai-gpt-4-1|openai-gpt-4-1-standard|standard|cachedInput|0.5": "present",
+      "offer-openai-gpt-4-1|openai-gpt-4-1-standard|standard|input|2": "present",
+      "offer-openai-gpt-4-1|openai-gpt-4-1-standard|standard|output|8": "present"
+    }
   },
   "https://platform.claude.com/docs/en/about-claude/pricing": {
-    "sha256": "bdcfc4c69e5b083863c2eef850c644acc69e77f9dc2f93071e0488eed205b850",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 21
+    "sha256": "265496595be4919873159625d601906e24753128b91cb82a72449ff3b3af90e8",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 40,
+    "pricingSignals": 32,
+    "missingSignals": 8,
+    "signalStates": {
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|cachedInput|0.5": "missing",
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|cacheWrite|6.25": "missing",
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|input|5": "present",
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|output|25": "present",
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-standard|standard|cachedInput|1": "present",
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-standard|standard|cacheWrite|12.5": "present",
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-standard|standard|input|10": "present",
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-standard|standard|output|50": "present",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|cachedInput|0.05": "missing",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|cacheWrite|0.625": "missing",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|input|0.5": "present",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|output|2.5": "present",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-standard|standard|cachedInput|0.1": "present",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-standard|standard|cacheWrite|1.25": "present",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-standard|standard|input|1": "present",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-standard|standard|output|5": "present",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|cachedInput|0.25": "present",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|cacheWrite|3.125": "missing",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|input|2.5": "present",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|output|12.5": "present",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-standard|standard|cachedInput|0.5": "present",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-standard|standard|cacheWrite|6.25": "present",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-standard|standard|input|5": "present",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-standard|standard|output|25": "present",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|cachedInput|0.15": "missing",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|cacheWrite|1.875": "missing",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|input|1.5": "present",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|output|7.5": "present",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-standard|standard|cachedInput|0.3": "present",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-standard|standard|cacheWrite|3.75": "present",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-standard|standard|input|3": "present",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-standard|standard|output|15": "present",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|cachedInput|0.1": "present",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|cacheWrite|1.25": "missing",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|input|1": "present",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|output|5": "present",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-standard|standard|cachedInput|0.2": "present",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-standard|standard|cacheWrite|2.5": "present",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-standard|standard|input|2": "present",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-standard|standard|output|10": "present"
+    }
   },
   "https://ai.google.dev/gemini-api/docs/pricing": {
-    "sha256": "d9141c3532d504421d6233bf3048c6bbdb05659221cf36f49323927668628ac4",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 27
+    "sha256": "82e87039058cc7c28ad5324f0d96f790c3a88d534e315aa7f6fa9ade325feeb2",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 42,
+    "pricingSignals": 35,
+    "missingSignals": 7,
+    "signalStates": {
+      "offer-google-gemini-2-5-flash-lite|google-gemini-2-5-flash-lite-batch|batch|cachedInput|0.01": "present",
+      "offer-google-gemini-2-5-flash-lite|google-gemini-2-5-flash-lite-batch|batch|input|0.05": "present",
+      "offer-google-gemini-2-5-flash-lite|google-gemini-2-5-flash-lite-batch|batch|output|0.2": "present",
+      "offer-google-gemini-2-5-flash-lite|google-gemini-2-5-flash-lite-standard|standard|cachedInput|0.01": "present",
+      "offer-google-gemini-2-5-flash-lite|google-gemini-2-5-flash-lite-standard|standard|input|0.1": "present",
+      "offer-google-gemini-2-5-flash-lite|google-gemini-2-5-flash-lite-standard|standard|output|0.4": "present",
+      "offer-google-gemini-2-5-flash|google-gemini-2-5-flash-batch|batch|cachedInput|0.03": "present",
+      "offer-google-gemini-2-5-flash|google-gemini-2-5-flash-batch|batch|input|0.15": "present",
+      "offer-google-gemini-2-5-flash|google-gemini-2-5-flash-batch|batch|output|1.25": "present",
+      "offer-google-gemini-2-5-flash|google-gemini-2-5-flash-standard|standard|cachedInput|0.03": "present",
+      "offer-google-gemini-2-5-flash|google-gemini-2-5-flash-standard|standard|input|0.3": "present",
+      "offer-google-gemini-2-5-flash|google-gemini-2-5-flash-standard|standard|output|2.5": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-batch-long|batch|cachedInput|0.25": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-batch-long|batch|input|1.25": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-batch-long|batch|output|7.5": "missing",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-batch-short|batch|cachedInput|0.125": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-batch-short|batch|input|0.625": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-batch-short|batch|output|5": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-standard-long|standard|cachedInput|0.25": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-standard-long|standard|input|2.5": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-standard-long|standard|output|15": "missing",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-standard-short|standard|cachedInput|0.125": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-standard-short|standard|input|1.25": "present",
+      "offer-google-gemini-2-5-pro|google-gemini-2-5-pro-standard-short|standard|output|10": "present",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-batch-long|batch|cachedInput|0.4": "missing",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-batch-long|batch|input|2": "present",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-batch-long|batch|output|9": "missing",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-batch-short|batch|cachedInput|0.2": "present",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-batch-short|batch|input|1": "present",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-batch-short|batch|output|6": "present",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-standard-long|standard|cachedInput|0.4": "missing",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-standard-long|standard|input|4": "missing",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-standard-long|standard|output|18": "missing",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-standard-short|standard|cachedInput|0.2": "present",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-standard-short|standard|input|2": "present",
+      "offer-google-gemini-3-1-pro|google-gemini-3-1-pro-standard-short|standard|output|12": "present",
+      "offer-google-gemini-3-flash|google-gemini-3-flash-batch|batch|cachedInput|0.05": "present",
+      "offer-google-gemini-3-flash|google-gemini-3-flash-batch|batch|input|0.25": "present",
+      "offer-google-gemini-3-flash|google-gemini-3-flash-batch|batch|output|1.5": "present",
+      "offer-google-gemini-3-flash|google-gemini-3-flash-standard|standard|cachedInput|0.05": "present",
+      "offer-google-gemini-3-flash|google-gemini-3-flash-standard|standard|input|0.5": "present",
+      "offer-google-gemini-3-flash|google-gemini-3-flash-standard|standard|output|3": "present"
+    }
   },
   "https://docs.mistral.ai/models/model-cards/mistral-small-4-0-26-03": {
-    "sha256": "7b9eb8880971538219ba5e3da0466413451638ba931224d32d291103aac0208a",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 2
+    "sha256": "28fef96eb9a87707ec61ca478d58b68b430c0f2f7d8ac954d15d0ca9ee7732b8",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 3,
+    "pricingSignals": 2,
+    "missingSignals": 1,
+    "signalStates": {
+      "offer-mistral-small-4|mistral-small-4-standard|standard|cachedInput|0.015": "missing",
+      "offer-mistral-small-4|mistral-small-4-standard|standard|input|0.15": "present",
+      "offer-mistral-small-4|mistral-small-4-standard|standard|output|0.6": "present"
+    }
   },
   "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04": {
-    "sha256": "275e39d2957a04ff8dec0969da8aec55488bcee33e19079bf241054d9180cf9f",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 2
+    "sha256": "3dc19d814149b1b16a7592ba08e120db780b3e381163a209da668be521d472da",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 3,
+    "pricingSignals": 2,
+    "missingSignals": 1,
+    "signalStates": {
+      "offer-mistral-medium-3-5|mistral-medium-3-5-standard|standard|cachedInput|0.15": "missing",
+      "offer-mistral-medium-3-5|mistral-medium-3-5-standard|standard|input|1.5": "present",
+      "offer-mistral-medium-3-5|mistral-medium-3-5-standard|standard|output|7.5": "present"
+    }
   },
   "https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12": {
-    "sha256": "70430c358ab1b80e1cb47d164ff63a4348d7e67490f0e874ede962755c398033",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 2
+    "sha256": "d25a1ade1ddc3b0880449396fdc12b83a409e702e75a10ce3ac846abf0a5201f",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 3,
+    "pricingSignals": 2,
+    "missingSignals": 1,
+    "signalStates": {
+      "offer-mistral-large-3|mistral-large-3-standard|standard|cachedInput|0.05": "missing",
+      "offer-mistral-large-3|mistral-large-3-standard|standard|input|0.5": "present",
+      "offer-mistral-large-3|mistral-large-3-standard|standard|output|1.5": "present"
+    }
   },
   "https://docs.mistral.ai/models/model-cards/ministral-3-3b-25-12": {
-    "sha256": "57eb697c714509b4b88a848a5a665795834d21c9cef27650060ccf3906c45a5b",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 1
+    "sha256": "96a5991b17858b33d8c81983cdf2f86558626ea9f5a4b1bbdba5b5d8b0d2c65a",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 3,
+    "pricingSignals": 2,
+    "missingSignals": 1,
+    "signalStates": {
+      "offer-mistral-ministral-3b|mistral-ministral-3b-standard|standard|cachedInput|0.01": "missing",
+      "offer-mistral-ministral-3b|mistral-ministral-3b-standard|standard|input|0.1": "present",
+      "offer-mistral-ministral-3b|mistral-ministral-3b-standard|standard|output|0.1": "present"
+    }
   },
   "https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12": {
-    "sha256": "8a90be15452fd43d387ced92c2b3c176b5ede6171f229796fd8f39af5c8389cb",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 1
+    "sha256": "2a134dece3facc9a93c27961df69d9eb6b799c970764f75250ab341f7fd48424",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 3,
+    "pricingSignals": 2,
+    "missingSignals": 1,
+    "signalStates": {
+      "offer-mistral-ministral-14b|mistral-ministral-14b-standard|standard|cachedInput|0.02": "missing",
+      "offer-mistral-ministral-14b|mistral-ministral-14b-standard|standard|input|0.2": "present",
+      "offer-mistral-ministral-14b|mistral-ministral-14b-standard|standard|output|0.2": "present"
+    }
   },
   "https://docs.mistral.ai/models/model-cards/codestral-25-08": {
-    "sha256": "0f2ed34f3469c7e2b3eadb8b3e4f3c3f93b7733f70b4f215bfb47a6fe866117c",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 2
+    "sha256": "fc33a0abd8c88926ff07dca4fb858bf7c12791d43805b5a6f16e7e4311a8f319",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 3,
+    "pricingSignals": 2,
+    "missingSignals": 1,
+    "signalStates": {
+      "offer-mistral-codestral-2508|mistral-codestral-2508-standard|standard|cachedInput|0.03": "missing",
+      "offer-mistral-codestral-2508|mistral-codestral-2508-standard|standard|input|0.3": "present",
+      "offer-mistral-codestral-2508|mistral-codestral-2508-standard|standard|output|0.9": "present"
+    }
   },
   "https://docs.cohere.com/docs/command-a": {
-    "sha256": "695d19e9a46f8bb6f0186bab45a536ab87166346394087f6e5f8114a92a8a0e2",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 2
+    "sha256": "43594e2420f57dd70bef40b68ea0d723b2f6639ed76496667e85c331fa007f60",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 2,
+    "pricingSignals": 2,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-cohere-command-a|cohere-command-a-standard|standard|input|2.5": "present",
+      "offer-cohere-command-a|cohere-command-a-standard|standard|output|10": "present"
+    }
   },
   "https://docs.cohere.com/v2/docs/command-r-plus": {
-    "sha256": "695d19e9a46f8bb6f0186bab45a536ab87166346394087f6e5f8114a92a8a0e2",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 2
+    "sha256": "752da171de024169909173339e9fcb070bd4908ec2357bf223fbe42363634ebe",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 2,
+    "pricingSignals": 2,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-cohere-command-r-plus|cohere-command-r-plus-standard|standard|input|2.5": "present",
+      "offer-cohere-command-r-plus|cohere-command-r-plus-standard|standard|output|10": "present"
+    }
   },
   "https://docs.cohere.com/docs/command-r": {
-    "sha256": "f107b3e7c6ddda555400bb1ad2f25fece6293bd0ff74057ccae4a66b87f76cc4",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 2
+    "sha256": "6a6b27f628501ff1a553e118c84b7aa7c08c8e4d6161b2bdaf9a96a027d73b11",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 2,
+    "pricingSignals": 2,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-cohere-command-r|cohere-command-r-standard|standard|input|0.15": "present",
+      "offer-cohere-command-r|cohere-command-r-standard|standard|output|0.6": "present"
+    }
   },
   "https://docs.cohere.com/v1/docs/command-r7b": {
-    "sha256": "4bb6b776fefb25e69faabf33157aa6a1daa674d53abc652928d8cff4fa2a0429",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 2
+    "sha256": "569320914e6e72df3e5b6a73a37c299427ec128395544a4185f293be38a53cdb",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 2,
+    "pricingSignals": 2,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-cohere-command-r7b|cohere-command-r7b-standard|standard|input|0.0375": "present",
+      "offer-cohere-command-r7b|cohere-command-r7b-standard|standard|output|0.15": "present"
+    }
   },
   "https://docs.cohere.com/docs/command-a-plus": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 0
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 0,
+    "pricingSignals": 0,
+    "missingSignals": 0,
+    "signalStates": {}
   },
   "https://docs.x.ai/developers/pricing": {
-    "sha256": "10841766f95535d0806a43f9674277c495e7a621860a617d09f2cf7e42abd2d3",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 12
+    "sha256": "491199ec7fe09ece3ed17c76b93912d7f879d539296d1d00c3c637b68b7dedf6",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 30,
+    "pricingSignals": 30,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-xai-grok-4-20-non-reasoning|xai-grok-4-20-non-reasoning-long|standard|cachedInput|0.4": "present",
+      "offer-xai-grok-4-20-non-reasoning|xai-grok-4-20-non-reasoning-long|standard|input|2.5": "present",
+      "offer-xai-grok-4-20-non-reasoning|xai-grok-4-20-non-reasoning-long|standard|output|5": "present",
+      "offer-xai-grok-4-20-non-reasoning|xai-grok-4-20-non-reasoning-short|standard|cachedInput|0.2": "present",
+      "offer-xai-grok-4-20-non-reasoning|xai-grok-4-20-non-reasoning-short|standard|input|1.25": "present",
+      "offer-xai-grok-4-20-non-reasoning|xai-grok-4-20-non-reasoning-short|standard|output|2.5": "present",
+      "offer-xai-grok-4-20-reasoning|xai-grok-4-20-reasoning-long|standard|cachedInput|0.4": "present",
+      "offer-xai-grok-4-20-reasoning|xai-grok-4-20-reasoning-long|standard|input|2.5": "present",
+      "offer-xai-grok-4-20-reasoning|xai-grok-4-20-reasoning-long|standard|output|5": "present",
+      "offer-xai-grok-4-20-reasoning|xai-grok-4-20-reasoning-short|standard|cachedInput|0.2": "present",
+      "offer-xai-grok-4-20-reasoning|xai-grok-4-20-reasoning-short|standard|input|1.25": "present",
+      "offer-xai-grok-4-20-reasoning|xai-grok-4-20-reasoning-short|standard|output|2.5": "present",
+      "offer-xai-grok-4-3|xai-grok-4-3-long|standard|cachedInput|0.4": "present",
+      "offer-xai-grok-4-3|xai-grok-4-3-long|standard|input|2.5": "present",
+      "offer-xai-grok-4-3|xai-grok-4-3-long|standard|output|5": "present",
+      "offer-xai-grok-4-3|xai-grok-4-3-short|standard|cachedInput|0.2": "present",
+      "offer-xai-grok-4-3|xai-grok-4-3-short|standard|input|1.25": "present",
+      "offer-xai-grok-4-3|xai-grok-4-3-short|standard|output|2.5": "present",
+      "offer-xai-grok-4-5|xai-grok-4-5-long|standard|cachedInput|0.6": "present",
+      "offer-xai-grok-4-5|xai-grok-4-5-long|standard|input|4": "present",
+      "offer-xai-grok-4-5|xai-grok-4-5-long|standard|output|12": "present",
+      "offer-xai-grok-4-5|xai-grok-4-5-short|standard|cachedInput|0.3": "present",
+      "offer-xai-grok-4-5|xai-grok-4-5-short|standard|input|2": "present",
+      "offer-xai-grok-4-5|xai-grok-4-5-short|standard|output|6": "present",
+      "offer-xai-grok-build-0-1|xai-grok-build-long|standard|cachedInput|0.4": "present",
+      "offer-xai-grok-build-0-1|xai-grok-build-long|standard|input|2": "present",
+      "offer-xai-grok-build-0-1|xai-grok-build-long|standard|output|4": "present",
+      "offer-xai-grok-build-0-1|xai-grok-build-short|standard|cachedInput|0.2": "present",
+      "offer-xai-grok-build-0-1|xai-grok-build-short|standard|input|1": "present",
+      "offer-xai-grok-build-0-1|xai-grok-build-short|standard|output|2": "present"
+    }
   },
   "https://api-docs.deepseek.com/quick_start/pricing": {
-    "sha256": "3fa236c887292f85f16583e4c6f3cab099929a15cbd4925c14b5fdf382f9f72e",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 1
+    "sha256": "b2a073618659189cec96c9fd0de03b00d6afac7988af13979a65141a44c1f601",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 6,
+    "pricingSignals": 0,
+    "missingSignals": 6,
+    "signalStates": {
+      "offer-deepseek-v4-flash|deepseek-v4-flash-standard|standard|cachedInput|0.0028": "missing",
+      "offer-deepseek-v4-flash|deepseek-v4-flash-standard|standard|input|0.14": "missing",
+      "offer-deepseek-v4-flash|deepseek-v4-flash-standard|standard|output|0.28": "missing",
+      "offer-deepseek-v4-pro|deepseek-v4-pro-standard|standard|cachedInput|0.003625": "missing",
+      "offer-deepseek-v4-pro|deepseek-v4-pro-standard|standard|input|0.435": "missing",
+      "offer-deepseek-v4-pro|deepseek-v4-pro-standard|standard|output|0.87": "missing"
+    }
   },
   "https://console.groq.com/docs/models": {
-    "sha256": "6ffcc6780022f4f58dd7aa2f2239f488c56d51876fce7fe3886124b953b2f6c2",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 4
+    "sha256": "516bf9652b42b3102691daa8bd97dc13f52be70e4902f436e357d16840d16695",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 4,
+    "pricingSignals": 4,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-groq-gpt-oss-120b|groq-gpt-oss-120b-standard|standard|input|0.15": "present",
+      "offer-groq-gpt-oss-120b|groq-gpt-oss-120b-standard|standard|output|0.6": "present",
+      "offer-groq-gpt-oss-20b|groq-gpt-oss-20b-standard|standard|input|0.075": "present",
+      "offer-groq-gpt-oss-20b|groq-gpt-oss-20b-standard|standard|output|0.3": "present"
+    }
   },
   "https://docs.together.ai/docs/serverless/models": {
-    "sha256": "25108ab004fddb7a18b2c331d3d20a1cf62690f212170269451a4a3050769936",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 11
+    "sha256": "8197bc02b51fca6d302811c3159f5337d9ad4ece7e5bd9b442effd3081a1cf69",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 10,
+    "pricingSignals": 10,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-together-deepseek-v4-pro-0813|together-deepseek-v4-pro-0813-standard|standard|cachedInput|0.13": "present",
+      "offer-together-deepseek-v4-pro-0813|together-deepseek-v4-pro-0813-standard|standard|input|1.32": "present",
+      "offer-together-deepseek-v4-pro-0813|together-deepseek-v4-pro-0813-standard|standard|output|3.96": "present",
+      "offer-together-qwen-3-5-9b|together-qwen-3-5-9b-standard|standard|input|0.17": "present",
+      "offer-together-qwen-3-5-9b|together-qwen-3-5-9b-standard|standard|output|0.25": "present",
+      "offer-together-qwen-3-6-plus|together-qwen-3-6-plus-standard|standard|input|0.5": "present",
+      "offer-together-qwen-3-6-plus|together-qwen-3-6-plus-standard|standard|output|3": "present",
+      "offer-together-qwen-3-7-max|together-qwen-3-7-max-standard|standard|cachedInput|0.5": "present",
+      "offer-together-qwen-3-7-max|together-qwen-3-7-max-standard|standard|input|2.5": "present",
+      "offer-together-qwen-3-7-max|together-qwen-3-7-max-standard|standard|output|7.5": "present"
+    }
   },
   "https://docs.together.ai/docs/inference/pricing": {
-    "sha256": "9af272ff0df06d1f33d3be8d2a6211a34aba7b28061a734cb581bf861584571d",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 2
+    "sha256": "de0e56194c81225e54284eccf372d438dd38a5c83b39bc39b2c509cccf61081f",
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 2,
+    "pricingSignals": 0,
+    "missingSignals": 2,
+    "signalStates": {
+      "offer-together-qwen-3-6-plus|together-qwen-3-6-plus-batch|batch|input|0.25": "missing",
+      "offer-together-qwen-3-6-plus|together-qwen-3-6-plus-batch|batch|output|1.5": "missing"
+    }
   },
   "https://docs.x.ai/developers/models": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 0
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 0,
+    "pricingSignals": 0,
+    "missingSignals": 0,
+    "signalStates": {}
   },
   "https://api-docs.deepseek.com/news/news260424": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T00:19:26.277Z",
-    "pricingSignals": 0
+    "checkedAt": "2026-09-20T00:56:37.350Z",
+    "expectedSignals": 0,
+    "pricingSignals": 0,
+    "missingSignals": 0,
+    "signalStates": {}
   }
 }
