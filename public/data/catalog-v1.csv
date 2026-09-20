@@ -38,8 +38,9 @@ offer-groq-gpt-oss-120b,GPT OSS 120B,OpenAI,GroqCloud API,openai/gpt-oss-120b,ac
 offer-groq-gpt-oss-20b,GPT OSS 20B,OpenAI,GroqCloud API,openai/gpt-oss-20b,active,0.075,,0.3,131072,65536,true,true,,true,2026-08-02
 offer-groq-whisper-large-v3,Whisper Large V3,OpenAI,GroqCloud API,whisper-large-v3,active,,,,,,,,,true,2026-08-02
 offer-groq-whisper-large-v3-turbo,Whisper Large V3 Turbo,OpenAI,GroqCloud API,whisper-large-v3-turbo,active,,,,,,,,,true,2026-08-02
-offer-together-qwen-3-7-max,Qwen3.7 Max,Qwen,Together AI,Qwen/Qwen3.7-Max,active,1.25,,3.75,,,,,,true,2026-08-06
+offer-together-qwen-3-7-max,Qwen3.7 Max,Qwen,Together AI,Qwen/Qwen3.7-Max,active,2.5,0.5,7.5,,,,,,true,2026-09-19
 offer-together-qwen-3-5-397b,Qwen3.5 397B A17B,Qwen,Together AI,Qwen/Qwen3.5-397B-A17B,retired,0.6,,3.6,262144,,true,true,,true,2026-08-06
 offer-together-qwen-3-6-plus,Qwen3.6 Plus,Qwen,Together AI,Qwen/Qwen3.6-Plus,active,0.5,,3,1000000,,,,,true,2026-08-02
 offer-together-qwen-3-5-9b,Qwen3.5 9B,Qwen,Together AI,Qwen/Qwen3.5-9B,active,0.17,,0.25,262144,,true,true,,true,2026-09-19
-offer-together-deepseek-v4-pro,DeepSeek V4 Pro,DeepSeek,Together AI,deepseek-ai/DeepSeek-V4-Pro,active,1.74,0.2,3.48,1000000,384000,true,true,true,,2026-08-06
+offer-together-deepseek-v4-pro,DeepSeek V4 Pro,DeepSeek,Together AI,deepseek-ai/DeepSeek-V4-Pro,retired,1.74,0.2,3.48,1000000,384000,true,true,true,,2026-09-19
+offer-together-deepseek-v4-pro-0813,DeepSeek V4 Pro,DeepSeek,Together AI,deepseek-ai/DeepSeek-V4-Pro-0813,active,1.32,0.13,3.96,1000000,384000,true,true,true,,2026-09-19

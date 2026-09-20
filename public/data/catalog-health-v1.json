@@ -7,9 +7,9 @@
     "providers": 9,
     "directProviders": 9,
     "models": 43,
-    "offers": 44,
+    "offers": 45,
     "sources": 23,
-    "historyEvents": 7,
+    "historyEvents": 10,
     "benchmarks": 0
   },
   "coverage": {

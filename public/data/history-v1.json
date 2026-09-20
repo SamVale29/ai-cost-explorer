@@ -498,5 +498,239 @@
       "checkedAt": "2026-09-19"
     },
     "notes": "Anthropic cancelled the previously scheduled September increase; Sonnet 5 remains at $2/$10 standard and $1/$5 batch."
+  },
+  {
+    "id": "offer-together-qwen-3-7-max-pricing-review-2026-09-19",
+    "offerId": "offer-together-qwen-3-7-max",
+    "detectedAt": "2026-09-19",
+    "effectiveAt": null,
+    "previousPricing": [
+      {
+        "id": "together-qwen-3-7-max-standard",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "standard",
+        "inputPrice": 1.25,
+        "outputPrice": 3.75,
+        "cachedInputPrice": null,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://docs.together.ai/docs/serverless/models",
+            "title": "Together serverless models",
+            "publisher": "Together AI",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-08-06"
+          }
+        ]
+      },
+      {
+        "id": "together-qwen-3-7-max-batch",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "batch",
+        "inputPrice": 1.25,
+        "outputPrice": 3.75,
+        "cachedInputPrice": null,
+        "cacheWritePrice": null,
+        "notes": "Together documents up to 50% batch discounts for eligible serverless models.",
+        "sources": [
+          {
+            "url": "https://docs.together.ai/docs/serverless/models",
+            "title": "Together serverless models",
+            "publisher": "Together AI",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-08-06"
+          }
+        ]
+      }
+    ],
+    "currentPricing": [
+      {
+        "id": "together-qwen-3-7-max-standard",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "standard",
+        "inputPrice": 2.5,
+        "outputPrice": 7.5,
+        "cachedInputPrice": 0.5,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://docs.together.ai/docs/serverless/models",
+            "title": "Together AI serverless model catalog",
+            "publisher": "Together AI",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-09-19",
+            "notes": "Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."
+          }
+        ],
+        "notes": "Together lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens in the current serverless catalog."
+      },
+      {
+        "id": "together-qwen-3-7-max-batch",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "batch",
+        "inputPrice": null,
+        "outputPrice": null,
+        "cachedInputPrice": null,
+        "cacheWritePrice": null,
+        "notes": "The current serverless table does not publish a Qwen3.7 Max-specific batch rate; keep this mode unknown instead of assuming standard pricing or a generic discount.",
+        "sources": [
+          {
+            "url": "https://docs.together.ai/docs/serverless/models",
+            "title": "Together AI serverless model catalog",
+            "publisher": "Together AI",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-09-19",
+            "notes": "Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."
+          }
+        ]
+      }
+    ],
+    "source": {
+      "url": "https://docs.together.ai/docs/serverless/models",
+      "title": "Together AI serverless model catalog",
+      "publisher": "Together AI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-09-19",
+      "notes": "Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."
+    },
+    "notes": "Corrected Qwen3.7 Max from the stale Together catalog values to the current official row; batch remains unknown because no model-specific batch rate is published on the reviewed table."
+  },
+  {
+    "id": "offer-together-deepseek-v4-pro-retired-2026-09-19",
+    "offerId": "offer-together-deepseek-v4-pro",
+    "detectedAt": "2026-09-19",
+    "effectiveAt": null,
+    "previousPricing": [
+      {
+        "id": "together-deepseek-v4-pro-standard",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "standard",
+        "inputPrice": 1.74,
+        "outputPrice": 3.48,
+        "cachedInputPrice": 0.2,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://docs.together.ai/docs/serverless/models",
+            "title": "Together serverless models",
+            "publisher": "Together AI",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-08-06"
+          }
+        ]
+      },
+      {
+        "id": "together-deepseek-v4-pro-batch",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "batch",
+        "inputPrice": 1.05,
+        "outputPrice": 2.2,
+        "cachedInputPrice": 0.1,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://docs.together.ai/docs/serverless/models",
+            "title": "Together serverless models",
+            "publisher": "Together AI",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-08-06"
+          }
+        ]
+      }
+    ],
+    "currentPricing": [
+      {
+        "id": "together-deepseek-v4-pro-standard",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "standard",
+        "inputPrice": 1.74,
+        "outputPrice": 3.48,
+        "cachedInputPrice": 0.2,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://docs.together.ai/docs/serverless/models",
+            "title": "Together serverless models",
+            "publisher": "Together AI",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-08-06"
+          }
+        ]
+      },
+      {
+        "id": "together-deepseek-v4-pro-batch",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "batch",
+        "inputPrice": 1.05,
+        "outputPrice": 2.2,
+        "cachedInputPrice": 0.1,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://docs.together.ai/docs/serverless/models",
+            "title": "Together serverless models",
+            "publisher": "Together AI",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-08-06"
+          }
+        ]
+      }
+    ],
+    "source": {
+      "url": "https://docs.together.ai/docs/serverless/models",
+      "title": "Together AI serverless model catalog",
+      "publisher": "Together AI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-09-19",
+      "notes": "Current row for DeepSeek V4 Pro 0813: $1.32 input, $0.13 cached input and $3.96 output per 1M tokens; the legacy DeepSeek-V4-Pro ID is not silently substituted."
+    },
+    "notes": "Together no longer lists the legacy deepseek-ai/DeepSeek-V4-Pro ID in its current catalog. The old offer is retained as retired for traceability; the new 0813 ID is represented as a separate offer instead of an automatic substitution."
+  },
+  {
+    "id": "offer-together-deepseek-v4-pro-0813-observation-2026-09-19",
+    "offerId": "offer-together-deepseek-v4-pro-0813",
+    "detectedAt": "2026-09-19",
+    "effectiveAt": null,
+    "previousPricing": [],
+    "currentPricing": [
+      {
+        "id": "together-deepseek-v4-pro-0813-standard",
+        "currency": "USD",
+        "unit": "per_million_tokens",
+        "mode": "standard",
+        "inputPrice": 1.32,
+        "outputPrice": 3.96,
+        "cachedInputPrice": 0.13,
+        "cacheWritePrice": null,
+        "sources": [
+          {
+            "url": "https://docs.together.ai/docs/serverless/models",
+            "title": "Together AI serverless model catalog",
+            "publisher": "Together AI",
+            "sourceType": "official-pricing",
+            "checkedAt": "2026-09-19",
+            "notes": "Current row for DeepSeek V4 Pro 0813: $1.32 input, $0.13 cached input and $3.96 output per 1M tokens; the legacy DeepSeek-V4-Pro ID is not silently substituted."
+          }
+        ],
+        "notes": "Together lists DeepSeek V4 Pro 0813 at $1.32 input, $0.13 cached input and $3.96 output per 1M tokens."
+      }
+    ],
+    "source": {
+      "url": "https://docs.together.ai/docs/serverless/models",
+      "title": "Together AI serverless model catalog",
+      "publisher": "Together AI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-09-19",
+      "notes": "Current row for DeepSeek V4 Pro 0813: $1.32 input, $0.13 cached input and $3.96 output per 1M tokens; the legacy DeepSeek-V4-Pro ID is not silently substituted."
+    },
+    "notes": "Observed the current Together row for deepseek-ai/DeepSeek-V4-Pro-0813 and added it as a distinct active offer; no model-specific batch rate is published on the reviewed table."
   }
 ]

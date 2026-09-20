@@ -1,9 +1,26 @@
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import type { Offer, SourceReference } from '../src/types';
+import type { Model, Offer, SourceReference } from '../src/types';
+import {
+  countPricingSignals,
+  pricingFingerprint,
+  pricingSignalKey,
+  pricingSignalEvidence,
+  pricingSignalsFor,
+} from '../src/lib/pricing-watch';
 
-type WatchBaseline = Record<string, { sha256: string; checkedAt: string; pricingSignals: number }>;
+type WatchBaseline = Record<
+  string,
+  {
+    sha256: string;
+    checkedAt: string;
+    expectedSignals: number;
+    pricingSignals: number;
+    missingSignals: number;
+    signalStates?: Record<string, 'present' | 'missing'>;
+  }
+>;
 
 const root = resolve(process.cwd());
 const sources = JSON.parse(
@@ -12,71 +29,14 @@ const sources = JSON.parse(
 const offers = JSON.parse(
   await readFile(resolve(root, 'data', 'offers', 'index.json'), 'utf8'),
 ) as Offer[];
+const models = JSON.parse(
+  await readFile(resolve(root, 'data', 'models', 'index.json'), 'utf8'),
+) as Model[];
 const baselinePath = resolve(root, 'data', 'sources', 'watch-baseline.json');
 const updateBaseline = process.argv.includes('--update-baseline');
 
-function normalizedBody(body: string): string {
-  return body
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<!--[\s\S]*?-->/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function escapeRegExp(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function numberVariants(value: number): string[] {
-  return [...new Set([String(value), value.toFixed(2), value.toFixed(3)])];
-}
-
-function containsPricingValue(body: string, value: number): boolean {
-  return numberVariants(value).some((variant) => {
-    const pattern = new RegExp(`(?<![\\d.])(?:\\$|USD\\s*)?${escapeRegExp(variant)}(?![\\d.])`);
-    return pattern.test(body);
-  });
-}
-
-/**
- * Hash only the reviewed price signals. Provider pages often include rotating
- * timestamps, request IDs or recommendation blocks that should not invalidate
- * a pricing baseline on every run.
- */
-function pricingFingerprint(body: string, expectedValues: number[]): string {
-  const compact = normalizedBody(body);
-  return [...new Set(expectedValues)]
-    .sort((a, b) => a - b)
-    .map((value) => `${value}:${containsPricingValue(compact, value) ? 'present' : 'missing'}`)
-    .join('|');
-}
-
-function digest(body: string, expectedValues: number[]): string {
-  return createHash('sha256').update(pricingFingerprint(body, expectedValues)).digest('hex');
-}
-
-function pricingSignalsFor(url: string): number[] {
-  const values: number[] = [];
-  for (const offer of offers) {
-    for (const rule of offer.pricing) {
-      if (!rule.sources.some((source) => source.url === url)) continue;
-      for (const value of [
-        rule.inputPrice,
-        rule.outputPrice,
-        rule.cachedInputPrice,
-        rule.cacheWritePrice,
-      ]) {
-        if (value !== null && value !== undefined && !values.includes(value)) values.push(value);
-      }
-    }
-  }
-  return values;
-}
-
-function countPricingSignals(body: string, expectedValues: number[]): number {
-  const compact = body.replace(/\s+/g, ' ');
-  return expectedValues.filter((value) => containsPricingValue(compact, value)).length;
+function digest(fingerprint: string): string {
+  return createHash('sha256').update(fingerprint).digest('hex');
 }
 
 async function loadBaseline(): Promise<WatchBaseline> {
@@ -88,20 +48,34 @@ async function loadBaseline(): Promise<WatchBaseline> {
 }
 
 async function checkSource(source: SourceReference) {
+  const signals = pricingSignalsFor(offers, models, source.url);
   try {
     const response = await fetch(source.url, {
-      headers: { 'user-agent': 'ai-cost-explorer-pricing-watch/1.0' },
+      headers: { 'user-agent': 'ai-cost-explorer-pricing-watch/2.0' },
       signal: AbortSignal.timeout(15_000),
     });
     const body = await response.text();
-    const expectedValues = pricingSignalsFor(source.url);
+    const evidence = response.ok ? pricingSignalEvidence(body, signals) : [];
+    const pricingSignals = response.ok ? countPricingSignals(body, signals) : 0;
+    const fingerprint = response.ok ? pricingFingerprint(body, signals) : '';
+    const signalStates = Object.fromEntries(
+      evidence.map(({ signal, status }) => [pricingSignalKey(signal), status]),
+    ) as Record<string, 'present' | 'missing'>;
     return {
       source,
       ok: response.ok,
       status: response.status,
-      sha256: response.ok ? digest(body, expectedValues) : null,
-      expectedSignals: expectedValues.length,
-      pricingSignals: response.ok ? countPricingSignals(body, expectedValues) : 0,
+      sha256: response.ok ? digest(fingerprint) : null,
+      expectedSignals: signals.length,
+      pricingSignals,
+      missingSignals: evidence.filter(({ status }) => status === 'missing').length,
+      signalStates,
+      missingSignalDetails: evidence
+        .filter(({ status }) => status === 'missing')
+        .slice(0, 4)
+        .map(
+          ({ signal }) => `${signal.apiModelId}/${signal.mode}/${signal.component}=${signal.value}`,
+        ),
     };
   } catch (error) {
     return {
@@ -109,8 +83,13 @@ async function checkSource(source: SourceReference) {
       ok: false,
       status: error instanceof Error ? error.message : 'network error',
       sha256: null,
-      expectedSignals: pricingSignalsFor(source.url).length,
+      expectedSignals: signals.length,
       pricingSignals: 0,
+      missingSignals: signals.length,
+      missingSignalDetails: [],
+      signalStates: Object.fromEntries(
+        signals.map((signal) => [pricingSignalKey(signal), 'missing']),
+      ) as Record<string, 'present' | 'missing'>,
     };
   }
 }
@@ -132,18 +111,42 @@ for (const result of results) {
   nextBaseline[source.url] = {
     sha256: result.sha256,
     checkedAt: new Date().toISOString(),
+    expectedSignals: result.expectedSignals,
     pricingSignals: result.pricingSignals,
+    missingSignals: result.missingSignals,
+    signalStates: result.signalStates,
   };
   if (!updateBaseline) {
     const previous = baseline[source.url];
     if (!previous) failures.push(`${source.publisher}: no baseline for ${source.url}`);
-    else if (previous.sha256 !== result.sha256)
-      failures.push(`${source.publisher}: content changed at ${source.url}`);
+    else if (previous.sha256 !== result.sha256) {
+      const regressions = previous.signalStates
+        ? Object.entries(result.signalStates).filter(
+            ([key, status]) => status === 'missing' && previous.signalStates?.[key] === 'present',
+          )
+        : [];
+      if (regressions.length > 0) {
+        failures.push(
+          `${source.publisher}: ${regressions.length} previously present model/mode/component pricing signal(s) disappeared at ${source.url}`,
+        );
+      } else {
+        reviews.push(`${source.publisher}: semantic evidence coverage changed at ${source.url}`);
+      }
+    }
   }
-  if (result.expectedSignals > 0 && result.pricingSignals === 0)
-    reviews.push(`${source.publisher}: no expected price value was found at ${source.url}`);
+  if (result.expectedSignals > 0 && result.pricingSignals === 0) {
+    reviews.push(`${source.publisher}: no model-scoped price evidence was found at ${source.url}`);
+  } else if (result.missingSignals > 0) {
+    const detail =
+      result.missingSignalDetails.length > 0
+        ? ` (e.g. ${result.missingSignalDetails.join(', ')})`
+        : '';
+    reviews.push(
+      `${source.publisher}: ${result.missingSignals}/${result.expectedSignals} model/mode/component signals need review at ${source.url}${detail}`,
+    );
+  }
   console.log(
-    `- ${source.publisher}: ${result.pricingSignals}/${result.expectedSignals} pricing signals, ${result.sha256.slice(0, 12)}…`,
+    `- ${source.publisher}: ${result.pricingSignals}/${result.expectedSignals} model-scoped pricing signals, ${result.missingSignals} needing review, ${result.sha256.slice(0, 12)}…`,
   );
 }
 
@@ -155,7 +158,7 @@ if (updateBaseline) {
 }
 
 if (reviews.length > 0) {
-  console.warn(`Pricing values requiring manual review: ${reviews.length}`);
+  console.warn(`Pricing evidence requiring manual review: ${reviews.length}`);
   for (const review of reviews) console.warn(`- ${review}`);
 }
 if (failures.length > 0) {
@@ -165,7 +168,7 @@ if (failures.length > 0) {
 } else {
   console.log(
     updateBaseline
-      ? 'Baseline updated after reviewing reachable sources. Values were checked for visible pricing signals; catalog data was not mutated.'
-      : 'All registered sources are reachable and unchanged from the reviewed baseline. Values were checked for visible pricing signals; no data was mutated.',
+      ? 'Baseline updated after reviewing reachable sources and model-scoped evidence; catalog data was not mutated.'
+      : 'All registered sources are reachable and unchanged from the reviewed semantic baseline. Model, mode and component evidence was checked; no data was mutated.',
   );
 }
