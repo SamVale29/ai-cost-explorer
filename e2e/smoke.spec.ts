@@ -10,6 +10,20 @@ test('landing page loads the verified catalog and links into the explorer', asyn
   await expect(page.getByRole('table', { name: 'Searchable AI model offers' })).toBeVisible();
 });
 
+test('landing page renders when browser storage is unavailable', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new DOMException('Storage disabled', 'SecurityError');
+      },
+    });
+  });
+  await page.goto('./');
+
+  await expect(page.getByRole('heading', { name: /Choose the right AI model/i })).toBeVisible();
+});
+
 test('explorer creates a shareable comparison', async ({ page }) => {
   await page.goto('./explore');
   await page.getByPlaceholder('Search model, provider or API ID').fill('GPT');

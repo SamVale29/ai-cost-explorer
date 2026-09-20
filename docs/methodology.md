@@ -1,6 +1,6 @@
 # AI Cost Explorer methodology
 
-Version: `v0.1.0` · data as of `2026-08-02`
+Version: `v0.1.0` · the generated catalog date is the latest `checkedAt` in the source registry
 
 AI Cost Explorer is a comparison aid, not a provider ranking and not a purchasing quote. The method is intentionally inspectable: a reader should be able to follow a displayed number back to a field, a pricing rule and an official source.
 
@@ -38,6 +38,8 @@ The simulator applies the rule matching the request input token count. If severa
 ### Workload calculation
 
 ```text
+cached input tokens = min(requested cached input, total input)
+cache-write tokens  = min(requested cache-write input, total input − cached input)
 standard input tokens = max(0, total input − cached input − cache-write input)
 standard input cost   = standard input tokens / 1M × mixed input rate
 cached input cost     = cached tokens / 1M × mixed cache-hit rate
@@ -49,7 +51,7 @@ monthly cost          = daily cost × days/month
 annual cost           = monthly cost × 12
 ```
 
-The cache buckets are subtracted before standard input is priced, so cached tokens are never counted twice. Batch is a weighted blend over the chosen batch fraction; it is not applied to an offer that does not publish a batch rule. Decimal arithmetic is used to avoid binary floating-point surprises.
+Cache hits take precedence when requested buckets exceed total input; cache writes use the remaining input, and cached tokens are never counted twice. Batch is a weighted blend over the chosen batch fraction; it is not applied to an offer that does not publish a batch rule. Decimal arithmetic is used to avoid binary floating-point surprises.
 
 ### Saved scenarios
 
@@ -96,7 +98,7 @@ The `/value` page can plot known price/context axes and marks non-dominated offe
 official page → reviewed data edit → validation → snapshot → build → CI → deploy
 ```
 
-The weekly pricing-watch job checks the source registry and validates the catalog. It reports unavailable URLs without mutating data. A human review is still required for a price edit, history event or benchmark submission.
+The weekly pricing-watch job checks the source registry, fetches the pages, compares a reviewed pricing-signal fingerprint and validates the catalog. It fails on unavailable sources, missing baselines or changed fingerprints without mutating catalog data; updating a baseline is an explicit reviewed action. A human review is still required for a price edit, history event or benchmark submission.
 
 The generated [`catalog-health-v1.json`](../public/data/catalog-health-v1.json) records how much of the reviewed snapshot is known: pricing-field coverage, model-field coverage, source freshness and whether measured benchmarks exist. Coverage is descriptive, not a provider quality score; an unknown field remains unknown in the catalog.
 

@@ -51,6 +51,7 @@ import {
 import { hasDifferences } from '../lib/compare';
 import { paretoFrontier, scoreOffers, type ParetoPoint } from '../lib/pareto';
 import { standardRule } from '../lib/pricing';
+import { readStoredTheme, storeTheme, type Theme } from '../lib/theme';
 import { AppErrorBoundary } from './AppErrorBoundary';
 import { GITHUB_URL } from './config';
 import {
@@ -126,21 +127,21 @@ export default function App() {
 
   return (
     <CatalogContext.Provider value={{ catalog, offers: hydrateOffers(catalog) }}>
-      <AppShell />
+      <AppErrorBoundary>
+        <AppShell />
+      </AppErrorBoundary>
     </CatalogContext.Provider>
   );
 }
 
 function AppShell() {
-  const [theme, setTheme] = useState<'dark' | 'light'>(
-    () => (localStorage.getItem('ace-theme') as 'dark' | 'light' | null) ?? 'dark',
-  );
+  const [theme, setTheme] = useState<Theme>(readStoredTheme);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const { catalog } = useCatalog();
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    localStorage.setItem('ace-theme', theme);
+    storeTheme(theme);
   }, [theme]);
   useEffect(() => setMobileOpen(false), [location.pathname]);
   const toggleTheme = () => setTheme((value) => (value === 'dark' ? 'light' : 'dark'));
@@ -262,19 +263,17 @@ function AppShell() {
           </div>
         </header>
         <div className="page-frame">
-          <AppErrorBoundary>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/explore" element={<ExplorerPage />} />
-              <Route path="/compare" element={<ComparePage />} />
-              <Route path="/calculator" element={<CalculatorPage />} />
-              <Route path="/history" element={<HistoryPage />} />
-              <Route path="/value" element={<ValuePage />} />
-              <Route path="/methodology" element={<MethodologyPage />} />
-              <Route path="/model/:modelId" element={<ModelPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </AppErrorBoundary>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/explore" element={<ExplorerPage />} />
+            <Route path="/compare" element={<ComparePage />} />
+            <Route path="/calculator" element={<CalculatorPage />} />
+            <Route path="/history" element={<HistoryPage />} />
+            <Route path="/value" element={<ValuePage />} />
+            <Route path="/methodology" element={<MethodologyPage />} />
+            <Route path="/model/:modelId" element={<ModelPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
         </div>
         <footer className="site-footer">
           <span>AI Cost Explorer · Independent open-source project · Built by Sam Vale</span>
@@ -1967,7 +1966,7 @@ function CalculatorPage() {
   };
   const validationMessages = [
     input.cachedInputTokens + input.cacheWriteTokens > input.inputTokens
-      ? 'Cache and cache-write tokens exceed total input; the calculator caps them at the request total.'
+      ? 'Cache and cache-write tokens exceed total input; cache hits take precedence and cache writes use the remaining input.'
       : null,
     input.retryRate > 1
       ? 'Retry rate is above 100%; reduce it to keep the estimate realistic.'
@@ -2106,8 +2105,9 @@ function CalculatorPage() {
             <div>
               <strong>Cache tokens are not counted twice.</strong>
               <p>
-                Standard input is calculated as total input minus cached input minus cache writes.
-                Batch pricing blends only the chosen fraction of requests.
+                Cache hits take precedence; cache writes use the remaining input, and standard input
+                uses what is left after both buckets. Batch pricing blends only the chosen fraction
+                of requests.
               </p>
             </div>
           </div>
@@ -2903,11 +2903,14 @@ function MethodologyPage() {
             <h2>Prices are rules, not labels.</h2>
             <p>
               Each rule has a unit, mode, optional cache prices and optional token thresholds. The
-              simulator subtracts cached and cache-write tokens from standard input so cached tokens
-              are never billed twice.
+              simulator gives cache hits precedence, then uses any remaining input for cache writes;
+              standard input is priced from what remains after both buckets.
             </p>
             <div className="code-block">
               <code>
+                cached = min(requested cached, input); cache writes = min(requested writes, input −
+                cached)
+                <br />
                 standard input = max(0, input − cached − writes)
                 <br />
                 token cost = tokens / 1,000,000 × price

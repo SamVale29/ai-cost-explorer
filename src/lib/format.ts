@@ -1,4 +1,5 @@
 import type { OfferView, Staleness } from '../types';
+import { standardRule } from './pricing';
 
 export const numberFormat = new Intl.NumberFormat('en-US');
 export const currencyFormat = new Intl.NumberFormat('en-US', {
@@ -32,12 +33,14 @@ export function formatTokens(value: number | null | undefined): string {
 
 export function formatDate(value: string | null | undefined): string {
   if (!value) return 'Not verified';
-  const date = new Date(value);
+  const isCivilDate = /^\d{4}-\d{2}-\d{2}$/.test(value);
+  const date = new Date(isCivilDate ? `${value}T00:00:00.000Z` : value);
   if (Number.isNaN(date.getTime())) return 'Not verified';
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
+    ...(isCivilDate ? { timeZone: 'UTC' } : {}),
   }).format(date);
 }
 
@@ -63,7 +66,7 @@ export function stalenessLabel(value: Staleness): string {
 }
 
 export function primaryPricing(offer: OfferView) {
-  return offer.pricing.find((rule) => rule.mode === 'standard') ?? offer.pricing[0];
+  return standardRule({ offer }) ?? offer.pricing[0];
 }
 
 export function valueOrDash(value: number | string | null | undefined): string {

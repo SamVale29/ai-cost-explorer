@@ -14,4 +14,6 @@ The site is a static client-side app. It does not collect provider credentials, 
 
 ## Automated dependency checks
 
-CI audits production dependencies and verifies registry signatures. The current audit exception for `GHSA-qwww-vcr4-c8h2` is limited to React Router's unstable RSC APIs; this repository uses declarative `BrowserRouter`/`Routes` only and has no RSC runtime. Review this exception by **2026-09-01**, then remove it when the deployed dependency line is upgraded to a release that includes the RSC fix, or if the application adopts RSC APIs.
+Every pull request receives the stable `audit` check, including documentation-only and workflow-only changes. CI audits production and development dependencies, verifies registry signatures and fails on high-severity advisories. Development dependencies are in scope because they execute in local tooling and CI; they are not shipped in the static bundle.
+
+Dependabot version updates remain enabled weekly in [`.github/dependabot.yml`](.github/dependabot.yml). Repository administrators should also keep Dependabot alerts and security updates enabled in the GitHub security settings; those account-level settings are not represented in this repository.

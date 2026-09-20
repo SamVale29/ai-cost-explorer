@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { CalculatorInput, OfferView, PricingRule, SourceReference } from '../types';
-import { calculateOfferCost, choosePricingRule } from './calculator';
+import { calculateOfferCost, choosePricingRule, effectiveRequestsPerDay } from './calculator';
 
 const source: SourceReference = {
   url: 'https://example.com/pricing',
@@ -128,6 +128,69 @@ describe('calculator', () => {
     expect(result.breakdown.cachedInput).toBe(0);
     expect(result.breakdown.cacheWrite).toBe(0);
     expect(result.warnings).toEqual([]);
+  });
+
+  it('does not use a batch price when the standard price is unknown', () => {
+    const result = calculateOfferCost(
+      makeOffer([
+        { ...standardAndBatch[0], inputPrice: null },
+        { ...standardAndBatch[1], inputPrice: 1 },
+      ]),
+      { ...baseInput, outputTokens: 0, cachedInputTokens: 0, cacheWriteTokens: 0, batchRate: 0 },
+    );
+
+    expect(result.breakdown.standardInput).toBeNull();
+    expect(result.monthlyCost).toBeNull();
+  });
+
+  it('requires only the pricing mode used by a 0% or 100% batch mix', () => {
+    const rules = [
+      { ...standardAndBatch[0], inputPrice: null },
+      { ...standardAndBatch[1], inputPrice: 1 },
+    ];
+
+    expect(
+      calculateOfferCost(makeOffer(rules), {
+        ...baseInput,
+        inputTokens: 1_000_000,
+        outputTokens: 0,
+        cachedInputTokens: 0,
+        cacheWriteTokens: 0,
+        batchRate: 1,
+      }).monthlyCost,
+    ).toBe(330);
+  });
+
+  it('normalizes cache buckets before pricing them', () => {
+    const result = calculateOfferCost(makeOffer([standardAndBatch[0]]), {
+      ...baseInput,
+      inputTokens: 100,
+      outputTokens: 0,
+      cachedInputTokens: 1_000_000,
+      cacheWriteTokens: 1_000_000,
+      batchRate: 0,
+    });
+
+    expect(result.breakdown).toMatchObject({
+      standardInput: 0,
+      cachedInput: 0.00005,
+      cacheWrite: 0,
+    });
+    expect(result.warnings).toContain(
+      'Cache and cache-write tokens exceeded total input; cache hits take precedence and cache writes use the remaining input.',
+    );
+  });
+
+  it('uses the derived workload dimensions in totals and exported assumptions', () => {
+    expect(
+      effectiveRequestsPerDay({
+        ...baseInput,
+        requestsPerDay: 1,
+        users: 100,
+        conversationsPerUser: 2,
+        messagesPerConversation: 3,
+      }),
+    ).toBe(600);
   });
 
   it('ignores expired and future pricing rules', () => {

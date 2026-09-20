@@ -37,7 +37,7 @@
   --border-light: #31445f;
   --text: #ecf2f8;
   --muted: #8493aa;
-  --muted-2: #66768f;
+  --muted-2: #90a0b7;
   --mint: #65e6b5;
   --mint-dim: #214c47;
   --gold: #f7b955;
@@ -62,16 +62,16 @@
   --border: #dde6f0;
   --border-light: #cbd8e6;
   --text: #152038;
-  --muted: #63738b;
-  --muted-2: #8190a4;
-  --mint: #1e9a72;
+  --muted: #5a6a80;
+  --muted-2: #5c6c83;
+  --mint: #0a6f52;
   --mint-dim: #d9f3e9;
-  --gold: #a76b06;
+  --gold: #8a5800;
   --gold-dim: #fff1cf;
   --blue: #2861ad;
   --blue-dim: #dceaff;
   --purple: #7044be;
-  --danger: #c24f4b;
+  --danger: #a23d39;
   --danger-dim: #ffe4e2;
   --shadow: 0 18px 60px rgba(36, 57, 82, 0.1);
 }
@@ -448,6 +448,13 @@ button {
 .button-primary:hover {
   color: #071713;
   background: #8df1cb;
+}
+:root[data-theme='light'] .button-primary {
+  color: #ffffff;
+}
+:root[data-theme='light'] .button-primary:hover {
+  color: #ffffff;
+  background: #08573f;
 }
 .button-ghost {
   color: var(--muted);
@@ -2064,7 +2071,7 @@ h3 {
 }
 .formula-card code,
 .code-block code {
-  color: var(--mint);
+  color: #65e6b5;
   font-family: 'DM Mono', monospace;
   font-size: 10px;
   line-height: 1.9;
@@ -2682,6 +2689,9 @@ h3 {
   color: var(--mint);
   border-color: #356d5f;
   background: var(--mint-dim);
+}
+.entity-flow > span.highlight small {
+  color: var(--text);
 }
 .entity-flow small {
   display: block;

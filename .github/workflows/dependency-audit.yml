@@ -5,10 +5,6 @@ on:
     - cron: '37 7 * * 0'
   workflow_dispatch:
   pull_request:
-    paths:
-      - package.json
-      - pnpm-lock.yaml
-      - .github/workflows/dependency-audit.yml
 
 permissions:
   contents: read
@@ -34,10 +30,5 @@ jobs:
         run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Verify package signatures
         run: pnpm audit signatures
-      - name: Audit production dependencies
-        # The site uses declarative React Router only; it has no unstable RSC APIs.
-        # Revisit this exception by 2026-09-01 and when the RSC fix is available.
-        run: pnpm audit --prod --audit-level high --ignore GHSA-qwww-vcr4-c8h2
-      - name: Informational audit without the documented exception
-        run: pnpm audit --prod --audit-level high
-        continue-on-error: true
+      - name: Audit all dependencies
+        run: pnpm audit --audit-level high

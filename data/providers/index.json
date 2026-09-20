@@ -1,11 +1,9 @@
-[
-  {"id":"openai","name":"OpenAI API","website":"https://openai.com","pricingPage":"https://developers.openai.com/api/docs/models","documentationPage":"https://developers.openai.com/api/docs","directProvider":true},
-  {"id":"anthropic","name":"Anthropic API","website":"https://www.anthropic.com","pricingPage":"https://platform.claude.com/docs/en/about-claude/pricing","documentationPage":"https://docs.anthropic.com","directProvider":true},
-  {"id":"google-ai","name":"Google AI Studio API","website":"https://ai.google.dev","pricingPage":"https://ai.google.dev/gemini-api/docs/pricing","documentationPage":"https://ai.google.dev/gemini-api/docs","directProvider":true},
-  {"id":"mistral","name":"Mistral API","website":"https://mistral.ai","pricingPage":"https://docs.mistral.ai/models/model-selection-guide","documentationPage":"https://docs.mistral.ai","directProvider":true},
-  {"id":"cohere","name":"Cohere API","website":"https://cohere.com","pricingPage":"https://docs.cohere.com/docs/how-does-cohere-pricing-work","documentationPage":"https://docs.cohere.com","directProvider":true},
-  {"id":"xai","name":"xAI API","website":"https://x.ai","pricingPage":"https://docs.x.ai/developers/pricing","documentationPage":"https://docs.x.ai","directProvider":true},
-  {"id":"deepseek","name":"DeepSeek API","website":"https://www.deepseek.com","pricingPage":"https://api-docs.deepseek.com/quick_start/pricing","documentationPage":"https://api-docs.deepseek.com","directProvider":true},
-  {"id":"groq","name":"GroqCloud API","website":"https://groq.com","pricingPage":"https://console.groq.com/docs/models","documentationPage":"https://console.groq.com/docs","directProvider":true},
-  {"id":"together","name":"Together AI","website":"https://www.together.ai","pricingPage":"https://docs.together.ai/docs/serverless/models","documentationPage":"https://docs.together.ai","directProvider":true}
-]
+[{"id":"openai","name":"OpenAI API","website":"https://openai.com","pricingPage":"https://developers.openai.com/api/docs/pricing","documentationPage":"https://developers.openai.com/api/docs","directProvider":true},
+{"id":"anthropic","name":"Anthropic API","website":"https://www.anthropic.com","pricingPage":"https://platform.claude.com/docs/en/about-claude/pricing","documentationPage":"https://docs.anthropic.com","directProvider":true},
+{"id":"google-ai","name":"Google AI Studio API","website":"https://ai.google.dev","pricingPage":"https://ai.google.dev/gemini-api/docs/pricing","documentationPage":"https://ai.google.dev/gemini-api/docs","directProvider":true},
+{"id":"mistral","name":"Mistral API","website":"https://mistral.ai","pricingPage":"https://docs.mistral.ai/models/model-selection-guide","documentationPage":"https://docs.mistral.ai","directProvider":true},
+{"id":"cohere","name":"Cohere API","website":"https://cohere.com","pricingPage":"https://docs.cohere.com/docs/how-does-cohere-pricing-work","documentationPage":"https://docs.cohere.com","directProvider":true},
+{"id":"xai","name":"xAI API","website":"https://x.ai","pricingPage":"https://docs.x.ai/developers/pricing","documentationPage":"https://docs.x.ai","directProvider":true},
+{"id":"deepseek","name":"DeepSeek API","website":"https://www.deepseek.com","pricingPage":"https://api-docs.deepseek.com/quick_start/pricing","documentationPage":"https://api-docs.deepseek.com","directProvider":true},
+{"id":"groq","name":"GroqCloud API","website":"https://groq.com","pricingPage":"https://console.groq.com/docs/models","documentationPage":"https://console.groq.com/docs","directProvider":true},
+{"id":"together","name":"Together AI","website":"https://www.together.ai","pricingPage":"https://docs.together.ai/docs/serverless/models","documentationPage":"https://docs.together.ai","directProvider":true}]
