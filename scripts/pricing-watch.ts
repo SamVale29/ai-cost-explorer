@@ -9,6 +9,7 @@ import {
   pricingSignalEvidence,
   pricingSignalsFor,
 } from '../src/lib/pricing-watch';
+import type { PricingSignalStatus } from '../src/lib/pricing-watch';
 
 type WatchBaseline = Record<
   string,
@@ -18,7 +19,7 @@ type WatchBaseline = Record<
     expectedSignals: number;
     pricingSignals: number;
     missingSignals: number;
-    signalStates?: Record<string, 'present' | 'missing'>;
+    signalStates?: Record<string, PricingSignalStatus>;
   }
 >;
 
@@ -33,7 +34,10 @@ const models = JSON.parse(
   await readFile(resolve(root, 'data', 'models', 'index.json'), 'utf8'),
 ) as Model[];
 const baselinePath = resolve(root, 'data', 'sources', 'watch-baseline.json');
-const updateBaseline = process.argv.includes('--update-baseline');
+const baselineUpdateUrl = process.argv
+  .find((argument) => argument.startsWith('--update-baseline-url='))
+  ?.slice('--update-baseline-url='.length);
+const updateBaseline = process.argv.includes('--update-baseline') || Boolean(baselineUpdateUrl);
 
 function digest(fingerprint: string): string {
   return createHash('sha256').update(fingerprint).digest('hex');
@@ -51,7 +55,10 @@ async function checkSource(source: SourceReference) {
   const signals = pricingSignalsFor(offers, models, source.url);
   try {
     const response = await fetch(source.url, {
-      headers: { 'user-agent': 'ai-cost-explorer-pricing-watch/2.0' },
+      headers: {
+        'user-agent': 'ai-cost-explorer-pricing-watch/2.0',
+        'accept-language': 'en-US,en;q=0.9',
+      },
       signal: AbortSignal.timeout(15_000),
     });
     const body = await response.text();
@@ -60,7 +67,7 @@ async function checkSource(source: SourceReference) {
     const fingerprint = response.ok ? pricingFingerprint(body, signals) : '';
     const signalStates = Object.fromEntries(
       evidence.map(({ signal, status }) => [pricingSignalKey(signal), status]),
-    ) as Record<string, 'present' | 'missing'>;
+    ) as Record<string, PricingSignalStatus>;
     return {
       source,
       ok: response.ok,
@@ -68,13 +75,14 @@ async function checkSource(source: SourceReference) {
       sha256: response.ok ? digest(fingerprint) : null,
       expectedSignals: signals.length,
       pricingSignals,
-      missingSignals: evidence.filter(({ status }) => status === 'missing').length,
+      missingSignals: evidence.filter(({ status }) => status !== 'present').length,
       signalStates,
       missingSignalDetails: evidence
-        .filter(({ status }) => status === 'missing')
+        .filter(({ status }) => status !== 'present')
         .slice(0, 4)
         .map(
-          ({ signal }) => `${signal.apiModelId}/${signal.mode}/${signal.component}=${signal.value}`,
+          ({ signal, status }) =>
+            `${signal.apiModelId}/${signal.mode}/${signal.component}=${signal.value} (${status})`,
         ),
     };
   } catch (error) {
@@ -89,7 +97,7 @@ async function checkSource(source: SourceReference) {
       missingSignalDetails: [],
       signalStates: Object.fromEntries(
         signals.map((signal) => [pricingSignalKey(signal), 'missing']),
-      ) as Record<string, 'present' | 'missing'>,
+      ) as Record<string, PricingSignalStatus>,
     };
   }
 }
@@ -122,7 +130,7 @@ for (const result of results) {
     else if (previous.sha256 !== result.sha256) {
       const regressions = previous.signalStates
         ? Object.entries(result.signalStates).filter(
-            ([key, status]) => status === 'missing' && previous.signalStates?.[key] === 'present',
+            ([key, status]) => status !== 'present' && previous.signalStates?.[key] === 'present',
           )
         : [];
       if (regressions.length > 0) {
@@ -151,8 +159,14 @@ for (const result of results) {
 }
 
 if (updateBaseline) {
-  await writeFile(baselinePath, `${JSON.stringify(nextBaseline, null, 2)}\n`);
-  console.log(`Updated ${baselinePath}`);
+  const baselineToWrite = baselineUpdateUrl
+    ? { ...baseline, [baselineUpdateUrl]: nextBaseline[baselineUpdateUrl] }
+    : nextBaseline;
+  if (baselineUpdateUrl && !nextBaseline[baselineUpdateUrl]) {
+    throw new Error(`Cannot update baseline: source was not reachable: ${baselineUpdateUrl}`);
+  }
+  await writeFile(baselinePath, `${JSON.stringify(baselineToWrite, null, 2)}\n`);
+  console.log(`Updated ${baselinePath}${baselineUpdateUrl ? ` for ${baselineUpdateUrl}` : ''}`);
 } else if (Object.keys(baseline).length === 0) {
   failures.push('no baseline file found; run pnpm pricing:watch -- --update-baseline after review');
 }
