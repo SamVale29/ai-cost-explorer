@@ -179,6 +179,25 @@ for (const result of results) {
 }
 
 if (updateBaseline) {
+  if (!baselineUpdateUrl && failures.length > 0) {
+    throw new Error(
+      `Cannot update the full baseline while ${failures.length} source(s) are unreachable; review connectivity first`,
+    );
+  }
+  if (baselineUpdateUrl) {
+    const selected = nextBaseline[baselineUpdateUrl];
+    if (!selected) {
+      throw new Error(`Cannot update baseline: source was not reachable: ${baselineUpdateUrl}`);
+    }
+    if (
+      selected.expectedSignals > 0 &&
+      (selected.pricingSignals !== selected.expectedSignals || selected.missingSignals !== 0)
+    ) {
+      throw new Error(
+        `Cannot update baseline: ${baselineUpdateUrl} has ${selected.pricingSignals}/${selected.expectedSignals} complete signals; resolve source coverage before migration`,
+      );
+    }
+  }
   const baselineToWrite = baselineUpdateUrl
     ? { ...baseline, [baselineUpdateUrl]: nextBaseline[baselineUpdateUrl] }
     : nextBaseline;

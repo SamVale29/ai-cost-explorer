@@ -663,7 +663,6 @@ function rangeMatches(
   }
   const range = descriptor.range ?? record.range;
   const expected = signalRange(signal);
-  if (range !== null) return range === expected;
   const matches = numericMatches(cell);
   const cellBoundaries = matches.flatMap((match, index) => {
     const context = numericContext(cell, match, index, matches);
@@ -675,6 +674,7 @@ function rangeMatches(
   if (record.boundaries.length === 1) {
     return rangeBoundaryMatchesSignal(signal, record.boundaries[0]);
   }
+  if (range !== null) return range === expected;
   if (expected === 'base') return true;
   return matches.some((match, index) => {
     const context = numericContext(cell, match, index, matches);
