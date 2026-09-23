@@ -210,6 +210,8 @@ function numericMatchesRange(context: NumericContext, expected: PricingRange): b
 
 function modeFromText(value: string): PricingMode | null {
   const text = normalized(value);
+  if (/\boff-peak\b/.test(text)) return 'off-peak';
+  if (/\bpeak\b/.test(text)) return 'peak';
   if (/\b(batch|bulk)\b/.test(text)) return 'batch';
   if (/\b(priority)\b/.test(text)) return 'priority';
   if (/\b(flex)\b/.test(text)) return 'flex';
@@ -529,13 +531,112 @@ function labeledTextRecords(body: string, signals: PricingSignal[]): PricingReco
   return records;
 }
 
-function pricingRecords(body: string, signals: PricingSignal[]): PricingRecord[] {
+function modelCardRecords(
+  body: string,
+  signals: PricingSignal[],
+  sourceUrl?: string,
+): PricingRecord[] {
+  if (!sourceUrl) return [];
+  const url = new URL(sourceUrl);
+  const openai =
+    url.hostname === 'developers.openai.com' && url.pathname.startsWith('/api/docs/models/');
+  const cohere = url.hostname === 'docs.cohere.com' && /\/docs\/command-/.test(url.pathname);
+  if (!openai && !cohere) return [];
+  const title = visibleText(body.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? '');
+  const heading = visibleText(body.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? '');
+  const modelText = heading || title;
+  if (
+    !signals.some((signal) =>
+      modelTokens(signal).some((token) => containsToken(normalized(modelText), token)),
+    )
+  )
+    return [];
+  const text = visibleText(body).replace(/\s+/g, ' ');
+  const block = openai
+    ? text.match(/Text tokens\s+Per 1M tokens([\s\S]*?)Quick comparison/i)?.[1]
+    : text.match(/Pricing\s+Input\s*([\s\S]*?)Specifications/i)?.[1];
+  if (!block) return [];
+  const pricing = cohere ? `Input ${block}` : block;
+  const input = pricing.match(/(?:^|\s)Input\s*\$\s*([0-9.]+)/i);
+  const cached = pricing.match(/Cached input\s*\$\s*([0-9.]+)/i);
+  const output = pricing.match(/Output\s*\$\s*([0-9.]+)/i);
+  if (!input || !output) return [];
+  const inputValue = Number(input[1]);
+  const outputValue = Number(output[1]);
+  const longContext =
+    openai &&
+    /Prompts with >272K input tokens are priced at 2x input and 1\.5x output for the full request\./.test(
+      text,
+    );
+  const cacheWrites =
+    openai && /Cache writes are billed at 1\.25x the uncached input token rate\./.test(text);
+  const make = (long: boolean): PricingRecord => ({
+    text: `${modelText} standard`,
+    mode: 'standard',
+    range: longContext ? (long ? 'long' : 'short') : null,
+    boundaries: longContext ? [{ operator: long ? '>' : '<=', tokens: 272000 }] : [],
+    headers: ['Input', 'Cached input', 'Output', 'Cache write'],
+    cells: [
+      String(inputValue * (long ? 2 : 1)),
+      !long && cached ? cached[1] : '',
+      String(outputValue * (long ? 1.5 : 1)),
+      cacheWrites ? String(inputValue * (long ? 2 : 1) * 1.25) : '',
+    ],
+  });
+  return longContext ? [make(false), make(true)] : [make(false)];
+}
+
+function deepseekTimeRecords(body: string, sourceUrl?: string): PricingRecord[] {
+  if (sourceUrl !== 'https://api-docs.deepseek.com/quick_start/pricing/') return [];
+  const records: PricingRecord[] = [];
+  for (const table of body.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)) {
+    const rows = Array.from(table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)).map((row) =>
+      Array.from(row[1].matchAll(/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi)).map((cell) =>
+        visibleText(cell[1]).replace(/\s+/g, ' ').trim(),
+      ),
+    );
+    const models = rows.find((row) => row[0] === 'MODEL')?.slice(1);
+    if (!models?.length) continue;
+    let component: string | null = null;
+    for (const row of rows) {
+      const label = row.join(' ');
+      if (/1M INPUT TOKENS.*CACHE HIT/.test(label)) component = 'Cached input';
+      else if (/1M INPUT TOKENS.*CACHE MISS/.test(label)) component = 'Input';
+      else if (/1M OUTPUT TOKENS/.test(label)) component = 'Output';
+      const band = row.find((cell) => cell === 'PEAK' || cell === 'OFF-PEAK');
+      if (!band || !component) continue;
+      const prices = row.slice(-models.length);
+      if (!prices.every((cell) => /^\$[0-9.]+$/.test(cell))) continue;
+      models.forEach((model, index) =>
+        records.push({
+          text: model,
+          mode: band === 'PEAK' ? 'peak' : 'off-peak',
+          range: null,
+          boundaries: [],
+          headers: [component!],
+          cells: [prices[index]],
+        }),
+      );
+    }
+  }
+  return records;
+}
+
+function pricingRecords(
+  body: string,
+  signals: PricingSignal[],
+  sourceUrl?: string,
+): PricingRecord[] {
   const structured = htmlRows(body);
-  const xaiBatch = xaiBatchRecords(body);
-  if (structured.length > 0) return [...structured, ...xaiBatch];
-  const markdown = markdownRows(body);
-  if (markdown.length > 0) return [...markdown, ...xaiBatch];
-  return [...labeledTextRecords(body, signals), ...xaiBatch];
+  const markdown = structured.length ? [] : markdownRows(body);
+  return [
+    ...structured,
+    ...markdown,
+    ...labeledTextRecords(body, signals),
+    ...xaiBatchRecords(body),
+    ...modelCardRecords(body, signals, sourceUrl),
+    ...deepseekTimeRecords(body, sourceUrl),
+  ];
 }
 
 function embeddedJsonObject(body: string, marker: string): unknown | null {
@@ -731,6 +832,22 @@ function signalCellStatus(record: PricingRecord, signal: PricingSignal): Pricing
             range: rowLabel.range ?? record.range,
           }
         : null);
+    if (
+      !descriptor &&
+      /price per\s*1m tokens/i.test(header) &&
+      (signal.component === 'input' || signal.component === 'output') &&
+      signal.mode === 'standard' &&
+      signalRange(signal) === 'base'
+    ) {
+      const values = Array.from(
+        record.cells[index].matchAll(/\$\s*([0-9.]+)\s*(input|output)\b/gi),
+      );
+      candidates.push(
+        ...values
+          .filter((match) => match[2].toLowerCase() === signal.component)
+          .map((match) => Number(match[1])),
+      );
+    }
     if (!descriptor || descriptor.component !== signal.component) continue;
     if (
       !modeMatches(signal, descriptor, record) ||
@@ -750,12 +867,26 @@ function signalCellStatus(record: PricingRecord, signal: PricingSignal): Pricing
 export function pricingSignalEvidence(
   body: string,
   signals: PricingSignal[],
+  sourceUrl?: string,
 ): PricingSignalEvidence[] {
-  const records = pricingRecords(body, signals);
+  const records = pricingRecords(body, signals, sourceUrl);
   return signals.map((signal) => {
     const matchingRecords = records.filter((record) => recordMatchesSignal(record, signal));
     const statuses = matchingRecords.map((record) => signalCellStatus(record, signal));
     if (statuses.includes('present')) return { signal, status: 'present' };
+    const stackedCache =
+      sourceUrl === 'https://platform.claude.com/docs/en/about-claude/pricing' &&
+      signal.mode === 'batch' &&
+      ['cachedInput', 'cacheWrite'].includes(signal.component) &&
+      /50% discount on both input and output tokens/.test(visibleText(body)) &&
+      /multipliers stack with other pricing modifiers, including the Batch API discount/.test(
+        visibleText(body),
+      );
+    if (stackedCache) {
+      const standardSignal = { ...signal, mode: 'standard' as const, value: signal.value * 2 };
+      if (matchingRecords.some((record) => signalCellStatus(record, standardSignal) === 'present'))
+        return { signal, status: 'present' };
+    }
     if (statuses.includes('missing')) return { signal, status: 'missing' };
     return { signal, status: 'ambiguous' };
   });
@@ -773,8 +904,12 @@ export function pricingSignalKey(signal: PricingSignal): string {
   ].join('|');
 }
 
-export function pricingFingerprint(body: string, signals: PricingSignal[]): string {
-  return pricingSignalEvidence(body, signals)
+export function pricingFingerprint(
+  body: string,
+  signals: PricingSignal[],
+  sourceUrl?: string,
+): string {
+  return pricingSignalEvidence(body, signals, sourceUrl)
     .sort((left, right) =>
       pricingSignalKey(left.signal).localeCompare(pricingSignalKey(right.signal)),
     )
@@ -782,6 +917,12 @@ export function pricingFingerprint(body: string, signals: PricingSignal[]): stri
     .join('|');
 }
 
-export function countPricingSignals(body: string, signals: PricingSignal[]): number {
-  return pricingSignalEvidence(body, signals).filter(({ status }) => status === 'present').length;
+export function countPricingSignals(
+  body: string,
+  signals: PricingSignal[],
+  sourceUrl?: string,
+): number {
+  return pricingSignalEvidence(body, signals, sourceUrl).filter(
+    ({ status }) => status === 'present',
+  ).length;
 }

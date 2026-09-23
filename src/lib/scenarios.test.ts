@@ -1,5 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
+  storeSavedScenarios,
+  isCalculatorInput,
   MAX_SAVED_SCENARIOS,
   parseSavedScenarioExport,
   parseSavedScenarios,
@@ -78,4 +80,42 @@ describe('saved calculator scenarios', () => {
     expect(parseSavedScenarioExport(serializeSavedScenarios(scenarios))).toEqual(scenarios);
     expect(parseSavedScenarioExport('{"schemaVersion":2,"scenarios":[]}')).toEqual(null);
   });
+});
+
+it('reports storage failure instead of reporting a durable save', () => {
+  const stub = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+    throw new DOMException('Quota exceeded', 'QuotaExceededError');
+  });
+  expect(storeSavedScenarios([])).toBe(false);
+  stub.mockRestore();
+  expect(storeSavedScenarios([])).toBe(true);
+});
+
+it('validates bounded whole-number workloads and complete legacy dimensions', () => {
+  for (const change of [
+    { requestsPerDay: 1e308 },
+    { inputTokens: 1.5 },
+    { daysPerMonth: 32 },
+    { batchRate: 1.1 },
+    { users: 2 },
+    { users: 1e6, conversationsPerUser: 1e6, messagesPerConversation: 1e6 },
+  ])
+    expect(isCalculatorInput({ ...input, ...change })).toBe(false);
+});
+
+it('makes legacy imported requests editable without hidden overrides', () => {
+  const record = {
+    id: 'legacy',
+    name: 'Legacy',
+    savedAt: '2026-09-23',
+    mode: 'monthly',
+    selectedOfferIds: [],
+    input: { ...input, users: 10, conversationsPerUser: 2, messagesPerConversation: 3 },
+  };
+  const migrated = parseSavedScenarios(JSON.stringify([record]))[0];
+  expect(migrated.input).toEqual({ ...input, requestsPerDay: 60 });
+  migrated.input.requestsPerDay = 999;
+  expect(
+    parseSavedScenarioExport(serializeSavedScenarios([migrated]))?.[0].input.requestsPerDay,
+  ).toBe(999);
 });

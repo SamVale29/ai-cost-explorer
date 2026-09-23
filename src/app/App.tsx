@@ -37,6 +37,14 @@ import {
 } from 'lucide-react';
 import { Link, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { calculateAll, resultAsText } from '../lib/calculator';
+import {
+  isOfferAvailable,
+  normalizeWorkload,
+  workloadErrors,
+  WORKLOAD_LIMITS,
+} from '../lib/workload';
+import { canonicalUrl, getPageMeta, robotsFor } from '../lib/page-meta';
+import { historyEventLabel, historyPriceChanges } from '../lib/history';
 import { calculateCatalogHealth } from '../lib/catalog-health';
 import { findOffer, hydrateOffers, loadCatalog, parseIds } from '../lib/catalog';
 import {
@@ -147,10 +155,32 @@ function AppShell() {
   const toggleTheme = () => setTheme((value) => (value === 'dark' ? 'light' : 'dark'));
   const pageTitle = getPageTitle(location.pathname);
   useEffect(() => {
-    const meta = getPageMeta(location.pathname);
+    const model = catalog.models.find(
+      (item) => location.pathname.replace(/\/$/, '') === `/model/${item.id}`,
+    );
+    const meta = getPageMeta(location.pathname, model);
     document.title = `${meta.title} · AI Cost Explorer`;
     document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description);
-  }, [location.pathname]);
+    document
+      .querySelector('link[rel="canonical"]')
+      ?.setAttribute('href', canonicalUrl(location.pathname));
+    const robots =
+      document.querySelector('meta[name="robots"]') ??
+      document.head.appendChild(document.createElement('meta'));
+    robots.setAttribute('name', 'robots');
+    robots.setAttribute('content', robotsFor(location.pathname, location.search));
+    for (const name of ['og:title', 'twitter:title'])
+      document
+        .querySelector(`meta[property="${name}"],meta[name="${name}"]`)
+        ?.setAttribute('content', document.title);
+    for (const name of ['og:description', 'twitter:description'])
+      document
+        .querySelector(`meta[property="${name}"],meta[name="${name}"]`)
+        ?.setAttribute('content', meta.description);
+    document
+      .querySelector('meta[property="og:url"]')
+      ?.setAttribute('content', canonicalUrl(location.pathname));
+  }, [location.pathname, location.search, catalog.models]);
 
   return (
     <div className="app-shell">
@@ -300,54 +330,6 @@ function getPageTitle(path: string) {
   if (path.startsWith('/methodology')) return 'Methodology';
   if (path.startsWith('/model')) return 'Model detail';
   return 'Overview';
-}
-
-function getPageMeta(path: string) {
-  if (path.startsWith('/explore'))
-    return {
-      title: 'Model explorer',
-      description:
-        'Search verified AI model offers by pricing, context, capabilities and source freshness.',
-    };
-  if (path.startsWith('/compare'))
-    return {
-      title: 'Comparison workspace',
-      description:
-        'Compare selected AI API offers side by side with differences and unknowns visible.',
-    };
-  if (path.startsWith('/calculator'))
-    return {
-      title: 'Cost simulator',
-      description:
-        'Estimate AI API workload costs with cache, retries, batch share and shareable scenarios.',
-    };
-  if (path.startsWith('/history'))
-    return {
-      title: 'Price history',
-      description: 'Review dated AI API pricing observations without invented historical lines.',
-    };
-  if (path.startsWith('/value'))
-    return {
-      title: 'Value frontier',
-      description: 'Plot measurable AI offer dimensions and inspect a transparent Pareto frontier.',
-    };
-  if (path.startsWith('/methodology'))
-    return {
-      title: 'Methodology',
-      description:
-        'Read the public data, pricing, freshness and benchmark methodology behind AI Cost Explorer.',
-    };
-  if (path.startsWith('/model/'))
-    return {
-      title: 'Model detail',
-      description:
-        'Inspect verified capabilities, pricing offers and official sources for an AI model.',
-    };
-  return {
-    title: 'Overview',
-    description:
-      'Compare LLM pricing, capabilities, context windows and verified sources before a workload becomes a bill.',
-  };
 }
 
 function LandingPage() {
@@ -1829,7 +1811,8 @@ function CalculatorPage() {
   const { offers } = useCatalog();
   const location = useLocation();
   const initialUrlState = useMemo(() => parseCalculatorUrl(location.search), [location.search]);
-  const defaultOfferIds = offers
+  const availableOffers = offers.filter(isOfferAvailable);
+  const defaultOfferIds = availableOffers
     .filter(
       (offer) =>
         standardRule({ offer })?.inputPrice !== null &&
@@ -1857,10 +1840,12 @@ function CalculatorPage() {
     .filter((offer): offer is OfferView => Boolean(offer));
   const results = calculateAll(selectedOffers, input);
   const resultById = new Map(results.map((result) => [result.offerId, result]));
-  const cheapest = results.find((result) => result.monthlyCost !== null)?.monthlyCost ?? null;
+  const cheapest =
+    results.find((result) => result.monthlyCost !== null && result.feasibility === 'compatible')
+      ?.monthlyCost ?? null;
   const update = <K extends keyof CalculatorInput>(key: K, value: CalculatorInput[K]) => {
     setPreset('custom');
-    setInput((current) => ({ ...current, [key]: value }));
+    setInput((current) => ({ ...normalizeWorkload(current), [key]: value }));
   };
   const selectPreset = (id: string) => {
     const next = PRESETS.find((item) => item.id === id);
@@ -1876,6 +1861,10 @@ function CalculatorPage() {
   const saveScenario = () => {
     const name = scenarioName.trim();
     if (!name) return;
+    if (workloadErrors(input).length) {
+      setScenarioNotice('Correct the workload errors before saving.');
+      return;
+    }
     const scenario: SavedScenario = {
       id: createScenarioId(),
       name,
@@ -1886,9 +1875,13 @@ function CalculatorPage() {
     };
     const next = limitSavedScenarios([scenario, ...savedScenarios]);
     setSavedScenarios(next);
-    storeSavedScenarios(next);
+    const persisted = storeSavedScenarios(next);
     setScenarioName('');
-    setScenarioNotice(`Saved “${name}”.`);
+    setScenarioNotice(
+      persisted
+        ? `Saved “${name}”.`
+        : 'Storage unavailable. Scenario kept for this session only; export it to keep a copy.',
+    );
   };
   const duplicateScenario = (scenario: SavedScenario) => {
     const duplicate: SavedScenario = {
@@ -1901,12 +1894,16 @@ function CalculatorPage() {
     };
     const next = limitSavedScenarios([duplicate, ...savedScenarios]);
     setSavedScenarios(next);
-    storeSavedScenarios(next);
+    const persisted = storeSavedScenarios(next);
     setScenarioName(duplicate.name);
-    setScenarioNotice(`Duplicated “${scenario.name}”.`);
+    setScenarioNotice(
+      persisted
+        ? `Duplicated “${scenario.name}”.`
+        : 'Storage unavailable. Copy kept for this session only; export it to keep a copy.',
+    );
   };
   const loadScenario = (scenario: SavedScenario) => {
-    setInput({ ...scenario.input });
+    setInput(normalizeWorkload(scenario.input));
     setSelectedIds(
       scenario.selectedOfferIds.filter((id) => offers.some((offer) => offer.id === id)),
     );
@@ -1917,10 +1914,18 @@ function CalculatorPage() {
   const deleteScenario = (id: string) => {
     const next = savedScenarios.filter((scenario) => scenario.id !== id);
     setSavedScenarios(next);
-    storeSavedScenarios(next);
-    setScenarioNotice('Scenario deleted.');
+    const persisted = storeSavedScenarios(next);
+    setScenarioNotice(
+      persisted
+        ? 'Scenario deleted.'
+        : 'Removed for this session only. Storage could not be updated; the scenario may reappear after reload.',
+    );
   };
   const copyShareLink = async () => {
+    if (workloadErrors(input).length) {
+      setScenarioNotice('Correct the workload errors before sharing.');
+      return;
+    }
     const shareUrl = `${window.location.origin}${window.location.pathname}${serializeCalculatorUrl({ input, selectedOfferIds: selectedIds, mode })}`;
     try {
       if (navigator.clipboard) await navigator.clipboard.writeText(shareUrl);
@@ -1943,6 +1948,10 @@ function CalculatorPage() {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
+    if (file.size > 1_048_576) {
+      setScenarioNotice('Scenario file must be no larger than 1 MB.');
+      return;
+    }
     try {
       const imported = parseSavedScenarioExport(await file.text());
       if (!imported) {
@@ -1951,8 +1960,12 @@ function CalculatorPage() {
       }
       const next = limitSavedScenarios([...imported, ...savedScenarios]);
       setSavedScenarios(next);
-      storeSavedScenarios(next);
-      setScenarioNotice(`${imported.length} scenario${imported.length === 1 ? '' : 's'} imported.`);
+      const persisted = storeSavedScenarios(next);
+      setScenarioNotice(
+        persisted
+          ? `${imported.length} scenario${imported.length === 1 ? '' : 's'} imported.`
+          : 'Storage unavailable. Imported for this session only; export to keep a copy.',
+      );
     } catch {
       setScenarioNotice('Could not read that file.');
     }
@@ -1965,6 +1978,7 @@ function CalculatorPage() {
     setScenarioNotice('Calculator reset to the default workload.');
   };
   const validationMessages = [
+    ...workloadErrors(input),
     input.cachedInputTokens + input.cacheWriteTokens > input.inputTokens
       ? 'Cache and cache-write tokens exceed total input; cache hits take precedence and cache writes use the remaining input.'
       : null,
@@ -1973,9 +1987,6 @@ function CalculatorPage() {
       : null,
     input.batchRate > 1
       ? 'Batch share is above 100%; reduce it to keep the estimate realistic.'
-      : null,
-    input.daysPerMonth > 31
-      ? 'Days per month is above 31; confirm that this is intentional.'
       : null,
   ].filter((message): message is string => Boolean(message));
   const inputFields: Array<{
@@ -1998,7 +2009,7 @@ function CalculatorPage() {
       <PageHeader
         eyebrow="WORKSPACE / SIMULATOR"
         title="Estimate the bill before it arrives."
-        description="Model real workloads with cache, batch, retries and long-context pricing tiers. Every total is an estimate, never a quote."
+        description="Estimate inference costs with cache, batch, retries and long-context pricing tiers. Storage, tools, taxes and other provider charges are excluded."
         actions={
           <>
             <button
@@ -2078,7 +2089,11 @@ function CalculatorPage() {
                   <input
                     type="number"
                     min="0"
-                    max={field.key === 'retryRate' || field.key === 'batchRate' ? 100 : undefined}
+                    max={
+                      field.key === 'retryRate' || field.key === 'batchRate'
+                        ? 100
+                        : WORKLOAD_LIMITS[field.key]
+                    }
                     step={field.step ?? 1}
                     value={
                       field.key === 'retryRate' || field.key === 'batchRate'
@@ -2122,30 +2137,35 @@ function CalculatorPage() {
             <span className="toolbar-note">{selectedOffers.length} selected</span>
           </div>
           <div className="offer-pick-list">
-            {offers.map((offer) => {
-              const selected = selectedIds.includes(offer.id);
-              const rule = standardRule({ offer });
-              return (
-                <label className={`offer-pick-row ${selected ? 'selected' : ''}`} key={offer.id}>
-                  <input
-                    type="checkbox"
-                    checked={selected}
-                    onChange={() => toggleOffer(offer.id)}
-                  />
-                  <span className="fake-check">
-                    <Check size={12} />
-                  </span>
-                  <span className="offer-pick-name">
-                    <strong>{offer.model.name}</strong>
-                    <small>{offer.provider.name}</small>
-                  </span>
-                  <span className="offer-pick-price">
-                    <Price value={rule?.inputPrice} />
-                    <small>input / 1M</small>
-                  </span>
-                </label>
-              );
-            })}
+            {offers
+              .filter((offer) => isOfferAvailable(offer) || selectedIds.includes(offer.id))
+              .map((offer) => {
+                const selected = selectedIds.includes(offer.id);
+                const rule = standardRule({ offer });
+                return (
+                  <label className={`offer-pick-row ${selected ? 'selected' : ''}`} key={offer.id}>
+                    <input
+                      type="checkbox"
+                      checked={selected}
+                      onChange={() => toggleOffer(offer.id)}
+                    />
+                    <span className="fake-check">
+                      <Check size={12} />
+                    </span>
+                    <span className="offer-pick-name">
+                      <strong>{offer.model.name}</strong>
+                      <small>
+                        {offer.provider.name}
+                        {!isOfferAvailable(offer) ? ' · Retired — historical selection' : ''}
+                      </small>
+                    </span>
+                    <span className="offer-pick-price">
+                      <Price value={rule?.inputPrice} />
+                      <small>input / 1M</small>
+                    </span>
+                  </label>
+                );
+              })}
           </div>
         </section>
       </div>
@@ -2153,14 +2173,18 @@ function CalculatorPage() {
         <div className="results-heading">
           <div>
             <div className="eyebrow">03 / RESULTS</div>
-            <h2>Monthly cost by offer</h2>
-            <p>Sorted from lowest to highest known monthly estimate.</p>
+            <h2>Inference subtotal by offer</h2>
+            <p>
+              Sorted by monthly inference subtotal. Only workloads with verified limits can receive
+              the lowest-subtotal badge.
+            </p>
           </div>
           <div className="mode-toggle" role="group" aria-label="Cost display mode">
             {(['request', 'daily', 'monthly', 'annual'] as const).map((item) => (
               <button
                 key={item}
                 className={mode === item ? 'active' : ''}
+                aria-pressed={mode === item}
                 onClick={() => setMode(item)}
               >
                 {item}
@@ -2189,7 +2213,8 @@ function CalculatorPage() {
                         : result.monthlyCost;
                 const isCheapest =
                   value !== null &&
-                  (mode === 'monthly' ? result.monthlyCost === cheapest : index === 0);
+                  result.feasibility === 'compatible' &&
+                  result.monthlyCost === cheapest;
                 return (
                   <div className={`result-card ${isCheapest ? 'best' : ''}`} key={result.offerId}>
                     <div className="result-card-top">
@@ -2202,7 +2227,13 @@ function CalculatorPage() {
                     <span className="result-provider">{offer.provider.name}</span>
                     <strong className="result-price">
                       {value === null
-                        ? 'Not verified'
+                        ? result.feasibility === 'incompatible'
+                          ? 'Incompatible workload'
+                          : result.feasibility === 'unavailable'
+                            ? 'Retired'
+                            : result.feasibility === 'invalid'
+                              ? 'Invalid workload'
+                              : 'Not verified'
                         : formatCurrency(value, mode === 'request' ? 6 : 2)}
                     </strong>
                     <span className="result-period">
@@ -2214,7 +2245,7 @@ function CalculatorPage() {
                             ? 'per year'
                             : 'per month'}
                     </span>
-                    {isCheapest && <Badge tone="mint">Lowest known estimate</Badge>}
+                    {isCheapest && <Badge tone="mint">Lowest verified subtotal</Badge>}
                     <div className="result-breakdown">
                       <span>
                         Input{' '}
@@ -2227,7 +2258,8 @@ function CalculatorPage() {
                       <span>
                         Cache{' '}
                         <b>
-                          {result.breakdown.cachedInput === null
+                          {result.breakdown.cachedInput === null ||
+                          result.breakdown.cacheWrite === null
                             ? '—'
                             : formatCurrency(
                                 (result.breakdown.cachedInput ?? 0) +
@@ -2245,12 +2277,12 @@ function CalculatorPage() {
                         </b>
                       </span>
                     </div>
-                    {result.warnings.length > 0 && (
-                      <span className="warning-note">
+                    {result.warnings.map((warning) => (
+                      <span className="warning-note" key={warning}>
                         <CircleHelp size={13} />
-                        {result.warnings[0]}
+                        {warning}
                       </span>
-                    )}
+                    ))}
                   </div>
                 );
               })}
@@ -2406,7 +2438,7 @@ function HistoryPage() {
           <div className="event-list">
             {visible.map((event) => {
               const offer = findOffer(offers, event.offerId);
-              const current = event.currentPricing.find((rule) => rule.mode === 'standard');
+              const changes = historyPriceChanges(event);
               return (
                 <article className="event-item" key={event.id}>
                   <div className="event-timeline">
@@ -2415,16 +2447,17 @@ function HistoryPage() {
                   </div>
                   <div>
                     <div className="event-topline">
-                      <Badge tone="mint">Initial observation</Badge>
+                      <Badge tone="mint">{historyEventLabel(event)}</Badge>
                       <span>{formatDate(event.detectedAt)}</span>
                     </div>
                     <h3>{offer?.model.name ?? event.offerId}</h3>
                     <p>
-                      {offer?.provider.name} ·{' '}
-                      {current?.inputPrice === null || current?.inputPrice === undefined
-                        ? 'Input price not verified'
-                        : `${formatCurrency(current.inputPrice, 4)} input / 1M`}
+                      {offer?.provider.name} · Detected {formatDate(event.detectedAt)} · Effective{' '}
+                      {event.effectiveAt ? formatDate(event.effectiveAt) : 'date not verified'}
                     </p>
+                    {changes.map((change) => (
+                      <p key={change}>{change}</p>
+                    ))}
                     <a href={event.source.url} target="_blank" rel="noreferrer">
                       Open official source <ExternalLink size={12} />
                     </a>
@@ -2457,13 +2490,16 @@ function ValuePage() {
   const [yAxis, setYAxis] = useState<'output' | 'context' | 'input'>('context');
   const [required, setRequired] = useState<string[]>([]);
   const [weights, setWeights] = useState({ cost: 50, context: 30, resources: 20 });
-  const candidates = offers.filter((offer) =>
-    required.every(
-      (capability) =>
-        offer.model.capabilities[capability as keyof OfferView['model']['capabilities']] === true ||
-        (capability === 'image' && offer.model.modalities.input.includes('image')),
-    ),
-  );
+  const candidates = offers
+    .filter(isOfferAvailable)
+    .filter((offer) =>
+      required.every(
+        (capability) =>
+          offer.model.capabilities[capability as keyof OfferView['model']['capabilities']] ===
+            true ||
+          (capability === 'image' && offer.model.modalities.input.includes('image')),
+      ),
+    );
   const getAxis = (offer: OfferView, axis: 'input' | 'context' | 'output') => {
     const rule = standardRule({ offer });
     if (axis === 'input') return rule?.inputPrice ?? null;
@@ -2787,6 +2823,15 @@ function ModelPage() {
                   <div>
                     <strong>{offer.provider.name}</strong>
                     <small>{offer.apiModelId}</small>
+                    {offer.pricing
+                      .filter((rule) => rule.mode === 'peak' || rule.mode === 'off-peak')
+                      .map((rule) => (
+                        <small key={rule.id}>
+                          {rule.mode}: {formatCurrency(rule.inputPrice)} input /{' '}
+                          {formatCurrency(rule.cachedInputPrice, 4)} cached /{' '}
+                          {formatCurrency(rule.outputPrice)} output per 1M tokens. {rule.notes}
+                        </small>
+                      ))}
                   </div>
                   <span>
                     <Price value={rule?.inputPrice} />

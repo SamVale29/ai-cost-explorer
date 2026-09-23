@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
-import { readFile, writeFile } from 'node:fs/promises';
+import { appendFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { canAcceptBaseline, sourceCheckStatus } from '../src/lib/watch-report';
 import type { Model, Offer, SourceReference } from '../src/types';
 import {
   countPricingSignals,
@@ -60,20 +61,35 @@ async function loadBaseline(): Promise<WatchBaseline> {
   }
 }
 
+async function fetchSource(url: string): Promise<Response> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'user-agent': 'ai-cost-explorer-pricing-watch/3.0',
+          'accept-language': 'en-US,en;q=0.9',
+        },
+        signal: AbortSignal.timeout(15_000),
+      });
+      if (response.ok || (response.status < 500 && response.status !== 429)) return response;
+      if (attempt === 1) return response;
+      await response.body?.cancel();
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError ?? new Error('Source request failed after retry');
+}
+
 async function checkSource(source: SourceReference) {
   const signals = pricingSignalsFor(offers, models, source.url);
   try {
-    const response = await fetch(source.url, {
-      headers: {
-        'user-agent': 'ai-cost-explorer-pricing-watch/2.0',
-        'accept-language': 'en-US,en;q=0.9',
-      },
-      signal: AbortSignal.timeout(15_000),
-    });
+    const response = await fetchSource(source.url);
     const body = await response.text();
-    const evidence = response.ok ? pricingSignalEvidence(body, signals) : [];
-    const pricingSignals = response.ok ? countPricingSignals(body, signals) : 0;
-    const fingerprint = response.ok ? pricingFingerprint(body, signals) : '';
+    const evidence = response.ok ? pricingSignalEvidence(body, signals, source.url) : [];
+    const pricingSignals = response.ok ? countPricingSignals(body, signals, source.url) : 0;
+    const fingerprint = response.ok ? pricingFingerprint(body, signals, source.url) : '';
     const signalStates = Object.fromEntries(
       evidence.map(({ signal, status }) => [pricingSignalKey(signal), status]),
     ) as Record<string, PricingSignalStatus>;
@@ -88,7 +104,6 @@ async function checkSource(source: SourceReference) {
       signalStates,
       missingSignalDetails: evidence
         .filter(({ status }) => status !== 'present')
-        .slice(0, 4)
         .map(
           ({ signal, status }) =>
             `${signal.apiModelId}/${signal.mode}/${signal.component}=${signal.value} (${status})`,
@@ -111,10 +126,22 @@ async function checkSource(source: SourceReference) {
   }
 }
 
+const sourceOnly = process.argv
+  .find((arg) => arg.startsWith('--source-url='))
+  ?.slice('--source-url='.length);
+const checkedSources = sourceOnly ? sources.filter((source) => source.url === sourceOnly) : sources;
+if (!checkedSources.length) throw new Error('Unknown source URL');
+if (sourceOnly && updateBaseline && baselineUpdateUrl !== sourceOnly)
+  throw new Error('A source-only baseline update must specify the same --update-baseline-url.');
+
 console.log(`# Pricing watch · ${new Date().toISOString()}`);
 console.log(`Registered official sources: ${sources.length}`);
 const baseline = await loadBaseline();
-const results = await Promise.all(sources.map(checkSource));
+const results: Awaited<ReturnType<typeof checkSource>>[] = [];
+// Bound concurrent requests; retry transient failures without weakening evidence checks.
+for (let index = 0; index < checkedSources.length; index += 4) {
+  results.push(...(await Promise.all(checkedSources.slice(index, index + 4).map(checkSource))));
+}
 const nextBaseline: WatchBaseline = {};
 const failures: string[] = [];
 const reviews: string[] = [];
@@ -178,7 +205,30 @@ for (const result of results) {
   );
 }
 
+const report = {
+  schemaVersion: 1,
+  checkedAt: new Date().toISOString(),
+  sources: results.map((result) => ({ ...result, evidenceStatus: sourceCheckStatus(result) })),
+  failures,
+  reviews,
+};
+await mkdir(resolve(root, 'reports'), { recursive: true });
+await writeFile(
+  resolve(root, 'reports/pricing-watch.json'),
+  `${JSON.stringify(report, null, 2)}\n`,
+);
+const summary = `## Pricing watch\n\n| Source | Evidence | Confirmed / expected |\n|---|---|---|\n${results.map((result) => `| ${result.source.publisher} — ${result.source.url} | ${sourceCheckStatus(result)} | ${result.pricingSignals}/${result.expectedSignals} |`).join('\n')}\n\nFull unresolved signal details are in the pricing-watch artifact. Reachability-only pages do not verify prices.\n`;
+await writeFile(resolve(root, 'reports/pricing-watch.md'), summary);
+if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, summary);
+
 if (updateBaseline) {
+  const selectedResults = baselineUpdateUrl
+    ? results.filter((result) => result.source.url === baselineUpdateUrl)
+    : results;
+  if (!canAcceptBaseline(selectedResults))
+    throw new Error(
+      'Cannot accept an incomplete baseline: resolve every unreachable, mismatched or inconclusive signal in the selected sources first. See reports/pricing-watch.json.',
+    );
   if (!baselineUpdateUrl && failures.length > 0) {
     throw new Error(
       `Cannot update the full baseline while ${failures.length} source(s) are unreachable; review connectivity first`,
@@ -227,6 +277,6 @@ if (failures.length > 0) {
   console.log(
     updateBaseline
       ? 'Baseline updated after reviewing reachable sources and model-scoped evidence; catalog data was not mutated.'
-      : 'All registered sources are reachable and unchanged from the reviewed semantic baseline. Model, mode and component evidence was checked; no data was mutated.',
+      : 'All expected pricing signals match the reviewed baseline. Sources without pricing signals were checked for reachability only; no data was mutated.',
   );
 }

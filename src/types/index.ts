@@ -1,7 +1,8 @@
 export type Status = 'active' | 'preview' | 'deprecated' | 'retired';
 export type SourceType =
   'official-pricing' | 'official-documentation' | 'official-release' | 'benchmark' | 'community';
-export type PricingMode = 'standard' | 'batch' | 'priority' | 'flex' | 'fast' | 'realtime';
+export type PricingMode =
+  'standard' | 'batch' | 'priority' | 'flex' | 'fast' | 'realtime' | 'peak' | 'off-peak';
 export type PricingUnit = 'per_million_tokens' | 'per_request' | 'per_second' | 'per_image';
 
 export type SourceReference = {
@@ -31,6 +32,7 @@ export type Model = {
   releaseDate?: string | null;
   knowledgeCutoff?: string | null;
   contextWindowTokens?: number | null;
+  contextWindowScope?: 'input' | 'combined';
   maxOutputTokens?: number | null;
   modalities: {
     input: Array<'text' | 'image' | 'audio' | 'video' | 'file'>;
@@ -128,6 +130,7 @@ export type PriceChangeEvent = {
   offerId: string;
   detectedAt: string;
   effectiveAt?: string | null;
+  eventType?: 'initial' | 'price-change' | 'retirement';
   previousPricing: PricingRule[];
   currentPricing: PricingRule[];
   source: SourceReference;
@@ -179,6 +182,8 @@ export type CostBreakdown = {
 };
 
 export type CalculatorResult = {
+  feasibility: 'compatible' | 'unknown' | 'incompatible' | 'unavailable' | 'invalid';
+  estimateKind: 'inference-subtotal';
   offerId: string;
   costPerRequest: number | null;
   dailyCost: number | null;

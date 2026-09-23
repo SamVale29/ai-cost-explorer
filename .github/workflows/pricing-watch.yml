@@ -35,5 +35,12 @@ jobs:
         run: pnpm benchmark:check-empty
       - name: Probe official source pages
         run: pnpm pricing:watch
+      - name: Preserve pricing review report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pricing-watch-${{ github.run_id }}
+          path: reports/pricing-watch.*
+          if-no-files-found: warn
       - name: Explain benchmark policy
         run: pnpm benchmark

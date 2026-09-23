@@ -45,7 +45,7 @@ test('calculator produces known estimates for selected offers', async ({ page })
   await expect(
     page.getByRole('heading', { name: 'Estimate the bill before it arrives.' }),
   ).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Monthly cost by offer' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Inference subtotal by offer' })).toBeVisible();
   await expect(page.locator('.result-card').first()).toBeVisible();
   await expect(page.locator('.result-price').first()).not.toHaveText('Not verified');
   await page.getByRole('button', { name: 'annual' }).click();
@@ -102,4 +102,22 @@ test('calculator accepts shareable URL state and imports scenario JSON', async (
   });
   await expect(page.getByText('Imported pilot')).toBeVisible();
   await expect(page.getByRole('status')).toContainText('imported');
+});
+
+test('direct routes have canonical metadata and scenario queries are noindex', async ({ page }) => {
+  await page.goto('./calculator/');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    'href',
+    'https://samvale29.github.io/ai-cost-explorer/calculator/',
+  );
+  await expect(page).toHaveTitle('Cost simulator · AI Cost Explorer');
+  await page.goto(
+    './calculator/?in=1000&out=200&cache=0&write=0&req=1000&days=30&retry=0&batch=0&users=10&convos=2&messages=3&offers=offer-cohere-command-r7b&mode=monthly',
+  );
+  await expect(page.getByLabel('Requests / day')).toHaveValue('60');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
+  await expect(page.getByRole('button', { name: 'monthly', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
 });

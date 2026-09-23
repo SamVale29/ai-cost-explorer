@@ -99,7 +99,7 @@ export function Capability({ value }: { value: boolean | null | undefined }) {
   if (value === false) return <span className="capability no">No</span>;
   return (
     <span className="capability unknown" title="Not verified">
-      â€”
+      —
     </span>
   );
 }
@@ -150,7 +150,7 @@ export function SourceList({
     <div className={`source-list ${compact ? 'source-list-compact' : ''}`}>
       {unique.map((source) => (
         <a key={source.url} href={source.url} target="_blank" rel="noreferrer">
-          <span className="source-mark">â†—</span>
+          <span className="source-mark">↗</span>
           <span>{source.title}</span>
           <ExternalLink size={12} />
         </a>

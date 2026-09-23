@@ -138,7 +138,7 @@ async function renderCatalog(path) {
     ${text(72, 158, 'See the market', 40, '#f5f7fb', 700)}
     ${text(72, 207, 'before you choose.', 40, '#f5f7fb', 700)}
     ${text(72, 268, 'A sharper starting point than a price list.', 20, '#a9b6ca', 400)}
-    ${text(72, 335, '44 verified offers', 25, '#58e5b1', 700)}
+    ${text(72, 335, '48 curated offers', 25, '#58e5b1', 700)}
     ${text(72, 365, 'across 9 direct API providers', 17, '#d8e0ee', 500)}
     ${text(72, 425, '22 official sources', 25, '#f6b94b', 700)}
     ${text(72, 455, 'linked at field level', 17, '#d8e0ee', 500)}
