@@ -19,7 +19,7 @@ describe('calculator URL state', () => {
     expect(parseCalculatorUrl(serializeCalculatorUrl(state))).toEqual(state);
   });
 
-  it('preserves derived workload dimensions used by the calculator', () => {
+  it('migrates derived workload dimensions into visible direct requests', () => {
     const state = {
       input: {
         ...input,
@@ -31,7 +31,12 @@ describe('calculator URL state', () => {
       mode: 'monthly' as const,
     };
 
-    expect(parseCalculatorUrl(serializeCalculatorUrl(state))).toEqual(state);
+    expect(parseCalculatorUrl(serializeCalculatorUrl(state))).toEqual({
+      ...state,
+      input: { ...input, requestsPerDay: 600 },
+    });
+    const legacy = serializeCalculatorUrl({ ...state, input }) + '&users=10&convos=2&messages=3';
+    expect(parseCalculatorUrl(legacy)?.input).toEqual({ ...input, requestsPerDay: 60 });
   });
 
   it('rejects incomplete or unsafe query state', () => {

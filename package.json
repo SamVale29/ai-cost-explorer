@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "vite",
     "build": "pnpm data:build && vite build && pnpm postbuild",
-    "postbuild": "node scripts/copy-spa-fallback.mjs",
+    "postbuild": "node --import tsx scripts/build-pages.ts",
     "preview": "vite preview",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier --write .",

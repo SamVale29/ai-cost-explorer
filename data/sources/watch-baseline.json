@@ -1,20 +1,12 @@
 {
   "https://developers.openai.com/api/docs/pricing": {
-    "sha256": "0bac8f4ac5cef2e2eb6d7d54a92fadbf5f5ae4a8ea3f7b56ec55b75172a2e25d",
-    "checkedAt": "2026-09-20T03:28:57.753Z",
+    "sha256": "d51a616eaae6cc0fd4cbc05f8c7fc217362a55e8e3c028213345d882322c6ffd",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
-    "expectedSignals": 32,
-    "pricingSignals": 32,
+    "expectedSignals": 16,
+    "pricingSignals": 16,
     "missingSignals": 0,
     "signalStates": {
-      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|cachedInput|0.04|272001|": "present",
-      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|cacheWrite|0.5|272001|": "present",
-      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|input|0.4|272001|": "present",
-      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|output|1.8|272001|": "present",
-      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|cachedInput|0.02||272000": "present",
-      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|cacheWrite|0.25||272000": "present",
-      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|input|0.2||272000": "present",
-      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|output|1.2||272000": "present",
       "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard-long|standard|cachedInput|0.8|272001|": "present",
       "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard-long|standard|cacheWrite|10|272001|": "present",
       "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard-long|standard|input|8|272001|": "present",
@@ -23,14 +15,6 @@
       "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard|standard|cacheWrite|5||272000": "present",
       "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard|standard|input|4||272000": "present",
       "offer-openai-gpt-5-6-sol|openai-gpt-5-6-sol-standard|standard|output|20||272000": "present",
-      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|cachedInput|0.4|272001|": "present",
-      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|cacheWrite|5|272001|": "present",
-      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|input|4|272001|": "present",
-      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|output|18|272001|": "present",
-      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|cachedInput|0.2||272000": "present",
-      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|cacheWrite|2.5||272000": "present",
-      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|input|2||272000": "present",
-      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|output|12||272000": "present",
       "offer-openai-gpt-6-astra|openai-gpt-6-astra-standard-long|standard|cachedInput|2|272001|": "present",
       "offer-openai-gpt-6-astra|openai-gpt-6-astra-standard-long|standard|cacheWrite|25|272001|": "present",
       "offer-openai-gpt-6-astra|openai-gpt-6-astra-standard-long|standard|input|20|272001|": "present",
@@ -42,69 +26,77 @@
     }
   },
   "https://developers.openai.com/api/docs/models/gpt-5.6-luna": {
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "bedd525468365ac592332af046a838cb7cdd5c337d10167f34a1c3559124867a",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
-    "expectedSignals": 0,
-    "pricingSignals": 0,
+    "expectedSignals": 7,
+    "pricingSignals": 7,
     "missingSignals": 0,
-    "signalStates": {}
+    "signalStates": {
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|cacheWrite|0.5|272001|": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|input|0.4|272001|": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard-long|standard|output|1.7999999999999998|272001|": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|cachedInput|0.02||272000": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|cacheWrite|0.25||272000": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|input|0.2||272000": "present",
+      "offer-openai-gpt-5-6-luna|openai-gpt-5-6-luna-standard|standard|output|1.2||272000": "present"
+    }
   },
   "https://developers.openai.com/api/docs/models/gpt-4.1": {
-    "sha256": "7a52e1e49b1e4f64e0802b7eb1536fb652cf0ef5884ca80f920f2d2343406445",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "cce338e8124e16a75e5b6ddf679ab3b2f8868a66105bc451c3e4a0ce74da090b",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 3,
-    "pricingSignals": 0,
-    "missingSignals": 3,
+    "pricingSignals": 3,
+    "missingSignals": 0,
     "signalStates": {
-      "offer-openai-gpt-4-1|openai-gpt-4-1-standard|standard|cachedInput|0.5||": "ambiguous",
-      "offer-openai-gpt-4-1|openai-gpt-4-1-standard|standard|input|2||": "ambiguous",
-      "offer-openai-gpt-4-1|openai-gpt-4-1-standard|standard|output|8||": "ambiguous"
+      "offer-openai-gpt-4-1|openai-gpt-4-1-standard|standard|cachedInput|0.5||": "present",
+      "offer-openai-gpt-4-1|openai-gpt-4-1-standard|standard|input|2||": "present",
+      "offer-openai-gpt-4-1|openai-gpt-4-1-standard|standard|output|8||": "present"
     }
   },
   "https://platform.claude.com/docs/en/about-claude/pricing": {
-    "sha256": "871e6b9d106d6ea392b201f3a83693c4d0d356247777c2e7926e3f9dd4ff610a",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "5997dd7916cc770373e81346d10ec519033fdce338ef94c72fdada1b3b53c937",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 40,
-    "pricingSignals": 30,
-    "missingSignals": 10,
+    "pricingSignals": 40,
+    "missingSignals": 0,
     "signalStates": {
-      "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|cachedInput|0.5||": "ambiguous",
-      "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|cacheWrite|6.25||": "ambiguous",
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|cachedInput|0.5||": "present",
+      "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|cacheWrite|6.25||": "present",
       "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|input|5||": "present",
       "offer-anthropic-claude-fable-5|anthropic-fable-5-batch|batch|output|25||": "present",
       "offer-anthropic-claude-fable-5|anthropic-fable-5-standard|standard|cachedInput|1||": "present",
       "offer-anthropic-claude-fable-5|anthropic-fable-5-standard|standard|cacheWrite|12.5||": "present",
       "offer-anthropic-claude-fable-5|anthropic-fable-5-standard|standard|input|10||": "present",
       "offer-anthropic-claude-fable-5|anthropic-fable-5-standard|standard|output|50||": "present",
-      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|cachedInput|0.05||": "ambiguous",
-      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|cacheWrite|0.625||": "ambiguous",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|cachedInput|0.05||": "present",
+      "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|cacheWrite|0.625||": "present",
       "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|input|0.5||": "present",
       "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-batch|batch|output|2.5||": "present",
       "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-standard|standard|cachedInput|0.1||": "present",
       "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-standard|standard|cacheWrite|1.25||": "present",
       "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-standard|standard|input|1||": "present",
       "offer-anthropic-claude-haiku-4-5|anthropic-haiku-4-5-standard|standard|output|5||": "present",
-      "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|cachedInput|0.25||": "ambiguous",
-      "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|cacheWrite|3.125||": "ambiguous",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|cachedInput|0.25||": "present",
+      "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|cacheWrite|3.125||": "present",
       "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|input|2.5||": "present",
       "offer-anthropic-claude-opus-5|anthropic-opus-5-batch|batch|output|12.5||": "present",
       "offer-anthropic-claude-opus-5|anthropic-opus-5-standard|standard|cachedInput|0.5||": "present",
       "offer-anthropic-claude-opus-5|anthropic-opus-5-standard|standard|cacheWrite|6.25||": "present",
       "offer-anthropic-claude-opus-5|anthropic-opus-5-standard|standard|input|5||": "present",
       "offer-anthropic-claude-opus-5|anthropic-opus-5-standard|standard|output|25||": "present",
-      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|cachedInput|0.15||": "ambiguous",
-      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|cacheWrite|1.875||": "ambiguous",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|cachedInput|0.15||": "present",
+      "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|cacheWrite|1.875||": "present",
       "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|input|1.5||": "present",
       "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-batch|batch|output|7.5||": "present",
       "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-standard|standard|cachedInput|0.3||": "present",
       "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-standard|standard|cacheWrite|3.75||": "present",
       "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-standard|standard|input|3||": "present",
       "offer-anthropic-claude-sonnet-4-6|anthropic-sonnet-4-6-standard|standard|output|15||": "present",
-      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|cachedInput|0.1||": "ambiguous",
-      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|cacheWrite|1.25||": "ambiguous",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|cachedInput|0.1||": "present",
+      "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|cacheWrite|1.25||": "present",
       "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|input|1||": "present",
       "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-batch|batch|output|5||": "present",
       "offer-anthropic-claude-sonnet-5|anthropic-sonnet-5-standard|standard|cachedInput|0.2||": "present",
@@ -115,7 +107,7 @@
   },
   "https://ai.google.dev/gemini-api/docs/pricing": {
     "sha256": "dcaf32118b8aef6372ba76db680a598744860ec5debabfecfb458b4568efa8d8",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 42,
     "pricingSignals": 42,
@@ -166,134 +158,101 @@
     }
   },
   "https://docs.mistral.ai/models/model-cards/mistral-small-4-0-26-03": {
-    "sha256": "835b3c821a518cd1c9573c1439b62054aad828e385a9c74e3beee442f1e7313d",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
-    "expectedSignals": 3,
+    "expectedSignals": 0,
     "pricingSignals": 0,
-    "missingSignals": 3,
-    "signalStates": {
-      "offer-mistral-small-4|mistral-small-4-standard|standard|cachedInput|0.015||": "ambiguous",
-      "offer-mistral-small-4|mistral-small-4-standard|standard|input|0.15||": "ambiguous",
-      "offer-mistral-small-4|mistral-small-4-standard|standard|output|0.6||": "ambiguous"
-    }
+    "missingSignals": 0,
+    "signalStates": {}
   },
   "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04": {
-    "sha256": "e89e6b20f98c22b6f48265f75986884ce9a73db95b441aa4ae2372b4ae9ab187",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
-    "expectedSignals": 3,
+    "expectedSignals": 0,
     "pricingSignals": 0,
-    "missingSignals": 3,
-    "signalStates": {
-      "offer-mistral-medium-3-5|mistral-medium-3-5-standard|standard|cachedInput|0.15||": "ambiguous",
-      "offer-mistral-medium-3-5|mistral-medium-3-5-standard|standard|input|1.5||": "ambiguous",
-      "offer-mistral-medium-3-5|mistral-medium-3-5-standard|standard|output|7.5||": "ambiguous"
-    }
+    "missingSignals": 0,
+    "signalStates": {}
   },
   "https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12": {
-    "sha256": "00f0aecc1fb1fd0998d59cd5f4f960c1bd177c2cf87d8e011752dce18242ee41",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
-    "expectedSignals": 3,
+    "expectedSignals": 0,
     "pricingSignals": 0,
-    "missingSignals": 3,
-    "signalStates": {
-      "offer-mistral-large-3|mistral-large-3-standard|standard|cachedInput|0.05||": "ambiguous",
-      "offer-mistral-large-3|mistral-large-3-standard|standard|input|0.5||": "ambiguous",
-      "offer-mistral-large-3|mistral-large-3-standard|standard|output|1.5||": "ambiguous"
-    }
-  },
-  "https://docs.mistral.ai/models/model-cards/ministral-3-3b-25-12": {
-    "sha256": "c17b2a53d10c3b0aadd3498b8578f9f427b29b4098d8f3b0a3411bed6667932f",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
-    "signalKeyVersion": 2,
-    "expectedSignals": 3,
-    "pricingSignals": 0,
-    "missingSignals": 3,
-    "signalStates": {
-      "offer-mistral-ministral-3b|mistral-ministral-3b-standard|standard|cachedInput|0.01||": "ambiguous",
-      "offer-mistral-ministral-3b|mistral-ministral-3b-standard|standard|input|0.1||": "ambiguous",
-      "offer-mistral-ministral-3b|mistral-ministral-3b-standard|standard|output|0.1||": "ambiguous"
-    }
+    "missingSignals": 0,
+    "signalStates": {}
   },
   "https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12": {
-    "sha256": "061b04a28d36af591d9c23bfa68b94bff1dec2de46e9ec7738bada0ce111208a",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
-    "expectedSignals": 3,
+    "expectedSignals": 0,
     "pricingSignals": 0,
-    "missingSignals": 3,
-    "signalStates": {
-      "offer-mistral-ministral-14b|mistral-ministral-14b-standard|standard|cachedInput|0.02||": "ambiguous",
-      "offer-mistral-ministral-14b|mistral-ministral-14b-standard|standard|input|0.2||": "ambiguous",
-      "offer-mistral-ministral-14b|mistral-ministral-14b-standard|standard|output|0.2||": "ambiguous"
-    }
+    "missingSignals": 0,
+    "signalStates": {}
   },
   "https://docs.mistral.ai/models/model-cards/codestral-25-08": {
-    "sha256": "5b5ce9f733a55a08b173ef8cf9f8dd9003f4809ba7eadaf505cea0b9e1641a62",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
-    "expectedSignals": 3,
+    "expectedSignals": 0,
     "pricingSignals": 0,
-    "missingSignals": 3,
-    "signalStates": {
-      "offer-mistral-codestral-2508|mistral-codestral-2508-standard|standard|cachedInput|0.03||": "ambiguous",
-      "offer-mistral-codestral-2508|mistral-codestral-2508-standard|standard|input|0.3||": "ambiguous",
-      "offer-mistral-codestral-2508|mistral-codestral-2508-standard|standard|output|0.9||": "missing"
-    }
+    "missingSignals": 0,
+    "signalStates": {}
   },
   "https://docs.cohere.com/docs/command-a": {
-    "sha256": "aca81eddf5d5f6ea1545155e780c81ef65e6cd48e5103d8c66785763ab326fc5",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "3d86348ab9de847b969c9b1981f3e9376d7c8c18e51ec0d2dec9f3274da2ba3e",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 2,
-    "pricingSignals": 0,
-    "missingSignals": 2,
+    "pricingSignals": 2,
+    "missingSignals": 0,
     "signalStates": {
-      "offer-cohere-command-a|cohere-command-a-standard|standard|input|2.5||": "ambiguous",
-      "offer-cohere-command-a|cohere-command-a-standard|standard|output|10||": "ambiguous"
+      "offer-cohere-command-a|cohere-command-a-standard|standard|input|2.5||": "present",
+      "offer-cohere-command-a|cohere-command-a-standard|standard|output|10||": "present"
     }
   },
   "https://docs.cohere.com/v2/docs/command-r-plus": {
-    "sha256": "353772ec319eebe16729952e49b584ddc792a7a4ff5d59bfc7cb703d82d47d70",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "92f2058f9a3769379515b7a7cec6a62f4760de8090b0ccacaf5416dd960ae161",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 2,
-    "pricingSignals": 0,
-    "missingSignals": 2,
+    "pricingSignals": 2,
+    "missingSignals": 0,
     "signalStates": {
-      "offer-cohere-command-r-plus|cohere-command-r-plus-standard|standard|input|2.5||": "ambiguous",
-      "offer-cohere-command-r-plus|cohere-command-r-plus-standard|standard|output|10||": "ambiguous"
+      "offer-cohere-command-r-plus|cohere-command-r-plus-standard|standard|input|2.5||": "present",
+      "offer-cohere-command-r-plus|cohere-command-r-plus-standard|standard|output|10||": "present"
     }
   },
   "https://docs.cohere.com/docs/command-r": {
-    "sha256": "2616fbf684d41d53d48c0e8cf8b11e1b61004c1fa255d0650f3529b6f19d2f26",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "e59a7094fe5b979f9c5295d0b3c1cbb0f0eb1a3f3aab22dff560e2cc0a46f07c",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 2,
-    "pricingSignals": 0,
-    "missingSignals": 2,
+    "pricingSignals": 2,
+    "missingSignals": 0,
     "signalStates": {
-      "offer-cohere-command-r|cohere-command-r-standard|standard|input|0.15||": "ambiguous",
-      "offer-cohere-command-r|cohere-command-r-standard|standard|output|0.6||": "ambiguous"
+      "offer-cohere-command-r|cohere-command-r-standard|standard|input|0.15||": "present",
+      "offer-cohere-command-r|cohere-command-r-standard|standard|output|0.6||": "present"
     }
   },
   "https://docs.cohere.com/v1/docs/command-r7b": {
-    "sha256": "d5f7aa1b6c341c723dfc857c8ef541ffba7ff68d01b9b48d13fe1abb65261dd0",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "7d43bc051cab0652679efd7a0bc9b9011ae4268d34d4e1e5614b014cf9846eea",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 2,
-    "pricingSignals": 0,
-    "missingSignals": 2,
+    "pricingSignals": 2,
+    "missingSignals": 0,
     "signalStates": {
-      "offer-cohere-command-r7b|cohere-command-r7b-standard|standard|input|0.0375||": "ambiguous",
-      "offer-cohere-command-r7b|cohere-command-r7b-standard|standard|output|0.15||": "ambiguous"
+      "offer-cohere-command-r7b|cohere-command-r7b-standard|standard|input|0.0375||": "present",
+      "offer-cohere-command-r7b|cohere-command-r7b-standard|standard|output|0.15||": "present"
     }
   },
   "https://docs.cohere.com/docs/command-a-plus": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 0,
     "pricingSignals": 0,
@@ -302,7 +261,7 @@
   },
   "https://docs.x.ai/developers/pricing": {
     "sha256": "a352a6555595cc84f0d5ab4b7988da665c668e966d58830f3ad00b9a51ab99e4",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 48,
     "pricingSignals": 48,
@@ -358,39 +317,39 @@
       "offer-xai-grok-build-0-1|xai-grok-build-short|standard|output|2||199999": "present"
     }
   },
-  "https://api-docs.deepseek.com/quick_start/pricing": {
-    "sha256": "e9f849f70cbbc5396c5949c9d286ffae2e9280a4e5a21db494068816e2bbbd03",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+  "https://api-docs.deepseek.com/quick_start/pricing/": {
+    "sha256": "d768f8f039c1145f5686065654d5e9a7c5bb0b12d4b1cd68b3a69296777bf767",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 6,
-    "pricingSignals": 0,
-    "missingSignals": 6,
+    "pricingSignals": 6,
+    "missingSignals": 0,
     "signalStates": {
-      "offer-deepseek-v4-flash|deepseek-v4-flash-standard|standard|cachedInput|0.0028||": "ambiguous",
-      "offer-deepseek-v4-flash|deepseek-v4-flash-standard|standard|input|0.14||": "ambiguous",
-      "offer-deepseek-v4-flash|deepseek-v4-flash-standard|standard|output|0.28||": "ambiguous",
-      "offer-deepseek-v4-pro|deepseek-v4-pro-standard|standard|cachedInput|0.003625||": "ambiguous",
-      "offer-deepseek-v4-pro|deepseek-v4-pro-standard|standard|input|0.435||": "ambiguous",
-      "offer-deepseek-v4-pro|deepseek-v4-pro-standard|standard|output|0.87||": "ambiguous"
+      "offer-deepseek-v4-pro|deepseek-v4-pro-off-peak|off-peak|cachedInput|0.022||": "present",
+      "offer-deepseek-v4-pro|deepseek-v4-pro-off-peak|off-peak|input|0.66||": "present",
+      "offer-deepseek-v4-pro|deepseek-v4-pro-off-peak|off-peak|output|1.98||": "present",
+      "offer-deepseek-v4-pro|deepseek-v4-pro-peak|peak|cachedInput|0.044||": "present",
+      "offer-deepseek-v4-pro|deepseek-v4-pro-peak|peak|input|1.32||": "present",
+      "offer-deepseek-v4-pro|deepseek-v4-pro-peak|peak|output|3.96||": "present"
     }
   },
   "https://console.groq.com/docs/models": {
-    "sha256": "2a71d8ce1a4aac8cf77f67f4f1d09f2168341eb77a96fdf24a747bb823c250e5",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "9749c87c00c9b24fb1765136dfce1a4b2d0fc49201b0cf29cd88478bbc42d14b",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 4,
-    "pricingSignals": 0,
-    "missingSignals": 4,
+    "pricingSignals": 4,
+    "missingSignals": 0,
     "signalStates": {
-      "offer-groq-gpt-oss-120b|groq-gpt-oss-120b-standard|standard|input|0.15||": "ambiguous",
-      "offer-groq-gpt-oss-120b|groq-gpt-oss-120b-standard|standard|output|0.6||": "missing",
-      "offer-groq-gpt-oss-20b|groq-gpt-oss-20b-standard|standard|input|0.075||": "ambiguous",
-      "offer-groq-gpt-oss-20b|groq-gpt-oss-20b-standard|standard|output|0.3||": "missing"
+      "offer-groq-gpt-oss-120b|groq-gpt-oss-120b-standard|standard|input|0.15||": "present",
+      "offer-groq-gpt-oss-120b|groq-gpt-oss-120b-standard|standard|output|0.6||": "present",
+      "offer-groq-gpt-oss-20b|groq-gpt-oss-20b-standard|standard|input|0.075||": "present",
+      "offer-groq-gpt-oss-20b|groq-gpt-oss-20b-standard|standard|output|0.3||": "present"
     }
   },
   "https://docs.together.ai/docs/serverless/models": {
-    "sha256": "e82fb477d49660f4021ceaeec5f1428e2e13402c258a1c33155fac4654f8bf6f",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "f5307fb7f38825b349df8822cb4f4679dd83dd863d010a66fb61048764bb847b",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 10,
     "pricingSignals": 10,
@@ -404,25 +363,22 @@
       "offer-together-qwen-3-6-plus|together-qwen-3-6-plus-standard|standard|input|0.5||": "present",
       "offer-together-qwen-3-6-plus|together-qwen-3-6-plus-standard|standard|output|3||": "present",
       "offer-together-qwen-3-7-max|together-qwen-3-7-max-standard|standard|cachedInput|0.5||": "present",
-      "offer-together-qwen-3-7-max|together-qwen-3-7-max-standard|standard|input|2.5||": "present",
-      "offer-together-qwen-3-7-max|together-qwen-3-7-max-standard|standard|output|7.5||": "present"
+      "offer-together-qwen-3-7-max|together-qwen-3-7-max-standard|standard|input|1.5||": "present",
+      "offer-together-qwen-3-7-max|together-qwen-3-7-max-standard|standard|output|4.5||": "present"
     }
   },
   "https://docs.together.ai/docs/inference/pricing": {
-    "sha256": "33fe042bd9a582a1dae03a0dfe0d36f7b1e2ea6d699ed34ba42beb928986d08e",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
-    "expectedSignals": 2,
+    "expectedSignals": 0,
     "pricingSignals": 0,
-    "missingSignals": 2,
-    "signalStates": {
-      "offer-together-qwen-3-6-plus|together-qwen-3-6-plus-batch|batch|input|0.25||": "ambiguous",
-      "offer-together-qwen-3-6-plus|together-qwen-3-6-plus-batch|batch|output|1.5||": "ambiguous"
-    }
+    "missingSignals": 0,
+    "signalStates": {}
   },
   "https://docs.x.ai/developers/models": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 0,
     "pricingSignals": 0,
@@ -431,7 +387,7 @@
   },
   "https://api-docs.deepseek.com/news/news260424": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 0,
     "pricingSignals": 0,
@@ -440,7 +396,7 @@
   },
   "https://developers.openai.com/api/docs/models/gpt-6-astra": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 0,
     "pricingSignals": 0,
@@ -449,7 +405,7 @@
   },
   "https://docs.x.ai/developers/grok-4-6": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
     "signalKeyVersion": 2,
     "expectedSignals": 0,
     "pricingSignals": 0,
@@ -458,7 +414,70 @@
   },
   "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309": {
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "checkedAt": "2026-09-20T03:28:57.754Z",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
+    "signalKeyVersion": 2,
+    "expectedSignals": 0,
+    "pricingSignals": 0,
+    "missingSignals": 0,
+    "signalStates": {}
+  },
+  "https://developers.openai.com/api/docs/guides/conversation-state": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
+    "signalKeyVersion": 2,
+    "expectedSignals": 0,
+    "pricingSignals": 0,
+    "missingSignals": 0,
+    "signalStates": {}
+  },
+  "https://developers.openai.com/api/docs/models/gpt-5.6-terra": {
+    "sha256": "44c9888dadc0f7fe8179412886d0192106df86c743f954a8c0484d6c29fea5d3",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
+    "signalKeyVersion": 2,
+    "expectedSignals": 7,
+    "pricingSignals": 7,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|cacheWrite|5|272001|": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|input|4|272001|": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard-long|standard|output|18|272001|": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|cachedInput|0.2||272000": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|cacheWrite|2.5||272000": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|input|2||272000": "present",
+      "offer-openai-gpt-5-6-terra|openai-gpt-5-6-terra-standard|standard|output|12||272000": "present"
+    }
+  },
+  "https://docs.mistral.ai/inference/pricing": {
+    "sha256": "72e424a7b81ea98624d5a717ef4d3b05cd475243d858377c0aea8ee1768e74c5",
+    "checkedAt": "2026-09-23T11:33:44.674Z",
+    "signalKeyVersion": 2,
+    "expectedSignals": 18,
+    "pricingSignals": 18,
+    "missingSignals": 0,
+    "signalStates": {
+      "offer-mistral-codestral-2508|mistral-codestral-2508-standard|standard|cachedInput|0.03||": "present",
+      "offer-mistral-codestral-2508|mistral-codestral-2508-standard|standard|input|0.3||": "present",
+      "offer-mistral-codestral-2508|mistral-codestral-2508-standard|standard|output|0.9||": "present",
+      "offer-mistral-large-3|mistral-large-3-standard|standard|cachedInput|0.05||": "present",
+      "offer-mistral-large-3|mistral-large-3-standard|standard|input|0.5||": "present",
+      "offer-mistral-large-3|mistral-large-3-standard|standard|output|1.5||": "present",
+      "offer-mistral-medium-3-5|mistral-medium-3-5-standard|standard|cachedInput|0.15||": "present",
+      "offer-mistral-medium-3-5|mistral-medium-3-5-standard|standard|input|1.5||": "present",
+      "offer-mistral-medium-3-5|mistral-medium-3-5-standard|standard|output|7.5||": "present",
+      "offer-mistral-ministral-14b|mistral-ministral-14b-standard|standard|cachedInput|0.02||": "present",
+      "offer-mistral-ministral-14b|mistral-ministral-14b-standard|standard|input|0.2||": "present",
+      "offer-mistral-ministral-14b|mistral-ministral-14b-standard|standard|output|0.2||": "present",
+      "offer-mistral-ministral-3b|mistral-ministral-3b-standard|standard|cachedInput|0.01||": "present",
+      "offer-mistral-ministral-3b|mistral-ministral-3b-standard|standard|input|0.1||": "present",
+      "offer-mistral-ministral-3b|mistral-ministral-3b-standard|standard|output|0.1||": "present",
+      "offer-mistral-small-4|mistral-small-4-standard|standard|cachedInput|0.015||": "present",
+      "offer-mistral-small-4|mistral-small-4-standard|standard|input|0.15||": "present",
+      "offer-mistral-small-4|mistral-small-4-standard|standard|output|0.6||": "present"
+    }
+  },
+  "https://docs.mistral.ai/models/ministral-3-3b-25-12": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checkedAt": "2026-09-23T11:36:31.255Z",
     "signalKeyVersion": 2,
     "expectedSignals": 0,
     "pricingSignals": 0,

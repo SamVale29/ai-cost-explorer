@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js';
+import { isOfferAvailable, normalizeWorkload, workloadErrors } from './workload';
 import type { CalculatorInput, CalculatorResult, OfferView, PricingRule } from '../types';
 import { choosePricingRule, TOKEN_PRICING_UNIT } from './pricing';
 
@@ -61,18 +62,81 @@ function normalizedTokenBuckets(input: CalculatorInput) {
 }
 
 export function effectiveRequestsPerDay(input: CalculatorInput): number {
-  const derivedInputs = [input.users, input.conversationsPerUser, input.messagesPerConversation];
-  const hasDerivedWorkload = derivedInputs.every((value) => value !== undefined);
-  if (hasDerivedWorkload)
-    return Math.max(
-      0,
-      derivedInputs.reduce((total, value) => total * value!, 1),
-    );
-  return Math.max(0, input.requestsPerDay);
+  return normalizeWorkload(input).requestsPerDay;
+}
+
+function unavailableResult(
+  offerId: string,
+  feasibility: CalculatorResult['feasibility'],
+  warnings: string[],
+): CalculatorResult {
+  return {
+    offerId,
+    feasibility,
+    estimateKind: 'inference-subtotal',
+    costPerRequest: null,
+    dailyCost: null,
+    monthlyCost: null,
+    annualCost: null,
+    adjustedRequestsPerDay: 0,
+    breakdown: {
+      standardInput: null,
+      cachedInput: null,
+      cacheWrite: null,
+      output: null,
+      total: null,
+    },
+    warnings,
+    ruleIds: [],
+  };
 }
 
 export function calculateOfferCost(offer: OfferView, input: CalculatorInput): CalculatorResult {
-  const warnings: string[] = [];
+  const warnings = workloadErrors(input);
+  if (warnings.length) return unavailableResult(offer.id, 'invalid', warnings);
+  if (!isOfferAvailable(offer))
+    return unavailableResult(offer.id, 'unavailable', [
+      'This offer or model is retired and cannot serve new workloads. Historical pricing is available in the explorer.',
+    ]);
+  if (offer.pricing.some((rule) => rule.mode === 'peak' || rule.mode === 'off-peak'))
+    return unavailableResult(offer.id, 'unknown', [
+      'Verified peak/off-peak prices require a usage schedule. This simulator does not total time-of-use tariffs; see model details for both rates.',
+    ]);
+  const {
+    contextWindowTokens: context,
+    maxOutputTokens: outputLimit,
+    contextWindowScope: scope,
+  } = offer.model;
+  if (context && input.inputTokens > context)
+    warnings.push(
+      `Input exceeds the published context limit of ${context.toLocaleString('en-US')} tokens.`,
+    );
+  if (outputLimit && input.outputTokens > outputLimit)
+    warnings.push(
+      `Output exceeds the published maximum of ${outputLimit.toLocaleString('en-US')} tokens.`,
+    );
+  if (context && scope === 'combined' && input.inputTokens + input.outputTokens > context)
+    warnings.push(
+      `Combined input and output exceed the context limit of ${context.toLocaleString('en-US')} tokens.`,
+    );
+  if (warnings.length) return unavailableResult(offer.id, 'incompatible', warnings);
+  const feasibility = context && outputLimit && scope ? 'compatible' : 'unknown';
+  if (feasibility === 'unknown')
+    warnings.push(
+      'Workload feasibility is not fully verified: context scope or token limits are unknown. Confirm provider limits before use.',
+    );
+  if (offer.availability.status === 'deprecated' || offer.model.status === 'deprecated')
+    warnings.push(
+      'This offer or model is deprecated. Confirm its remaining availability with the provider.',
+    );
+  if (offer.providerId === 'google-ai' && input.cachedInputTokens > 0)
+    warnings.push(
+      'Inference subtotal only: Google explicit caching also charges for cache storage duration, which is not included. Implicit cache hits do not incur explicit-cache storage charges.',
+    );
+  if (offer.providerId === 'anthropic' && input.cacheWriteTokens > 0)
+    warnings.push(
+      'Cache-write estimate assumes the published 5-minute TTL. A 1-hour cache has a different write rate and is not modeled.',
+    );
   const buckets = normalizedTokenBuckets(input);
   if (buckets.wasCapped) {
     warnings.push(
@@ -130,7 +194,19 @@ export function calculateOfferCost(offer: OfferView, input: CalculatorInput): Ca
   const monthly = daily?.mul(Math.max(0, input.daysPerMonth)) ?? null;
   const annual = monthly?.mul(12) ?? null;
 
+  const amounts = [total, daily, monthly, annual, ...Object.values(breakdown)];
+  if (
+    !Number.isFinite(adjustedRequestsPerDay) ||
+    amounts.some((value) => value !== null && !Number.isFinite(value.toNumber()))
+  )
+    return unavailableResult(offer.id, 'invalid', [
+      ...warnings,
+      'The calculated amount exceeds the supported numeric range. Reduce the workload.',
+    ]);
+
   return {
+    feasibility,
+    estimateKind: 'inference-subtotal',
     offerId: offer.id,
     costPerRequest: total?.toNumber() ?? null,
     dailyCost: daily?.toNumber() ?? null,
@@ -163,9 +239,10 @@ export function resultAsText(
   return [
     `AI Cost Explorer estimate — ${offer.model.name} via ${offer.provider.name}`,
     `Input ${input.inputTokens.toLocaleString()} / output ${input.outputTokens.toLocaleString()} tokens per request`,
-    `Monthly: ${result.monthlyCost === null ? 'Not verified' : `$${result.monthlyCost.toFixed(2)}`}`,
-    `Daily: ${result.dailyCost === null ? 'Not verified' : `$${result.dailyCost.toFixed(4)}`}`,
+    `Monthly inference subtotal: ${result.monthlyCost === null ? 'Not verified' : `$${result.monthlyCost.toFixed(2)}`}`,
+    `Daily inference subtotal: ${result.dailyCost === null ? 'Not verified' : `$${result.dailyCost.toFixed(4)}`}`,
     `Assumptions: ${effectiveRequestsPerDay(input).toLocaleString()} effective requests/day, ${input.daysPerMonth} days/month, ${(input.retryRate * 100).toFixed(1)}% retries, ${(input.batchRate * 100).toFixed(1)}% batch`,
+    ...result.warnings,
     'Estimate only. Verify current pricing with the provider before making purchasing decisions.',
   ].join('\n');
 }

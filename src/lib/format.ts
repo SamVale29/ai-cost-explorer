@@ -9,7 +9,7 @@ export const currencyFormat = new Intl.NumberFormat('en-US', {
 });
 
 export function formatCurrency(value: number | null | undefined, digits = 2): string {
-  if (value === null || value === undefined || Number.isNaN(value)) return 'Not verified';
+  if (value === null || value === undefined || !Number.isFinite(value)) return 'Not verified';
   const minimumFractionDigits = value !== 0 && value < 0.01 ? Math.min(6, digits + 4) : 2;
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -20,14 +20,14 @@ export function formatCurrency(value: number | null | undefined, digits = 2): st
 }
 
 export function formatCompactNumber(value: number | null | undefined): string {
-  if (value === null || value === undefined || Number.isNaN(value)) return 'Not verified';
+  if (value === null || value === undefined || !Number.isFinite(value)) return 'Not verified';
   return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(
     value,
   );
 }
 
 export function formatTokens(value: number | null | undefined): string {
-  if (value === null || value === undefined || Number.isNaN(value)) return 'Not verified';
+  if (value === null || value === undefined || !Number.isFinite(value)) return 'Not verified';
   return `${formatCompactNumber(value)} tokens`;
 }
 

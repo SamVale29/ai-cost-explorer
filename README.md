@@ -10,7 +10,7 @@ AI Cost Explorer is a small, independent, open-source decision tool for comparin
 
 ## What it does
 
-- Searches a catalog of 44 verified offers across 9 direct API providers.
+- Searches a catalog of 48 curated offers across 9 direct API providers.
 - Separates canonical models from API providers and provider-specific offers.
 - Shows input, cached-input, cache-write, output, context, modalities, capabilities, status and staleness.
 - Builds shareable 2–4 offer comparisons with a differences-only view and JSON export.
@@ -74,7 +74,7 @@ The generated, public artifacts are in [`public/data/`](public/data/):
 - [`catalog-health-v1.json`](public/data/catalog-health-v1.json) — field coverage, source freshness and benchmark status.
 - [`schema-v1.json`](public/data/schema-v1.json) — schema version, entities and null-value policy.
 
-The current generated catalog has `dataAsOf` `2026-09-19`; `pnpm data:build` derives that date from the latest `checkedAt` in the 23-URL provenance registry at [`data/sources/index.json`](data/sources/index.json). Individual offers retain their own verification date, so an older field is intentionally shown as aging or stale until it is rechecked. Every price is stored at offer/pricing-rule level, not as an unattributed model label.
+The current generated catalog has `dataAsOf` `2026-09-23`; `pnpm data:build` derives that date from the latest `checkedAt` in the 29-URL provenance registry at [`data/sources/index.json`](data/sources/index.json). Individual offers retain their own verification date, so an older field is intentionally shown as aging or stale until it is rechecked. Every price is stored at offer/pricing-rule level, not as an unattributed model label.
 
 ## Calculator contract
 
@@ -117,17 +117,17 @@ See [`docs/methodology.md`](docs/methodology.md), [`docs/data-contract.md`](docs
 
 ## Scripts
 
-| Command                      | Purpose                                                                                                                                                                                                |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `pnpm data:validate`         | Checks entity references, source fields, prices, tiers and release targets.                                                                                                                            |
-| `pnpm data:build`            | Joins `data/` into public JSON/CSV artifacts.                                                                                                                                                          |
-| `pnpm data:health`           | Reports field coverage, source freshness and benchmark status without network calls.                                                                                                                   |
-| `pnpm data:check-sources`    | Checks source URL shape; `CHECK_SOURCES_NETWORK=1` also performs a non-mutating network check.                                                                                                         |
-| `pnpm data:snapshot`         | Writes an immutable dated catalog snapshot.                                                                                                                                                            |
-| `pnpm generate:og`           | Rebuilds the social preview image.                                                                                                                                                                     |
-| `pnpm generate:screenshots`  | Captures landing/explorer launch screenshots from a local preview.                                                                                                                                     |
-| `pnpm benchmark`             | Runs a no-network dry-run by default; execution is opt-in. Use `pnpm benchmark -- --provider openai --model gpt-4.1 --execute --write` only in a local environment with explicit provider credentials. |
-| `pnpm benchmark:check-empty` | Confirms the source and public benchmark artifacts are synchronized and still empty.                                                                                                                   |
+| Command                                | Purpose                                                                                                                                                                                                |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm data:validate`                   | Checks entity references, source fields, prices, tiers and release targets.                                                                                                                            |
+| `pnpm data:build`                      | Joins `data/` into public JSON/CSV artifacts.                                                                                                                                                          |
+| `pnpm data:health`                     | Reports field coverage, source freshness and benchmark status without network calls.                                                                                                                   |
+| `pnpm data:check-sources`              | Checks source URL shape; `CHECK_SOURCES_NETWORK=1` also performs a non-mutating network check.                                                                                                         |
+| `pnpm data:snapshot --date=YYYY-MM-DD` | Creates a validated dated catalog snapshot; refuses to overwrite. `pnpm data:diff --date=YYYY-MM-DD` compares against that existing snapshot without writing.                                          |
+| `pnpm generate:og`                     | Rebuilds the social preview image.                                                                                                                                                                     |
+| `pnpm generate:screenshots`            | Captures landing/explorer launch screenshots from a local preview.                                                                                                                                     |
+| `pnpm benchmark`                       | Runs a no-network dry-run by default; execution is opt-in. Use `pnpm benchmark -- --provider openai --model gpt-4.1 --execute --write` only in a local environment with explicit provider credentials. |
+| `pnpm benchmark:check-empty`           | Confirms the source and public benchmark artifacts are synchronized and still empty.                                                                                                                   |
 
 ## Contributing
 

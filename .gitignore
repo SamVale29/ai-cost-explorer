@@ -11,3 +11,6 @@ coverage/
 
 # Generated promotional exports; keep the reproducible render script, not binaries.
 /promo/
+
+# Ephemeral live-source evidence reports; CI retains them as artifacts.
+/reports/

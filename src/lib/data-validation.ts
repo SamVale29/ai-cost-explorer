@@ -24,7 +24,16 @@ const sourceType = z.enum([
   'community',
 ]);
 const status = z.enum(['active', 'preview', 'deprecated', 'retired']);
-const pricingMode = z.enum(['standard', 'batch', 'priority', 'flex', 'fast', 'realtime']);
+const pricingMode = z.enum([
+  'standard',
+  'batch',
+  'priority',
+  'flex',
+  'fast',
+  'realtime',
+  'peak',
+  'off-peak',
+]);
 const pricingUnit = z.enum(['per_million_tokens', 'per_request', 'per_second', 'per_image']);
 
 export const sourceReferenceSchema = z
@@ -92,6 +101,7 @@ export const modelSchema = z
     releaseDate: OPTIONAL_DATE,
     knowledgeCutoff: OPTIONAL_DATE,
     contextWindowTokens: FINITE_NON_NEGATIVE.nullable().optional(),
+    contextWindowScope: z.enum(['input', 'combined']).optional(),
     maxOutputTokens: FINITE_NON_NEGATIVE.nullable().optional(),
     modalities: modalitiesSchema,
     capabilities: capabilitiesSchema,
@@ -222,6 +232,7 @@ export const priceChangeEventSchema = z
     offerId: NON_EMPTY,
     detectedAt: DATE_VALUE,
     effectiveAt: OPTIONAL_DATE,
+    eventType: z.enum(['initial', 'price-change', 'retirement']).optional(),
     previousPricing: z.array(pricingRuleSchema),
     currentPricing: z.array(pricingRuleSchema).min(1),
     source: sourceReferenceSchema,
@@ -241,6 +252,12 @@ export const dataSetSchema = z
     history: z.array(priceChangeEventSchema),
   })
   .strict();
+
+export const catalogSchema = dataSetSchema.extend({
+  schemaVersion: z.literal('v1'),
+  generatedAt: DATE_VALUE,
+  dataAsOf: DATE_VALUE,
+});
 
 type ParsedDataSet = z.infer<typeof dataSetSchema>;
 

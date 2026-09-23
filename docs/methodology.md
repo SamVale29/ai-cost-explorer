@@ -74,7 +74,7 @@ Stale data stays visible with a warning. Staleness is a review signal, not permi
 
 ## Price history
 
-History records project detection events, not a reconstruction of provider history. The initial beta contains three dated observations on the project start date. Their `previousPricing` arrays are empty because there is no earlier project observation. No chart line is drawn before that date. A later change should include:
+History records project detection events, not a reconstruction of provider history. The initial observations have empty `previousPricing` arrays because there is no earlier project observation. Later entries distinguish initial observations, price changes and retirement through `eventType`, preserving previous and current pricing. The log contains 16 events as of 2026-09-23. No chart line is drawn before that date. A later change should include:
 
 - detected date;
 - effective date when an official source provides one;
@@ -110,3 +110,17 @@ The generated [`catalog-health-v1.json`](../public/data/catalog-health-v1.json) 
 - Context and output limits can differ across API surfaces even for similarly named models.
 - The current benchmark dataset is empty, so no performance ranking is implied.
 - The catalog is a curated public snapshot, not an exhaustive market index.
+
+## Calculator scope and limits
+
+Calculator outputs are **inference subtotals**, not complete provider invoices. They exclude taxes, tool calls, explicit-cache storage and other non-token charges. Google explicit caching bills cache storage duration separately; implicit cache hits do not imply that storage charge. Anthropic cache-write prices in this catalog assume the 5-minute TTL; the 1-hour rate is not modeled. These assumptions appear with affected estimates and text exports.
+
+The output-token input must include all billed output, including reasoning tokens when applicable. Known context and maximum-output limits are checked before calculating. `contextWindowScope: combined` enforces input plus output; `input` enforces an input-only ceiling. An absent scope or limit remains unknown and cannot receive the lowest-verified-subtotal badge. OpenAI combined-window semantics are sourced to its conversation-state documentation; other unverified scopes are intentionally not inferred.
+
+Counts must be whole, nonnegative finite numbers. The supported limits are 1 billion tokens per bucket, 1 trillion requests/day, 31 days/month and 0–100% retry/batch shares. Oversized inputs and arithmetic overflow produce an explicit invalid-workload result, never Infinity. Legacy derived workloads are migrated to a visible Requests/day value before editing, sharing or persistence. Retired offers remain in historical views but are excluded from new workload recommendations.
+
+Create a snapshot with `pnpm data:snapshot --date=YYYY-MM-DD`. It reads only the validated full public catalog and uses exclusive file creation. `pnpm data:diff --date=YYYY-MM-DD` compares the current catalog with the named existing snapshot; it creates or changes no files.
+
+The production build emits real HTML documents for known routes and catalog model pages, with route-specific titles, descriptions and canonical URLs. Unknown routes retain HTTP 404. Comparison pages are noindex; the client marks query-driven scenarios noindex and canonicalizes to the base route. GitHub Pages cannot condition its HTTP response on query strings, so query-specific robots metadata is applied after JavaScript runs.
+
+DeepSeek's official pricing reviewed on 2026-09-23 uses peak and off-peak modes. Both verified rates are retained and shown in model details. The simulator returns an explicit unavailable subtotal for this tariff because it has no usage schedule; it does not silently choose a time band. The retired direct `deepseek-v4-flash` offer remains historical because that alias now serves a different model. This is provider-specific availability, not a claim that all third-party deployments of that model are retired.

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "v1",
-  "generatedAt": "2026-09-19T00:00:00Z",
-  "dataAsOf": "2026-09-19",
+  "generatedAt": "2026-09-23T00:00:00Z",
+  "dataAsOf": "2026-09-23",
   "organizations": [
     {
       "id": "openai",
@@ -185,9 +185,18 @@
           "sourceType": "official-pricing",
           "checkedAt": "2026-09-19",
           "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+          "title": "OpenAI context window semantics",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-23",
+          "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
         }
       ],
-      "lastVerifiedAt": "2026-09-19"
+      "lastVerifiedAt": "2026-09-19",
+      "contextWindowScope": "combined"
     },
     {
       "id": "gpt-5-6-terra",
@@ -229,9 +238,18 @@
           "sourceType": "official-pricing",
           "checkedAt": "2026-09-19",
           "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+          "title": "OpenAI context window semantics",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-23",
+          "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
         }
       ],
-      "lastVerifiedAt": "2026-09-19"
+      "lastVerifiedAt": "2026-09-19",
+      "contextWindowScope": "combined"
     },
     {
       "id": "gpt-5-6-luna",
@@ -273,9 +291,18 @@
           "sourceType": "official-pricing",
           "checkedAt": "2026-09-19",
           "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+          "title": "OpenAI context window semantics",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-23",
+          "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
         }
       ],
-      "lastVerifiedAt": "2026-09-19"
+      "lastVerifiedAt": "2026-09-19",
+      "contextWindowScope": "combined"
     },
     {
       "id": "gpt-6-astra",
@@ -323,9 +350,18 @@
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
           "checkedAt": "2026-09-19"
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+          "title": "OpenAI context window semantics",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-23",
+          "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
         }
       ],
-      "lastVerifiedAt": "2026-09-19"
+      "lastVerifiedAt": "2026-09-19",
+      "contextWindowScope": "combined"
     },
     {
       "id": "gpt-4-1",
@@ -365,9 +401,18 @@
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
           "checkedAt": "2026-08-02"
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+          "title": "OpenAI context window semantics",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-23",
+          "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-02",
+      "contextWindowScope": "combined"
     },
     {
       "id": "gpt-4-1-mini",
@@ -407,9 +452,18 @@
           "publisher": "OpenAI",
           "sourceType": "official-release",
           "checkedAt": "2026-08-02"
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+          "title": "OpenAI context window semantics",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-23",
+          "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-08-02",
+      "contextWindowScope": "combined"
     },
     {
       "id": "claude-fable-5",
@@ -1014,7 +1068,7 @@
       },
       "sources": [
         {
-          "url": "https://docs.mistral.ai/models/model-cards/ministral-3-3b-25-12",
+          "url": "https://docs.mistral.ai/models/ministral-3-3b-25-12",
           "title": "Ministral 3 3B model card",
           "publisher": "Mistral AI",
           "sourceType": "official-pricing",
@@ -2212,15 +2266,15 @@
           "cacheWritePrice": 2.5,
           "outputPrice": 12,
           "maximumInputTokens": 272000,
-          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
+          "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown.",
           "sources": [
             {
-              "url": "https://developers.openai.com/api/docs/pricing",
-              "title": "OpenAI API pricing",
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+              "title": "OpenAI GPT-5.6 Terra model pricing",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-09-19",
-              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+              "checkedAt": "2026-09-23",
+              "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
             }
           ]
         },
@@ -2230,34 +2284,34 @@
           "unit": "per_million_tokens",
           "mode": "standard",
           "inputPrice": 4,
-          "cachedInputPrice": 0.4,
+          "cachedInputPrice": null,
           "cacheWritePrice": 5,
           "outputPrice": 18,
           "minimumInputTokens": 272001,
-          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown.",
           "sources": [
             {
-              "url": "https://developers.openai.com/api/docs/pricing",
-              "title": "OpenAI API pricing",
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+              "title": "OpenAI GPT-5.6 Terra model pricing",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-09-19",
-              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+              "checkedAt": "2026-09-23",
+              "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
             }
           ]
         }
       ],
       "sources": [
         {
-          "url": "https://developers.openai.com/api/docs/pricing",
-          "title": "OpenAI API pricing",
+          "url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+          "title": "OpenAI GPT-5.6 Terra model pricing",
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-09-19",
-          "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+          "checkedAt": "2026-09-23",
+          "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
         }
       ],
-      "lastVerifiedAt": "2026-09-19"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-openai-gpt-5-6-luna",
@@ -2278,15 +2332,15 @@
           "cacheWritePrice": 0.25,
           "outputPrice": 1.2,
           "maximumInputTokens": 272000,
-          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
+          "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown.",
           "sources": [
             {
-              "url": "https://developers.openai.com/api/docs/pricing",
-              "title": "OpenAI API pricing",
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+              "title": "OpenAI GPT-5.6 Luna model pricing",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-09-19",
-              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+              "checkedAt": "2026-09-23",
+              "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
             }
           ]
         },
@@ -2296,34 +2350,34 @@
           "unit": "per_million_tokens",
           "mode": "standard",
           "inputPrice": 0.4,
-          "cachedInputPrice": 0.04,
+          "cachedInputPrice": null,
           "cacheWritePrice": 0.5,
-          "outputPrice": 1.8,
+          "outputPrice": 1.7999999999999998,
           "minimumInputTokens": 272001,
-          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown.",
           "sources": [
             {
-              "url": "https://developers.openai.com/api/docs/pricing",
-              "title": "OpenAI API pricing",
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+              "title": "OpenAI GPT-5.6 Luna model pricing",
               "publisher": "OpenAI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-09-19",
-              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+              "checkedAt": "2026-09-23",
+              "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
             }
           ]
         }
       ],
       "sources": [
         {
-          "url": "https://developers.openai.com/api/docs/pricing",
-          "title": "OpenAI API pricing",
+          "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+          "title": "OpenAI GPT-5.6 Luna model pricing",
           "publisher": "OpenAI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-09-19",
-          "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+          "checkedAt": "2026-09-23",
+          "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
         }
       ],
-      "lastVerifiedAt": "2026-09-19"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-openai-gpt-6-astra",
@@ -3203,11 +3257,12 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.mistral.ai/models/model-cards/mistral-small-4-0-26-03",
-              "title": "Mistral Small 4 model card",
+              "url": "https://docs.mistral.ai/inference/pricing",
+              "title": "Mistral inference pricing tables",
               "publisher": "Mistral AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-23",
+              "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
             }
           ]
         }
@@ -3219,9 +3274,17 @@
           "publisher": "Mistral AI",
           "sourceType": "official-pricing",
           "checkedAt": "2026-08-02"
+        },
+        {
+          "url": "https://docs.mistral.ai/inference/pricing",
+          "title": "Mistral inference pricing tables",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-23",
+          "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-mistral-medium-3-5",
@@ -3243,11 +3306,12 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04",
-              "title": "Mistral Medium 3.5 model card",
+              "url": "https://docs.mistral.ai/inference/pricing",
+              "title": "Mistral inference pricing tables",
               "publisher": "Mistral AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-23",
+              "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
             }
           ]
         }
@@ -3259,9 +3323,17 @@
           "publisher": "Mistral AI",
           "sourceType": "official-pricing",
           "checkedAt": "2026-08-02"
+        },
+        {
+          "url": "https://docs.mistral.ai/inference/pricing",
+          "title": "Mistral inference pricing tables",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-23",
+          "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-mistral-large-3",
@@ -3283,11 +3355,12 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12",
-              "title": "Mistral Large 3 model card",
+              "url": "https://docs.mistral.ai/inference/pricing",
+              "title": "Mistral inference pricing tables",
               "publisher": "Mistral AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-23",
+              "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
             }
           ]
         }
@@ -3299,9 +3372,17 @@
           "publisher": "Mistral AI",
           "sourceType": "official-pricing",
           "checkedAt": "2026-08-02"
+        },
+        {
+          "url": "https://docs.mistral.ai/inference/pricing",
+          "title": "Mistral inference pricing tables",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-23",
+          "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-mistral-ministral-3b",
@@ -3323,25 +3404,34 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.mistral.ai/models/model-cards/ministral-3-3b-25-12",
-              "title": "Ministral 3 3B model card",
+              "url": "https://docs.mistral.ai/inference/pricing",
+              "title": "Mistral inference pricing tables",
               "publisher": "Mistral AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-23",
+              "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
             }
           ]
         }
       ],
       "sources": [
         {
-          "url": "https://docs.mistral.ai/models/model-cards/ministral-3-3b-25-12",
+          "url": "https://docs.mistral.ai/models/ministral-3-3b-25-12",
           "title": "Ministral 3 3B model card",
           "publisher": "Mistral AI",
           "sourceType": "official-pricing",
           "checkedAt": "2026-08-02"
+        },
+        {
+          "url": "https://docs.mistral.ai/inference/pricing",
+          "title": "Mistral inference pricing tables",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-23",
+          "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-mistral-ministral-14b",
@@ -3363,11 +3453,12 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12",
-              "title": "Ministral 3 14B model card",
+              "url": "https://docs.mistral.ai/inference/pricing",
+              "title": "Mistral inference pricing tables",
               "publisher": "Mistral AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-23",
+              "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
             }
           ]
         }
@@ -3379,9 +3470,17 @@
           "publisher": "Mistral AI",
           "sourceType": "official-pricing",
           "checkedAt": "2026-08-02"
+        },
+        {
+          "url": "https://docs.mistral.ai/inference/pricing",
+          "title": "Mistral inference pricing tables",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-23",
+          "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-mistral-codestral-2508",
@@ -3403,11 +3502,12 @@
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.mistral.ai/models/model-cards/codestral-25-08",
-              "title": "Codestral model card",
+              "url": "https://docs.mistral.ai/inference/pricing",
+              "title": "Mistral inference pricing tables",
               "publisher": "Mistral AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-23",
+              "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
             }
           ]
         }
@@ -3419,9 +3519,17 @@
           "publisher": "Mistral AI",
           "sourceType": "official-pricing",
           "checkedAt": "2026-08-02"
+        },
+        {
+          "url": "https://docs.mistral.ai/inference/pricing",
+          "title": "Mistral inference pricing tables",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-23",
+          "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-cohere-command-a",
@@ -4120,7 +4228,7 @@
       "providerId": "deepseek",
       "apiModelId": "deepseek-v4-flash",
       "availability": {
-        "status": "active"
+        "status": "retired"
       },
       "pricing": [
         {
@@ -4145,14 +4253,15 @@
       ],
       "sources": [
         {
-          "url": "https://api-docs.deepseek.com/quick_start/pricing",
-          "title": "DeepSeek API models and pricing",
+          "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "title": "DeepSeek current models and time-of-use pricing",
           "publisher": "DeepSeek",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-23",
+          "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-deepseek-v4-pro",
@@ -4164,35 +4273,59 @@
       },
       "pricing": [
         {
-          "id": "deepseek-v4-pro-standard",
+          "id": "deepseek-v4-pro-peak",
           "currency": "USD",
           "unit": "per_million_tokens",
-          "mode": "standard",
-          "inputPrice": 0.435,
-          "outputPrice": 0.87,
-          "cachedInputPrice": 0.003625,
+          "mode": "peak",
+          "inputPrice": 1.32,
+          "outputPrice": 3.96,
+          "cachedInputPrice": 0.044,
           "cacheWritePrice": null,
+          "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests.",
           "sources": [
             {
-              "url": "https://api-docs.deepseek.com/quick_start/pricing",
-              "title": "DeepSeek API models and pricing",
+              "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+              "title": "DeepSeek current models and time-of-use pricing",
               "publisher": "DeepSeek",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-23",
+              "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro-off-peak",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "off-peak",
+          "inputPrice": 0.66,
+          "outputPrice": 1.98,
+          "cachedInputPrice": 0.022,
+          "cacheWritePrice": null,
+          "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests.",
+          "sources": [
+            {
+              "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+              "title": "DeepSeek current models and time-of-use pricing",
+              "publisher": "DeepSeek",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
             }
           ]
         }
       ],
       "sources": [
         {
-          "url": "https://api-docs.deepseek.com/quick_start/pricing",
-          "title": "DeepSeek API models and pricing",
+          "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "title": "DeepSeek current models and time-of-use pricing",
           "publisher": "DeepSeek",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-23",
+          "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-groq-llama-3-1-8b",
@@ -4526,8 +4659,8 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "standard",
-          "inputPrice": 2.5,
-          "outputPrice": 7.5,
+          "inputPrice": 1.5,
+          "outputPrice": 4.5,
           "cachedInputPrice": 0.5,
           "cacheWritePrice": null,
           "sources": [
@@ -4536,11 +4669,11 @@
               "title": "Together AI serverless model catalog",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-09-19",
-              "notes": "Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."
+              "checkedAt": "2026-09-23",
+              "notes": "Together serverless table checked on 2026-09-23: Qwen3.7 Max input $1.50, cached input $0.50, output $4.50 per 1M tokens. Provider effective date is not published."
             }
           ],
-          "notes": "Together lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens in the current serverless catalog."
+          "notes": "Together serverless table checked on 2026-09-23: Qwen3.7 Max input $1.50, cached input $0.50, output $4.50 per 1M tokens. Provider effective date is not published."
         },
         {
           "id": "together-qwen-3-7-max-batch",
@@ -4558,8 +4691,8 @@
               "title": "Together AI serverless model catalog",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-09-19",
-              "notes": "Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."
+              "checkedAt": "2026-09-23",
+              "notes": "Together serverless table checked on 2026-09-23: Qwen3.7 Max input $1.50, cached input $0.50, output $4.50 per 1M tokens. Provider effective date is not published."
             }
           ]
         }
@@ -4570,11 +4703,11 @@
           "title": "Together AI serverless model catalog",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-09-19",
-          "notes": "Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."
+          "checkedAt": "2026-09-23",
+          "notes": "Together serverless table checked on 2026-09-23: Qwen3.7 Max input $1.50, cached input $0.50, output $4.50 per 1M tokens. Provider effective date is not published."
         }
       ],
-      "lastVerifiedAt": "2026-09-19"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-together-qwen-3-5-397b",
@@ -4659,7 +4792,8 @@
               "title": "Together AI serverless model catalog",
               "publisher": "Together AI",
               "sourceType": "official-pricing",
-              "checkedAt": "2026-08-02"
+              "checkedAt": "2026-09-23",
+              "notes": "Qwen3.6 Plus standard row verifies $0.50 input and $3.00 output per 1M tokens. Model-specific batch prices are not published; the former inference/pricing URL redirects to an overview."
             }
           ]
         },
@@ -4668,19 +4802,21 @@
           "currency": "USD",
           "unit": "per_million_tokens",
           "mode": "batch",
-          "inputPrice": 0.25,
-          "outputPrice": 1.5,
+          "inputPrice": null,
+          "outputPrice": null,
           "cachedInputPrice": null,
           "cacheWritePrice": null,
           "sources": [
             {
-              "url": "https://docs.together.ai/docs/inference/pricing",
-              "title": "Together AI inference pricing",
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together AI serverless model catalog",
               "publisher": "Together AI",
-              "sourceType": "official-documentation",
-              "checkedAt": "2026-08-02"
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Qwen3.6 Plus standard row verifies $0.50 input and $3.00 output per 1M tokens. Model-specific batch prices are not published; the former inference/pricing URL redirects to an overview."
             }
-          ]
+          ],
+          "notes": "Qwen3.6 Plus standard row verifies $0.50 input and $3.00 output per 1M tokens. Model-specific batch prices are not published; the former inference/pricing URL redirects to an overview."
         }
       ],
       "sources": [
@@ -4689,10 +4825,11 @@
           "title": "Together AI serverless model catalog",
           "publisher": "Together AI",
           "sourceType": "official-pricing",
-          "checkedAt": "2026-08-02"
+          "checkedAt": "2026-09-23",
+          "notes": "Qwen3.6 Plus standard row verifies $0.50 input and $3.00 output per 1M tokens. Model-specific batch prices are not published; the former inference/pricing URL redirects to an overview."
         }
       ],
-      "lastVerifiedAt": "2026-08-02"
+      "lastVerifiedAt": "2026-09-23"
     },
     {
       "id": "offer-together-qwen-3-5-9b",
@@ -4896,7 +5033,8 @@
         "sourceType": "official-pricing",
         "checkedAt": "2026-08-02"
       },
-      "notes": "Initial project observation. No earlier price line is inferred."
+      "notes": "Initial project observation. No earlier price line is inferred.",
+      "eventType": "initial"
     },
     {
       "id": "initial-observation-gemini-2-5-flash",
@@ -4932,7 +5070,8 @@
         "sourceType": "official-pricing",
         "checkedAt": "2026-08-02"
       },
-      "notes": "Initial project observation. No earlier price line is inferred."
+      "notes": "Initial project observation. No earlier price line is inferred.",
+      "eventType": "initial"
     },
     {
       "id": "initial-observation-groq-gpt-oss-20b",
@@ -4968,7 +5107,8 @@
         "sourceType": "official-pricing",
         "checkedAt": "2026-08-02"
       },
-      "notes": "Initial project observation. No earlier price line is inferred."
+      "notes": "Initial project observation. No earlier price line is inferred.",
+      "eventType": "initial"
     },
     {
       "id": "offer-openai-gpt-5-6-sol-pricing-review-2026-09-19",
@@ -5050,7 +5190,8 @@
         "checkedAt": "2026-09-19",
         "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
       },
-      "notes": "Reviewed against the current OpenAI pricing table; added the 272k long-context tier and cache-write prices."
+      "notes": "Reviewed against the current OpenAI pricing table; added the 272k long-context tier and cache-write prices.",
+      "eventType": "price-change"
     },
     {
       "id": "offer-openai-gpt-5-6-terra-pricing-review-2026-09-19",
@@ -5139,7 +5280,8 @@
         "checkedAt": "2026-09-19",
         "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
       },
-      "notes": "Reviewed against the current OpenAI pricing table; added the 272k long-context tier and cache-write prices."
+      "notes": "Reviewed against the current OpenAI pricing table; added the 272k long-context tier and cache-write prices.",
+      "eventType": "price-change"
     },
     {
       "id": "offer-openai-gpt-5-6-luna-pricing-review-2026-09-19",
@@ -5221,7 +5363,8 @@
         "checkedAt": "2026-09-19",
         "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
       },
-      "notes": "Reviewed against the current OpenAI pricing table; added the 272k long-context tier and cache-write prices."
+      "notes": "Reviewed against the current OpenAI pricing table; added the 272k long-context tier and cache-write prices.",
+      "eventType": "price-change"
     },
     {
       "id": "offer-anthropic-claude-sonnet-5-pricing-review-2026-09-19",
@@ -5360,7 +5503,8 @@
         "sourceType": "official-pricing",
         "checkedAt": "2026-09-19"
       },
-      "notes": "Anthropic cancelled the previously scheduled September increase; Sonnet 5 remains at $2/$10 standard and $1/$5 batch."
+      "notes": "Anthropic cancelled the previously scheduled September increase; Sonnet 5 remains at $2/$10 standard and $1/$5 batch.",
+      "eventType": "price-change"
     },
     {
       "id": "offer-together-qwen-3-7-max-pricing-review-2026-09-19",
@@ -5460,7 +5604,8 @@
         "checkedAt": "2026-09-19",
         "notes": "Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."
       },
-      "notes": "Corrected Qwen3.7 Max from the stale Together catalog values to the current official row; batch remains unknown because no model-specific batch rate is published on the reviewed table."
+      "notes": "Corrected Qwen3.7 Max from the stale Together catalog values to the current official row; batch remains unknown because no model-specific batch rate is published on the reviewed table.",
+      "eventType": "price-change"
     },
     {
       "id": "offer-together-deepseek-v4-pro-retired-2026-09-19",
@@ -5555,7 +5700,8 @@
         "checkedAt": "2026-09-19",
         "notes": "Current row for DeepSeek V4 Pro 0813: $1.32 input, $0.13 cached input and $3.96 output per 1M tokens; the legacy DeepSeek-V4-Pro ID is not silently substituted."
       },
-      "notes": "Together no longer lists the legacy deepseek-ai/DeepSeek-V4-Pro ID in its current catalog. The old offer is retained as retired for traceability; the new 0813 ID is represented as a separate offer instead of an automatic substitution."
+      "notes": "Together no longer lists the legacy deepseek-ai/DeepSeek-V4-Pro ID in its current catalog. The old offer is retained as retired for traceability; the new 0813 ID is represented as a separate offer instead of an automatic substitution.",
+      "eventType": "retirement"
     },
     {
       "id": "offer-together-deepseek-v4-pro-0813-observation-2026-09-19",
@@ -5594,7 +5740,566 @@
         "checkedAt": "2026-09-19",
         "notes": "Current row for DeepSeek V4 Pro 0813: $1.32 input, $0.13 cached input and $3.96 output per 1M tokens; the legacy DeepSeek-V4-Pro ID is not silently substituted."
       },
-      "notes": "Observed the current Together row for deepseek-ai/DeepSeek-V4-Pro-0813 and added it as a distinct active offer; no model-specific batch rate is published on the reviewed table."
+      "notes": "Observed the current Together row for deepseek-ai/DeepSeek-V4-Pro-0813 and added it as a distinct active offer; no model-specific batch rate is published on the reviewed table.",
+      "eventType": "initial"
+    },
+    {
+      "id": "offer-together-qwen-3-7-max-pricing-review-2026-09-23",
+      "offerId": "offer-together-qwen-3-7-max",
+      "detectedAt": "2026-09-23",
+      "effectiveAt": null,
+      "eventType": "price-change",
+      "previousPricing": [
+        {
+          "id": "together-qwen-3-7-max-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 2.5,
+          "outputPrice": 7.5,
+          "cachedInputPrice": 0.5,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together AI serverless model catalog",
+              "publisher": "Together AI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."
+            }
+          ],
+          "notes": "Together lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens in the current serverless catalog."
+        },
+        {
+          "id": "together-qwen-3-7-max-batch",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": null,
+          "outputPrice": null,
+          "cachedInputPrice": null,
+          "cacheWritePrice": null,
+          "notes": "The current serverless table does not publish a Qwen3.7 Max-specific batch rate; keep this mode unknown instead of assuming standard pricing or a generic discount.",
+          "sources": [
+            {
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together AI serverless model catalog",
+              "publisher": "Together AI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "together-qwen-3-7-max-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 1.5,
+          "outputPrice": 4.5,
+          "cachedInputPrice": 0.5,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together AI serverless model catalog",
+              "publisher": "Together AI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Together serverless table checked on 2026-09-23: Qwen3.7 Max input $1.50, cached input $0.50, output $4.50 per 1M tokens. Provider effective date is not published."
+            }
+          ],
+          "notes": "Together serverless table checked on 2026-09-23: Qwen3.7 Max input $1.50, cached input $0.50, output $4.50 per 1M tokens. Provider effective date is not published."
+        },
+        {
+          "id": "together-qwen-3-7-max-batch",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": null,
+          "outputPrice": null,
+          "cachedInputPrice": null,
+          "cacheWritePrice": null,
+          "notes": "The current serverless table does not publish a Qwen3.7 Max-specific batch rate; keep this mode unknown instead of assuming standard pricing or a generic discount.",
+          "sources": [
+            {
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together AI serverless model catalog",
+              "publisher": "Together AI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Together serverless table checked on 2026-09-23: Qwen3.7 Max input $1.50, cached input $0.50, output $4.50 per 1M tokens. Provider effective date is not published."
+            }
+          ]
+        }
+      ],
+      "source": {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-23",
+        "notes": "Together serverless table checked on 2026-09-23: Qwen3.7 Max input $1.50, cached input $0.50, output $4.50 per 1M tokens. Provider effective date is not published."
+      },
+      "notes": "Together serverless table checked on 2026-09-23: Qwen3.7 Max input $1.50, cached input $0.50, output $4.50 per 1M tokens. Provider effective date is not published."
+    },
+    {
+      "id": "offer-openai-gpt-5-6-terra-pricing-review-2026-09-23",
+      "offerId": "offer-openai-gpt-5-6-terra",
+      "detectedAt": "2026-09-23",
+      "effectiveAt": null,
+      "eventType": "price-change",
+      "previousPricing": [
+        {
+          "id": "openai-gpt-5-6-terra-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 2,
+          "cachedInputPrice": 0.2,
+          "cacheWritePrice": 2.5,
+          "outputPrice": 12,
+          "maximumInputTokens": 272000,
+          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-terra-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 4,
+          "cachedInputPrice": 0.4,
+          "cacheWritePrice": 5,
+          "outputPrice": 18,
+          "minimumInputTokens": 272001,
+          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "openai-gpt-5-6-terra-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 2,
+          "cachedInputPrice": 0.2,
+          "cacheWritePrice": 2.5,
+          "outputPrice": 12,
+          "maximumInputTokens": 272000,
+          "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+              "title": "OpenAI GPT-5.6 Terra model pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-terra-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 4,
+          "cachedInputPrice": null,
+          "cacheWritePrice": 5,
+          "outputPrice": 18,
+          "minimumInputTokens": 272001,
+          "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+              "title": "OpenAI GPT-5.6 Terra model pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+            }
+          ]
+        }
+      ],
+      "source": {
+        "url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+        "title": "OpenAI GPT-5.6 Terra model pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-23",
+        "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+      },
+      "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+    },
+    {
+      "id": "offer-openai-gpt-5-6-luna-pricing-review-2026-09-23",
+      "offerId": "offer-openai-gpt-5-6-luna",
+      "detectedAt": "2026-09-23",
+      "effectiveAt": null,
+      "eventType": "price-change",
+      "previousPricing": [
+        {
+          "id": "openai-gpt-5-6-luna-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.2,
+          "cachedInputPrice": 0.02,
+          "cacheWritePrice": 0.25,
+          "outputPrice": 1.2,
+          "maximumInputTokens": 272000,
+          "notes": "Short context applies through 272k input tokens; the long-context multiplier starts above 272k.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-luna-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.4,
+          "cachedInputPrice": 0.04,
+          "cacheWritePrice": 0.5,
+          "outputPrice": 1.8,
+          "minimumInputTokens": 272001,
+          "notes": "OpenAI prices the full request at 2x input and 1.5x output above 272k input tokens.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/pricing",
+              "title": "OpenAI API pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-19",
+              "notes": "Short and long context prices for the GPT-5.6 family, including cache writes."
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "openai-gpt-5-6-luna-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.2,
+          "cachedInputPrice": 0.02,
+          "cacheWritePrice": 0.25,
+          "outputPrice": 1.2,
+          "maximumInputTokens": 272000,
+          "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+              "title": "OpenAI GPT-5.6 Luna model pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+            }
+          ]
+        },
+        {
+          "id": "openai-gpt-5-6-luna-standard-long",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.4,
+          "cachedInputPrice": null,
+          "cacheWritePrice": 0.5,
+          "outputPrice": 1.7999999999999998,
+          "minimumInputTokens": 272001,
+          "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown.",
+          "sources": [
+            {
+              "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+              "title": "OpenAI GPT-5.6 Luna model pricing",
+              "publisher": "OpenAI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+            }
+          ]
+        }
+      ],
+      "source": {
+        "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+        "title": "OpenAI GPT-5.6 Luna model pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-23",
+        "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+      },
+      "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+    },
+    {
+      "id": "offer-together-qwen-3-6-plus-pricing-review-2026-09-23",
+      "offerId": "offer-together-qwen-3-6-plus",
+      "detectedAt": "2026-09-23",
+      "effectiveAt": null,
+      "eventType": "price-change",
+      "previousPricing": [
+        {
+          "id": "together-qwen-3-6-plus-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.5,
+          "outputPrice": 3,
+          "cachedInputPrice": null,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together AI serverless model catalog",
+              "publisher": "Together AI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-02"
+            }
+          ]
+        },
+        {
+          "id": "together-qwen-3-6-plus-batch",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": 0.25,
+          "outputPrice": 1.5,
+          "cachedInputPrice": null,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://docs.together.ai/docs/inference/pricing",
+              "title": "Together AI inference pricing",
+              "publisher": "Together AI",
+              "sourceType": "official-documentation",
+              "checkedAt": "2026-08-02"
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "together-qwen-3-6-plus-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.5,
+          "outputPrice": 3,
+          "cachedInputPrice": null,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together AI serverless model catalog",
+              "publisher": "Together AI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Qwen3.6 Plus standard row verifies $0.50 input and $3.00 output per 1M tokens. Model-specific batch prices are not published; the former inference/pricing URL redirects to an overview."
+            }
+          ]
+        },
+        {
+          "id": "together-qwen-3-6-plus-batch",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "batch",
+          "inputPrice": null,
+          "outputPrice": null,
+          "cachedInputPrice": null,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://docs.together.ai/docs/serverless/models",
+              "title": "Together AI serverless model catalog",
+              "publisher": "Together AI",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Qwen3.6 Plus standard row verifies $0.50 input and $3.00 output per 1M tokens. Model-specific batch prices are not published; the former inference/pricing URL redirects to an overview."
+            }
+          ],
+          "notes": "Qwen3.6 Plus standard row verifies $0.50 input and $3.00 output per 1M tokens. Model-specific batch prices are not published; the former inference/pricing URL redirects to an overview."
+        }
+      ],
+      "source": {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-23",
+        "notes": "Qwen3.6 Plus standard row verifies $0.50 input and $3.00 output per 1M tokens. Model-specific batch prices are not published; the former inference/pricing URL redirects to an overview."
+      },
+      "notes": "Qwen3.6 Plus standard row verifies $0.50 input and $3.00 output per 1M tokens. Model-specific batch prices are not published; the former inference/pricing URL redirects to an overview."
+    },
+    {
+      "id": "offer-deepseek-v4-flash-review-2026-09-23",
+      "offerId": "offer-deepseek-v4-flash",
+      "detectedAt": "2026-09-23",
+      "effectiveAt": null,
+      "eventType": "retirement",
+      "previousPricing": [
+        {
+          "id": "deepseek-v4-flash-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.14,
+          "outputPrice": 0.28,
+          "cachedInputPrice": 0.0028,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://api-docs.deepseek.com/quick_start/pricing",
+              "title": "DeepSeek API models and pricing",
+              "publisher": "DeepSeek",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-02"
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "deepseek-v4-flash-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.14,
+          "outputPrice": 0.28,
+          "cachedInputPrice": 0.0028,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://api-docs.deepseek.com/quick_start/pricing",
+              "title": "DeepSeek API models and pricing",
+              "publisher": "DeepSeek",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-02"
+            }
+          ]
+        }
+      ],
+      "source": {
+        "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "title": "DeepSeek current models and time-of-use pricing",
+        "publisher": "DeepSeek",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-23",
+        "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
+      },
+      "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
+    },
+    {
+      "id": "offer-deepseek-v4-pro-review-2026-09-23",
+      "offerId": "offer-deepseek-v4-pro",
+      "detectedAt": "2026-09-23",
+      "effectiveAt": null,
+      "eventType": "price-change",
+      "previousPricing": [
+        {
+          "id": "deepseek-v4-pro-standard",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "standard",
+          "inputPrice": 0.435,
+          "outputPrice": 0.87,
+          "cachedInputPrice": 0.003625,
+          "cacheWritePrice": null,
+          "sources": [
+            {
+              "url": "https://api-docs.deepseek.com/quick_start/pricing",
+              "title": "DeepSeek API models and pricing",
+              "publisher": "DeepSeek",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-08-02"
+            }
+          ]
+        }
+      ],
+      "currentPricing": [
+        {
+          "id": "deepseek-v4-pro-peak",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "peak",
+          "inputPrice": 1.32,
+          "outputPrice": 3.96,
+          "cachedInputPrice": 0.044,
+          "cacheWritePrice": null,
+          "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests.",
+          "sources": [
+            {
+              "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+              "title": "DeepSeek current models and time-of-use pricing",
+              "publisher": "DeepSeek",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro-off-peak",
+          "currency": "USD",
+          "unit": "per_million_tokens",
+          "mode": "off-peak",
+          "inputPrice": 0.66,
+          "outputPrice": 1.98,
+          "cachedInputPrice": 0.022,
+          "cacheWritePrice": null,
+          "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests.",
+          "sources": [
+            {
+              "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+              "title": "DeepSeek current models and time-of-use pricing",
+              "publisher": "DeepSeek",
+              "sourceType": "official-pricing",
+              "checkedAt": "2026-09-23",
+              "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
+            }
+          ]
+        }
+      ],
+      "source": {
+        "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "title": "DeepSeek current models and time-of-use pricing",
+        "publisher": "DeepSeek",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-23",
+        "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
+      },
+      "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
     }
   ],
   "sources": [
@@ -5608,11 +6313,11 @@
     },
     {
       "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
-      "title": "GPT-5.6 Luna model card",
+      "title": "OpenAI GPT-5.6 Luna model pricing",
       "publisher": "OpenAI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-06",
-      "notes": "Publishes the cached-input prices for the GPT-5.6 offers."
+      "checkedAt": "2026-09-23",
+      "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
     },
     {
       "url": "https://developers.openai.com/api/docs/models/gpt-4.1",
@@ -5663,7 +6368,7 @@
       "notes": "Model card with context, price and capabilities."
     },
     {
-      "url": "https://docs.mistral.ai/models/model-cards/ministral-3-3b-25-12",
+      "url": "https://docs.mistral.ai/models/ministral-3-3b-25-12",
       "title": "Ministral 3 3B model card",
       "publisher": "Mistral AI",
       "sourceType": "official-pricing",
@@ -5735,12 +6440,12 @@
       "notes": "Current token, long-context and Batch API pricing for Grok models."
     },
     {
-      "url": "https://api-docs.deepseek.com/quick_start/pricing",
-      "title": "DeepSeek API models and pricing",
+      "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "title": "DeepSeek current models and time-of-use pricing",
       "publisher": "DeepSeek",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-08-06",
-      "notes": "Current V4 Flash and V4 Pro prices, cache-hit prices and limits."
+      "checkedAt": "2026-09-23",
+      "notes": "Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."
     },
     {
       "url": "https://console.groq.com/docs/models",
@@ -5755,8 +6460,8 @@
       "title": "Together AI serverless model catalog",
       "publisher": "Together AI",
       "sourceType": "official-pricing",
-      "checkedAt": "2026-09-19",
-      "notes": "Model-level input, cached input, output prices, context and capability columns; reviewed for Qwen3.7 Max and DeepSeek V4 Pro 0813 on 2026-09-19."
+      "checkedAt": "2026-09-23",
+      "notes": "Qwen3.7 Max standard row reviewed; remaining rows retain their individual verification dates."
     },
     {
       "url": "https://docs.together.ai/docs/inference/pricing",
@@ -5805,6 +6510,30 @@
       "sourceType": "official-pricing",
       "checkedAt": "2026-09-19",
       "notes": "Model ID, 1M context, modalities and Batch API availability."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+      "title": "OpenAI context window semantics",
+      "publisher": "OpenAI",
+      "sourceType": "official-documentation",
+      "checkedAt": "2026-09-23",
+      "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+      "title": "OpenAI GPT-5.6 Terra model pricing",
+      "publisher": "OpenAI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-09-23",
+      "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+    },
+    {
+      "url": "https://docs.mistral.ai/inference/pricing",
+      "title": "Mistral inference pricing tables",
+      "publisher": "Mistral AI",
+      "sourceType": "official-pricing",
+      "checkedAt": "2026-09-23",
+      "notes": "Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."
     }
   ]
 }
