@@ -17,6 +17,9 @@ afterEach(() => {
 });
 const shared =
   '/calculator?in=1000&out=200&cache=0&write=0&req=1000&days=30&retry=0&batch=0&users=10&convos=2&messages=3&offers=offer-cohere-command-r7b&mode=monthly';
+const workloadFields = () =>
+  screen.getAllByRole('spinbutton').map((field) => (field as HTMLInputElement).value);
+const presetCard = (name: RegExp) => screen.getByRole('button', { name });
 
 test('legacy shares show actual volume and edits immediately change the estimate', async () => {
   const { container } = render(
@@ -34,6 +37,37 @@ test('legacy shares show actual volume and edits immediately change the estimate
   expect(screen.getByRole('button', { name: 'monthly' }).getAttribute('aria-pressed')).toBe('true');
   fireEvent.click(screen.getByRole('button', { name: 'annual' }));
   expect(screen.getByRole('button', { name: 'annual' }).getAttribute('aria-pressed')).toBe('true');
+});
+
+test('offers-only links preselect exactly those offers on the default workload', async () => {
+  const defaults = render(
+    <MemoryRouter initialEntries={['/calculator']}>
+      <App />
+    </MemoryRouter>,
+  );
+  await screen.findByRole('heading', { name: 'Inference subtotal by offer' });
+  const defaultWorkload = workloadFields();
+  defaults.unmount();
+
+  const { container } = render(
+    <MemoryRouter
+      initialEntries={['/calculator?offers=offer-openai-gpt-6-sol,offer-mistral-large-3']}
+    >
+      <App />
+    </MemoryRouter>,
+  );
+  await screen.findByRole('heading', { name: 'Inference subtotal by offer' });
+  const checked = screen
+    .getAllByRole('checkbox', { checked: true })
+    .map((box) => box.closest('.offer-pick-row')?.querySelector('strong')?.textContent);
+  expect(checked.sort()).toEqual(['GPT-6 Sol', 'Mistral Large 3']);
+  const cards = [...container.querySelectorAll('.result-card')].map(
+    (card) => card.querySelector('.result-model')?.textContent,
+  );
+  expect(cards.sort()).toEqual(['GPT-6 Sol', 'Mistral Large 3']);
+  expect(presetCard(/Customer support chatbot/).className).toContain('active');
+  expect(presetCard(/Custom workload/).className).not.toContain('active');
+  expect(workloadFields()).toEqual(defaultWorkload);
 });
 
 test('storage rejection is visible and still permits session export', async () => {

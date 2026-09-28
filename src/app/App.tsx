@@ -73,7 +73,11 @@ import {
   storeSavedScenarios,
   type SavedScenario,
 } from '../lib/scenarios';
-import { parseCalculatorUrl, serializeCalculatorUrl } from '../lib/calculator-url-state';
+import {
+  parseCalculatorOfferIds,
+  parseCalculatorUrl,
+  serializeCalculatorUrl,
+} from '../lib/calculator-url-state';
 import { parseExplorerUrl, serializeExplorerUrl, type ExplorerUrlState } from '../lib/url-state';
 import {
   offerCapabilities,
@@ -2187,11 +2191,10 @@ function CalculatorPage() {
     () => initialUrlState?.input ?? DEFAULT_CALCULATOR_INPUT,
   );
   const [preset, setPreset] = useState(() => (initialUrlState ? 'custom' : 'support'));
-  const [selectedIds, setSelectedIds] = useState<string[]>(
-    () =>
-      initialUrlState?.selectedOfferIds.filter((id) => offers.some((offer) => offer.id === id)) ??
-      defaultOfferIds,
-  );
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
+    const linkedIds = initialUrlState?.selectedOfferIds ?? parseCalculatorOfferIds(location.search);
+    return linkedIds?.filter((id) => offers.some((offer) => offer.id === id)) ?? defaultOfferIds;
+  });
   const [offerSearch, setOfferSearch] = useState('');
   const [offerProvider, setOfferProvider] = useState('');
   const [mode, setMode] = useState<'request' | 'daily' | 'monthly' | 'annual'>(
