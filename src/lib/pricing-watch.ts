@@ -21,6 +21,8 @@ export type PricingSignal = {
   value: number;
   minimumInputTokens: number | null;
   maximumInputTokens: number | null;
+  effectiveFrom?: string | null;
+  effectiveUntil?: string | null;
   inputModality?: string | null;
   outputModality?: string | null;
 };
@@ -50,6 +52,7 @@ type PricingRecord = {
   cells: string[];
   headers: string[];
   text: string;
+  modelKey?: string;
   mode: PricingMode | null;
   range: PricingRange | null;
   boundaries: RangeBoundary[];
@@ -114,6 +117,8 @@ export function pricingSignalsFor(offers: Offer[], models: Model[], url: string)
           value,
           minimumInputTokens: rule.minimumInputTokens ?? null,
           maximumInputTokens: rule.maximumInputTokens ?? null,
+          effectiveFrom: rule.effectiveFrom ?? null,
+          effectiveUntil: rule.effectiveUntil ?? null,
           inputModality: model?.modalities?.input?.[0] ?? null,
           outputModality: model?.modalities?.output?.[0] ?? null,
         });
@@ -160,6 +165,7 @@ function escapeRegExp(value: string): string {
 }
 
 function parseNumericCell(cell: string): CellPrice {
+  if (/^\s*(?:free|free of charge|no charge)\s*$/i.test(cell)) return 0;
   const values = numericMatches(cell).map((match) => match.value);
   if (values.length === 0) return null;
   if (values.length > 1) return 'ambiguous';
@@ -541,7 +547,9 @@ function modelCardRecords(
   const openai =
     url.hostname === 'developers.openai.com' && url.pathname.startsWith('/api/docs/models/');
   const cohere = url.hostname === 'docs.cohere.com' && /\/docs\/command-/.test(url.pathname);
-  if (!openai && !cohere) return [];
+  const anthropic =
+    url.hostname === 'platform.claude.com' && url.pathname.startsWith('/docs/en/models/');
+  if (!openai && !cohere && !anthropic) return [];
   const title = visibleText(body.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? '');
   const heading = visibleText(body.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? '');
   const modelText = heading || title;
@@ -552,6 +560,40 @@ function modelCardRecords(
   )
     return [];
   const text = visibleText(body).replace(/\s+/g, ' ');
+  if (anthropic) {
+    const input = text.match(/Input pricing\s*\$\s*([0-9.]+)/i);
+    const cached = text.match(/Cache read\s*\$\s*([0-9.]+)/i);
+    const cacheWrite = text.match(/5m cache write\s*\$\s*([0-9.]+)/i);
+    const output = text.match(/Output pricing\s*\$\s*([0-9.]+)/i);
+    if (!input || !output) return [];
+    const values = [input[1], cached?.[1] ?? '', cacheWrite?.[1] ?? '', output[1]];
+    const records: PricingRecord[] = [
+      {
+        text: `${modelText} standard`,
+        mode: 'standard',
+        range: null,
+        boundaries: [],
+        headers: ['Input', 'Cached input', 'Cache write', 'Output'],
+        cells: values,
+      },
+    ];
+    if (/Batch API\s+50% discount on input and output/i.test(text)) {
+      records.push({
+        text: `${modelText} batch`,
+        mode: 'batch',
+        range: null,
+        boundaries: [],
+        headers: ['Input', 'Cached input', 'Cache write', 'Output'],
+        cells: [
+          String(Number(input[1]) / 2),
+          cached ? String(Number(cached[1]) / 2) : '',
+          cacheWrite ? String(Number(cacheWrite[1]) / 2) : '',
+          String(Number(output[1]) / 2),
+        ],
+      });
+    }
+    return records;
+  }
   const block = openai
     ? text.match(/Text tokens\s+Per 1M tokens([\s\S]*?)Quick comparison/i)?.[1]
     : text.match(/Pricing\s+Input\s*([\s\S]*?)Specifications/i)?.[1];
@@ -584,6 +626,101 @@ function modelCardRecords(
     ],
   });
   return longContext ? [make(false), make(true)] : [make(false)];
+}
+
+function groqModelRecords(
+  body: string,
+  signals: PricingSignal[],
+  sourceUrl?: string,
+): PricingRecord[] {
+  if (!sourceUrl) return [];
+  const url = new URL(sourceUrl);
+  if (url.hostname !== 'console.groq.com') return [];
+  if (url.pathname.startsWith('/docs/model/')) {
+    const heading = visibleText(body.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? '');
+    const apiModelId = visibleText(body.match(/<code\b[^>]*>([\s\S]*?)<\/code>/i)?.[1] ?? '');
+    const text = visibleText(body);
+    const pricing = text.match(/PRICING([\s\S]*?)LIMITS/i)?.[1] ?? '';
+    const input = pricing.match(/\bInput\s+\$([0-9.]+)/i);
+    const output = pricing.match(/\bOutput\s+\$([0-9.]+)/i);
+    if (!apiModelId || !input || !output) return [];
+    return [
+      {
+        cells: ['Model', input[1], output[1]],
+        headers: ['Model', 'Input', 'Output'],
+        text: `${heading} ${apiModelId}`,
+        modelKey: apiModelId,
+        mode: 'standard',
+        range: null,
+        boundaries: [],
+      },
+    ];
+  }
+  if (url.pathname !== '/docs/models') return [];
+  const records: PricingRecord[] = [];
+  for (const row of body.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)) {
+    const cells = Array.from(row[1].matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)).map((cell) =>
+      visibleText(cell[1]).replace(/\s+/g, ' ').trim(),
+    );
+    if (cells.length < 2) continue;
+    const priceCell = cells.find((cell) => /\$\s*[0-9.]+\s*input\b/i.test(cell));
+    if (
+      !priceCell ||
+      !signals.some((signal) =>
+        modelTokens(signal).some((token) => containsToken(cells.join(' '), token)),
+      )
+    )
+      continue;
+    records.push({
+      cells: ['Model', priceCell],
+      headers: ['Model', 'Price per 1M tokens'],
+      text: cells.join(' | '),
+      mode: 'standard',
+      range: null,
+      boundaries: [],
+    });
+  }
+  return records;
+}
+
+function openaiPricingRecords(
+  body: string,
+  signals: PricingSignal[],
+  sourceUrl?: string,
+): PricingRecord[] {
+  if (sourceUrl !== 'https://developers.openai.com/api/docs/pricing') return [];
+  const panes = Array.from(
+    body.matchAll(/<div\b[^>]*data-content-switcher-pane="true"[^>]*data-value="([^"]+)"[^>]*>/gi),
+  );
+  const records: PricingRecord[] = [];
+  const rowPattern =
+    /\[1,\[\[0,&quot;([^&]+?)&quot;\],\[0,([^\]]+)\],\[0,([^\]]+)\],\[0,([^\]]+)\]\]\]/g;
+  const numericCell = (value: string): string => {
+    const text = value.trim().replace(/^&quot;|&quot;$/g, '');
+    return text === 'null' || text === '-' || !Number.isFinite(Number(text)) ? '' : text;
+  };
+
+  for (let index = 0; index < panes.length; index += 1) {
+    const mode = panes[index][1];
+    if (mode !== 'standard' && mode !== 'batch') continue;
+    const start = (panes[index].index ?? 0) + panes[index][0].length;
+    const end = panes[index + 1]?.index ?? body.length;
+    const pane = body.slice(start, end);
+    for (const row of pane.matchAll(rowPattern)) {
+      const modelKey = row[1].replace(/&amp;/g, '&').trim();
+      if (!signals.some((signal) => modelTokens(signal).includes(normalized(modelKey)))) continue;
+      records.push({
+        cells: ['Model', numericCell(row[2]), numericCell(row[3]), numericCell(row[4])],
+        headers: ['Model', 'Input', 'Cached input', 'Output'],
+        text: modelKey,
+        modelKey,
+        mode,
+        range: null,
+        boundaries: [],
+      });
+    }
+  }
+  return records;
 }
 
 function deepseekTimeRecords(body: string, sourceUrl?: string): PricingRecord[] {
@@ -627,14 +764,22 @@ function pricingRecords(
   signals: PricingSignal[],
   sourceUrl?: string,
 ): PricingRecord[] {
+  if (
+    sourceUrl === 'https://console.groq.com/docs/models' ||
+    (sourceUrl?.startsWith('https://console.groq.com/docs/model/') ?? false)
+  ) {
+    return groqModelRecords(body, signals, sourceUrl);
+  }
   const structured = htmlRows(body);
   const markdown = structured.length ? [] : markdownRows(body);
   return [
     ...structured,
     ...markdown,
     ...labeledTextRecords(body, signals),
+    ...openaiPricingRecords(body, signals, sourceUrl),
     ...xaiBatchRecords(body),
     ...modelCardRecords(body, signals, sourceUrl),
+    ...groqModelRecords(body, signals, sourceUrl),
     ...deepseekTimeRecords(body, sourceUrl),
   ];
 }
@@ -739,6 +884,10 @@ function signalRange(signal: PricingSignal): PricingRange {
 }
 
 function recordMatchesSignal(record: PricingRecord, signal: PricingSignal): boolean {
+  if (record.modelKey) {
+    const key = normalized(record.modelKey);
+    return modelTokens(signal).includes(key);
+  }
   const text = normalized(record.text);
   return modelTokens(signal).some((token) => containsToken(text, token));
 }
@@ -790,9 +939,48 @@ function signalModality(signal: PricingSignal): string | null {
   return signal.inputModality ?? null;
 }
 
+function effectiveDateMatches(signal: PricingSignal, context: NumericContext): boolean {
+  if (!signal.effectiveFrom && !signal.effectiveUntil) return true;
+  const formatDate = (date: string) =>
+    new Date(`${date}T00:00:00Z`)
+      .toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        timeZone: 'UTC',
+      })
+      .toLocaleLowerCase();
+  const clauses = [
+    { text: normalized(context.before), side: 'before' as const },
+    { text: normalized(context.after), side: 'after' as const },
+  ].flatMap(({ text, side }) => {
+    const matches = Array.from(
+      text.matchAll(
+        /\b(through|until|up to|starting|effective from|beginning)\s+((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2},\s+\d{4}|\d{4}-\d{2}-\d{2})/gi,
+      ),
+    );
+    return matches.map((match) => {
+      const start = match.index ?? 0;
+      const distance = side === 'before' ? text.length - start - match[0].length + 1 : start;
+      return {
+        kind: /^(?:through|until|up to)$/i.test(match[1]) ? 'until' : 'from',
+        date: match[2],
+        distance,
+        side,
+      };
+    });
+  });
+  const closest = clauses.sort(
+    (left, right) => left.distance - right.distance || (left.side === 'after' ? -1 : 1),
+  )[0];
+  if (!closest) return false;
+  const expectedDate = closest.kind === 'until' ? signal.effectiveUntil : signal.effectiveFrom;
+  return Boolean(expectedDate && normalized(closest.date) === formatDate(expectedDate));
+}
+
 function cellPriceForSignal(cell: string, signal: PricingSignal): CellPrice {
   const parsed = parseNumericCell(cell);
-  if (parsed !== 'ambiguous') return parsed;
+  if (parsed === null || typeof parsed === 'number') return parsed;
   const modality = signalModality(signal);
   const modalityPattern = /\b(?:text|audio|image|video)\b/i;
   const allMatches = numericMatches(cell);
@@ -802,6 +990,7 @@ function cellPriceForSignal(cell: string, signal: PricingSignal): CellPrice {
   const matches = priceMatches.filter((match, index) => {
     const context = numericContext(cell, match, index, priceMatches);
     if (/\bstorage\s+price\b/i.test(context.after)) return false;
+    if (!effectiveDateMatches(signal, context)) return false;
     const rangeMatches = numericMatchesSignalRange(context, signal);
     const afterHasModality = modalityPattern.test(context.after);
     const cellHasModality = modalityPattern.test(cell);
@@ -869,6 +1058,19 @@ export function pricingSignalEvidence(
   signals: PricingSignal[],
   sourceUrl?: string,
 ): PricingSignalEvidence[] {
+  if (sourceUrl === 'https://console.groq.com/docs/batch') {
+    const text = visibleText(body);
+    const hasHalfPricePolicy = /50% cost discount compared to synchronous APIs/i.test(text);
+    return signals.map((signal) => ({
+      signal,
+      status:
+        signal.mode === 'batch' &&
+        hasHalfPricePolicy &&
+        modelTokens(signal).some((token) => containsToken(normalized(text), token))
+          ? 'present'
+          : 'missing',
+    }));
+  }
   const records = pricingRecords(body, signals, sourceUrl);
   return signals.map((signal) => {
     const matchingRecords = records.filter((record) => recordMatchesSignal(record, signal));

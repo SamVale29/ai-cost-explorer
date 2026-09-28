@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate, getStaleness } from './format';
+import { formatDate, formatExactTokens, formatUnitPrice, getStaleness } from './format';
 
 describe('staleness', () => {
   const now = new Date('2026-08-04T12:00:00Z');
@@ -19,5 +19,13 @@ describe('staleness', () => {
 describe('civil dates', () => {
   it('formats date-only values without shifting them across time zones', () => {
     expect(formatDate('2026-08-06')).toBe('Aug 6, 2026');
+  });
+});
+
+describe('unit formatting', () => {
+  it('preserves published fractional prices and exact token limits', () => {
+    expect(formatUnitPrice(0.075)).toBe('$0.075');
+    expect(formatUnitPrice(0.000018)).toBe('$0.000018');
+    expect(formatExactTokens(1_048_576)).toBe('1,048,576 tokens');
   });
 });

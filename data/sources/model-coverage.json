@@ -1,48 +1,2819 @@
 {
-  "schemaVersion": "v1",
-  "checkedAt": "2026-09-19",
+  "schemaVersion": "v2",
+  "reviewedAt": "2026-09-27",
+  "providers": [
+    {
+      "providerId": "openai",
+      "reviewedAt": "2026-09-27",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "summary": "Reviewed first-party model inventory, covered offers and explicit unit/access exclusions."
+    },
+    {
+      "providerId": "anthropic",
+      "reviewedAt": "2026-09-27",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "summary": "Reviewed first-party model inventory, covered offers and explicit unit/access exclusions."
+    },
+    {
+      "providerId": "google-ai",
+      "reviewedAt": "2026-09-27",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "summary": "Reviewed first-party model inventory, covered offers and explicit unit/access exclusions."
+    },
+    {
+      "providerId": "mistral",
+      "reviewedAt": "2026-09-27",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "summary": "Reviewed first-party model inventory, covered offers and explicit unit/access exclusions."
+    },
+    {
+      "providerId": "cohere",
+      "reviewedAt": "2026-09-27",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "summary": "Reviewed first-party model inventory, covered offers and explicit unit/access exclusions."
+    },
+    {
+      "providerId": "xai",
+      "reviewedAt": "2026-09-27",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "summary": "Reviewed first-party model inventory, covered offers and explicit unit/access exclusions."
+    },
+    {
+      "providerId": "deepseek",
+      "reviewedAt": "2026-09-27",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "summary": "Reviewed first-party model inventory, covered offers and explicit unit/access exclusions."
+    },
+    {
+      "providerId": "groq",
+      "reviewedAt": "2026-09-27",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "summary": "Reviewed first-party model inventory, covered offers and explicit unit/access exclusions."
+    },
+    {
+      "providerId": "together",
+      "reviewedAt": "2026-09-27",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "summary": "Reviewed first-party model inventory, covered offers and explicit unit/access exclusions."
+    }
+  ],
   "entries": [
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-5.6-sol",
+      "catalogModelId": "gpt-5-6-sol",
+      "status": "tracked",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-5.6-terra",
+      "catalogModelId": "gpt-5-6-terra",
+      "status": "tracked",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-5.6-terra"
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-5.6-luna",
+      "catalogModelId": "gpt-5-6-luna",
+      "status": "tracked",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-5.6-luna"
+    },
     {
       "providerId": "openai",
       "apiModelId": "gpt-6-astra",
       "catalogModelId": "gpt-6-astra",
       "status": "tracked",
-      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra"
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-4.1",
+      "catalogModelId": "gpt-4-1",
+      "status": "tracked",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-4.1"
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-4.1-mini",
+      "catalogModelId": "gpt-4-1-mini",
+      "status": "tracked",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-4.1-mini"
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-fable-5",
+      "catalogModelId": "claude-fable-5",
+      "status": "tracked",
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-opus-5",
+      "catalogModelId": "claude-opus-5",
+      "status": "tracked",
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-sonnet-5",
+      "catalogModelId": "claude-sonnet-5",
+      "status": "tracked",
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-sonnet-4-6",
+      "catalogModelId": "claude-sonnet-4-6",
+      "status": "tracked",
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-haiku-4-5",
+      "catalogModelId": "claude-haiku-4-5",
+      "status": "tracked",
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.1-pro-preview",
+      "catalogModelId": "gemini-3-1-pro-preview",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3-flash-preview",
+      "catalogModelId": "gemini-3-flash-preview",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-pro",
+      "catalogModelId": "gemini-2-5-pro",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-flash",
+      "catalogModelId": "gemini-2-5-flash",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-flash-lite",
+      "catalogModelId": "gemini-2-5-flash-lite",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-2603",
+      "catalogModelId": "mistral-small-4",
+      "status": "tracked",
+      "sourceUrl": "https://docs.mistral.ai/inference/pricing"
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-medium-3-5",
+      "catalogModelId": "mistral-medium-3-5",
+      "status": "tracked",
+      "sourceUrl": "https://docs.mistral.ai/inference/pricing"
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-large-2512",
+      "catalogModelId": "mistral-large-3",
+      "status": "tracked",
+      "sourceUrl": "https://docs.mistral.ai/inference/pricing"
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-3b-2512",
+      "catalogModelId": "ministral-3b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.mistral.ai/inference/pricing"
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-14b-2512",
+      "catalogModelId": "ministral-14b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.mistral.ai/inference/pricing"
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-2508",
+      "catalogModelId": "codestral-2508",
+      "status": "tracked",
+      "sourceUrl": "https://docs.mistral.ai/inference/pricing"
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-03-2025",
+      "catalogModelId": "command-a",
+      "status": "tracked",
+      "sourceUrl": "https://docs.cohere.com/docs/command-a"
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r-plus-08-2024",
+      "catalogModelId": "command-r-plus",
+      "status": "tracked",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/command-r-plus"
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r-08-2024",
+      "catalogModelId": "command-r",
+      "status": "tracked",
+      "sourceUrl": "https://docs.cohere.com/docs/command-r"
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r7b-12-2024",
+      "catalogModelId": "command-r7b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.cohere.com/v1/docs/command-r7b"
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-plus-05-2026",
+      "catalogModelId": "command-a-plus",
+      "status": "tracked",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models"
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.5",
+      "catalogModelId": "grok-4-5",
+      "status": "tracked",
+      "sourceUrl": "https://docs.x.ai/developers/pricing"
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-build-0.1",
+      "catalogModelId": "grok-build-0-1",
+      "status": "tracked",
+      "sourceUrl": "https://docs.x.ai/developers/pricing"
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.3",
+      "catalogModelId": "grok-4-3",
+      "status": "tracked",
+      "sourceUrl": "https://docs.x.ai/developers/pricing"
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-0309-reasoning",
+      "catalogModelId": "grok-4-20-reasoning",
+      "status": "tracked",
+      "sourceUrl": "https://docs.x.ai/developers/pricing"
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-0309-non-reasoning",
+      "catalogModelId": "grok-4-20-non-reasoning",
+      "status": "tracked",
+      "sourceUrl": "https://docs.x.ai/developers/pricing"
     },
     {
       "providerId": "xai",
       "apiModelId": "grok-4.6",
       "catalogModelId": "grok-4-6",
       "status": "tracked",
-      "sourceUrl": "https://docs.x.ai/developers/grok-4-6"
+      "sourceUrl": "https://docs.x.ai/developers/pricing"
     },
     {
       "providerId": "xai",
       "apiModelId": "grok-4.20-multi-agent-0309",
       "catalogModelId": "grok-4-20-multi-agent-0309",
       "status": "tracked",
-      "sourceUrl": "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309"
+      "sourceUrl": "https://docs.x.ai/developers/pricing"
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v4-flash",
+      "catalogModelId": "deepseek-v4-flash",
+      "status": "retired",
+      "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing",
+      "reason": "Provider marks this offer retired; the historical record links to its current replacement."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v4-pro",
+      "catalogModelId": "deepseek-v4-pro",
+      "status": "tracked",
+      "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing/"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "llama-3.1-8b-instant",
+      "catalogModelId": "llama-3-1-8b",
+      "status": "tracked",
+      "sourceUrl": "https://console.groq.com/docs/models"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "llama-3.3-70b-versatile",
+      "catalogModelId": "llama-3-3-70b",
+      "status": "tracked",
+      "sourceUrl": "https://console.groq.com/docs/models"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "openai/gpt-oss-120b",
+      "catalogModelId": "gpt-oss-120b",
+      "status": "tracked",
+      "sourceUrl": "https://console.groq.com/docs/models"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "openai/gpt-oss-20b",
+      "catalogModelId": "gpt-oss-20b",
+      "status": "tracked",
+      "sourceUrl": "https://console.groq.com/docs/models"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "whisper-large-v3",
+      "catalogModelId": "whisper-large-v3",
+      "status": "deferred-non-token",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "reason": "This specialized offer uses non-token or mixed billing units; the calculator does not convert those into token prices."
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "whisper-large-v3-turbo",
+      "catalogModelId": "whisper-large-v3-turbo",
+      "status": "deferred-non-token",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "reason": "This specialized offer uses non-token or mixed billing units; the calculator does not convert those into token prices."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "Qwen/Qwen3.7-Max",
+      "catalogModelId": "qwen-3-7-max",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "Qwen/Qwen3.5-397B-A17B",
+      "catalogModelId": "qwen-3-5-397b",
+      "status": "retired",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Provider marks this offer retired; this row is historical reference only."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "Qwen/Qwen3.6-Plus",
+      "catalogModelId": "qwen-3-6-plus",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "Qwen/Qwen3.5-9B",
+      "catalogModelId": "qwen-3-5-9b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "deepseek-ai/DeepSeek-V4-Pro",
+      "catalogModelId": "deepseek-v4-pro",
+      "status": "retired",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Provider marks this offer retired; this row is historical reference only."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "deepseek-ai/DeepSeek-V4-Pro-0813",
+      "catalogModelId": "deepseek-v4-pro",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-6-sol",
+      "catalogModelId": "gpt-6-sol",
+      "status": "tracked",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-6-luna",
+      "catalogModelId": "gpt-6-luna",
+      "status": "tracked",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-fable-5-1",
+      "catalogModelId": "claude-fable-5-1",
+      "status": "tracked",
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-opus-5-5",
+      "catalogModelId": "claude-opus-5-5",
+      "status": "tracked",
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.8-flash",
+      "catalogModelId": "gemini-3-8-flash",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.7-flash",
+      "catalogModelId": "gemini-3-7-flash",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.6-flash",
+      "catalogModelId": "gemini-3-6-flash",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.5-flash",
+      "catalogModelId": "gemini-3-5-flash",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.5-flash-lite",
+      "catalogModelId": "gemini-3-5-flash-lite",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.1-flash-lite",
+      "catalogModelId": "gemini-3-1-flash-lite",
+      "status": "tracked",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.7",
+      "catalogModelId": "grok-4-7",
+      "status": "tracked",
+      "sourceUrl": "https://docs.x.ai/developers/release-notes"
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-flash",
+      "catalogModelId": "deepseek-v4-1-flash",
+      "status": "tracked",
+      "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing/"
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "zai-glm-5-3",
+      "catalogModelId": "zai-glm-5-3",
+      "status": "tracked",
+      "sourceUrl": "https://docs.mistral.ai/models/zai-glm-5-3"
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "zai-glm-5-2",
+      "catalogModelId": "zai-glm-5-2",
+      "status": "tracked",
+      "sourceUrl": "https://docs.mistral.ai/models/zai-glm-5-2"
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-8b-2512",
+      "catalogModelId": "ministral-8b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.mistral.ai/models/ministral-3-8b-25-12"
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-translate-08-2025",
+      "catalogModelId": "command-a-translate",
+      "status": "tracked",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models"
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-reasoning-08-2025",
+      "catalogModelId": "command-a-reasoning",
+      "status": "tracked",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models"
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-vision-07-2025",
+      "catalogModelId": "command-a-vision",
+      "status": "tracked",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "qwen/qwen3.8-27b",
+      "catalogModelId": "qwen-3-8-27b",
+      "status": "tracked",
+      "sourceUrl": "https://console.groq.com/docs/model/qwen/qwen3.8-27b"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "meta-llama/llama-prompt-guard-2-22m",
+      "catalogModelId": "llama-prompt-guard-2-22m",
+      "status": "tracked",
+      "sourceUrl": "https://console.groq.com/docs/models"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "meta-llama/llama-prompt-guard-2-86m",
+      "catalogModelId": "llama-prompt-guard-2-86m",
+      "status": "tracked",
+      "sourceUrl": "https://console.groq.com/docs/models"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "openai/gpt-oss-safeguard-20b",
+      "catalogModelId": "gpt-oss-safeguard-20b",
+      "status": "tracked",
+      "sourceUrl": "https://console.groq.com/docs/models"
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "minimaxai/minimax-m2.7",
+      "catalogModelId": "minimax-m2-7",
+      "status": "tracked",
+      "sourceUrl": "https://console.groq.com/docs/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "thinkingmachines/Inkling",
+      "catalogModelId": "thinking-machines-inkling",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "MiniMaxAI/MiniMax-M3",
+      "catalogModelId": "minimax-m3",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "Qwen/Qwen3.8-2.4T-A95B",
+      "catalogModelId": "qwen-3-8-2-4t-a95b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "moonshotai/Kimi-K3",
+      "catalogModelId": "kimi-k3",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "zai-org/GLM-5.3",
+      "catalogModelId": "zai-glm-5-3",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "zai-org/GLM-5.3-Flash",
+      "catalogModelId": "zai-glm-5-3-flash",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "zai-org/GLM-5.2",
+      "catalogModelId": "zai-glm-5-2",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "deepseek-ai/DeepSeek-V4.1-Flash",
+      "catalogModelId": "deepseek-v4-1-flash",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "Qwen/Qwen3.7-Plus",
+      "catalogModelId": "qwen-3-7-plus",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "Prism-ML/Ternary-Bonsai-27B",
+      "catalogModelId": "ternary-bonsai-27b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "meta-models/Muse-Glimmer-30B",
+      "catalogModelId": "muse-glimmer-30b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "Qwen/Qwen3.8-Flash",
+      "catalogModelId": "qwen-3-8-flash",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "together/Tev1-4B-experimental",
+      "catalogModelId": "tev1-4b-experimental",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "openai/gpt-oss-120b",
+      "catalogModelId": "gpt-oss-120b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+      "catalogModelId": "llama-3-3-70b",
+      "status": "tracked",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models"
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-image-2.5",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image generation is priced by image and request settings; image-unit pricing is not modeled."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-realtime-2.1",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Realtime audio uses mixed audio/text units and session terms outside the token-only calculator."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-realtime-mini",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Realtime audio uses mixed audio/text units and session terms outside the token-only calculator."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-live",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Live audio/video uses modality-specific units outside the token-only calculator."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-mythos-5-1",
+      "status": "restricted",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+      "reason": "Access is limited to Project Glasswing participants; do not present it as generally available."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.8-live",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "Realtime audio uses audio-minutes and session units not supported by the token-only calculator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.8-flash-lite-tts",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "Speech output uses audio units and separate storage charges, outside token-only simulation."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.1-flash-image",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "Image generation has image-resolution pricing and is not converted into token rates."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "veo-3.1",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "Video generation is priced by duration and resolution, outside token-only simulation."
     },
     {
       "providerId": "xai",
       "apiModelId": "grok-imagine-image-2.0",
-      "status": "deferred-non-token",
+      "status": "out-of-scope",
       "sourceUrl": "https://docs.x.ai/developers/pricing",
-      "reason": "Pricing is per image with resolution and quality dimensions; the token calculator must support image units before an offer is published."
+      "reason": "Image generation is priced per image and quality/resolution."
     },
     {
       "providerId": "xai",
       "apiModelId": "grok-imagine-video-1.5",
-      "status": "deferred-non-token",
+      "status": "out-of-scope",
       "sourceUrl": "https://docs.x.ai/developers/pricing",
-      "reason": "Pricing is per image input and per second of video output; the catalog must represent mixed media units before an offer is published."
+      "reason": "Video generation bills mixed image input and video seconds."
     },
     {
       "providerId": "xai",
       "apiModelId": "grok-voice-think-fast-2.0",
-      "status": "deferred-non-token",
+      "status": "out-of-scope",
       "sourceUrl": "https://docs.x.ai/developers/pricing",
-      "reason": "Pricing is per audio minute plus text input; the calculator must support audio duration and mixed billing units before an offer is published."
+      "reason": "Voice usage combines audio minutes and text tokens."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "voxtral",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "Speech/transcription uses audio-duration units outside token-only simulation."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-ocr",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "OCR is priced per page, a billing unit not modeled by the simulator."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "embed-v4.0",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "Embedding uses a separate endpoint and workload surface; review its unit before adding an offer."
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "canopylabs/orpheus-arabic-saudi",
+      "status": "out-of-scope",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "reason": "The official price is per million generated characters, not per token."
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "canopylabs/orpheus-v1-english",
+      "status": "out-of-scope",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "reason": "The official price is per million generated characters, not per token."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/imagen-4.0-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image generation is priced per image or megapixel, not per token."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "openai/gpt-image-2",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image generation is billed by output image and resolution."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/veo-3.1",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Video generation is billed by duration and resolution."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "canopylabs/orpheus-3b-0.1-ft",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Text-to-speech is priced per character, not per token."
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "qwen/qwen3.6-27b",
+      "catalogModelId": "qwen-3-6-27b",
+      "status": "retired",
+      "sourceUrl": "https://console.groq.com/docs/deprecations",
+      "reason": "Groq retired this model for free and developer tiers on 2026-09-14 in favor of Qwen 3.8 27B; committed-spend enterprise access is exempt."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-4o",
+      "status": "not-listed",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "This is a legacy generation, family alias, or specialist outside the audit’s selected current-offer matrix; no separate offer is represented by this identifier."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-4o-mini-transcribe",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-4o-mini-tts",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-4o-transcribe",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-5.6-cyber",
+      "status": "restricted",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Official OpenAI documentation requires separate approval, provisioning, or trusted research access; this catalog does not present the offer as generally available."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-daybreak-blue-latest",
+      "status": "restricted",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Official OpenAI documentation requires separate approval, provisioning, or trusted research access; this catalog does not present the offer as generally available."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-daybreak-red-latest",
+      "status": "restricted",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Official OpenAI documentation requires separate approval, provisioning, or trusted research access; this catalog does not present the offer as generally available."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-image-2.5-flare",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-image-2.5-sunburst",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-live-1",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-live-transcribe",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-realtime",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-realtime-1.5",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-realtime-2",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-realtime-2.1-mini",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-realtime-translate",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-realtime-whisper",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-rosalind",
+      "status": "restricted",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Official OpenAI documentation requires separate approval, provisioning, or trusted research access; this catalog does not present the offer as generally available."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-rosalind-research",
+      "status": "restricted",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Official OpenAI documentation requires separate approval, provisioning, or trusted research access; this catalog does not present the offer as generally available."
+    },
+    {
+      "providerId": "openai",
+      "apiModelId": "gpt-transcribe",
+      "status": "out-of-scope",
+      "sourceUrl": "https://developers.openai.com/api/docs/models",
+      "reason": "Image, realtime, speech, and transcription pricing uses image, audio, or mixed units that the text-token simulator does not model."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-haiku-3",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-haiku-3-5",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-haiku-4-5-20251001",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-haiku-4-5-20251001-v1",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-opus-3",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-opus-4",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-opus-4-1",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-opus-4-5",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-opus-4-6",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-opus-4-7",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-opus-4-8",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-sonnet-3-5",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-sonnet-3-7",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-sonnet-4",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "anthropic",
+      "apiModelId": "claude-sonnet-4-5",
+      "status": "not-listed",
+      "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+      "reason": "This older generation or dated snapshot appears in the provider inventory; the reviewed catalog cut prioritizes current audited generations and does not claim separate current pricing for this identifier."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.0-flash",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.0-flash-lite",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-computer-use-preview-10-2025",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-flash-image",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-flash-lite-preview-09-2025",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-flash-native-audio-preview-12-2025",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-flash-preview-09-2025",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-flash-preview-tts",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-2.5-pro-preview-tts",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3-flash",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3-preview",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3-pro-image",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3-pro-preview",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3-stable",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.1-flash-lite-image",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.1-flash-lite-preview",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.1-flash-live-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.1-flash-tts-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.1-pro",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.5",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.5-live-translate-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.5-transcribe",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.5-transcribe-live",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.8-flash-tts",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-3.8-live-extended-thinking",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-embedding-001",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "Embedding is a separate endpoint and workload surface, not comparable to the text-generation offers in the simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-embedding-2",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "Embedding is a separate endpoint and workload surface, not comparable to the text-generation offers in the simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-embedding-2-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "Embedding is a separate endpoint and workload surface, not comparable to the text-generation offers in the simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-flash-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-omni-1.1-flash",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-omni-flash",
+      "status": "not-listed",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This is a prior generation, preview snapshot, or family alias outside the audit’s selected current-offer matrix; it is not represented as a separate current offer."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-robotics-er-1.5-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-robotics-er-1.6-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-robotics-er-2-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "google-ai",
+      "apiModelId": "gemini-robotics-er-2-streaming-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+      "reason": "This image, video, audio, robotics, or computer-use service has modality-specific units or interactions outside the text-token simulator."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-24-05",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-2405",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-25-01",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-25-08",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-2501",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-embed",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-embed-25-05",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-mamba",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "codestral-mamba-7b-0-1",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-2-25-12",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-2507",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-2512",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-medium-1-0-25-07",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-medium-2507",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-small-1-0-25-05",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-small-1-1-25-07",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-small-2-25-12",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-small-2505",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-small-2507",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "devstral-small-2512",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-medium-1-0-25-06",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-medium-1-1-25-07",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-medium-1-2-25-09",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-medium-2506",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-medium-2507",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-medium-2509",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-small-1-0-25-06",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-small-1-1-25-07",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-small-1-2-25-09",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-small-2506",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-small-2507",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "magistral-small-2509",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-3-14b-25-12",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-3-3b-25-12",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-3-8b-25-12",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-3b-24-1",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-3b-2410",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-8b-24-1",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "ministral-8b-2410",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-7b",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-7b-0-1",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-7b-0-2",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-7b-0-3",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-embed",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-embed-23-12",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-large",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-large-1-0-24-02",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-large-2-0-24-07",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-large-2-1-24-11",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-large-2402",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-large-2407",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-large-2411",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-large-3-25-12",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-medium-1-0-23-12",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-medium-2312",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-medium-2505",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-medium-2508",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-medium-3",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-medium-3-1-25-08",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-medium-3-25-05",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-medium-3-5-26-04",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-moderation-24-11",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-moderation-2411",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-moderation-26-03",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-nemo-12b-24-07",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-nemo-2407",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-next",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-ocr-2503",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-ocr-2505",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-saba-25-02",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-saba-2502",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-1-0-24-02",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-2-0-24-09",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-2402",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-2409",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-2501",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-2503",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-2506",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-3-0-25-01",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-3-1-25-03",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-3-2-25-06",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-4-0-26-03",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-creative",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "mistral-small-creative-25-12",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This historical snapshot, alias, or additional specialist is outside the audit’s selected offer matrix; no separate current price row is represented for this identifier."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "voxtral-mini-25-07",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "voxtral-mini-2507",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "voxtral-mini-transcribe-25-07",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "voxtral-mini-transcribe-26-02",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "voxtral-mini-transcribe-realtime-26-02",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "voxtral-small-25-07",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "mistral",
+      "apiModelId": "voxtral-tts-26-03",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.mistral.ai/models",
+      "reason": "This embedding, OCR, audio, or moderation endpoint has a specialized workload or billing unit outside the general text-generation comparison."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-plus",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-plus-05-2026-w4a4",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This quantized checkpoint is not listed as a separately callable Cohere API offer; the canonical Command A+ API ID is tracked."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-translate",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-a-vision",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-beta",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-light",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-light-text-v14",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r-03-2024",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r-0824",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r-16k",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r-plus",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r-plus-04-2024",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r-plus-v1",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r-v1",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r7b",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "cohere",
+      "apiModelId": "command-r7b-hf",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.cohere.com/v2/docs/models",
+      "reason": "This older generation, generic alias, or non-canonical identifier has no separate current price row in the audited offer matrix."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-0309",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-beta",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-beta-0309",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-beta-0309-non-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-beta-0309-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-beta-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-beta-latest-non-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-beta-latest-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-beta-non-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-beta-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-experimental-beta-0304",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-experimental-beta-0304-non-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-experimental-beta-0304-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-experimental-beta-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-experimental-beta-non-reasoning-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-experimental-beta-reasoning-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-multi-agent",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-multi-agent-beta-0309",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-multi-agent-beta-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-multi-agent-experimental-beta-0304",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-multi-agent-experimental-beta-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-multi-agent-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-non-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-non-reasoning-gv2",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-non-reasoning-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-reasoning",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-reasoning-gv2",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.20-reasoning-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This alias or experimental beta points to a canonical Grok 4.20 release; the catalog tracks the provider-priced 0309 reasoning, non-reasoning, and multi-agent IDs without duplicate alias rows."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.3-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This older alias or specialist is outside the audit’s selected current general-offer matrix; no separate current offer is represented by this identifier."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-4.5-latest",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This older alias or specialist is outside the audit’s selected current general-offer matrix; no separate current offer is represented by this identifier."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-code-fast",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This older alias or specialist is outside the audit’s selected current general-offer matrix; no separate current offer is represented by this identifier."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-code-fast-1",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This older alias or specialist is outside the audit’s selected current general-offer matrix; no separate current offer is represented by this identifier."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-code-fast-1-0825",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "This older alias or specialist is outside the audit’s selected current general-offer matrix; no separate current offer is represented by this identifier."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-image",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-image-2026-03-02",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-image-pro",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-image-quality",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-image-quality-20260403",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-image-quality-latest",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-video",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-video-1.5-2026-05-30",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-imagine-video-1.5-preview",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-tts",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-voice-latest",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-voice-transcribe-1.0",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "xai",
+      "apiModelId": "grok-voice-transcribe-2.0",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.x.ai/developers/models",
+      "reason": "Image/video generation and voice use per-image, per-second, per-minute, or per-character billing that the text-token simulator does not model."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-chat",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-chat-1",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-chat-2",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-chat-3",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-chat-4",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-coder",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-coder-1",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-coder-v2-0614",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-coder-v2-0724",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-r1",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-r1-0528",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-reasoner",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-reasoner-1",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v2-0517",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v2-0628",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v2.5-1210",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v3",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v3-0324",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v3.1",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v3.1-terminus",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v3.1-think",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v3.2",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v3.2-exp",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v3.2-speciale",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v31",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v31-terminus",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v32",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v32-exp",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v32-speciale",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v4",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v4-flash-0731",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v4-flash-preview",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v4-flash-vision-exp",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "deepseek",
+      "apiModelId": "deepseek-v4.1-flash",
+      "status": "not-listed",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "reason": "This historical snapshot, preview, or alias is not a separately priced current API offer in the reviewed inventory; the current DeepSeek Flash/Pro IDs are recorded separately."
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "meta-llama/llama-4-maverick-17b-128e-instruct",
+      "status": "not-listed",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "reason": "Groq marks this model deprecated with a March 9, 2026 shutdown date; the catalog excludes it from active offers."
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "meta-llama/llama-4-scout-17b-16e-instruct",
+      "status": "not-listed",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "reason": "Groq marks this model deprecated with a July 17, 2026 shutdown date; the catalog excludes it from active offers."
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "meta-llama/llama-guard-4-12b",
+      "status": "out-of-scope",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "reason": "This guardrail/classification offer is a specialized safety endpoint, not a general-purpose text-generation workload in this catalog."
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "moonshotai/kimi-k2-instruct",
+      "status": "not-listed",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "reason": "Groq marks this alias deprecated with an April 15, 2026 shutdown date; the catalog excludes it from active offers."
+    },
+    {
+      "providerId": "groq",
+      "apiModelId": "qwen/qwen3-32b",
+      "status": "not-listed",
+      "sourceUrl": "https://console.groq.com/docs/models",
+      "reason": "Groq marks this model deprecated with a July 17, 2026 shutdown date; the catalog excludes it from active offers."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "deepseek-ai/deepseek-v4-flash-0731",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "This dated provider-specific snapshot is not the current DeepSeek model ID in the reviewed catalog; it is not treated as a distinct current offer."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/flash-image-2.5",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/flash-image-3.1",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/flash-image-3.1-lite",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/gemini-3-pro-image",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/imagen-4.0-fast",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/imagen-4.0-ultra",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/veo-2.0",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/veo-3.1-lite",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "google/veo-3.1-test-debug",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "minimaxai/minimax-h3",
+      "status": "not-listed",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "This provider-listed identifier is outside the audit’s selected current-offer matrix; the decision does not imply that the provider has shut it down."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "openai/gpt-image-1.5",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "openai/sora-2",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "openai/sora-2-pro",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "openai/whisper-large-v3",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "qwen/qwen-image",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "qwen/qwen-image-2.0",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
+    },
+    {
+      "providerId": "together",
+      "apiModelId": "qwen/qwen-image-2.0-pro",
+      "status": "out-of-scope",
+      "sourceUrl": "https://docs.together.ai/docs/serverless/models",
+      "reason": "Image, video, and transcription workloads use modality-specific units outside the text-token simulator."
     }
   ]
 }

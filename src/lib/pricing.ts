@@ -79,3 +79,21 @@ export function standardRule(
     ) ?? undefined
   );
 }
+
+export function getPriceVerificationDate(
+  offer: OfferView,
+  rule: PricingRule | null | undefined,
+): string | null {
+  if (offer.pricingVerifiedAt) return offer.pricingVerifiedAt;
+  return (
+    rule?.sources
+      .map((source) => source.checkedAt)
+      .sort()
+      .at(-1) ??
+    offer.pricing
+      .flatMap((pricingRule) => pricingRule.sources.map((source) => source.checkedAt))
+      .sort()
+      .at(-1) ??
+    null
+  );
+}

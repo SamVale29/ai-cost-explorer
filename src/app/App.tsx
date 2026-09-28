@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type ReactNode } from 'react';
 import { createContext, useContext } from 'react';
 import {
   ArrowDownUp,
@@ -52,13 +52,15 @@ import {
   formatCompactNumber,
   formatCurrency,
   formatDate,
+  formatExactTokens,
+  formatUnitPrice,
   formatTokens,
   getStaleness,
   toCsv,
 } from '../lib/format';
 import { hasDifferences } from '../lib/compare';
 import { paretoFrontier, scoreOffers, type ParetoPoint } from '../lib/pareto';
-import { standardRule } from '../lib/pricing';
+import { getPriceVerificationDate, standardRule } from '../lib/pricing';
 import { readStoredTheme, storeTheme, type Theme } from '../lib/theme';
 import { AppErrorBoundary } from './AppErrorBoundary';
 import { GITHUB_URL } from './config';
@@ -73,7 +75,13 @@ import {
 } from '../lib/scenarios';
 import { parseCalculatorUrl, serializeCalculatorUrl } from '../lib/calculator-url-state';
 import { parseExplorerUrl, serializeExplorerUrl, type ExplorerUrlState } from '../lib/url-state';
-import type { CalculatorInput, Catalog, OfferView } from '../types';
+import {
+  offerCapabilities,
+  offerModalities,
+  type CalculatorInput,
+  type Catalog,
+  type OfferView,
+} from '../types';
 import {
   Badge,
   Capability,
@@ -88,7 +96,7 @@ import {
 } from './components';
 
 const DISCLAIMER =
-  'AI Cost Explorer is an independent open-source project and is not affiliated with the model providers listed. Prices and capabilities may change. Always verify critical purchasing decisions with the provider’s official documentation.';
+  'AI Cost Explorer is an independent open-source project and is not affiliated with the model providers listed. Estimates are USD inference subtotals; they exclude tools, storage, network charges and taxes. Prices and capabilities may change. Always verify critical purchasing decisions with the provider’s official documentation.';
 
 type CatalogContextValue = { catalog: Catalog; offers: OfferView[] };
 const CatalogContext = createContext<CatalogContextValue | null>(null);
@@ -206,9 +214,14 @@ function AppShell() {
         <nav id="primary-navigation" className="side-nav" aria-label="Primary navigation">
           <div className="nav-label">WORKSPACE</div>
           <ShellNavLink to="/" icon={<LayoutGrid size={17} />} label="Overview" end />
-          <ShellNavLink to="/explore" icon={<Table2 size={17} />} label="Model explorer" />
-          <ShellNavLink to="/compare" icon={<ArrowDownUp size={17} />} label="Compare" />
-          <ShellNavLink to="/calculator" icon={<BarChart3 size={17} />} label="Cost simulator" />
+          <ShellNavLink
+            to="/explore"
+            icon={<Table2 size={17} />}
+            label="Explore models"
+            count={catalog.offers.filter((offer) => offer.availability.status === 'active').length}
+          />
+          <ShellNavLink to="/compare" icon={<ArrowDownUp size={17} />} label="Compare models" />
+          <ShellNavLink to="/calculator" icon={<BarChart3 size={17} />} label="Simulate cost" />
           <ShellNavLink to="/value" icon={<Target size={17} />} label="Value frontier" />
           <ShellNavLink to="/history" icon={<History size={17} />} label="Price history" />
           <div className="nav-label nav-label-spaced">REFERENCE</div>
@@ -335,8 +348,10 @@ function getPageTitle(path: string) {
 function LandingPage() {
   const { catalog, offers } = useCatalog();
   const health = useMemo(() => calculateCatalogHealth(catalog), [catalog]);
-  const fresh = offers.filter((offer) => getStaleness(offer.lastVerifiedAt) === 'fresh').length;
-  const preview = offers.slice(0, 6);
+  const fresh = offers.filter(
+    (offer) => getStaleness(getPriceVerificationDate(offer, standardRule({ offer }))) === 'fresh',
+  ).length;
+  const preview = representativeOffers(offers);
   const pricingEvents = catalog.history.length;
   return (
     <>
@@ -406,7 +421,7 @@ function LandingPage() {
               );
             })}
             <div className="terminal-row terminal-footer">
-              <span>+ {Math.max(0, offers.length - 5)} more verified offers</span>
+              <span>+ {Math.max(0, offers.length - preview.length)} more offers</span>
               <Link to="/explore">
                 Open explorer <ArrowRight size={13} />
               </Link>
@@ -553,6 +568,40 @@ function LandingPage() {
   );
 }
 
+function representativeOffers(offers: OfferView[]): OfferView[] {
+  const representatives = new Map<string, OfferView>();
+  for (const offer of offers) {
+    if (offer.availability.status !== 'active' || representatives.has(offer.providerId)) continue;
+    representatives.set(offer.providerId, offer);
+  }
+  return [...representatives.values()];
+}
+
+function unavailablePriceLabel(offer: OfferView): string | undefined {
+  if (
+    !offer.pricing.some((rule) => rule.mode === 'standard') &&
+    offer.pricing.some((rule) => rule.mode === 'peak' || rule.mode === 'off-peak')
+  )
+    return 'Time-based rates · schedule not simulated';
+  if (offer.pricing.some((rule) => rule.priceStatus === 'contact-sales')) return 'Contact sales';
+  if (offer.pricing.some((rule) => rule.priceStatus === 'not-published')) return 'Not published';
+  if (offer.pricing.some((rule) => rule.priceStatus === 'unit-unsupported'))
+    return 'Unit not supported';
+  return undefined;
+}
+
+function accountEligibilityLabel(eligibility: OfferView['availability']['accountEligibility']) {
+  return eligibility === 'public'
+    ? 'Public account access'
+    : eligibility === 'existing-users'
+      ? 'Existing users only'
+      : eligibility === 'allowlisted'
+        ? 'Allowlisted access'
+        : eligibility === 'enterprise'
+          ? 'Enterprise access'
+          : 'Eligibility not specified';
+}
+
 function OfferTableRow({
   offer,
   compact = false,
@@ -565,6 +614,7 @@ function OfferTableRow({
   onSelect?: () => void;
 }) {
   const rule = standardRule({ offer });
+  const historical = offer.availability.status === 'retired';
   return (
     <tr className={selected ? 'row-selected' : ''}>
       <td className="model-cell">
@@ -583,20 +633,30 @@ function OfferTableRow({
         <small className="org-name">{offer.organization.name}</small>
       </td>
       <td className="numeric-cell">
-        <Price value={rule?.inputPrice} />
+        <Price
+          value={rule?.inputPrice}
+          priceStatus={rule?.priceStatus}
+          historical={historical}
+          unavailableLabel={unavailablePriceLabel(offer)}
+        />
         <small>
           {rule?.cachedInputPrice === null || rule?.cachedInputPrice === undefined
             ? 'cache —'
-            : `cache ${formatCurrency(rule.cachedInputPrice, 3)}`}
+            : `cache ${formatUnitPrice(rule.cachedInputPrice)}`}
         </small>
       </td>
       <td className="numeric-cell">
-        <Price value={rule?.outputPrice} />
+        <Price
+          value={rule?.outputPrice}
+          priceStatus={rule?.priceStatus}
+          historical={historical}
+          unavailableLabel={unavailablePriceLabel(offer)}
+        />
       </td>
       <td className="numeric-cell">{formatTokens(offer.model.contextWindowTokens)}</td>
       <td>
         {compact ? (
-          <StalenessBadge value={offer.lastVerifiedAt} />
+          <StalenessBadge value={getPriceVerificationDate(offer, rule)} />
         ) : (
           <Badge
             tone={
@@ -634,7 +694,14 @@ function ExplorerPage() {
   const navigate = useNavigate();
   const initial = useMemo(() => parseExplorerUrl(location.search), [location.search]);
   const [filters, setFilters] = useState<ExplorerUrlState>(initial);
-  const [showFilters, setShowFilters] = useState(true);
+  const [isMobileViewport, setIsMobileViewport] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 820px)').matches,
+  );
+  const [showFilters, setShowFilters] = useState(
+    () => typeof window === 'undefined' || window.matchMedia('(min-width: 821px)').matches,
+  );
+  const filterToggleRef = useRef<HTMLButtonElement>(null);
+  const filterPanelRef = useRef<HTMLElement>(null);
   const [sort, setSort] = useState<{ key: string; direction: 'asc' | 'desc' }>({
     key: 'input',
     direction: 'asc',
@@ -643,6 +710,57 @@ function ExplorerPage() {
     parseIds(new URLSearchParams(location.search).get('compare')),
   );
   useEffect(() => setFilters(initial), [initial]);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 820px)');
+    const update = () => {
+      setIsMobileViewport(media.matches);
+      setShowFilters(!media.matches);
+    };
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+  useEffect(() => {
+    if (!isMobileViewport || !showFilters) return;
+    const panel = filterPanelRef.current;
+    if (!panel) return;
+    const selector =
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusable = () =>
+      Array.from(panel.querySelectorAll<HTMLElement>(selector)).filter(
+        (element) => element.offsetParent !== null,
+      );
+    const search = panel.querySelector<HTMLInputElement>(
+      'input[aria-label="Search model, provider or API ID"]',
+    );
+    (search ?? focusable()[0])?.focus();
+    const keepFocusInside = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowFilters(false);
+        filterToggleRef.current?.focus();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const items = focusable();
+      const first = items[0];
+      const last = items.at(-1);
+      if (!first || !last) return;
+      if (
+        event.shiftKey &&
+        (document.activeElement === first || !panel.contains(document.activeElement))
+      ) {
+        event.preventDefault();
+        last.focus();
+      } else if (
+        !event.shiftKey &&
+        (document.activeElement === last || !panel.contains(document.activeElement))
+      ) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', keepFocusInside);
+    return () => document.removeEventListener('keydown', keepFocusInside);
+  }, [isMobileViewport, showFilters]);
   useEffect(() => {
     const query = serializeExplorerUrl(filters);
     if (query !== location.search) navigate({ search: query }, { replace: true });
@@ -661,9 +779,10 @@ function ExplorerPage() {
     { id: 'computerUse', label: 'Computer use' },
   ];
   const matchesCap = (offer: OfferView, cap: string) => {
+    const modalities = offerModalities(offer);
     if (cap === 'image' || cap === 'audio' || cap === 'video')
-      return offer.model.modalities.input.includes(cap);
-    return offer.model.capabilities[cap as keyof OfferView['model']['capabilities']] === true;
+      return modalities.input.includes(cap);
+    return offerCapabilities(offer)[cap as keyof OfferView['model']['capabilities']] === true;
   };
   const filtered = useMemo(
     () =>
@@ -676,7 +795,8 @@ function ExplorerPage() {
         if (filters.organization && offer.organization.id !== filters.organization) return false;
         if (filters.status && offer.availability.status !== filters.status) return false;
         if (filters.capabilities.some((cap) => !matchesCap(offer, cap))) return false;
-        if (filters.recentOnly && getStaleness(offer.lastVerifiedAt) !== 'fresh') return false;
+        if (filters.recentOnly && getStaleness(getPriceVerificationDate(offer, rule)) !== 'fresh')
+          return false;
         if (
           filters.minInput !== undefined &&
           (rule?.inputPrice === null ||
@@ -746,7 +866,7 @@ function ExplorerPage() {
       search: '',
       providers: [],
       organization: '',
-      status: '',
+      status: 'active',
       capabilities: [],
       recentOnly: false,
     });
@@ -758,7 +878,7 @@ function ExplorerPage() {
     [
       filters.search,
       filters.organization,
-      filters.status,
+      filters.status === 'active' ? '' : filters.status,
       filters.recentOnly,
       filters.minInput,
       filters.maxInput,
@@ -777,6 +897,9 @@ function ExplorerPage() {
       outputPriceUsdPerMillion: rule?.outputPrice ?? null,
       contextWindowTokens: offer.model.contextWindowTokens,
       lastVerifiedAt: offer.lastVerifiedAt,
+      pricingVerifiedAt: getPriceVerificationDate(offer, rule),
+      availabilityVerifiedAt: offer.availabilityVerifiedAt ?? offer.lastVerifiedAt,
+      priceStatus: rule?.priceStatus ?? null,
     };
   });
   const shareCompare = () => {
@@ -785,238 +908,279 @@ function ExplorerPage() {
   return (
     <>
       <PageHeader
-        eyebrow="CATALOG / EXPLORER"
-        title="Model explorer"
-        description="Search verified offers, compare the economics, and keep unknowns visible."
+        eyebrow="CATALOG / EXPLORE"
+        title="Explore AI models"
+        description="Search currently available offers. Retired prices remain available as historical reference when you ask for them."
         actions={
           <>
             <button
-              className="button button-ghost"
+              ref={filterToggleRef}
+              className="button button-primary"
               onClick={() => setShowFilters((value) => !value)}
+              aria-expanded={showFilters}
+              aria-controls="catalog-filter-panel"
             >
               <SlidersHorizontal size={16} />
               Filters{' '}
               {activeFilterCount > 0 && <span className="button-count">{activeFilterCount}</span>}
             </button>
-            <button
-              className="button button-ghost"
-              onClick={() =>
-                downloadText(
-                  'ai-cost-explorer-catalog.json',
-                  JSON.stringify(
-                    { schemaVersion: catalog.schemaVersion, offers: exportRows },
-                    null,
-                    2,
-                  ),
-                  'application/json',
-                )
-              }
-            >
-              <Download size={16} />
-              Export JSON
-            </button>
-            <button
-              className="button button-primary"
-              onClick={() =>
-                downloadText('ai-cost-explorer-catalog.csv', toCsv(exportRows), 'text/csv')
-              }
-            >
-              <Download size={16} />
-              Export CSV
-            </button>
+            <details className="action-menu">
+              <summary className="button button-ghost">More actions</summary>
+              <div>
+                <button
+                  className="button button-small button-ghost"
+                  onClick={() =>
+                    downloadText(
+                      'ai-cost-explorer-catalog.json',
+                      JSON.stringify(
+                        { schemaVersion: catalog.schemaVersion, offers: exportRows },
+                        null,
+                        2,
+                      ),
+                      'application/json',
+                    )
+                  }
+                >
+                  <Download size={15} />
+                  Export JSON
+                </button>
+                <button
+                  className="button button-small button-ghost"
+                  onClick={() =>
+                    downloadText('ai-cost-explorer-catalog.csv', toCsv(exportRows), 'text/csv')
+                  }
+                >
+                  <Download size={15} />
+                  Export CSV
+                </button>
+              </div>
+            </details>
           </>
         }
       />
-      <div className={`explorer-layout ${showFilters ? '' : 'filters-collapsed'}`}>
+      <div className={`explorer-layout ${showFilters ? 'filters-expanded' : 'filters-collapsed'}`}>
         {showFilters && (
-          <aside className="filter-panel" aria-label="Catalog filters">
-            <div className="filter-heading">
-              <span>
-                <Filter size={16} />
-                Filter catalog
-              </span>
-              <button className="clear-button" type="button" onClick={clearAll}>
-                Clear all
-              </button>
-            </div>
-            <label className="search-field">
-              <Search size={16} />
-              <input
-                aria-label="Search model, provider or API ID"
-                value={filters.search}
-                onChange={(event) => updateFilter('search', event.target.value)}
-                placeholder="Search model, provider or API ID"
-              />
-            </label>
-            <div className="filter-section">
-              <label className="field-label" htmlFor="provider-select">
-                Provider
-              </label>
-              <select
-                id="provider-select"
-                value={filters.providers[0] ?? ''}
-                onChange={(event) =>
-                  updateFilter('providers', event.target.value ? [event.target.value] : [])
-                }
-              >
-                <option value="">All providers</option>
-                {catalog.providers.map((provider) => (
-                  <option key={provider.id} value={provider.id}>
-                    {provider.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="filter-section">
-              <label className="field-label" htmlFor="organization-select">
-                Organization
-              </label>
-              <select
-                id="organization-select"
-                value={filters.organization}
-                onChange={(event) => updateFilter('organization', event.target.value)}
-              >
-                <option value="">All organizations</option>
-                {catalog.organizations.map((organization) => (
-                  <option key={organization.id} value={organization.id}>
-                    {organization.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="filter-section">
-              <label className="field-label" htmlFor="status-select">
-                Lifecycle
-              </label>
-              <select
-                id="status-select"
-                value={filters.status}
-                onChange={(event) => updateFilter('status', event.target.value)}
-              >
-                <option value="">Any status</option>
-                <option value="active">Active</option>
-                <option value="preview">Preview</option>
-                <option value="deprecated">Deprecated</option>
-              </select>
-            </div>
-            <div className="filter-section">
-              <span className="field-label">Pricing range · USD / 1M</span>
-              <div className="range-grid">
-                <input
-                  aria-label="Minimum input price"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  placeholder="Min input"
-                  value={filters.minInput ?? ''}
-                  onChange={(event) =>
-                    updateFilter(
-                      'minInput',
-                      event.target.value ? Number(event.target.value) : undefined,
-                    )
-                  }
-                />
-                <input
-                  aria-label="Maximum input price"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  placeholder="Max input"
-                  value={filters.maxInput ?? ''}
-                  onChange={(event) =>
-                    updateFilter(
-                      'maxInput',
-                      event.target.value ? Number(event.target.value) : undefined,
-                    )
-                  }
-                />
-                <input
-                  aria-label="Minimum output price"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  placeholder="Min output"
-                  value={filters.minOutput ?? ''}
-                  onChange={(event) =>
-                    updateFilter(
-                      'minOutput',
-                      event.target.value ? Number(event.target.value) : undefined,
-                    )
-                  }
-                />
-                <input
-                  aria-label="Maximum output price"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  placeholder="Max output"
-                  value={filters.maxOutput ?? ''}
-                  onChange={(event) =>
-                    updateFilter(
-                      'maxOutput',
-                      event.target.value ? Number(event.target.value) : undefined,
-                    )
-                  }
-                />
+          <>
+            <div
+              className="filter-backdrop"
+              aria-hidden="true"
+              onClick={() => {
+                setShowFilters(false);
+                filterToggleRef.current?.focus();
+              }}
+            />
+            <aside
+              id="catalog-filter-panel"
+              ref={filterPanelRef}
+              className="filter-panel"
+              role={isMobileViewport ? 'dialog' : 'region'}
+              aria-modal={isMobileViewport ? true : undefined}
+              aria-labelledby="catalog-filter-title"
+            >
+              <div className="filter-heading">
+                <span id="catalog-filter-title">
+                  <Filter size={16} />
+                  Filter catalog
+                </span>
+                <span className="filter-heading-actions">
+                  <button className="clear-button" type="button" onClick={clearAll}>
+                    Clear all
+                  </button>
+                  {isMobileViewport && (
+                    <button
+                      className="filter-close"
+                      type="button"
+                      aria-label="Close catalog filters"
+                      onClick={() => {
+                        setShowFilters(false);
+                        filterToggleRef.current?.focus();
+                      }}
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
+                </span>
               </div>
-            </div>
-            <div className="filter-section">
-              <label className="field-label" htmlFor="context-input">
-                Minimum context
-              </label>
-              <div className="input-with-suffix">
+              <label className="search-field">
+                <Search size={16} />
                 <input
-                  id="context-input"
-                  type="number"
-                  min="0"
-                  step="1000"
-                  value={filters.minContext ?? ''}
-                  onChange={(event) =>
-                    updateFilter(
-                      'minContext',
-                      event.target.value ? Number(event.target.value) : undefined,
-                    )
-                  }
-                  placeholder="e.g. 128000"
+                  aria-label="Search model, provider or API ID"
+                  value={filters.search}
+                  onChange={(event) => updateFilter('search', event.target.value)}
+                  placeholder="Search model, provider or API ID"
                 />
-                <span>tokens</span>
+              </label>
+              <div className="filter-section">
+                <label className="field-label" htmlFor="provider-select">
+                  Provider
+                </label>
+                <select
+                  id="provider-select"
+                  value={filters.providers[0] ?? ''}
+                  onChange={(event) =>
+                    updateFilter('providers', event.target.value ? [event.target.value] : [])
+                  }
+                >
+                  <option value="">All providers</option>
+                  {catalog.providers.map((provider) => (
+                    <option key={provider.id} value={provider.id}>
+                      {provider.name}
+                    </option>
+                  ))}
+                </select>
               </div>
-            </div>
-            <div className="filter-section">
-              <span className="field-label">Required capabilities</span>
-              <div className="check-grid">
-                {capabilityOptions.map((option) => (
-                  <label key={option.id} className="check-label">
-                    <input
-                      type="checkbox"
-                      checked={filters.capabilities.includes(option.id)}
-                      onChange={(event) =>
-                        updateFilter(
-                          'capabilities',
-                          event.target.checked
-                            ? [...filters.capabilities, option.id]
-                            : filters.capabilities.filter((item) => item !== option.id),
-                        )
-                      }
-                    />
-                    <span className="fake-check">
-                      <Check size={12} />
-                    </span>
-                    {option.label}
-                  </label>
-                ))}
+              <div className="filter-section">
+                <label className="field-label" htmlFor="organization-select">
+                  Organization
+                </label>
+                <select
+                  id="organization-select"
+                  value={filters.organization}
+                  onChange={(event) => updateFilter('organization', event.target.value)}
+                >
+                  <option value="">All organizations</option>
+                  {catalog.organizations.map((organization) => (
+                    <option key={organization.id} value={organization.id}>
+                      {organization.name}
+                    </option>
+                  ))}
+                </select>
               </div>
-            </div>
-            <label className="switch-label">
-              <input
-                type="checkbox"
-                checked={filters.recentOnly}
-                onChange={(event) => updateFilter('recentOnly', event.target.checked)}
-              />
-              <span className="switch" />
-              <span>Only freshly verified</span>
-            </label>
-          </aside>
+              <div className="filter-section">
+                <label className="field-label" htmlFor="status-select">
+                  Lifecycle
+                </label>
+                <select
+                  id="status-select"
+                  value={filters.status}
+                  onChange={(event) => updateFilter('status', event.target.value)}
+                >
+                  <option value="">Any status</option>
+                  <option value="active">Active</option>
+                  <option value="preview">Preview</option>
+                  <option value="deprecated">Deprecated</option>
+                  <option value="retired">Retired</option>
+                </select>
+              </div>
+              <div className="filter-section">
+                <span className="field-label">Pricing range · USD / 1M</span>
+                <div className="range-grid">
+                  <input
+                    aria-label="Minimum input price"
+                    type="number"
+                    min="0"
+                    step="0.0001"
+                    placeholder="Min input"
+                    value={filters.minInput ?? ''}
+                    onChange={(event) =>
+                      updateFilter(
+                        'minInput',
+                        event.target.value ? Number(event.target.value) : undefined,
+                      )
+                    }
+                  />
+                  <input
+                    aria-label="Maximum input price"
+                    type="number"
+                    min="0"
+                    step="0.0001"
+                    placeholder="Max input"
+                    value={filters.maxInput ?? ''}
+                    onChange={(event) =>
+                      updateFilter(
+                        'maxInput',
+                        event.target.value ? Number(event.target.value) : undefined,
+                      )
+                    }
+                  />
+                  <input
+                    aria-label="Minimum output price"
+                    type="number"
+                    min="0"
+                    step="0.0001"
+                    placeholder="Min output"
+                    value={filters.minOutput ?? ''}
+                    onChange={(event) =>
+                      updateFilter(
+                        'minOutput',
+                        event.target.value ? Number(event.target.value) : undefined,
+                      )
+                    }
+                  />
+                  <input
+                    aria-label="Maximum output price"
+                    type="number"
+                    min="0"
+                    step="0.0001"
+                    placeholder="Max output"
+                    value={filters.maxOutput ?? ''}
+                    onChange={(event) =>
+                      updateFilter(
+                        'maxOutput',
+                        event.target.value ? Number(event.target.value) : undefined,
+                      )
+                    }
+                  />
+                </div>
+              </div>
+              <div className="filter-section">
+                <label className="field-label" htmlFor="context-input">
+                  Minimum context
+                </label>
+                <div className="input-with-suffix">
+                  <input
+                    id="context-input"
+                    type="number"
+                    min="0"
+                    step="1000"
+                    value={filters.minContext ?? ''}
+                    onChange={(event) =>
+                      updateFilter(
+                        'minContext',
+                        event.target.value ? Number(event.target.value) : undefined,
+                      )
+                    }
+                    placeholder="e.g. 128000"
+                  />
+                  <span>tokens</span>
+                </div>
+              </div>
+              <div className="filter-section">
+                <span className="field-label">Required capabilities</span>
+                <div className="check-grid">
+                  {capabilityOptions.map((option) => (
+                    <label key={option.id} className="check-label">
+                      <input
+                        type="checkbox"
+                        checked={filters.capabilities.includes(option.id)}
+                        onChange={(event) =>
+                          updateFilter(
+                            'capabilities',
+                            event.target.checked
+                              ? [...filters.capabilities, option.id]
+                              : filters.capabilities.filter((item) => item !== option.id),
+                          )
+                        }
+                      />
+                      <span className="fake-check">
+                        <Check size={12} />
+                      </span>
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <label className="switch-label">
+                <input
+                  type="checkbox"
+                  checked={filters.recentOnly}
+                  onChange={(event) => updateFilter('recentOnly', event.target.checked)}
+                />
+                <span className="switch" />
+                <span>Only recently price-checked</span>
+              </label>
+            </aside>
+          </>
         )}
         <section className="explorer-main">
           <div className="active-filters">
@@ -1066,7 +1230,7 @@ function ExplorerPage() {
           <div className="table-card explorer-table-card">
             <div className="table-toolbar">
               <div>
-                <span className="toolbar-title">Verified offers</span>
+                <span className="toolbar-title">Provider offers</span>
                 <span className="toolbar-note">Select 2–4 for a side-by-side comparison</span>
               </div>
               <div className="toolbar-right">
@@ -1127,6 +1291,16 @@ function ExplorerPage() {
                 </tbody>
               </table>
             </div>
+            <div className="explorer-mobile-list">
+              {sorted.map((offer) => (
+                <ExplorerCard
+                  key={offer.id}
+                  offer={offer}
+                  selected={selected.includes(offer.id)}
+                  onSelect={() => toggleSelected(offer.id)}
+                />
+              ))}
+            </div>
             {sorted.length === 0 && (
               <EmptyState
                 title="No offers match these filters"
@@ -1182,6 +1356,91 @@ function ExplorerPage() {
   );
 }
 
+function ExplorerCard({
+  offer,
+  selected,
+  onSelect,
+}: {
+  offer: OfferView;
+  selected: boolean;
+  onSelect: () => void;
+}) {
+  const rule = standardRule({ offer });
+  const historical = offer.availability.status === 'retired';
+  const { offers } = useCatalog();
+  const replacement = offer.availability.replacementOfferId
+    ? findOffer(offers, offer.availability.replacementOfferId)
+    : undefined;
+  return (
+    <article className={`explorer-offer-card ${historical ? 'historical' : ''}`}>
+      <div className="explorer-offer-heading">
+        <div>
+          <Link className="model-name-link" to={`/model/${offer.model.id}`}>
+            {offer.model.name}
+          </Link>
+          <small>
+            {offer.provider.name} · {offer.apiModelId}
+          </small>
+          <small>{accountEligibilityLabel(offer.availability.accountEligibility)}</small>
+        </div>
+        <Badge
+          tone={historical ? 'danger' : offer.availability.status === 'active' ? 'mint' : 'gold'}
+        >
+          {offer.availability.status}
+        </Badge>
+      </div>
+      {replacement && (
+        <Link className="replacement-link" to={`/model/${replacement.model.id}`}>
+          Replaced by {replacement.model.name}
+        </Link>
+      )}
+      {offer.availability.notes && <p className="availability-note">{offer.availability.notes}</p>}
+      <div className="explorer-card-metrics">
+        <span>
+          <small>Input / 1M · USD</small>
+          <Price
+            value={rule?.inputPrice}
+            priceStatus={rule?.priceStatus}
+            historical={historical}
+            unavailableLabel={unavailablePriceLabel(offer)}
+          />
+        </span>
+        <span>
+          <small>Output / 1M · USD</small>
+          <Price
+            value={rule?.outputPrice}
+            priceStatus={rule?.priceStatus}
+            historical={historical}
+            unavailableLabel={unavailablePriceLabel(offer)}
+          />
+        </span>
+        <span>
+          <small>Context</small>
+          <span title={`${offer.model.contextWindowTokens ?? 'Unknown'} tokens`}>
+            {formatTokens(offer.model.contextWindowTokens)}
+          </span>
+        </span>
+      </div>
+      <div className="explorer-card-footer">
+        <span>
+          Price checked {formatDate(getPriceVerificationDate(offer, rule))} · availability checked{' '}
+          {formatDate(offer.availabilityVerifiedAt ?? offer.lastVerifiedAt)}
+        </span>
+        <button
+          className={`select-toggle ${selected ? 'selected' : ''}`}
+          type="button"
+          onClick={onSelect}
+          aria-label={`${selected ? 'Remove' : 'Add'} ${offer.model.name} from comparison`}
+          aria-pressed={selected}
+        >
+          {selected ? <Check size={14} /> : '+'}
+          <span>{selected ? 'Selected' : 'Compare'}</span>
+        </button>
+      </div>
+    </article>
+  );
+}
+
 function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }) {
   return (
     <span className="filter-chip">
@@ -1231,6 +1490,12 @@ function ExplorerRow({
   onSelect: () => void;
 }) {
   const rule = standardRule({ offer });
+  const historical = offer.availability.status === 'retired';
+  const checkedAt = getPriceVerificationDate(offer, rule);
+  const { offers } = useCatalog();
+  const replacement = offer.availability.replacementOfferId
+    ? findOffer(offers, offer.availability.replacementOfferId)
+    : undefined;
   return (
     <tr className={selected ? 'row-selected' : ''}>
       <td className="model-cell">
@@ -1240,6 +1505,17 @@ function ExplorerRow({
             {offer.model.name}
           </Link>
           <small>{offer.apiModelId}</small>
+          <small>{accountEligibilityLabel(offer.availability.accountEligibility)}</small>
+          <Badge
+            tone={historical ? 'danger' : offer.availability.status === 'active' ? 'mint' : 'gold'}
+          >
+            {offer.availability.status}
+          </Badge>
+          {replacement && (
+            <Link className="replacement-link" to={`/model/${replacement.model.id}`}>
+              Replaced by {replacement.model.name}
+            </Link>
+          )}
         </div>
       </td>
       <td>
@@ -1249,32 +1525,56 @@ function ExplorerRow({
         <small className="org-name">{offer.organization.name}</small>
       </td>
       <td className="numeric-cell">
-        <Price value={rule?.inputPrice} />
+        <Price
+          value={rule?.inputPrice}
+          priceStatus={rule?.priceStatus}
+          historical={historical}
+          unavailableLabel={unavailablePriceLabel(offer)}
+        />
         <small>
           {rule?.cachedInputPrice == null
             ? 'cache —'
-            : `cache ${formatCurrency(rule.cachedInputPrice, 3)}`}
+            : `cache ${formatUnitPrice(rule.cachedInputPrice)}`}
         </small>
       </td>
       <td className="numeric-cell">
-        <Price value={rule?.outputPrice} />
+        <Price
+          value={rule?.outputPrice}
+          priceStatus={rule?.priceStatus}
+          historical={historical}
+          unavailableLabel={unavailablePriceLabel(offer)}
+        />
       </td>
-      <td className="numeric-cell">{formatTokens(offer.model.contextWindowTokens)}</td>
+      <td className="numeric-cell" title={`${offer.model.contextWindowTokens ?? 'Unknown'} tokens`}>
+        {formatTokens(offer.model.contextWindowTokens)}
+      </td>
       <td>
         <span className="modality-list">
-          {offer.model.modalities.input.map((item) => (
+          {offerModalities(offer).input.map((item) => (
             <span key={item}>{item}</span>
           ))}
         </span>
       </td>
       <td>
         <span className="capability-summary">
-          <Capability value={offer.model.capabilities.functionCalling} />
-          <Capability value={offer.model.capabilities.promptCaching} />
+          <span>
+            <small>Function calling</small>
+            <Capability value={offerCapabilities(offer).functionCalling} />
+          </span>
+          <span>
+            <small>Prompt caching</small>
+            <Capability value={offerCapabilities(offer).promptCaching} />
+          </span>
         </span>
       </td>
       <td>
-        <StalenessBadge value={offer.lastVerifiedAt} />
+        <div className="verification-stack">
+          <small>Price checked</small>
+          <StalenessBadge value={checkedAt} />
+          <small>
+            Availability checked {formatDate(offer.availabilityVerifiedAt ?? offer.lastVerifiedAt)}
+          </small>
+        </div>
       </td>
       <td className="select-cell">
         <button
@@ -1314,8 +1614,13 @@ function ComparePage() {
           id: offer.id,
           model: offer.model.name,
           provider: offer.provider.name,
+          apiModelId: offer.apiModelId,
+          availability: offer.availability,
+          modalities: offerModalities(offer),
           pricing: offer.pricing,
-          capabilities: offer.model.capabilities,
+          capabilities: offerCapabilities(offer),
+          pricingVerifiedAt: getPriceVerificationDate(offer, standardRule({ offer })),
+          availabilityVerifiedAt: offer.availabilityVerifiedAt ?? offer.lastVerifiedAt,
         })),
         null,
         2,
@@ -1348,9 +1653,29 @@ function ComparePage() {
     );
   const rows: Array<{ label: string; values: ReactNode[]; keys?: unknown[]; compare?: boolean }> = [
     {
+      label: 'Lifecycle and account access',
+      values: selected.map((offer) => (
+        <span key={offer.id}>
+          <Badge tone={offer.availability.status === 'active' ? 'mint' : 'gold'}>
+            {offer.availability.status}
+          </Badge>
+          <small className="comparison-availability">
+            {accountEligibilityLabel(offer.availability.accountEligibility)}
+            {offer.availability.notes ? ` · ${offer.availability.notes}` : ''}
+          </small>
+        </span>
+      )),
+    },
+    {
       label: 'Input price / 1M',
       values: selected.map((offer) => (
-        <Price key={offer.id} value={standardRule({ offer })?.inputPrice} />
+        <Price
+          key={offer.id}
+          value={standardRule({ offer })?.inputPrice}
+          priceStatus={standardRule({ offer })?.priceStatus}
+          historical={offer.availability.status === 'retired'}
+          unavailableLabel={unavailablePriceLabel(offer)}
+        />
       )),
       keys: selected.map((offer) => standardRule({ offer })?.inputPrice ?? null),
       compare: true,
@@ -1358,7 +1683,13 @@ function ComparePage() {
     {
       label: 'Cached input / 1M',
       values: selected.map((offer) => (
-        <Price key={offer.id} value={standardRule({ offer })?.cachedInputPrice} />
+        <Price
+          key={offer.id}
+          value={standardRule({ offer })?.cachedInputPrice}
+          priceStatus={standardRule({ offer })?.priceStatus}
+          historical={offer.availability.status === 'retired'}
+          unavailableLabel={unavailablePriceLabel(offer)}
+        />
       )),
       keys: selected.map((offer) => standardRule({ offer })?.cachedInputPrice ?? null),
       compare: true,
@@ -1366,7 +1697,13 @@ function ComparePage() {
     {
       label: 'Output price / 1M',
       values: selected.map((offer) => (
-        <Price key={offer.id} value={standardRule({ offer })?.outputPrice} />
+        <Price
+          key={offer.id}
+          value={standardRule({ offer })?.outputPrice}
+          priceStatus={standardRule({ offer })?.priceStatus}
+          historical={offer.availability.status === 'retired'}
+          unavailableLabel={unavailablePriceLabel(offer)}
+        />
       )),
       keys: selected.map((offer) => standardRule({ offer })?.outputPrice ?? null),
       compare: true,
@@ -1374,7 +1711,7 @@ function ComparePage() {
     {
       label: 'Context window',
       values: selected.map((offer) => (
-        <span key={offer.id}>{formatTokens(offer.model.contextWindowTokens)}</span>
+        <span key={offer.id}>{formatExactTokens(offer.model.contextWindowTokens)}</span>
       )),
       keys: selected.map((offer) => offer.model.contextWindowTokens ?? null),
       compare: true,
@@ -1382,7 +1719,7 @@ function ComparePage() {
     {
       label: 'Max output',
       values: selected.map((offer) => (
-        <span key={offer.id}>{formatTokens(offer.model.maxOutputTokens)}</span>
+        <span key={offer.id}>{formatExactTokens(offer.model.maxOutputTokens)}</span>
       )),
       keys: selected.map((offer) => offer.model.maxOutputTokens ?? null),
       compare: true,
@@ -1391,7 +1728,7 @@ function ComparePage() {
       label: 'Input modalities',
       values: selected.map((offer) => (
         <span key={offer.id} className="modality-list">
-          {offer.model.modalities.input.join(' · ')}
+          {offerModalities(offer).input.join(' · ')}
         </span>
       )),
     },
@@ -1399,54 +1736,64 @@ function ComparePage() {
       label: 'Output modalities',
       values: selected.map((offer) => (
         <span key={offer.id} className="modality-list">
-          {offer.model.modalities.output.join(' · ')}
+          {offerModalities(offer).output.join(' · ')}
         </span>
       )),
     },
     {
       label: 'Function calling',
       values: selected.map((offer) => (
-        <Capability key={offer.id} value={offer.model.capabilities.functionCalling} />
+        <Capability key={offer.id} value={offerCapabilities(offer).functionCalling} />
       )),
-      keys: selected.map((offer) => offer.model.capabilities.functionCalling ?? null),
+      keys: selected.map((offer) => offerCapabilities(offer).functionCalling ?? null),
       compare: true,
     },
     {
       label: 'Structured outputs',
       values: selected.map((offer) => (
-        <Capability key={offer.id} value={offer.model.capabilities.structuredOutputs} />
+        <Capability key={offer.id} value={offerCapabilities(offer).structuredOutputs} />
       )),
-      keys: selected.map((offer) => offer.model.capabilities.structuredOutputs ?? null),
+      keys: selected.map((offer) => offerCapabilities(offer).structuredOutputs ?? null),
       compare: true,
     },
     {
       label: 'Prompt caching',
       values: selected.map((offer) => (
-        <Capability key={offer.id} value={offer.model.capabilities.promptCaching} />
+        <Capability key={offer.id} value={offerCapabilities(offer).promptCaching} />
       )),
-      keys: selected.map((offer) => offer.model.capabilities.promptCaching ?? null),
+      keys: selected.map((offer) => offerCapabilities(offer).promptCaching ?? null),
       compare: true,
     },
     {
       label: 'Batch API',
       values: selected.map((offer) => (
-        <Capability key={offer.id} value={offer.model.capabilities.batchApi} />
+        <Capability key={offer.id} value={offerCapabilities(offer).batchApi} />
       )),
-      keys: selected.map((offer) => offer.model.capabilities.batchApi ?? null),
+      keys: selected.map((offer) => offerCapabilities(offer).batchApi ?? null),
       compare: true,
     },
     {
       label: 'Reasoning',
       values: selected.map((offer) => (
-        <Capability key={offer.id} value={offer.model.capabilities.reasoning} />
+        <Capability key={offer.id} value={offerCapabilities(offer).reasoning} />
       )),
-      keys: selected.map((offer) => offer.model.capabilities.reasoning ?? null),
+      keys: selected.map((offer) => offerCapabilities(offer).reasoning ?? null),
       compare: true,
     },
     {
-      label: 'Last verified',
+      label: 'Pricing checked',
       values: selected.map((offer) => (
-        <StalenessBadge key={offer.id} value={offer.lastVerifiedAt} />
+        <span key={offer.id}>
+          {formatDate(getPriceVerificationDate(offer, standardRule({ offer })))}
+        </span>
+      )),
+    },
+    {
+      label: 'Availability checked',
+      values: selected.map((offer) => (
+        <span key={offer.id}>
+          {formatDate(offer.availabilityVerifiedAt ?? offer.lastVerifiedAt)}
+        </span>
       )),
     },
   ];
@@ -1461,18 +1808,29 @@ function ComparePage() {
         description={`${selected.length} offers · unknowns stay visible instead of becoming false negatives.`}
         actions={
           <>
-            <button className="button button-ghost" onClick={copyLink}>
-              <Share2 size={16} />
-              Copy link
-            </button>
-            <button className="button button-ghost" onClick={downloadComparison}>
-              <Download size={16} />
-              Export JSON
-            </button>
-            <button className="button button-primary" onClick={() => window.print()}>
-              <Download size={16} />
-              Print view
-            </button>
+            <Link
+              className="button button-primary"
+              to={`/calculator?offers=${selected.map((offer) => offer.id).join(',')}`}
+            >
+              Simulate selected <BarChart3 size={16} />
+            </Link>
+            <details className="action-menu">
+              <summary className="button button-ghost">More actions</summary>
+              <div>
+                <button className="button button-small button-ghost" onClick={copyLink}>
+                  <Share2 size={15} />
+                  Copy link
+                </button>
+                <button className="button button-small button-ghost" onClick={downloadComparison}>
+                  <Download size={15} />
+                  Export JSON
+                </button>
+                <button className="button button-small button-ghost" onClick={() => window.print()}>
+                  <Download size={15} />
+                  Print view
+                </button>
+              </div>
+            </details>
           </>
         }
       />
@@ -1812,12 +2170,17 @@ function CalculatorPage() {
   const location = useLocation();
   const initialUrlState = useMemo(() => parseCalculatorUrl(location.search), [location.search]);
   const availableOffers = offers.filter(isOfferAvailable);
-  const defaultOfferIds = availableOffers
-    .filter(
-      (offer) =>
-        standardRule({ offer })?.inputPrice !== null &&
-        standardRule({ offer })?.inputPrice !== undefined,
-    )
+  const pricedAvailableOffers = availableOffers.filter((offer) => {
+    const rule = standardRule({ offer });
+    return rule?.inputPrice != null && rule.outputPrice != null;
+  });
+  const diverseDefaults = representativeOffers(pricedAvailableOffers);
+  const defaultOfferIds = [
+    ...diverseDefaults,
+    ...pricedAvailableOffers.filter(
+      (offer) => !diverseDefaults.some((selected) => selected.id === offer.id),
+    ),
+  ]
     .slice(0, 6)
     .map((offer) => offer.id);
   const [input, setInput] = useState<CalculatorInput>(
@@ -1829,6 +2192,8 @@ function CalculatorPage() {
       initialUrlState?.selectedOfferIds.filter((id) => offers.some((offer) => offer.id === id)) ??
       defaultOfferIds,
   );
+  const [offerSearch, setOfferSearch] = useState('');
+  const [offerProvider, setOfferProvider] = useState('');
   const [mode, setMode] = useState<'request' | 'daily' | 'monthly' | 'annual'>(
     () => initialUrlState?.mode ?? 'monthly',
   );
@@ -2011,48 +2376,37 @@ function CalculatorPage() {
         title="Estimate the bill before it arrives."
         description="Estimate inference costs with cache, batch, retries and long-context pricing tiers. Storage, tools, taxes and other provider charges are excluded."
         actions={
-          <>
-            <button
-              className="button button-ghost"
-              onClick={() =>
-                downloadText(
-                  'ai-cost-estimate.json',
-                  JSON.stringify({ input, results }, null, 2),
-                  'application/json',
-                )
-              }
-            >
-              <FileJson size={16} />
-              Export JSON
-            </button>
-            <button
-              className="button button-primary"
-              onClick={() => {
-                const offer = selectedOffers[0];
-                const result = offer ? resultById.get(offer.id) : undefined;
-                if (offer && result)
-                  downloadText('ai-cost-estimate.txt', resultAsText(result, offer, input));
-              }}
-            >
-              <Clipboard size={16} />
-              Copy estimate text
-            </button>
-          </>
+          <details className="action-menu">
+            <summary className="button button-ghost">More actions</summary>
+            <div>
+              <button
+                className="button button-small button-ghost"
+                onClick={() =>
+                  downloadText(
+                    'ai-cost-estimate.json',
+                    JSON.stringify({ input, results }, null, 2),
+                    'application/json',
+                  )
+                }
+              >
+                <FileJson size={15} />
+                Export JSON
+              </button>
+              <button
+                className="button button-small button-ghost"
+                onClick={() => {
+                  const offer = selectedOffers[0];
+                  const result = offer ? resultById.get(offer.id) : undefined;
+                  if (offer && result)
+                    downloadText('ai-cost-estimate.txt', resultAsText(result, offer, input));
+                }}
+              >
+                <Clipboard size={15} />
+                Copy estimate text
+              </button>
+            </div>
+          </details>
         }
-      />
-      <ScenarioShelf
-        scenarios={savedScenarios}
-        name={scenarioName}
-        onNameChange={setScenarioName}
-        onSave={saveScenario}
-        onLoad={loadScenario}
-        onDuplicate={duplicateScenario}
-        onDelete={deleteScenario}
-        onShare={copyShareLink}
-        onReset={resetCalculator}
-        onExport={exportScenarios}
-        onImport={importScenarios}
-        notice={scenarioNotice}
       />
       <div className="calculator-layout">
         <section className="calculator-form-card table-card">
@@ -2136,9 +2490,44 @@ function CalculatorPage() {
             </div>
             <span className="toolbar-note">{selectedOffers.length} selected</span>
           </div>
+          <div className="offer-picker-filters">
+            <label className="search-field">
+              <Search size={15} />
+              <input
+                aria-label="Search offers by model or API ID"
+                value={offerSearch}
+                onChange={(event) => setOfferSearch(event.target.value)}
+                placeholder="Search model or API ID"
+              />
+            </label>
+            <label className="sr-only" htmlFor="calculator-provider">
+              Filter offers by provider
+            </label>
+            <select
+              id="calculator-provider"
+              aria-label="Filter offers by provider"
+              value={offerProvider}
+              onChange={(event) => setOfferProvider(event.target.value)}
+            >
+              <option value="">All providers</option>
+              {[...new Map(offers.map((offer) => [offer.providerId, offer.provider])).values()].map(
+                (provider) => (
+                  <option key={provider.id} value={provider.id}>
+                    {provider.name}
+                  </option>
+                ),
+              )}
+            </select>
+          </div>
           <div className="offer-pick-list">
             {offers
               .filter((offer) => isOfferAvailable(offer) || selectedIds.includes(offer.id))
+              .filter((offer) => !offerProvider || offer.providerId === offerProvider)
+              .filter((offer) =>
+                `${offer.model.name} ${offer.apiModelId} ${offer.provider.name}`
+                  .toLowerCase()
+                  .includes(offerSearch.toLowerCase()),
+              )
               .map((offer) => {
                 const selected = selectedIds.includes(offer.id);
                 const rule = standardRule({ offer });
@@ -2160,7 +2549,11 @@ function CalculatorPage() {
                       </small>
                     </span>
                     <span className="offer-pick-price">
-                      <Price value={rule?.inputPrice} />
+                      <Price
+                        value={rule?.inputPrice}
+                        priceStatus={rule?.priceStatus}
+                        unavailableLabel={unavailablePriceLabel(offer)}
+                      />
                       <small>input / 1M</small>
                     </span>
                   </label>
@@ -2199,6 +2592,23 @@ function CalculatorPage() {
           />
         ) : (
           <>
+            {(() => {
+              const comparable = results
+                .filter(
+                  (result) => result.monthlyCost !== null && result.feasibility === 'compatible',
+                )
+                .sort((a, b) => (a.monthlyCost ?? Infinity) - (b.monthlyCost ?? Infinity));
+              if (comparable.length < 2) return null;
+              const difference =
+                (comparable[1]?.monthlyCost ?? 0) - (comparable[0]?.monthlyCost ?? 0);
+              return (
+                <div className="estimate-summary" role="status">
+                  <strong>At this workload, the lowest verified subtotal saves</strong>
+                  <span>{formatCurrency(difference)} USD per month</span>
+                  <small>compared with the next lowest compatible offer.</small>
+                </div>
+              );
+            })()}
             <div className="result-cards">
               {results.map((result, index) => {
                 const offer = findOffer(offers, result.offerId);
@@ -2219,7 +2629,9 @@ function CalculatorPage() {
                   <div className={`result-card ${isCheapest ? 'best' : ''}`} key={result.offerId}>
                     <div className="result-card-top">
                       <span className="rank-pill">{String(index + 1).padStart(2, '0')}</span>
-                      <StalenessBadge value={offer.lastVerifiedAt} />
+                      <StalenessBadge
+                        value={getPriceVerificationDate(offer, standardRule({ offer }))}
+                      />
                     </div>
                     <Link to={`/model/${offer.model.id}`} className="result-model">
                       {offer.model.name}
@@ -2238,12 +2650,12 @@ function CalculatorPage() {
                     </strong>
                     <span className="result-period">
                       {mode === 'request'
-                        ? 'per request'
+                        ? 'USD per request'
                         : mode === 'daily'
-                          ? 'per day'
+                          ? 'USD per day'
                           : mode === 'annual'
-                            ? 'per year'
-                            : 'per month'}
+                            ? 'USD per year'
+                            : 'USD per month'}
                     </span>
                     {isCheapest && <Badge tone="mint">Lowest verified subtotal</Badge>}
                     <div className="result-breakdown">
@@ -2309,6 +2721,23 @@ function CalculatorPage() {
           </>
         )}
       </section>
+      <details className="saved-workloads-collapse">
+        <summary>Saved workloads · {savedScenarios.length}</summary>
+        <ScenarioShelf
+          scenarios={savedScenarios}
+          name={scenarioName}
+          onNameChange={setScenarioName}
+          onSave={saveScenario}
+          onLoad={loadScenario}
+          onDuplicate={duplicateScenario}
+          onDelete={deleteScenario}
+          onShare={copyShareLink}
+          onReset={resetCalculator}
+          onExport={exportScenarios}
+          onImport={importScenarios}
+          notice={scenarioNotice}
+        />
+      </details>
       <p className="disclaimer">{DISCLAIMER}</p>
     </>
   );
@@ -2495,9 +2924,9 @@ function ValuePage() {
     .filter((offer) =>
       required.every(
         (capability) =>
-          offer.model.capabilities[capability as keyof OfferView['model']['capabilities']] ===
+          offerCapabilities(offer)[capability as keyof OfferView['model']['capabilities']] ===
             true ||
-          (capability === 'image' && offer.model.modalities.input.includes('image')),
+          (capability === 'image' && offerModalities(offer).input.includes('image')),
       ),
     );
   const getAxis = (offer: OfferView, axis: 'input' | 'context' | 'output') => {
@@ -2526,11 +2955,14 @@ function ValuePage() {
     dominated: false,
   }));
   const frontierIds = new Set(paretoFrontier(points).map((point) => point.offer.id));
-  const rankings = scoreOffers(candidates, {
+  const allRankings = scoreOffers(candidates, {
     cost: weights.cost,
     context: weights.context,
     resources: weights.resources,
-  }).slice(0, 8);
+  });
+  const rankings = allRankings.filter((item) => item.score !== null).slice(0, 8);
+  const unrankedCount = allRankings.filter((item) => item.score === null).length;
+  const hasRankingWeights = Object.values(weights).some((weight) => weight > 0);
   const toggleRequired = (id: string) =>
     setRequired((current) =>
       current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
@@ -2685,8 +3117,9 @@ function ValuePage() {
             <CircleHelp size={17} />
           </div>
           <p className="ranking-intro">
-            A small, inspectable score using only verified cost, context and resource fields. Speed
-            and latency stay out until measured benchmarks exist.
+            This decision aid uses the input rate as a cost proxy, not a workload subtotal. It is
+            not a model quality score. Every selected dimension must be known for an offer to be
+            ranked; speed and latency stay out until measured benchmarks exist.
           </p>
           <div className="weight-list">
             {(Object.keys(weights) as Array<keyof typeof weights>).map((key) => (
@@ -2718,7 +3151,15 @@ function ValuePage() {
                 <b>{item.score === null ? '—' : `${Math.round(item.score * 100)}%`}</b>
               </div>
             ))}
+            {rankings.length === 0 && (
+              <p className="ranking-empty">No offers have every selected ranking field.</p>
+            )}
           </div>
+          <p className="ranking-unranked">
+            {hasRankingWeights
+              ? `${unrankedCount} offer${unrankedCount === 1 ? '' : 's'} left unranked because a selected field is unknown.`
+              : 'Choose at least one nonzero weight to rank offers.'}
+          </p>
         </section>
       </div>
     </>
@@ -2769,17 +3210,18 @@ function ModelPage() {
           </div>
           <h2>{model.name}</h2>
           <p>
-            {model.modalities.input.join(', ')} input · {model.modalities.output.join(', ')} output
+            {offerModalities(modelOffers[0]!).input.join(', ')} input ·{' '}
+            {offerModalities(modelOffers[0]!).output.join(', ')} output
           </p>
         </div>
         <div className="model-hero-stats">
           <div>
             <span>Context</span>
-            <strong>{formatCompactNumber(model.contextWindowTokens)}</strong>
+            <strong>{formatExactTokens(model.contextWindowTokens)}</strong>
           </div>
           <div>
             <span>Max output</span>
-            <strong>{formatCompactNumber(model.maxOutputTokens)}</strong>
+            <strong>{formatExactTokens(model.maxOutputTokens)}</strong>
           </div>
           <div>
             <span>Verified</span>
@@ -2796,6 +3238,10 @@ function ModelPage() {
             </div>
             <ShieldCheck size={18} />
           </div>
+          <p className="detail-copy">
+            These values describe the canonical model. Individual providers may expose different
+            modalities, tools and access conditions in their offers below.
+          </p>
           <div className="capability-detail-grid">
             {Object.entries(model.capabilities).map(([key, value]) => (
               <div key={key}>
@@ -2818,11 +3264,48 @@ function ModelPage() {
           <div className="offer-detail-list">
             {modelOffers.map((offer) => {
               const rule = standardRule({ offer });
+              const replacement = offer.availability.replacementOfferId
+                ? findOffer(offers, offer.availability.replacementOfferId)
+                : undefined;
+              const capabilities = offerCapabilities(offer);
+              const modalities = offerModalities(offer);
               return (
                 <div key={offer.id} className="offer-detail-row">
                   <div>
                     <strong>{offer.provider.name}</strong>
                     <small>{offer.apiModelId}</small>
+                    <Badge tone={offer.availability.status === 'active' ? 'mint' : 'gold'}>
+                      {offer.availability.status}
+                    </Badge>
+                    <small>{accountEligibilityLabel(offer.availability.accountEligibility)}</small>
+                    {offer.availability.notes && <small>{offer.availability.notes}</small>}
+                    <small>
+                      Input: {modalities.input.join(', ')} · output: {modalities.output.join(', ')}
+                    </small>
+                    <small>
+                      Function calling:{' '}
+                      {capabilities.functionCalling == null
+                        ? 'unknown'
+                        : capabilities.functionCalling
+                          ? 'yes'
+                          : 'no'}
+                      {' · '}Prompt caching:{' '}
+                      {capabilities.promptCaching == null
+                        ? 'unknown'
+                        : capabilities.promptCaching
+                          ? 'yes'
+                          : 'no'}
+                    </small>
+                    <small>
+                      Pricing checked {formatDate(getPriceVerificationDate(offer, rule))} ·{' '}
+                      availability checked{' '}
+                      {formatDate(offer.availabilityVerifiedAt ?? offer.lastVerifiedAt)}
+                    </small>
+                    {replacement && (
+                      <Link className="replacement-link" to={`/model/${replacement.model.id}`}>
+                        Replaced by {replacement.model.name}
+                      </Link>
+                    )}
                     {offer.pricing
                       .filter((rule) => rule.mode === 'peak' || rule.mode === 'off-peak')
                       .map((rule) => (
@@ -2834,11 +3317,21 @@ function ModelPage() {
                       ))}
                   </div>
                   <span>
-                    <Price value={rule?.inputPrice} />
+                    <Price
+                      value={rule?.inputPrice}
+                      priceStatus={rule?.priceStatus}
+                      historical={offer.availability.status === 'retired'}
+                      unavailableLabel={unavailablePriceLabel(offer)}
+                    />
                     <small>input / 1M</small>
                   </span>
                   <span>
-                    <Price value={rule?.outputPrice} />
+                    <Price
+                      value={rule?.outputPrice}
+                      priceStatus={rule?.priceStatus}
+                      historical={offer.availability.status === 'retired'}
+                      unavailableLabel={unavailablePriceLabel(offer)}
+                    />
                     <small>output / 1M</small>
                   </span>
                   <Link
