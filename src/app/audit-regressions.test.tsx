@@ -39,6 +39,27 @@ test('legacy shares show actual volume and edits immediately change the estimate
   expect(screen.getByRole('button', { name: 'annual' }).getAttribute('aria-pressed')).toBe('true');
 });
 
+test('the default workload matches the highlighted preset, including after reset', async () => {
+  render(
+    <MemoryRouter initialEntries={['/calculator']}>
+      <App />
+    </MemoryRouter>,
+  );
+  await screen.findByRole('heading', { name: 'Inference subtotal by offer' });
+  const support = presetCard(/Customer support chatbot/);
+  expect(support.className).toContain('active');
+  const defaultWorkload = workloadFields();
+  fireEvent.click(support);
+  expect(workloadFields()).toEqual(defaultWorkload);
+
+  fireEvent.change(screen.getByLabelText(/Requests \/ day/), { target: { value: '999' } });
+  expect(support.className).not.toContain('active');
+  fireEvent.click(screen.getByText('Saved workloads · 0'));
+  fireEvent.click(await screen.findByRole('button', { name: 'Reset' }));
+  expect(support.className).toContain('active');
+  expect(workloadFields()).toEqual(defaultWorkload);
+});
+
 test('offers-only links preselect exactly those offers on the default workload', async () => {
   const defaults = render(
     <MemoryRouter initialEntries={['/calculator']}>
