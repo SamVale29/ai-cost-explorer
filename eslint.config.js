@@ -11,6 +11,8 @@ export default tseslint.config(
       'node_modules/**',
       'playwright-report/**',
       'test-results/**',
+      // Generated promotional exports (already ignored by .gitignore and .prettierignore).
+      'promo/**',
     ],
   },
   js.configs.recommended,

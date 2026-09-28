@@ -17,7 +17,7 @@
 .scenario-shelf-heading p {
   margin: 6px 0 0;
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--fs-sm);
 }
 
 .scenario-save-row {
@@ -33,7 +33,7 @@
   gap: 6px;
   color: var(--muted);
   font-family: 'DM Mono', monospace;
-  font-size: 9px;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
 }
 
@@ -47,7 +47,7 @@
   color: var(--text);
   background: var(--panel-soft);
   font-family: 'Manrope', sans-serif;
-  font-size: 10px;
+  font-size: var(--fs-sm);
   text-transform: none;
 }
 
@@ -89,7 +89,7 @@
   margin: 10px 0 0;
   color: var(--mint);
   font-family: 'DM Mono', monospace;
-  font-size: 9px;
+  font-size: var(--fs-xs);
 }
 
 .scenario-list {
@@ -115,14 +115,14 @@
 }
 
 .scenario-item strong {
-  font-size: 10px;
+  font-size: var(--fs-sm);
 }
 
 .scenario-item small {
   margin-top: 4px;
   color: var(--muted);
   font-family: 'DM Mono', monospace;
-  font-size: 8px;
+  font-size: var(--fs-2xs);
 }
 
 .scenario-item-actions {
@@ -134,7 +134,7 @@
 .scenario-empty {
   margin: 14px 0 0;
   color: var(--muted-2);
-  font-size: 9px;
+  font-size: var(--fs-xs);
 }
 
 .calculator-validation {
@@ -147,7 +147,7 @@
   border-radius: 8px;
   color: var(--gold);
   background: color-mix(in srgb, var(--gold) 8%, transparent);
-  font-size: 9px;
+  font-size: var(--fs-xs);
   line-height: 1.5;
 }
 
