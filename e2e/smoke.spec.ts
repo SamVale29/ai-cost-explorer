@@ -109,11 +109,18 @@ test('mobile explorer selection flows through comparison into the calculator', a
   await addButtons.nth(1).click();
   await page.getByRole('button', { name: 'Open comparison' }).click();
   await expect(page.getByRole('heading', { name: 'Comparison workspace' })).toBeVisible();
+  const compared = (await page.locator('.compare-offer-chip strong').allTextContents()).sort();
+  expect(compared).toHaveLength(2);
   await page.getByRole('link', { name: 'Simulate selected' }).click();
   await expect(
     page.getByRole('heading', { name: 'Estimate the bill before it arrives.' }),
   ).toBeVisible();
   await expect(page).toHaveURL(/calculator\?offers=offer-/);
+  await expect(page.locator('.offer-pick-row input:checked')).toHaveCount(2);
+  await expect(page.locator('.result-card')).toHaveCount(2);
+  expect((await page.locator('.result-card .result-model').allTextContents()).sort()).toEqual(
+    compared,
+  );
   await expect(page.locator('.result-period').first()).toContainText('USD');
 });
 

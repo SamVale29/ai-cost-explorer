@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import type { CalculatorInput } from '../types';
-import { parseCalculatorUrl, serializeCalculatorUrl } from './calculator-url-state';
+import {
+  parseCalculatorOfferIds,
+  parseCalculatorUrl,
+  serializeCalculatorUrl,
+} from './calculator-url-state';
 
 const input: CalculatorInput = {
   inputTokens: 5000,
@@ -51,5 +55,14 @@ describe('calculator URL state', () => {
         '?in=1&out=1&cache=0&write=0&req=1&days=30&retry=0&batch=0&offers=x&mode=hourly',
       ),
     ).toBeNull();
+  });
+
+  it('reads offers-only links without accepting them as a workload', () => {
+    const search = '?offers=offer-a,offer-b';
+    expect(parseCalculatorUrl(search)).toBeNull();
+    expect(parseCalculatorOfferIds(search)).toEqual(['offer-a', 'offer-b']);
+    expect(parseCalculatorOfferIds('?in=100&offers=offer-a&mode=monthly')).toEqual(['offer-a']);
+    expect(parseCalculatorOfferIds('?offers=')).toBeNull();
+    expect(parseCalculatorOfferIds('')).toBeNull();
   });
 });

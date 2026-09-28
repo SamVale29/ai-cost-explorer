@@ -32,6 +32,10 @@ function readNumber(params: URLSearchParams, key: string): number | null {
   return Number.isFinite(value) ? value : null;
 }
 
+function readOfferIds(params: URLSearchParams): string[] {
+  return params.get('offers')?.split(',').filter(Boolean) ?? [];
+}
+
 export function parseCalculatorUrl(search: string): CalculatorUrlState | null {
   const params = new URLSearchParams(search);
   const values = Object.fromEntries(
@@ -49,9 +53,14 @@ export function parseCalculatorUrl(search: string): CalculatorUrlState | null {
   if (!isCalculatorInput(input) || !mode || !MODES.includes(mode)) return null;
   return {
     input: normalizeWorkload(input),
-    selectedOfferIds: params.get('offers')?.split(',').filter(Boolean) ?? [],
+    selectedOfferIds: readOfferIds(params),
     mode,
   };
+}
+
+export function parseCalculatorOfferIds(search: string): string[] | null {
+  const ids = readOfferIds(new URLSearchParams(search));
+  return ids.length ? ids : null;
 }
 
 export function serializeCalculatorUrl(state: CalculatorUrlState): string {
