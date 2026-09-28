@@ -72,6 +72,7 @@ import {
   serializeSavedScenarios,
   storeSavedScenarios,
   type SavedScenario,
+  type ScenarioMode,
 } from '../lib/scenarios';
 import {
   parseCalculatorOfferIds,
@@ -83,6 +84,7 @@ import {
   offerCapabilities,
   offerModalities,
   type CalculatorInput,
+  type CalculatorResult,
   type Catalog,
   type OfferView,
 } from '../types';
@@ -594,6 +596,43 @@ function unavailablePriceLabel(offer: OfferView): string | undefined {
   return undefined;
 }
 
+const PERIOD_LABEL: Record<ScenarioMode, string> = {
+  request: 'USD per request',
+  daily: 'USD per day',
+  monthly: 'USD per month',
+  annual: 'USD per year',
+};
+
+function resultValue(result: CalculatorResult, mode: ScenarioMode): number | null {
+  if (mode === 'request') return result.costPerRequest;
+  if (mode === 'daily') return result.dailyCost;
+  if (mode === 'annual') return result.annualCost;
+  return result.monthlyCost;
+}
+
+function resultValueLabel(result: CalculatorResult, mode: ScenarioMode): string {
+  const value = resultValue(result, mode);
+  if (value !== null) return formatCurrency(value, mode === 'request' ? 6 : 2);
+  if (result.feasibility === 'incompatible') return 'Incompatible workload';
+  if (result.feasibility === 'unavailable') return 'Retired';
+  if (result.feasibility === 'invalid') return 'Invalid workload';
+  return 'Not verified';
+}
+
+const CAPABILITY_LABELS: Record<string, string> = {
+  batchApi: 'Batch API',
+  fineTuning: 'Fine-tuning',
+  functionCalling: 'Function calling',
+  structuredOutputs: 'Structured outputs',
+  promptCaching: 'Prompt caching',
+  webSearch: 'Web search',
+  computerUse: 'Computer use',
+};
+
+function capabilityLabel(key: string): string {
+  return CAPABILITY_LABELS[key] ?? key.replaceAll(/([A-Z])/g, ' $1');
+}
+
 function accountEligibilityLabel(eligibility: OfferView['availability']['accountEligibility']) {
   return eligibility === 'public'
     ? 'Public account access'
@@ -692,17 +731,20 @@ function OfferTableRow({
   );
 }
 
+// Below this width the catalog filters open as a modal drawer so the table keeps the full width.
+const FILTER_DRAWER_QUERY = '(max-width: 1160px)';
+
 function ExplorerPage() {
   const { offers, catalog } = useCatalog();
   const location = useLocation();
   const navigate = useNavigate();
   const initial = useMemo(() => parseExplorerUrl(location.search), [location.search]);
   const [filters, setFilters] = useState<ExplorerUrlState>(initial);
-  const [isMobileViewport, setIsMobileViewport] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 820px)').matches,
+  const [filterDrawer, setFilterDrawer] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(FILTER_DRAWER_QUERY).matches,
   );
   const [showFilters, setShowFilters] = useState(
-    () => typeof window === 'undefined' || window.matchMedia('(min-width: 821px)').matches,
+    () => typeof window === 'undefined' || !window.matchMedia(FILTER_DRAWER_QUERY).matches,
   );
   const filterToggleRef = useRef<HTMLButtonElement>(null);
   const filterPanelRef = useRef<HTMLElement>(null);
@@ -715,16 +757,16 @@ function ExplorerPage() {
   );
   useEffect(() => setFilters(initial), [initial]);
   useEffect(() => {
-    const media = window.matchMedia('(max-width: 820px)');
+    const media = window.matchMedia(FILTER_DRAWER_QUERY);
     const update = () => {
-      setIsMobileViewport(media.matches);
+      setFilterDrawer(media.matches);
       setShowFilters(!media.matches);
     };
     media.addEventListener('change', update);
     return () => media.removeEventListener('change', update);
   }, []);
   useEffect(() => {
-    if (!isMobileViewport || !showFilters) return;
+    if (!filterDrawer || !showFilters) return;
     const panel = filterPanelRef.current;
     if (!panel) return;
     const selector =
@@ -764,7 +806,7 @@ function ExplorerPage() {
     };
     document.addEventListener('keydown', keepFocusInside);
     return () => document.removeEventListener('keydown', keepFocusInside);
-  }, [isMobileViewport, showFilters]);
+  }, [filterDrawer, showFilters]);
   useEffect(() => {
     const query = serializeExplorerUrl(filters);
     if (query !== location.search) navigate({ search: query }, { replace: true });
@@ -977,8 +1019,8 @@ function ExplorerPage() {
               id="catalog-filter-panel"
               ref={filterPanelRef}
               className="filter-panel"
-              role={isMobileViewport ? 'dialog' : 'region'}
-              aria-modal={isMobileViewport ? true : undefined}
+              role={filterDrawer ? 'dialog' : 'region'}
+              aria-modal={filterDrawer ? true : undefined}
               aria-labelledby="catalog-filter-title"
             >
               <div className="filter-heading">
@@ -990,7 +1032,7 @@ function ExplorerPage() {
                   <button className="clear-button" type="button" onClick={clearAll}>
                     Clear all
                   </button>
-                  {isMobileViewport && (
+                  {filterDrawer && (
                     <button
                       className="filter-close"
                       type="button"
@@ -1261,6 +1303,7 @@ function ExplorerPage() {
                       sortKey="provider"
                       sort={sort}
                       setSort={setSort}
+                      className="col-provider"
                     />
                     <SortableHeader
                       label="Input / cache"
@@ -1275,9 +1318,9 @@ function ExplorerPage() {
                       sort={sort}
                       setSort={setSort}
                     />
-                    <th>Modalities</th>
-                    <th>Capabilities</th>
-                    <th>Checked</th>
+                    <th className="col-modalities">Modalities</th>
+                    <th className="col-capabilities">Capabilities</th>
+                    <th className="col-checked">Checked</th>
                     <th>
                       <span className="sr-only">Select offer for comparison</span>
                     </th>
@@ -1385,7 +1428,9 @@ function ExplorerCard({
           <small>
             {offer.provider.name} · {offer.apiModelId}
           </small>
-          <small>{accountEligibilityLabel(offer.availability.accountEligibility)}</small>
+          {offer.availability.accountEligibility && (
+            <small>{accountEligibilityLabel(offer.availability.accountEligibility)}</small>
+          )}
         </div>
         <Badge
           tone={historical ? 'danger' : offer.availability.status === 'active' ? 'mint' : 'gold'}
@@ -1401,7 +1446,7 @@ function ExplorerCard({
       {offer.availability.notes && <p className="availability-note">{offer.availability.notes}</p>}
       <div className="explorer-card-metrics">
         <span>
-          <small>Input / 1M · USD</small>
+          <small>Input / 1M</small>
           <Price
             value={rule?.inputPrice}
             priceStatus={rule?.priceStatus}
@@ -1410,7 +1455,7 @@ function ExplorerCard({
           />
         </span>
         <span>
-          <small>Output / 1M · USD</small>
+          <small>Output / 1M</small>
           <Price
             value={rule?.outputPrice}
             priceStatus={rule?.priceStatus}
@@ -1426,9 +1471,9 @@ function ExplorerCard({
         </span>
       </div>
       <div className="explorer-card-footer">
-        <span>
-          Price checked {formatDate(getPriceVerificationDate(offer, rule))} · availability checked{' '}
-          {formatDate(offer.availabilityVerifiedAt ?? offer.lastVerifiedAt)}
+        <span className="card-freshness">
+          <StalenessBadge value={getPriceVerificationDate(offer, rule)} />
+          Price checked {formatDate(getPriceVerificationDate(offer, rule))}
         </span>
         <button
           className={`select-toggle ${selected ? 'selected' : ''}`}
@@ -1460,16 +1505,21 @@ function SortableHeader({
   sortKey,
   sort,
   setSort,
+  className,
 }: {
   label: string;
   sortKey: string;
   sort: { key: string; direction: 'asc' | 'desc' };
   setSort: (value: { key: string; direction: 'asc' | 'desc' }) => void;
+  className?: string;
 }) {
   const active = sort.key === sortKey;
   const direction = active ? sort.direction : 'asc';
   return (
-    <th aria-sort={active ? (sort.direction === 'asc' ? 'ascending' : 'descending') : 'none'}>
+    <th
+      className={className}
+      aria-sort={active ? (sort.direction === 'asc' ? 'ascending' : 'descending') : 'none'}
+    >
       <button
         className={`sort-header ${active ? 'active' : ''}`}
         type="button"
@@ -1508,13 +1558,24 @@ function ExplorerRow({
           <Link className="model-name-link" to={`/model/${offer.model.id}`}>
             {offer.model.name}
           </Link>
+          <small className="inline-provider">{offer.provider.name}</small>
           <small>{offer.apiModelId}</small>
-          <small>{accountEligibilityLabel(offer.availability.accountEligibility)}</small>
-          <Badge
-            tone={historical ? 'danger' : offer.availability.status === 'active' ? 'mint' : 'gold'}
-          >
-            {offer.availability.status}
-          </Badge>
+          {offer.availability.accountEligibility && (
+            <small>{accountEligibilityLabel(offer.availability.accountEligibility)}</small>
+          )}
+          <span className="model-badges">
+            <Badge
+              tone={
+                historical ? 'danger' : offer.availability.status === 'active' ? 'mint' : 'gold'
+              }
+            >
+              {offer.availability.status}
+            </Badge>
+            {/* Shown only when the table is too narrow for the "Checked" column. */}
+            <span className="inline-freshness">
+              <StalenessBadge value={checkedAt} />
+            </span>
+          </span>
           {replacement && (
             <Link className="replacement-link" to={`/model/${replacement.model.id}`}>
               Replaced by {replacement.model.name}
@@ -1522,7 +1583,7 @@ function ExplorerRow({
           )}
         </div>
       </td>
-      <td>
+      <td className="col-provider">
         <span className="provider-name">
           {offer.provider.name.replace(' API', '').replace('Cloud', '')}
         </span>
@@ -1552,14 +1613,14 @@ function ExplorerRow({
       <td className="numeric-cell" title={`${offer.model.contextWindowTokens ?? 'Unknown'} tokens`}>
         {formatTokens(offer.model.contextWindowTokens)}
       </td>
-      <td>
+      <td className="col-modalities">
         <span className="modality-list">
           {offerModalities(offer).input.map((item) => (
             <span key={item}>{item}</span>
           ))}
         </span>
       </td>
-      <td>
+      <td className="col-capabilities">
         <span className="capability-summary">
           <span>
             <small>Function calling</small>
@@ -1571,7 +1632,7 @@ function ExplorerRow({
           </span>
         </span>
       </td>
-      <td>
+      <td className="col-checked">
         <div className="verification-stack">
           <small>Price checked</small>
           <StalenessBadge value={checkedAt} />
@@ -1655,7 +1716,13 @@ function ComparePage() {
         />
       </>
     );
-  const rows: Array<{ label: string; values: ReactNode[]; keys?: unknown[]; compare?: boolean }> = [
+  const rows: Array<{
+    label: string;
+    values: ReactNode[];
+    keys?: unknown[];
+    compare?: boolean;
+    better?: 'lower' | 'higher';
+  }> = [
     {
       label: 'Lifecycle and account access',
       values: selected.map((offer) => (
@@ -1683,6 +1750,7 @@ function ComparePage() {
       )),
       keys: selected.map((offer) => standardRule({ offer })?.inputPrice ?? null),
       compare: true,
+      better: 'lower',
     },
     {
       label: 'Cached input / 1M',
@@ -1697,6 +1765,7 @@ function ComparePage() {
       )),
       keys: selected.map((offer) => standardRule({ offer })?.cachedInputPrice ?? null),
       compare: true,
+      better: 'lower',
     },
     {
       label: 'Output price / 1M',
@@ -1711,6 +1780,7 @@ function ComparePage() {
       )),
       keys: selected.map((offer) => standardRule({ offer })?.outputPrice ?? null),
       compare: true,
+      better: 'lower',
     },
     {
       label: 'Context window',
@@ -1719,6 +1789,7 @@ function ComparePage() {
       )),
       keys: selected.map((offer) => offer.model.contextWindowTokens ?? null),
       compare: true,
+      better: 'higher',
     },
     {
       label: 'Max output',
@@ -1727,6 +1798,7 @@ function ComparePage() {
       )),
       keys: selected.map((offer) => offer.model.maxOutputTokens ?? null),
       compare: true,
+      better: 'higher',
     },
     {
       label: 'Input modalities',
@@ -1801,6 +1873,18 @@ function ComparePage() {
       )),
     },
   ];
+  // Mark the best known value per row; retired offers are historical and never "win".
+  const bestIndexes = (row: (typeof rows)[number]) => {
+    if (!row.better || !row.keys) return new Set<number>();
+    const values = row.keys.map((key, index) =>
+      typeof key === 'number' && selected[index]?.availability.status !== 'retired' ? key : null,
+    );
+    const known = values.filter((value): value is number => value !== null);
+    if (known.length < 2) return new Set<number>();
+    const target = row.better === 'lower' ? Math.min(...known) : Math.max(...known);
+    if (known.every((value) => value === target)) return new Set<number>();
+    return new Set(values.flatMap((value, index) => (value === target ? [index] : [])));
+  };
   const displayRows = rows.filter(
     (row) => !diffOnly || !row.compare || !row.keys || hasDifferences(row.keys),
   );
@@ -1871,11 +1955,7 @@ function ComparePage() {
       <div className="comparison-card table-card">
         <div
           className="comparison-grid"
-          style={
-            {
-              '--compare-columns': `200px repeat(${selected.length}, minmax(190px, 1fr))`,
-            } as React.CSSProperties
-          }
+          style={{ '--compare-count': selected.length } as React.CSSProperties}
         >
           <div className="comparison-row comparison-head">
             <div className="comparison-label">Offer</div>
@@ -1892,16 +1972,27 @@ function ComparePage() {
               </div>
             ))}
           </div>
-          {displayRows.map((row) => (
-            <div className="comparison-row" key={row.label}>
-              <div className="comparison-label">{row.label}</div>
-              {row.values.map((value, index) => (
-                <div className="comparison-value" key={`${row.label}-${selected[index]?.id}`}>
-                  {value}
-                </div>
-              ))}
-            </div>
-          ))}
+          {displayRows.map((row) => {
+            const best = bestIndexes(row);
+            return (
+              <div className="comparison-row" key={row.label}>
+                <div className="comparison-label">{row.label}</div>
+                {row.values.map((value, index) => (
+                  <div
+                    className={`comparison-value${best.has(index) ? ' is-best' : ''}`}
+                    key={`${row.label}-${selected[index]?.id}`}
+                  >
+                    {value}
+                    {best.has(index) && (
+                      <span className="best-tag">
+                        {row.better === 'lower' ? 'Lowest' : 'Largest'}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            );
+          })}
           <div className="comparison-row comparison-sources">
             <div className="comparison-label">Official sources</div>
             {selected.map((offer) => (
@@ -2213,6 +2304,7 @@ function CalculatorPage() {
   const cheapest =
     results.find((result) => result.monthlyCost !== null && result.feasibility === 'compatible')
       ?.monthlyCost ?? null;
+  const highestMonthly = Math.max(0, ...results.map((result) => result.monthlyCost ?? 0));
   const update = <K extends keyof CalculatorInput>(key: K, value: CalculatorInput[K]) => {
     setPreset('custom');
     setInput((current) => ({ ...normalizeWorkload(current), [key]: value }));
@@ -2492,6 +2584,7 @@ function CalculatorPage() {
             <div>
               <span className="eyebrow">02 / OFFERS</span>
               <h2>Compare this workload</h2>
+              <p className="picker-hint">Checked offers show their live {mode} subtotal.</p>
             </div>
             <span className="toolbar-note">{selectedOffers.length} selected</span>
           </div>
@@ -2536,6 +2629,7 @@ function CalculatorPage() {
               .map((offer) => {
                 const selected = selectedIds.includes(offer.id);
                 const rule = standardRule({ offer });
+                const live = selected ? resultById.get(offer.id) : undefined;
                 return (
                   <label className={`offer-pick-row ${selected ? 'selected' : ''}`} key={offer.id}>
                     <input
@@ -2553,21 +2647,39 @@ function CalculatorPage() {
                         {!isOfferAvailable(offer) ? ' · Retired — historical selection' : ''}
                       </small>
                     </span>
-                    <span className="offer-pick-price">
-                      <Price
-                        value={rule?.inputPrice}
-                        priceStatus={rule?.priceStatus}
-                        unavailableLabel={unavailablePriceLabel(offer)}
-                      />
-                      <small>input / 1M</small>
-                    </span>
+                    {live ? (
+                      <span className="offer-pick-price live">
+                        <span
+                          className={
+                            resultValue(live, mode) === null ? 'unknown-value' : 'live-value'
+                          }
+                        >
+                          {resultValueLabel(live, mode)}
+                        </span>
+                        <small>
+                          {live.feasibility === 'compatible' && live.monthlyCost === cheapest
+                            ? 'lowest verified · '
+                            : ''}
+                          {PERIOD_LABEL[mode].replace('USD ', '')}
+                        </small>
+                      </span>
+                    ) : (
+                      <span className="offer-pick-price">
+                        <Price
+                          value={rule?.inputPrice}
+                          priceStatus={rule?.priceStatus}
+                          unavailableLabel={unavailablePriceLabel(offer)}
+                        />
+                        <small>input / 1M</small>
+                      </span>
+                    )}
                   </label>
                 );
               })}
           </div>
         </section>
       </div>
-      <section className="results-section">
+      <section className="results-section" id="results">
         <div className="results-heading">
           <div>
             <div className="eyebrow">03 / RESULTS</div>
@@ -2618,14 +2730,11 @@ function CalculatorPage() {
               {results.map((result, index) => {
                 const offer = findOffer(offers, result.offerId);
                 if (!offer) return null;
-                const value =
-                  mode === 'request'
-                    ? result.costPerRequest
-                    : mode === 'daily'
-                      ? result.dailyCost
-                      : mode === 'annual'
-                        ? result.annualCost
-                        : result.monthlyCost;
+                const value = resultValue(result, mode);
+                const share =
+                  result.monthlyCost !== null && highestMonthly > 0
+                    ? result.monthlyCost / highestMonthly
+                    : null;
                 const isCheapest =
                   value !== null &&
                   result.feasibility === 'compatible' &&
@@ -2642,26 +2751,16 @@ function CalculatorPage() {
                       {offer.model.name}
                     </Link>
                     <span className="result-provider">{offer.provider.name}</span>
-                    <strong className="result-price">
-                      {value === null
-                        ? result.feasibility === 'incompatible'
-                          ? 'Incompatible workload'
-                          : result.feasibility === 'unavailable'
-                            ? 'Retired'
-                            : result.feasibility === 'invalid'
-                              ? 'Invalid workload'
-                              : 'Not verified'
-                        : formatCurrency(value, mode === 'request' ? 6 : 2)}
-                    </strong>
-                    <span className="result-period">
-                      {mode === 'request'
-                        ? 'USD per request'
-                        : mode === 'daily'
-                          ? 'USD per day'
-                          : mode === 'annual'
-                            ? 'USD per year'
-                            : 'USD per month'}
-                    </span>
+                    <strong className="result-price">{resultValueLabel(result, mode)}</strong>
+                    <span className="result-period">{PERIOD_LABEL[mode]}</span>
+                    {share !== null && (
+                      <span
+                        className="result-share"
+                        title={`${Math.round(share * 100)}% of the highest subtotal in this comparison`}
+                      >
+                        <i style={{ width: `${Math.max(1.5, share * 100)}%` }} />
+                      </span>
+                    )}
                     {isCheapest && <Badge tone="mint">Lowest verified subtotal</Badge>}
                     <div className="result-breakdown">
                       <span>
@@ -2694,12 +2793,21 @@ function CalculatorPage() {
                         </b>
                       </span>
                     </div>
-                    {result.warnings.map((warning) => (
-                      <span className="warning-note" key={warning}>
-                        <CircleHelp size={13} />
-                        {warning}
-                      </span>
-                    ))}
+                    {result.warnings.length > 0 && (
+                      <details className="warning-details">
+                        <summary>
+                          <CircleHelp size={14} />
+                          {result.warnings.length === 1
+                            ? '1 caveat to review'
+                            : `${result.warnings.length} caveats to review`}
+                        </summary>
+                        <ul>
+                          {result.warnings.map((warning) => (
+                            <li key={warning}>{warning}</li>
+                          ))}
+                        </ul>
+                      </details>
+                    )}
                   </div>
                 );
               })}
@@ -3250,7 +3358,7 @@ function ModelPage() {
           <div className="capability-detail-grid">
             {Object.entries(model.capabilities).map(([key, value]) => (
               <div key={key}>
-                <span>{key.replaceAll(/([A-Z])/g, ' $1')}</span>
+                <span>{capabilityLabel(key)}</span>
                 <Capability value={value} />
               </div>
             ))}

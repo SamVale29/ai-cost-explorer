@@ -17,7 +17,7 @@
 .catalog-health-heading p {
   margin: 6px 0 0;
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--fs-sm);
 }
 
 .catalog-health-heading .text-link {
@@ -50,7 +50,7 @@
 .catalog-health-grid span,
 .catalog-health-footer {
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--fs-xs);
 }
 
 .catalog-health-footer {

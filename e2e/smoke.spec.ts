@@ -7,7 +7,8 @@ test('landing page loads the verified catalog and links into the explorer', asyn
   await expect(page.getByText(/^\d+ offers monitored$/i)).toBeVisible();
   await page.getByRole('link', { name: 'Explore models', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Explore AI models' })).toBeVisible();
-  await expect(page.locator('.explorer-mobile-list .explorer-offer-card').first()).toBeVisible();
+  // Laptop widths show the adaptive table; cards are reserved for narrow containers.
+  await expect(page.locator('.explorer-table tbody tr').first()).toBeVisible();
 });
 
 test('landing page renders when browser storage is unavailable', async ({ page }) => {
@@ -28,7 +29,7 @@ test('explorer creates a shareable comparison', async ({ page }) => {
   await page.goto('./explore');
   await page.getByPlaceholder('Search model, provider or API ID').fill('GPT');
 
-  const addButtons = page.locator('.explorer-mobile-list button[aria-label^="Add"]');
+  const addButtons = page.locator('.explorer-table button[aria-label^="Add"]');
   await expect(addButtons.first()).toBeVisible({ timeout: 10_000 });
   expect(await addButtons.count()).toBeGreaterThanOrEqual(2);
   await addButtons.nth(0).click();
