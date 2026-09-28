@@ -1923,6 +1923,7 @@ function ComparePage() {
   );
 }
 
+// Shared assumptions every preset builds on, and the starting point of a custom workload.
 const BASE_CALCULATOR_INPUT: CalculatorInput = {
   inputTokens: 5000,
   outputTokens: 1200,
@@ -1934,6 +1935,7 @@ const BASE_CALCULATOR_INPUT: CalculatorInput = {
   batchRate: 0,
 };
 type CalculatorPreset = { id: string; label: string; description: string; input: CalculatorInput };
+// The simulator opens and resets on this preset, so its highlighted card matches the fields.
 const DEFAULT_PRESET: CalculatorPreset = {
   id: 'support',
   label: 'Customer support chatbot',

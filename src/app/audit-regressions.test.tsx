@@ -49,6 +49,8 @@ test('the default workload matches the highlighted preset, including after reset
   const support = presetCard(/Customer support chatbot/);
   expect(support.className).toContain('active');
   const defaultWorkload = workloadFields();
+  // Promotional material quotes this exact opening workload.
+  expect(defaultWorkload).toEqual(['1800', '420', '900', '0', '50000', '30', '3', '0']);
   fireEvent.click(support);
   expect(workloadFields()).toEqual(defaultWorkload);
 
