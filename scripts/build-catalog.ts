@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { calculateCatalogHealth } from '../src/lib/catalog-health';
 import { choosePricingRule } from '../src/lib/pricing';
+import { offerCapabilities, offerModalities } from '../src/types';
 import type {
   BenchmarkResult,
   Catalog,
@@ -10,6 +11,7 @@ import type {
   Organization,
   PriceChangeEvent,
   Provider,
+  OfferView,
   SourceReference,
 } from '../src/types';
 
@@ -91,6 +93,14 @@ const providerMap = new Map(providers.map((item) => [item.id, item.name]));
 const modelMap = new Map(models.map((item) => [item.id, item]));
 const rows = offers.map((offer) => {
   const model = modelMap.get(offer.modelId);
+  const provider = providers.find((item) => item.id === offer.providerId);
+  const organization = model
+    ? organizations.find((item) => item.id === model.organizationId)
+    : undefined;
+  const view: OfferView | null =
+    model && provider && organization ? { ...offer, model, provider, organization } : null;
+  const modalities = view ? offerModalities(view) : model?.modalities;
+  const capabilities = view ? offerCapabilities(view) : model?.capabilities;
   const standard = choosePricingRule(
     offer.pricing,
     'standard',
@@ -103,17 +113,35 @@ const rows = offers.map((offer) => {
     organization: model ? (organizationMap.get(model.organizationId) ?? '') : '',
     provider: providerMap.get(offer.providerId) ?? '',
     apiModelId: offer.apiModelId,
-    status: offer.availability.status,
+    apiVariant: offer.apiVariant ?? '',
+    availabilityStatus: offer.availability.status,
+    accountEligibility: offer.availability.accountEligibility ?? '',
+    availabilityNotes: offer.availability.notes ?? '',
+    replacementOfferId: offer.availability.replacementOfferId ?? '',
+    modalitiesInput: modalities?.input.join('; ') ?? '',
+    modalitiesOutput: modalities?.output.join('; ') ?? '',
     inputPriceUsdPerMillion: standard?.inputPrice ?? '',
     cachedInputPriceUsdPerMillion: standard?.cachedInputPrice ?? '',
     outputPriceUsdPerMillion: standard?.outputPrice ?? '',
     contextWindowTokens: model?.contextWindowTokens ?? '',
     maxOutputTokens: model?.maxOutputTokens ?? '',
-    functionCalling: model?.capabilities.functionCalling ?? '',
-    structuredOutputs: model?.capabilities.structuredOutputs ?? '',
-    promptCaching: model?.capabilities.promptCaching ?? '',
-    batchApi: model?.capabilities.batchApi ?? '',
-    lastVerifiedAt: offer.lastVerifiedAt,
+    priceStatus:
+      standard?.priceStatus ??
+      (offer.pricing.some((rule) => rule.mode === 'peak' || rule.mode === 'off-peak') && !standard
+        ? 'time-based-not-simulated'
+        : ''),
+    functionCalling: capabilities?.functionCalling ?? '',
+    structuredOutputs: capabilities?.structuredOutputs ?? '',
+    promptCaching: capabilities?.promptCaching ?? '',
+    batchApi: capabilities?.batchApi ?? '',
+    pricingVerifiedAt:
+      offer.pricingVerifiedAt ??
+      standard?.sources
+        .map((source) => source.checkedAt)
+        .sort()
+        .at(-1) ??
+      '',
+    availabilityVerifiedAt: offer.availabilityVerifiedAt ?? offer.lastVerifiedAt,
   };
 });
 const headers = Object.keys(rows[0] ?? {});

@@ -1,48 +1,4528 @@
 [
-{"id":"gpt-5-6-sol","organizationId":"openai","name":"GPT-5.6 Sol","family":"GPT-5.6","status":"active","releaseDate":null,"knowledgeCutoff":"2026-02-16","contextWindowTokens":1050000,"maxOutputTokens":128000,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://developers.openai.com/api/docs/pricing","title":"OpenAI API pricing","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Short and long context prices for the GPT-5.6 family, including cache writes."},{"url":"https://developers.openai.com/api/docs/guides/conversation-state","title":"OpenAI context window semantics","publisher":"OpenAI","sourceType":"official-documentation","checkedAt":"2026-09-23","notes":"Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."}],"lastVerifiedAt":"2026-09-19","contextWindowScope":"combined"},
-{"id":"gpt-5-6-terra","organizationId":"openai","name":"GPT-5.6 Terra","family":"GPT-5.6","status":"active","releaseDate":null,"knowledgeCutoff":"2026-02-16","contextWindowTokens":1050000,"maxOutputTokens":128000,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://developers.openai.com/api/docs/pricing","title":"OpenAI API pricing","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Short and long context prices for the GPT-5.6 family, including cache writes."},{"url":"https://developers.openai.com/api/docs/guides/conversation-state","title":"OpenAI context window semantics","publisher":"OpenAI","sourceType":"official-documentation","checkedAt":"2026-09-23","notes":"Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."}],"lastVerifiedAt":"2026-09-19","contextWindowScope":"combined"},
-{"id":"gpt-5-6-luna","organizationId":"openai","name":"GPT-5.6 Luna","family":"GPT-5.6","status":"active","releaseDate":null,"knowledgeCutoff":"2026-02-16","contextWindowTokens":1050000,"maxOutputTokens":128000,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://developers.openai.com/api/docs/pricing","title":"OpenAI API pricing","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Short and long context prices for the GPT-5.6 family, including cache writes."},{"url":"https://developers.openai.com/api/docs/guides/conversation-state","title":"OpenAI context window semantics","publisher":"OpenAI","sourceType":"official-documentation","checkedAt":"2026-09-23","notes":"Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."}],"lastVerifiedAt":"2026-09-19","contextWindowScope":"combined"},
-{"id":"gpt-6-astra","organizationId":"openai","name":"GPT-6 Astra","family":"GPT-6","status":"active","releaseDate":null,"knowledgeCutoff":"2026-04-30","contextWindowTokens":1050000,"maxOutputTokens":128000,"modalities":{"input":["text","image"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":false,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://developers.openai.com/api/docs/models/gpt-6-astra","title":"GPT-6 Astra model card","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Model ID, modalities, context window, max output and token pricing."},{"url":"https://developers.openai.com/api/docs/pricing","title":"OpenAI API pricing","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-09-19"},{"url":"https://developers.openai.com/api/docs/guides/conversation-state","title":"OpenAI context window semantics","publisher":"OpenAI","sourceType":"official-documentation","checkedAt":"2026-09-23","notes":"Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."}],"lastVerifiedAt":"2026-09-19","contextWindowScope":"combined"},
-{"id":"gpt-4-1","organizationId":"openai","name":"GPT-4.1","family":"GPT-4.1","status":"active","releaseDate":null,"knowledgeCutoff":"2024-06-01","contextWindowTokens":1047576,"maxOutputTokens":32768,"modalities":{"input":["text","image"],"output":["text"]},"capabilities":{"reasoning":false,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":true,"embeddings":false,"realtime":false,"webSearch":null,"computerUse":null},"sources":[{"url":"https://developers.openai.com/api/docs/models/gpt-4.1","title":"GPT-4.1 model card","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-08-02"},{"url":"https://developers.openai.com/api/docs/guides/conversation-state","title":"OpenAI context window semantics","publisher":"OpenAI","sourceType":"official-documentation","checkedAt":"2026-09-23","notes":"Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."}],"lastVerifiedAt":"2026-08-02","contextWindowScope":"combined"},
-{"id":"gpt-4-1-mini","organizationId":"openai","name":"GPT-4.1 mini","family":"GPT-4.1","status":"active","releaseDate":null,"knowledgeCutoff":"2024-06-01","contextWindowTokens":1047576,"maxOutputTokens":32768,"modalities":{"input":["text","image"],"output":["text"]},"capabilities":{"reasoning":false,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":true,"embeddings":false,"realtime":false,"webSearch":null,"computerUse":null},"sources":[{"url":"https://openai.com/index/gpt-4-1/","title":"Introducing GPT-4.1 in the API","publisher":"OpenAI","sourceType":"official-release","checkedAt":"2026-08-02"},{"url":"https://developers.openai.com/api/docs/guides/conversation-state","title":"OpenAI context window semantics","publisher":"OpenAI","sourceType":"official-documentation","checkedAt":"2026-09-23","notes":"Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."}],"lastVerifiedAt":"2026-08-02","contextWindowScope":"combined"},
-{"id":"claude-fable-5","organizationId":"anthropic","name":"Claude Fable 5","family":"Claude Fable","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":200000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://platform.claude.com/docs/en/about-claude/pricing","title":"Claude API pricing","publisher":"Anthropic","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"claude-opus-5","organizationId":"anthropic","name":"Claude Opus 5","family":"Claude Opus","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":200000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://platform.claude.com/docs/en/about-claude/pricing","title":"Claude API pricing","publisher":"Anthropic","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"claude-sonnet-5","organizationId":"anthropic","name":"Claude Sonnet 5","family":"Claude Sonnet","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":200000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://platform.claude.com/docs/en/about-claude/pricing","title":"Claude API pricing","publisher":"Anthropic","sourceType":"official-pricing","checkedAt":"2026-09-19"}],"lastVerifiedAt":"2026-09-19"},
-{"id":"claude-sonnet-4-6","organizationId":"anthropic","name":"Claude Sonnet 4.6","family":"Claude Sonnet","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":200000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://platform.claude.com/docs/en/about-claude/pricing","title":"Claude API pricing","publisher":"Anthropic","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"claude-haiku-4-5","organizationId":"anthropic","name":"Claude Haiku 4.5","family":"Claude Haiku","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":200000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://platform.claude.com/docs/en/about-claude/pricing","title":"Claude API pricing","publisher":"Anthropic","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"gemini-3-1-pro-preview","organizationId":"google","name":"Gemini 3.1 Pro Preview","family":"Gemini 3.1","status":"preview","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1048576,"maxOutputTokens":null,"modalities":{"input":["text","image","audio","video","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://ai.google.dev/gemini-api/docs/pricing","title":"Gemini Developer API pricing","publisher":"Google","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"gemini-3-flash-preview","organizationId":"google","name":"Gemini 3 Flash Preview","family":"Gemini 3","status":"preview","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1048576,"maxOutputTokens":null,"modalities":{"input":["text","image","audio","video","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://ai.google.dev/gemini-api/docs/pricing","title":"Gemini Developer API pricing","publisher":"Google","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"gemini-2-5-pro","organizationId":"google","name":"Gemini 2.5 Pro","family":"Gemini 2.5","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1048576,"maxOutputTokens":null,"modalities":{"input":["text","image","audio","video","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://ai.google.dev/gemini-api/docs/pricing","title":"Gemini Developer API pricing","publisher":"Google","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"gemini-2-5-flash","organizationId":"google","name":"Gemini 2.5 Flash","family":"Gemini 2.5","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1048576,"maxOutputTokens":null,"modalities":{"input":["text","image","audio","video","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":true,"webSearch":true,"computerUse":null},"sources":[{"url":"https://ai.google.dev/gemini-api/docs/pricing","title":"Gemini Developer API pricing","publisher":"Google","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"gemini-2-5-flash-lite","organizationId":"google","name":"Gemini 2.5 Flash-Lite","family":"Gemini 2.5","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1048576,"maxOutputTokens":null,"modalities":{"input":["text","image","audio","video","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://ai.google.dev/gemini-api/docs/pricing","title":"Gemini Developer API pricing","publisher":"Google","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"mistral-small-4","organizationId":"mistral","name":"Mistral Small 4","family":"Mistral Small","status":"active","releaseDate":"2026-03-16","knowledgeCutoff":null,"contextWindowTokens":256000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":true,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.mistral.ai/models/model-cards/mistral-small-4-0-26-03","title":"Mistral Small 4 model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"mistral-medium-3-5","organizationId":"mistral","name":"Mistral Medium 3.5","family":"Mistral Medium","status":"active","releaseDate":"2026-04-28","knowledgeCutoff":null,"contextWindowTokens":256000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":true,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04","title":"Mistral Medium 3.5 model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"mistral-large-3","organizationId":"mistral","name":"Mistral Large 3","family":"Mistral Large","status":"active","releaseDate":"2025-12-02","knowledgeCutoff":null,"contextWindowTokens":256000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":true,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12","title":"Mistral Large 3 model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"ministral-3b","organizationId":"mistral","name":"Ministral 3 3B","family":"Ministral 3","status":"active","releaseDate":"2025-12-02","knowledgeCutoff":null,"contextWindowTokens":256000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":true,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.mistral.ai/models/ministral-3-3b-25-12","title":"Ministral 3 3B model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"ministral-14b","organizationId":"mistral","name":"Ministral 3 14B","family":"Ministral 3","status":"active","releaseDate":"2025-12-02","knowledgeCutoff":null,"contextWindowTokens":256000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":true,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12","title":"Ministral 3 14B model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"codestral-2508","organizationId":"mistral","name":"Codestral","family":"Codestral","status":"active","releaseDate":"2025-07-30","knowledgeCutoff":null,"contextWindowTokens":128000,"maxOutputTokens":null,"modalities":{"input":["text","file"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":null,"fineTuning":null,"embeddings":true,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.mistral.ai/models/model-cards/codestral-25-08","title":"Codestral model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"command-a","organizationId":"cohere","name":"Command A","family":"Command","status":"active","releaseDate":null,"knowledgeCutoff":"2024-06-01","contextWindowTokens":256000,"maxOutputTokens":8000,"modalities":{"input":["text","image"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":null,"batchApi":null,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.cohere.com/docs/command-a","title":"Command A model card","publisher":"Cohere","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"command-r-plus","organizationId":"cohere","name":"Command R+","family":"Command R","status":"active","releaseDate":null,"knowledgeCutoff":"2024-06-01","contextWindowTokens":128000,"maxOutputTokens":4000,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":true,"structuredOutputs":true,"promptCaching":null,"batchApi":null,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.cohere.com/v2/docs/command-r-plus","title":"Command R+ model card","publisher":"Cohere","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"command-r","organizationId":"cohere","name":"Command R","family":"Command R","status":"active","releaseDate":null,"knowledgeCutoff":"2024-06-01","contextWindowTokens":128000,"maxOutputTokens":4000,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":true,"structuredOutputs":true,"promptCaching":null,"batchApi":null,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.cohere.com/docs/command-r","title":"Command R model card","publisher":"Cohere","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"command-r7b","organizationId":"cohere","name":"Command R7B","family":"Command R","status":"active","releaseDate":null,"knowledgeCutoff":"2024-06-01","contextWindowTokens":128000,"maxOutputTokens":4000,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":true,"structuredOutputs":true,"promptCaching":null,"batchApi":null,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.cohere.com/v1/docs/command-r7b","title":"Command R7B model card","publisher":"Cohere","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"command-a-plus","organizationId":"cohere","name":"Command A+","family":"Command A","status":"active","releaseDate":"2026-05-20","knowledgeCutoff":"2025-04-01","contextWindowTokens":128000,"maxOutputTokens":64000,"modalities":{"input":["text","image"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":null,"batchApi":null,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.cohere.com/docs/command-a-plus","title":"Command A+ model card","publisher":"Cohere","sourceType":"official-documentation","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"grok-4-5","organizationId":"xai","name":"Grok 4.5","family":"Grok 4","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":500000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://docs.x.ai/developers/pricing","title":"xAI API pricing","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"grok-build-0-1","organizationId":"xai","name":"Grok Build 0.1","family":"Grok Build","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":256000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://docs.x.ai/developers/pricing","title":"xAI API pricing","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"grok-4-3","organizationId":"xai","name":"Grok 4.3","family":"Grok 4","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1000000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://docs.x.ai/developers/pricing","title":"xAI API pricing","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"grok-4-20-reasoning","organizationId":"xai","name":"Grok 4.20 Reasoning","family":"Grok 4.20","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1000000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://docs.x.ai/developers/pricing","title":"xAI API pricing","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"grok-4-20-non-reasoning","organizationId":"xai","name":"Grok 4.20 Non-reasoning","family":"Grok 4.20","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1000000,"maxOutputTokens":null,"modalities":{"input":["text","image","file"],"output":["text"]},"capabilities":{"reasoning":false,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://docs.x.ai/developers/pricing","title":"xAI API pricing","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"grok-4-6","organizationId":"xai","name":"Grok 4.6","family":"Grok 4","status":"active","releaseDate":null,"knowledgeCutoff":"2026-02-01","contextWindowTokens":500000,"maxOutputTokens":null,"modalities":{"input":["text","image"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":false,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://docs.x.ai/developers/grok-4-6","title":"Grok 4.6 model page","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Model ID, 500k context, modalities and capabilities."},{"url":"https://docs.x.ai/developers/pricing","title":"xAI API pricing","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Current token, long-context and Batch API pricing for Grok models."}],"lastVerifiedAt":"2026-09-19"},
-{"id":"grok-4-20-multi-agent-0309","organizationId":"xai","name":"Grok 4.20 Multi-Agent Beta","family":"Grok 4.20","status":"preview","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1000000,"maxOutputTokens":null,"modalities":{"input":["text","image"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":null},"sources":[{"url":"https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309","title":"Grok 4.20 Multi-Agent model page","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Model ID, 1M context, modalities and Batch API availability."},{"url":"https://docs.x.ai/developers/pricing","title":"xAI API pricing","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Current token, long-context and Batch API pricing for Grok models."}],"lastVerifiedAt":"2026-09-19"},
-{"id":"deepseek-v4-flash","organizationId":"deepseek","name":"DeepSeek V4 Flash","family":"DeepSeek V4","status":"active","releaseDate":"2026-04-24","knowledgeCutoff":null,"contextWindowTokens":1000000,"maxOutputTokens":384000,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":null,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://api-docs.deepseek.com/quick_start/pricing","title":"DeepSeek API models and pricing","publisher":"DeepSeek","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"deepseek-v4-pro","organizationId":"deepseek","name":"DeepSeek V4 Pro","family":"DeepSeek V4","status":"active","releaseDate":"2026-04-24","knowledgeCutoff":null,"contextWindowTokens":1000000,"maxOutputTokens":384000,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":true,"batchApi":null,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://api-docs.deepseek.com/quick_start/pricing","title":"DeepSeek API models and pricing","publisher":"DeepSeek","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"llama-3-1-8b","organizationId":"meta","name":"Llama 3.1 8B","family":"Llama 3.1","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":131072,"maxOutputTokens":131072,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":null,"structuredOutputs":null,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://console.groq.com/docs/models","title":"GroqCloud supported models","publisher":"Groq","sourceType":"official-pricing","checkedAt":"2026-09-19"}],"lastVerifiedAt":"2026-09-19"},
-{"id":"llama-3-3-70b","organizationId":"meta","name":"Llama 3.3 70B","family":"Llama 3.3","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":131072,"maxOutputTokens":32768,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":null,"structuredOutputs":null,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://console.groq.com/docs/models","title":"GroqCloud supported models","publisher":"Groq","sourceType":"official-pricing","checkedAt":"2026-09-19"}],"lastVerifiedAt":"2026-09-19"},
-{"id":"gpt-oss-120b","organizationId":"openai","name":"GPT OSS 120B","family":"GPT OSS","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":131072,"maxOutputTokens":65536,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://console.groq.com/docs/models","title":"GroqCloud supported models","publisher":"Groq","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"gpt-oss-20b","organizationId":"openai","name":"GPT OSS 20B","family":"GPT OSS","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":131072,"maxOutputTokens":65536,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":true,"functionCalling":true,"structuredOutputs":true,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":true,"computerUse":true},"sources":[{"url":"https://console.groq.com/docs/models","title":"GroqCloud supported models","publisher":"Groq","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"whisper-large-v3","organizationId":"openai","name":"Whisper Large V3","family":"Whisper","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":null,"maxOutputTokens":null,"modalities":{"input":["audio"],"output":["text"]},"capabilities":{"reasoning":false,"functionCalling":null,"structuredOutputs":null,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://console.groq.com/docs/models","title":"GroqCloud supported models","publisher":"Groq","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"whisper-large-v3-turbo","organizationId":"openai","name":"Whisper Large V3 Turbo","family":"Whisper","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":null,"maxOutputTokens":null,"modalities":{"input":["audio"],"output":["text"]},"capabilities":{"reasoning":false,"functionCalling":null,"structuredOutputs":null,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://console.groq.com/docs/models","title":"GroqCloud supported models","publisher":"Groq","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"qwen-3-7-max","organizationId":"qwen","name":"Qwen3.7 Max","family":"Qwen3.7","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":null,"maxOutputTokens":null,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":null,"structuredOutputs":null,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.together.ai/docs/serverless/models","title":"Together AI serverless model catalog","publisher":"Together AI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Qwen3.7 Max row lists $2.50 input, $0.50 cached input and $7.50 output per 1M tokens."}],"lastVerifiedAt":"2026-09-19"},
-{"id":"qwen-3-5-397b","organizationId":"qwen","name":"Qwen3.5 397B A17B","family":"Qwen3.5","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":262144,"maxOutputTokens":null,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":true,"structuredOutputs":true,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.together.ai/docs/serverless/models","title":"Together AI serverless model catalog","publisher":"Together AI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"qwen-3-6-plus","organizationId":"qwen","name":"Qwen3.6 Plus","family":"Qwen3.6","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":1000000,"maxOutputTokens":null,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":null,"structuredOutputs":null,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.together.ai/docs/serverless/models","title":"Together AI serverless model catalog","publisher":"Together AI","sourceType":"official-pricing","checkedAt":"2026-08-02"}],"lastVerifiedAt":"2026-08-02"},
-{"id":"qwen-3-5-9b","organizationId":"qwen","name":"Qwen3.5 9B","family":"Qwen3.5","status":"active","releaseDate":null,"knowledgeCutoff":null,"contextWindowTokens":262144,"maxOutputTokens":null,"modalities":{"input":["text"],"output":["text"]},"capabilities":{"reasoning":null,"functionCalling":true,"structuredOutputs":true,"promptCaching":null,"batchApi":true,"fineTuning":null,"embeddings":false,"realtime":null,"webSearch":null,"computerUse":null},"sources":[{"url":"https://docs.together.ai/docs/serverless/models","title":"Together AI serverless model catalog","publisher":"Together AI","sourceType":"official-pricing","checkedAt":"2026-09-19"}],"lastVerifiedAt":"2026-09-19"}
+  {
+    "id": "gpt-5-6-sol",
+    "organizationId": "openai",
+    "name": "GPT-5.6 Sol",
+    "family": "GPT-5.6",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2026-02-16",
+    "contextWindowTokens": 1050000,
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "title": "OpenAI API pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "GPT-6 short/long context and cache rates reviewed."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+        "title": "OpenAI context window semantics",
+        "publisher": "OpenAI",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-23",
+        "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19",
+    "contextWindowScope": "combined"
+  },
+  {
+    "id": "gpt-5-6-terra",
+    "organizationId": "openai",
+    "name": "GPT-5.6 Terra",
+    "family": "GPT-5.6",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2026-02-16",
+    "contextWindowTokens": 1050000,
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "title": "OpenAI API pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "GPT-6 short/long context and cache rates reviewed."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+        "title": "OpenAI context window semantics",
+        "publisher": "OpenAI",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-23",
+        "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19",
+    "contextWindowScope": "combined"
+  },
+  {
+    "id": "gpt-5-6-luna",
+    "organizationId": "openai",
+    "name": "GPT-5.6 Luna",
+    "family": "GPT-5.6",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2026-02-16",
+    "contextWindowTokens": 1050000,
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "title": "OpenAI API pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "GPT-6 short/long context and cache rates reviewed."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+        "title": "OpenAI context window semantics",
+        "publisher": "OpenAI",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-23",
+        "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19",
+    "contextWindowScope": "combined"
+  },
+  {
+    "id": "gpt-6-astra",
+    "organizationId": "openai",
+    "name": "GPT-6 Astra",
+    "family": "GPT-6",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2026-04-30",
+    "contextWindowTokens": 1050000,
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": false,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+        "title": "GPT-6 Astra model card",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-19",
+        "notes": "Model ID, modalities, context window, max output and token pricing."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "title": "OpenAI API pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "GPT-6 short/long context and cache rates reviewed."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+        "title": "OpenAI context window semantics",
+        "publisher": "OpenAI",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-23",
+        "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19",
+    "contextWindowScope": "combined"
+  },
+  {
+    "id": "gpt-4-1",
+    "organizationId": "openai",
+    "name": "GPT-4.1",
+    "family": "GPT-4.1",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2024-06-01",
+    "contextWindowTokens": 1047576,
+    "maxOutputTokens": 32768,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": false,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": true,
+      "embeddings": false,
+      "realtime": false,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://developers.openai.com/api/docs/models/gpt-4.1",
+        "title": "GPT-4.1 model card",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02",
+        "notes": "Input, cached input, output, context and tool support."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+        "title": "OpenAI context window semantics",
+        "publisher": "OpenAI",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-23",
+        "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27",
+    "contextWindowScope": "combined"
+  },
+  {
+    "id": "gpt-4-1-mini",
+    "organizationId": "openai",
+    "name": "GPT-4.1 mini",
+    "family": "GPT-4.1",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2024-06-01",
+    "contextWindowTokens": 1047576,
+    "maxOutputTokens": 32768,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": false,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": true,
+      "embeddings": false,
+      "realtime": false,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+        "title": "GPT-4.1 Mini model card",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model ID, capabilities, limits and standard input/cache/output prices reviewed."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+        "title": "OpenAI context window semantics",
+        "publisher": "OpenAI",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-23",
+        "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27",
+    "contextWindowScope": "combined"
+  },
+  {
+    "id": "claude-fable-5",
+    "organizationId": "anthropic",
+    "name": "Claude Fable 5",
+    "family": "Claude Fable",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 200000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "title": "Claude API pricing",
+        "publisher": "Anthropic",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model prices, cache and batch rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "claude-opus-5",
+    "organizationId": "anthropic",
+    "name": "Claude Opus 5",
+    "family": "Claude Opus",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 200000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "title": "Claude API pricing",
+        "publisher": "Anthropic",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model prices, cache and batch rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "claude-sonnet-5",
+    "organizationId": "anthropic",
+    "name": "Claude Sonnet 5",
+    "family": "Claude Sonnet",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1000000,
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://platform.claude.com/docs/en/models/overview",
+        "title": "Claude models overview",
+        "publisher": "Anthropic",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current Claude model IDs, limits and availability reviewed."
+      },
+      {
+        "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "title": "Claude API pricing",
+        "publisher": "Anthropic",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model prices, cache and batch rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27",
+    "contextWindowScope": "input",
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://platform.claude.com/docs/en/models/overview",
+          "title": "Claude models overview",
+          "publisher": "Anthropic",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current Claude model IDs, limits and availability reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://platform.claude.com/docs/en/models/overview",
+          "title": "Claude models overview",
+          "publisher": "Anthropic",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current Claude model IDs, limits and availability reviewed."
+        }
+      ]
+    }
+  },
+  {
+    "id": "claude-sonnet-4-6",
+    "organizationId": "anthropic",
+    "name": "Claude Sonnet 4.6",
+    "family": "Claude Sonnet",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 200000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "title": "Claude API pricing",
+        "publisher": "Anthropic",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model prices, cache and batch rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "claude-haiku-4-5",
+    "organizationId": "anthropic",
+    "name": "Claude Haiku 4.5",
+    "family": "Claude Haiku",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 200000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "title": "Claude API pricing",
+        "publisher": "Anthropic",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model prices, cache and batch rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "gemini-3-1-pro-preview",
+    "organizationId": "google",
+    "name": "Gemini 3.1 Pro Preview",
+    "family": "Gemini 3.1",
+    "status": "preview",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1048576,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "gemini-3-flash-preview",
+    "organizationId": "google",
+    "name": "Gemini 3 Flash Preview",
+    "family": "Gemini 3",
+    "status": "preview",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1048576,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "gemini-2-5-pro",
+    "organizationId": "google",
+    "name": "Gemini 2.5 Pro",
+    "family": "Gemini 2.5",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1048576,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "gemini-2-5-flash",
+    "organizationId": "google",
+    "name": "Gemini 2.5 Flash",
+    "family": "Gemini 2.5",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1048576,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": true,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "gemini-2-5-flash-lite",
+    "organizationId": "google",
+    "name": "Gemini 2.5 Flash-Lite",
+    "family": "Gemini 2.5",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1048576,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "mistral-small-4",
+    "organizationId": "mistral",
+    "name": "Mistral Small 4",
+    "family": "Mistral Small",
+    "status": "active",
+    "releaseDate": "2026-03-16",
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 256000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": true,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/model-cards/mistral-small-4-0-26-03",
+        "title": "Mistral Small 4 model card",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-06",
+        "notes": "Model card with context, price and capabilities."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "mistral-medium-3-5",
+    "organizationId": "mistral",
+    "name": "Mistral Medium 3.5",
+    "family": "Mistral Medium",
+    "status": "active",
+    "releaseDate": "2026-04-28",
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 256000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": true,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04",
+        "title": "Mistral Medium 3.5 model card",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-06",
+        "notes": "Model card with context, price and capabilities."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "mistral-large-3",
+    "organizationId": "mistral",
+    "name": "Mistral Large 3",
+    "family": "Mistral Large",
+    "status": "active",
+    "releaseDate": "2025-12-02",
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 256000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": true,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12",
+        "title": "Mistral Large 3 model card",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02",
+        "notes": "Model card with context, price and capabilities."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "ministral-3b",
+    "organizationId": "mistral",
+    "name": "Ministral 3 3B",
+    "family": "Ministral 3",
+    "status": "active",
+    "releaseDate": "2025-12-02",
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 256000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": true,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/ministral-3-3b-25-12",
+        "title": "Ministral 3 3B model card",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02",
+        "notes": "Model card with context, price and capabilities."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "ministral-14b",
+    "organizationId": "mistral",
+    "name": "Ministral 3 14B",
+    "family": "Ministral 3",
+    "status": "active",
+    "releaseDate": "2025-12-02",
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 256000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": true,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12",
+        "title": "Ministral 3 14B model card",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02",
+        "notes": "Model card with context, price and capabilities."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "codestral-2508",
+    "organizationId": "mistral",
+    "name": "Codestral",
+    "family": "Codestral",
+    "status": "active",
+    "releaseDate": "2025-07-30",
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 128000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": null,
+      "fineTuning": null,
+      "embeddings": true,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/model-cards/codestral-25-08",
+        "title": "Codestral model card",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02",
+        "notes": "Code model card with context and token prices."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "command-a",
+    "organizationId": "cohere",
+    "name": "Command A",
+    "family": "Command",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2024-06-01",
+    "contextWindowTokens": 256000,
+    "maxOutputTokens": 8000,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": null,
+      "batchApi": null,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.cohere.com/docs/command-a",
+        "title": "Command A model card",
+        "publisher": "Cohere",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Command A API ID, text modality, limits and published rate reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "command-r-plus",
+    "organizationId": "cohere",
+    "name": "Command R+",
+    "family": "Command R",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2024-06-01",
+    "contextWindowTokens": 128000,
+    "maxOutputTokens": 4000,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": null,
+      "batchApi": null,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.cohere.com/v2/docs/command-r-plus",
+        "title": "Command R+ model card",
+        "publisher": "Cohere",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02",
+        "notes": "Input/output price, context and tool-use details."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "command-r",
+    "organizationId": "cohere",
+    "name": "Command R",
+    "family": "Command R",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2024-06-01",
+    "contextWindowTokens": 128000,
+    "maxOutputTokens": 4000,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": null,
+      "batchApi": null,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.cohere.com/docs/command-r",
+        "title": "Command R model card",
+        "publisher": "Cohere",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02",
+        "notes": "Input/output price, context and tool-use details."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "command-r7b",
+    "organizationId": "cohere",
+    "name": "Command R7B",
+    "family": "Command R",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2024-06-01",
+    "contextWindowTokens": 128000,
+    "maxOutputTokens": 4000,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": null,
+      "batchApi": null,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.cohere.com/v1/docs/command-r7b",
+        "title": "Command R7B model card",
+        "publisher": "Cohere",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02",
+        "notes": "Input/output price, context and tool-use details."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "command-a-plus",
+    "organizationId": "cohere",
+    "name": "Command A+",
+    "family": "Command A",
+    "status": "active",
+    "releaseDate": "2026-05-20",
+    "knowledgeCutoff": "2025-04-01",
+    "contextWindowTokens": 128000,
+    "maxOutputTokens": 64000,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": null,
+      "batchApi": null,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.cohere.com/docs/command-a-plus",
+        "title": "Command A+ model card",
+        "publisher": "Cohere",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-08-02",
+        "notes": "Current model ID, context and availability. Production price is not published on the model page."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "grok-4-5",
+    "organizationId": "xai",
+    "name": "Grok 4.5",
+    "family": "Grok 4",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 500000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.x.ai/developers/pricing",
+        "title": "xAI API pricing",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok token and context-tier pricing reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "grok-build-0-1",
+    "organizationId": "xai",
+    "name": "Grok Build 0.1",
+    "family": "Grok Build",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 256000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.x.ai/developers/pricing",
+        "title": "xAI API pricing",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok token and context-tier pricing reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "grok-4-3",
+    "organizationId": "xai",
+    "name": "Grok 4.3",
+    "family": "Grok 4",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1000000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.x.ai/developers/pricing",
+        "title": "xAI API pricing",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok token and context-tier pricing reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "grok-4-20-reasoning",
+    "organizationId": "xai",
+    "name": "Grok 4.20 Reasoning",
+    "family": "Grok 4.20",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1000000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.x.ai/developers/pricing",
+        "title": "xAI API pricing",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok token and context-tier pricing reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "grok-4-20-non-reasoning",
+    "organizationId": "xai",
+    "name": "Grok 4.20 Non-reasoning",
+    "family": "Grok 4.20",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1000000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": false,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.x.ai/developers/pricing",
+        "title": "xAI API pricing",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok token and context-tier pricing reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "grok-4-6",
+    "organizationId": "xai",
+    "name": "Grok 4.6",
+    "family": "Grok 4",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": "2026-02-01",
+    "contextWindowTokens": 500000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": false,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.x.ai/developers/grok-4-6",
+        "title": "Grok 4.6 model page",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-19",
+        "notes": "Model ID, 500k context, modalities and capabilities."
+      },
+      {
+        "url": "https://docs.x.ai/developers/pricing",
+        "title": "xAI API pricing",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok token and context-tier pricing reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19"
+  },
+  {
+    "id": "grok-4-20-multi-agent-0309",
+    "organizationId": "xai",
+    "name": "Grok 4.20 Multi-Agent Beta",
+    "family": "Grok 4.20",
+    "status": "preview",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1000000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309",
+        "title": "Grok 4.20 Multi-Agent model page",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-19",
+        "notes": "Model ID, 1M context, modalities and Batch API availability."
+      },
+      {
+        "url": "https://docs.x.ai/developers/pricing",
+        "title": "xAI API pricing",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok token and context-tier pricing reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19"
+  },
+  {
+    "id": "deepseek-v4-flash",
+    "organizationId": "deepseek",
+    "name": "DeepSeek V4 Flash",
+    "family": "DeepSeek V4",
+    "status": "active",
+    "releaseDate": "2026-04-24",
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1000000,
+    "maxOutputTokens": 384000,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": null,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://api-docs.deepseek.com/quick_start/pricing",
+        "title": "DeepSeek API models and pricing",
+        "publisher": "DeepSeek",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02"
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "deepseek-v4-pro",
+    "organizationId": "deepseek",
+    "name": "DeepSeek V4 Pro",
+    "family": "DeepSeek V4",
+    "status": "active",
+    "releaseDate": "2026-04-24",
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1000000,
+    "maxOutputTokens": 384000,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": null,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://api-docs.deepseek.com/quick_start/pricing",
+        "title": "DeepSeek API models and pricing",
+        "publisher": "DeepSeek",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-08-02"
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "llama-3-1-8b",
+    "organizationId": "meta",
+    "name": "Llama 3.1 8B",
+    "family": "Llama 3.1",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 131072,
+    "maxOutputTokens": 131072,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": null,
+      "structuredOutputs": null,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19"
+  },
+  {
+    "id": "llama-3-3-70b",
+    "organizationId": "meta",
+    "name": "Llama 3.3 70B",
+    "family": "Llama 3.3",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 131072,
+    "maxOutputTokens": 32768,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": null,
+      "structuredOutputs": null,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19"
+  },
+  {
+    "id": "gpt-oss-120b",
+    "organizationId": "openai",
+    "name": "GPT OSS 120B",
+    "family": "GPT OSS",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 131072,
+    "maxOutputTokens": 65536,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "gpt-oss-20b",
+    "organizationId": "openai",
+    "name": "GPT OSS 20B",
+    "family": "GPT OSS",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 131072,
+    "maxOutputTokens": 65536,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "whisper-large-v3",
+    "organizationId": "openai",
+    "name": "Whisper Large V3",
+    "family": "Whisper",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": null,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": false,
+      "functionCalling": null,
+      "structuredOutputs": null,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "whisper-large-v3-turbo",
+    "organizationId": "openai",
+    "name": "Whisper Large V3 Turbo",
+    "family": "Whisper",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": null,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": false,
+      "functionCalling": null,
+      "structuredOutputs": null,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "qwen-3-7-max",
+    "organizationId": "qwen",
+    "name": "Qwen3.7 Max",
+    "family": "Qwen3.7",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": null,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": null,
+      "structuredOutputs": null,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19"
+  },
+  {
+    "id": "qwen-3-5-397b",
+    "organizationId": "qwen",
+    "name": "Qwen3.5 397B A17B",
+    "family": "Qwen3.5",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 262144,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "qwen-3-6-plus",
+    "organizationId": "qwen",
+    "name": "Qwen3.6 Plus",
+    "family": "Qwen3.6",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 1000000,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": null,
+      "structuredOutputs": null,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-08-02"
+  },
+  {
+    "id": "qwen-3-5-9b",
+    "organizationId": "qwen",
+    "name": "Qwen3.5 9B",
+    "family": "Qwen3.5",
+    "status": "active",
+    "releaseDate": null,
+    "knowledgeCutoff": null,
+    "contextWindowTokens": 262144,
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": null,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": null,
+      "batchApi": true,
+      "fineTuning": null,
+      "embeddings": false,
+      "realtime": null,
+      "webSearch": null,
+      "computerUse": null
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-19"
+  },
+  {
+    "id": "gpt-6-sol",
+    "organizationId": "openai",
+    "name": "GPT-6 Sol",
+    "family": "GPT-6",
+    "status": "active",
+    "contextWindowTokens": 1050000,
+    "contextWindowScope": "combined",
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": false,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ],
+      "capabilities.promptCaching": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://developers.openai.com/api/docs/models",
+        "title": "OpenAI API model catalog",
+        "publisher": "OpenAI",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "title": "OpenAI API pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "GPT-6 short/long context and cache rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "gpt-6-luna",
+    "organizationId": "openai",
+    "name": "GPT-6 Luna",
+    "family": "GPT-6",
+    "status": "active",
+    "contextWindowTokens": 1050000,
+    "contextWindowScope": "combined",
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "fineTuning": false,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ],
+      "capabilities.promptCaching": [
+        {
+          "url": "https://developers.openai.com/api/docs/models",
+          "title": "OpenAI API model catalog",
+          "publisher": "OpenAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://developers.openai.com/api/docs/models",
+        "title": "OpenAI API model catalog",
+        "publisher": "OpenAI",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "title": "OpenAI API pricing",
+        "publisher": "OpenAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "GPT-6 short/long context and cache rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "claude-fable-5-1",
+    "organizationId": "anthropic",
+    "name": "Claude Fable 5.1",
+    "family": "Claude Fable",
+    "status": "active",
+    "contextWindowTokens": 1000000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+          "title": "Claude Fable 5.1 model overview",
+          "publisher": "Anthropic",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Fable 5.1 API ID, context, output, cache and availability reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+          "title": "Claude Fable 5.1 model overview",
+          "publisher": "Anthropic",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Fable 5.1 API ID, context, output, cache and availability reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+          "title": "Claude Fable 5.1 model overview",
+          "publisher": "Anthropic",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Fable 5.1 API ID, context, output, cache and availability reviewed."
+        }
+      ],
+      "capabilities.promptCaching": [
+        {
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "title": "Claude API pricing",
+          "publisher": "Anthropic",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model prices, cache and batch rates reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+        "title": "Claude Fable 5.1 model overview",
+        "publisher": "Anthropic",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Fable 5.1 API ID, context, output, cache and availability reviewed."
+      },
+      {
+        "url": "https://platform.claude.com/docs/en/models/overview",
+        "title": "Claude models overview",
+        "publisher": "Anthropic",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current Claude model IDs, limits and availability reviewed."
+      },
+      {
+        "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "title": "Claude API pricing",
+        "publisher": "Anthropic",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model prices, cache and batch rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "claude-opus-5-5",
+    "organizationId": "anthropic",
+    "name": "Claude Opus 5.5",
+    "family": "Claude Opus",
+    "status": "active",
+    "contextWindowTokens": 1000000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5",
+          "title": "Claude Opus 5.5 release and pricing",
+          "publisher": "Anthropic",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Opus 5.5 rates, limits and cache prices reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5",
+          "title": "Claude Opus 5.5 release and pricing",
+          "publisher": "Anthropic",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Opus 5.5 rates, limits and cache prices reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5",
+          "title": "Claude Opus 5.5 release and pricing",
+          "publisher": "Anthropic",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Opus 5.5 rates, limits and cache prices reviewed."
+        }
+      ],
+      "capabilities.promptCaching": [
+        {
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "title": "Claude API pricing",
+          "publisher": "Anthropic",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model prices, cache and batch rates reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5",
+        "title": "Claude Opus 5.5 release and pricing",
+        "publisher": "Anthropic",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Opus 5.5 rates, limits and cache prices reviewed."
+      },
+      {
+        "url": "https://platform.claude.com/docs/en/models/overview",
+        "title": "Claude models overview",
+        "publisher": "Anthropic",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current Claude model IDs, limits and availability reviewed."
+      },
+      {
+        "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "title": "Claude API pricing",
+        "publisher": "Anthropic",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model prices, cache and batch rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "gemini-3-8-flash",
+    "organizationId": "google",
+    "name": "Gemini 3.8 Flash",
+    "family": "Gemini 3 Flash",
+    "status": "active",
+    "contextWindowTokens": 1048576,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 65536,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/models",
+        "title": "Gemini API models",
+        "publisher": "Google",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+      },
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "gemini-3-7-flash",
+    "organizationId": "google",
+    "name": "Gemini 3.7 Flash",
+    "family": "Gemini 3 Flash",
+    "status": "active",
+    "contextWindowTokens": 1048576,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 65536,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/models",
+        "title": "Gemini API models",
+        "publisher": "Google",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+      },
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "gemini-3-6-flash",
+    "organizationId": "google",
+    "name": "Gemini 3.6 Flash",
+    "family": "Gemini 3 Flash",
+    "status": "active",
+    "contextWindowTokens": 1048576,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 65536,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true,
+      "webSearch": true,
+      "computerUse": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/models",
+        "title": "Gemini API models",
+        "publisher": "Google",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+      },
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "gemini-3-5-flash",
+    "organizationId": "google",
+    "name": "Gemini 3.5 Flash",
+    "family": "Gemini 3 Flash",
+    "status": "active",
+    "contextWindowTokens": 1048576,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 65536,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/whats-new-gemini-3.5",
+          "title": "Gemini 3.5 Flash release notes",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Gemini 3.5 Flash model ID, GA status and limits reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/models",
+        "title": "Gemini API models",
+        "publisher": "Google",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+      },
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      },
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/whats-new-gemini-3.5",
+        "title": "Gemini 3.5 Flash release notes",
+        "publisher": "Google",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Gemini 3.5 Flash model ID, GA status and limits reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "gemini-3-5-flash-lite",
+    "organizationId": "google",
+    "name": "Gemini 3.5 Flash-Lite",
+    "family": "Gemini 3 Flash-Lite",
+    "status": "active",
+    "contextWindowTokens": 1048576,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 65536,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/models",
+        "title": "Gemini API models",
+        "publisher": "Google",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+      },
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "gemini-3-1-flash-lite",
+    "organizationId": "google",
+    "name": "Gemini 3.1 Flash-Lite",
+    "family": "Gemini 3 Flash-Lite",
+    "status": "active",
+    "contextWindowTokens": 1048576,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 65536,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "title": "Gemini API models",
+          "publisher": "Google",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/models",
+        "title": "Gemini API models",
+        "publisher": "Google",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+      },
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "title": "Gemini Developer API pricing",
+        "publisher": "Google",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Introductory, standard, cache and batch token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "grok-4-7",
+    "organizationId": "xai",
+    "name": "Grok 4.7",
+    "family": "Grok 4",
+    "status": "active",
+    "contextWindowTokens": 500000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "batchApi": false
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.x.ai/developers/models/grok-4.7",
+          "title": "Grok 4.7 model page",
+          "publisher": "xAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Grok 4.7 API ID, context, modalities and features reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://docs.x.ai/developers/release-notes",
+          "title": "xAI API release notes",
+          "publisher": "xAI",
+          "sourceType": "official-release",
+          "checkedAt": "2026-09-27",
+          "notes": "Grok 4.7 launch, threshold and pricing reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://docs.x.ai/developers/models/grok-4.7",
+          "title": "Grok 4.7 model page",
+          "publisher": "xAI",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Grok 4.7 API ID, context, modalities and features reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.x.ai/developers/models/grok-4.7",
+        "title": "Grok 4.7 model page",
+        "publisher": "xAI",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok 4.7 API ID, context, modalities and features reviewed."
+      },
+      {
+        "url": "https://docs.x.ai/developers/release-notes",
+        "title": "xAI API release notes",
+        "publisher": "xAI",
+        "sourceType": "official-release",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok 4.7 launch, threshold and pricing reviewed."
+      },
+      {
+        "url": "https://docs.x.ai/developers/pricing",
+        "title": "xAI API pricing",
+        "publisher": "xAI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Grok token and context-tier pricing reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "deepseek-v4-1-flash",
+    "organizationId": "deepseek",
+    "name": "DeepSeek V4.1 Flash",
+    "family": "DeepSeek V4.1",
+    "status": "active",
+    "contextWindowTokens": 1048576,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 393216,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "promptCaching": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "title": "DeepSeek current models and time-of-use pricing",
+          "publisher": "DeepSeek",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "V4.1 Flash alias, retired IDs and peak/off-peak rates reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "title": "DeepSeek current models and time-of-use pricing",
+          "publisher": "DeepSeek",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "V4.1 Flash alias, retired IDs and peak/off-peak rates reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "title": "DeepSeek current models and time-of-use pricing",
+          "publisher": "DeepSeek",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "V4.1 Flash alias, retired IDs and peak/off-peak rates reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "title": "DeepSeek current models and time-of-use pricing",
+        "publisher": "DeepSeek",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "V4.1 Flash alias, retired IDs and peak/off-peak rates reviewed."
+      },
+      {
+        "url": "https://api-docs.deepseek.com/updates/",
+        "title": "DeepSeek API release notes",
+        "publisher": "DeepSeek",
+        "sourceType": "official-release",
+        "checkedAt": "2026-09-27",
+        "notes": "Current model aliases and service notices reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "zai-glm-5-3",
+    "organizationId": "zai",
+    "name": "Z.ai GLM 5.3",
+    "family": "GLM 5",
+    "status": "preview",
+    "contextWindowTokens": 1000000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.mistral.ai/models/zai-glm-5-3",
+          "title": "Z.ai GLM 5.3 on Mistral",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Third-party preview status, context, output, cache and rates reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://docs.mistral.ai/models/zai-glm-5-3",
+          "title": "Z.ai GLM 5.3 on Mistral",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Third-party preview status, context, output, cache and rates reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://docs.mistral.ai/models/zai-glm-5-3",
+          "title": "Z.ai GLM 5.3 on Mistral",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Third-party preview status, context, output, cache and rates reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/zai-glm-5-3",
+        "title": "Z.ai GLM 5.3 on Mistral",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Third-party preview status, context, output, cache and rates reviewed."
+      },
+      {
+        "url": "https://docs.mistral.ai/inference/pricing",
+        "title": "Mistral inference pricing",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Mistral API token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "zai-glm-5-2",
+    "organizationId": "zai",
+    "name": "Z.ai GLM 5.2",
+    "family": "GLM 5",
+    "status": "preview",
+    "contextWindowTokens": 1000000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 128000,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.mistral.ai/models/zai-glm-5-2",
+          "title": "Z.ai GLM 5.2 on Mistral",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Third-party preview status, context, output, cache and rates reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://docs.mistral.ai/models/zai-glm-5-2",
+          "title": "Z.ai GLM 5.2 on Mistral",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Third-party preview status, context, output, cache and rates reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://docs.mistral.ai/models/zai-glm-5-2",
+          "title": "Z.ai GLM 5.2 on Mistral",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Third-party preview status, context, output, cache and rates reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/zai-glm-5-2",
+        "title": "Z.ai GLM 5.2 on Mistral",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Third-party preview status, context, output, cache and rates reviewed."
+      },
+      {
+        "url": "https://docs.mistral.ai/inference/pricing",
+        "title": "Mistral inference pricing",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Mistral API token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "ministral-8b",
+    "organizationId": "mistral",
+    "name": "Ministral 3 8B",
+    "family": "Ministral 3",
+    "status": "active",
+    "contextWindowTokens": 256000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "functionCalling": true,
+      "structuredOutputs": true,
+      "promptCaching": true,
+      "batchApi": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.mistral.ai/models/ministral-3-8b-25-12",
+          "title": "Ministral 3 8B model card",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model ID, vision, context, features and token rates reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://docs.mistral.ai/models/ministral-3-8b-25-12",
+          "title": "Ministral 3 8B model card",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model ID, vision, context, features and token rates reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://docs.mistral.ai/models/ministral-3-8b-25-12",
+          "title": "Ministral 3 8B model card",
+          "publisher": "Mistral AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model ID, vision, context, features and token rates reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/ministral-3-8b-25-12",
+        "title": "Ministral 3 8B model card",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model ID, vision, context, features and token rates reviewed."
+      },
+      {
+        "url": "https://docs.mistral.ai/inference/pricing",
+        "title": "Mistral inference pricing",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Mistral API token rates reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "command-a-translate",
+    "organizationId": "cohere",
+    "name": "Command A Translate",
+    "family": "Command A",
+    "status": "active",
+    "contextWindowTokens": 8000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 8000,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {},
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.cohere.com/docs/command-a-translate",
+          "title": "Command A Translate model card",
+          "publisher": "Cohere",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Translate model ID, context and output limits reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://docs.cohere.com/docs/command-a-translate",
+          "title": "Command A Translate model card",
+          "publisher": "Cohere",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Translate model ID, context and output limits reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://docs.cohere.com/docs/command-a-translate",
+          "title": "Command A Translate model card",
+          "publisher": "Cohere",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Translate model ID, context and output limits reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.cohere.com/docs/command-a-translate",
+        "title": "Command A Translate model card",
+        "publisher": "Cohere",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Translate model ID, context and output limits reviewed."
+      },
+      {
+        "url": "https://docs.cohere.com/v2/docs/models",
+        "title": "Cohere model overview",
+        "publisher": "Cohere",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Command IDs, limits, statuses and modalities reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "command-a-reasoning",
+    "organizationId": "cohere",
+    "name": "Command A Reasoning",
+    "family": "Command A",
+    "status": "active",
+    "contextWindowTokens": 256000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 32000,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.cohere.com/v1/docs/command-a-reasoning",
+          "title": "Command A Reasoning model card",
+          "publisher": "Cohere",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Reasoning model ID, context, output and features reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://docs.cohere.com/v1/docs/command-a-reasoning",
+          "title": "Command A Reasoning model card",
+          "publisher": "Cohere",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Reasoning model ID, context, output and features reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://docs.cohere.com/v1/docs/command-a-reasoning",
+          "title": "Command A Reasoning model card",
+          "publisher": "Cohere",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Reasoning model ID, context, output and features reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.cohere.com/v1/docs/command-a-reasoning",
+        "title": "Command A Reasoning model card",
+        "publisher": "Cohere",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Reasoning model ID, context, output and features reviewed."
+      },
+      {
+        "url": "https://docs.cohere.com/v2/docs/models",
+        "title": "Cohere model overview",
+        "publisher": "Cohere",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Command IDs, limits, statuses and modalities reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "command-a-vision",
+    "organizationId": "cohere",
+    "name": "Command A Vision",
+    "family": "Command A",
+    "status": "active",
+    "contextWindowTokens": 128000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 8000,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": false,
+      "structuredOutputs": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.cohere.com/docs/command-a-vision",
+          "title": "Command A Vision model card",
+          "publisher": "Cohere",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Vision model ID, image input, limits and production access reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://docs.cohere.com/docs/command-a-vision",
+          "title": "Command A Vision model card",
+          "publisher": "Cohere",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Vision model ID, image input, limits and production access reviewed."
+        }
+      ],
+      "modalities.input": [
+        {
+          "url": "https://docs.cohere.com/docs/command-a-vision",
+          "title": "Command A Vision model card",
+          "publisher": "Cohere",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Vision model ID, image input, limits and production access reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.cohere.com/docs/command-a-vision",
+        "title": "Command A Vision model card",
+        "publisher": "Cohere",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Vision model ID, image input, limits and production access reviewed."
+      },
+      {
+        "url": "https://docs.cohere.com/v2/docs/models",
+        "title": "Cohere model overview",
+        "publisher": "Cohere",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Command IDs, limits, statuses and modalities reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "qwen-3-8-27b",
+    "organizationId": "qwen",
+    "name": "Qwen3.8 27B",
+    "family": "Qwen3.8",
+    "status": "preview",
+    "contextWindowTokens": 131072,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 16384,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true,
+      "functionCalling": true,
+      "structuredOutputs": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://console.groq.com/docs/model/qwen/qwen3.8-27b",
+          "title": "Groq Qwen 3.8 27B model pricing",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Context, output limit, modalities and pricing reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://console.groq.com/docs/model/qwen/qwen3.8-27b",
+          "title": "Groq Qwen 3.8 27B model pricing",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Context, output limit, modalities and pricing reviewed."
+        }
+      ],
+      "capabilities.reasoning": [
+        {
+          "url": "https://console.groq.com/docs/model/qwen/qwen3.8-27b",
+          "title": "Groq Qwen 3.8 27B model pricing",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Context, output limit, modalities and pricing reviewed."
+        }
+      ],
+      "modalities": [
+        {
+          "url": "https://console.groq.com/docs/model/qwen/qwen3.8-27b",
+          "title": "Groq Qwen 3.8 27B model pricing",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Context, output limit, modalities and pricing reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://console.groq.com/docs/model/qwen/qwen3.8-27b",
+          "title": "Groq Qwen 3.8 27B model pricing",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Context, output limit, modalities and pricing reviewed."
+        }
+      ],
+      "capabilities.structuredOutputs": [
+        {
+          "url": "https://console.groq.com/docs/model/qwen/qwen3.8-27b",
+          "title": "Groq Qwen 3.8 27B model pricing",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Context, output limit, modalities and pricing reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      },
+      {
+        "url": "https://console.groq.com/docs/model/qwen/qwen3.8-27b",
+        "title": "Groq Qwen 3.8 27B model pricing",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Qwen 3.8 27B API ID and token prices reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "llama-prompt-guard-2-22m",
+    "organizationId": "meta",
+    "name": "Llama Prompt Guard 2 22M",
+    "family": "Llama Prompt Guard",
+    "status": "active",
+    "contextWindowTokens": 512,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 512,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {},
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "llama-prompt-guard-2-86m",
+    "organizationId": "meta",
+    "name": "Llama Prompt Guard 2 86M",
+    "family": "Llama Prompt Guard",
+    "status": "active",
+    "contextWindowTokens": 512,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 512,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {},
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "gpt-oss-safeguard-20b",
+    "organizationId": "openai",
+    "name": "GPT OSS Safeguard 20B",
+    "family": "GPT OSS Safeguard",
+    "status": "active",
+    "contextWindowTokens": 131072,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 65536,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ],
+      "capabilities.reasoning": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "minimax-m2-7",
+    "organizationId": "minimax",
+    "name": "MiniMax M2.7",
+    "family": "MiniMax M",
+    "status": "active",
+    "contextWindowTokens": 196608,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 131072,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "thinking-machines-inkling",
+    "organizationId": "thinking-machines",
+    "name": "Inkling",
+    "family": "Inkling",
+    "status": "active",
+    "contextWindowTokens": 524288,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "functionCalling": true,
+      "structuredOutputs": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ],
+      "capabilities.structuredOutputs": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "minimax-m3",
+    "organizationId": "minimax",
+    "name": "MiniMax M3",
+    "family": "MiniMax M3",
+    "status": "active",
+    "contextWindowTokens": 524288,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "functionCalling": true,
+      "structuredOutputs": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ],
+      "capabilities.structuredOutputs": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "qwen-3-8-2-4t-a95b",
+    "organizationId": "qwen",
+    "name": "Qwen3.8 2.4T A95B",
+    "family": "Qwen3.8 2.4T",
+    "status": "active",
+    "contextWindowTokens": null,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {},
+    "evidenceByField": {},
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "kimi-k3",
+    "organizationId": "moonshot",
+    "name": "Kimi K3",
+    "family": "Kimi K3",
+    "status": "active",
+    "contextWindowTokens": 1048576,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "functionCalling": true,
+      "structuredOutputs": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ],
+      "capabilities.structuredOutputs": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "zai-glm-5-3-flash",
+    "organizationId": "zai",
+    "name": "Z.ai GLM 5.3 Flash",
+    "family": "Z.ai GLM",
+    "status": "active",
+    "contextWindowTokens": 1048575,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "functionCalling": true,
+      "structuredOutputs": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ],
+      "capabilities.functionCalling": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ],
+      "capabilities.structuredOutputs": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.mistral.ai/models/zai-glm-5-3",
+        "title": "Z.ai GLM 5.3 on Mistral",
+        "publisher": "Mistral AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Third-party preview status, context, output, cache and rates reviewed."
+      },
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "qwen-3-7-plus",
+    "organizationId": "qwen",
+    "name": "Qwen3.7 Plus",
+    "family": "Qwen3.7 Plus",
+    "status": "active",
+    "contextWindowTokens": 1000000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {},
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "ternary-bonsai-27b",
+    "organizationId": "prism-ml",
+    "name": "Ternary Bonsai 27B",
+    "family": "Ternary Bonsai",
+    "status": "preview",
+    "contextWindowTokens": 262144,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {},
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "muse-glimmer-30b",
+    "organizationId": "meta-models",
+    "name": "Muse Glimmer 30B",
+    "family": "Muse Glimmer",
+    "status": "active",
+    "contextWindowTokens": 131072,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {},
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "qwen-3-8-flash",
+    "organizationId": "qwen",
+    "name": "Qwen3.8 Flash",
+    "family": "Qwen3.8 Flash",
+    "status": "active",
+    "contextWindowTokens": 1000000,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {},
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "tev1-4b-experimental",
+    "organizationId": "together",
+    "name": "Tev1 4B Experimental",
+    "family": "Tev1 4B",
+    "status": "preview",
+    "contextWindowTokens": 32768,
+    "contextWindowScope": "input",
+    "maxOutputTokens": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {},
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://docs.together.ai/docs/serverless/models",
+          "title": "Together AI serverless model catalog",
+          "publisher": "Together AI",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://docs.together.ai/docs/serverless/models",
+        "title": "Together AI serverless model catalog",
+        "publisher": "Together AI",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  },
+  {
+    "id": "qwen-3-6-27b",
+    "organizationId": "qwen",
+    "name": "Qwen3.6 27B",
+    "family": "Qwen3.6",
+    "status": "retired",
+    "contextWindowTokens": 131072,
+    "contextWindowScope": "input",
+    "maxOutputTokens": 16384,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": {
+      "reasoning": true
+    },
+    "evidenceByField": {
+      "contextWindowTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ],
+      "maxOutputTokens": [
+        {
+          "url": "https://console.groq.com/docs/models",
+          "title": "GroqCloud supported models",
+          "publisher": "Groq",
+          "sourceType": "official-pricing",
+          "checkedAt": "2026-09-27",
+          "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+        }
+      ],
+      "modalities": [
+        {
+          "url": "https://console.groq.com/docs/model/qwen/qwen3.6-27b",
+          "title": "Groq Qwen 3.6 27B model pricing",
+          "publisher": "Groq",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Image and text input confirmed in the model card."
+        }
+      ],
+      "capabilities.reasoning": [
+        {
+          "url": "https://console.groq.com/docs/reasoning",
+          "title": "Groq reasoning guide",
+          "publisher": "Groq",
+          "sourceType": "official-documentation",
+          "checkedAt": "2026-09-27",
+          "notes": "Reasoning controls and supported model IDs reviewed for Qwen 3.6 27B."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "https://console.groq.com/docs/models",
+        "title": "GroqCloud supported models",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+      },
+      {
+        "url": "https://console.groq.com/docs/reasoning",
+        "title": "Groq reasoning guide",
+        "publisher": "Groq",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Reasoning controls and supported model IDs reviewed for Qwen 3.6 27B."
+      },
+      {
+        "url": "https://console.groq.com/docs/model/qwen/qwen3.6-27b",
+        "title": "Groq Qwen 3.6 27B model pricing",
+        "publisher": "Groq",
+        "sourceType": "official-pricing",
+        "checkedAt": "2026-09-27",
+        "notes": "Qwen 3.6 27B API ID and token prices reviewed."
+      },
+      {
+        "url": "https://console.groq.com/docs/deprecations",
+        "title": "Groq model deprecation history",
+        "publisher": "Groq",
+        "sourceType": "official-documentation",
+        "checkedAt": "2026-09-27",
+        "notes": "Qwen 3.6 shutdown date and Qwen 3.8 replacement reviewed."
+      }
+    ],
+    "lastVerifiedAt": "2026-09-27"
+  }
 ]

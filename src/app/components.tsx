@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Check, ExternalLink, Search } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { type CatalogHealth } from '../lib/catalog-health';
-import { formatCurrency, formatDate, getStaleness, stalenessLabel } from '../lib/format';
+import { formatDate, formatUnitPrice, getStaleness, stalenessLabel } from '../lib/format';
 import type { OfferView } from '../types';
 import { GITHUB_URL } from './config';
 
@@ -11,11 +11,13 @@ export function ShellNavLink({
   icon,
   label,
   end,
+  count,
 }: {
   to: string;
   icon: ReactNode;
   label: string;
   end?: boolean;
+  count?: number;
 }) {
   return (
     <NavLink
@@ -25,7 +27,11 @@ export function ShellNavLink({
     >
       {icon}
       <span>{label}</span>
-      {label === 'Model explorer' && <span className="nav-count">40+</span>}
+      {count !== undefined && (
+        <span className="nav-count" aria-label={`${count} currently active offers`}>
+          {count}
+        </span>
+      )}
     </NavLink>
   );
 }
@@ -125,15 +131,32 @@ export function StalenessBadge({ value }: { value: string | null | undefined }) 
 export function Price({
   value,
   suffix = '',
+  priceStatus,
+  historical = false,
+  unavailableLabel: explicitUnavailableLabel,
 }: {
   value: number | null | undefined;
   suffix?: string;
+  priceStatus?: 'public' | 'contact-sales' | 'not-published' | 'unit-unsupported';
+  historical?: boolean;
+  unavailableLabel?: string;
 }) {
+  const unavailableLabel =
+    priceStatus === 'contact-sales'
+      ? 'Contact sales'
+      : priceStatus === 'not-published'
+        ? 'Not published'
+        : priceStatus === 'unit-unsupported'
+          ? 'Unit not supported'
+          : 'Not verified';
   return (
-    <span className={value === null || value === undefined ? 'unknown-value' : ''}>
+    <span
+      className={`${value === null || value === undefined ? 'unknown-value' : ''}${historical ? ' historical-price' : ''}`}
+      title={historical ? 'Historical price; this offer is retired.' : undefined}
+    >
       {value === null || value === undefined
-        ? 'Not verified'
-        : `${formatCurrency(value, value < 0.01 ? 4 : 2)}${suffix}`}
+        ? (explicitUnavailableLabel ?? unavailableLabel)
+        : `${historical ? 'Historical · ' : ''}${formatUnitPrice(value)}${suffix}`}
     </span>
   );
 }
@@ -188,7 +211,9 @@ export function CatalogHealthPanel({ health }: { health: CatalogHealth }) {
           <span className="eyebrow">CATALOG HEALTH</span>
           <h2 id="catalog-health-title">Coverage you can inspect.</h2>
           <p>
-            Percentages describe known fields in the reviewed public snapshot, not provider quality.
+            Percentages describe listed fields and published price evidence in the dated public
+            snapshot. A listed capability is not a claim that every capability was independently
+            re-tested.
           </p>
         </div>
         <a
@@ -202,26 +227,34 @@ export function CatalogHealthPanel({ health }: { health: CatalogHealth }) {
       </div>
       <div className="catalog-health-grid">
         <div>
-          <strong>{health.coverage.offersWithStandardInputPrice}%</strong>
-          <span>Offers with input price</span>
+          <strong>{health.coverage.offersWithPublicStandardPrices}%</strong>
+          <span>Offers with public input and output rates</span>
         </div>
         <div>
-          <strong>{health.coverage.offersWithStandardOutputPrice}%</strong>
-          <span>Offers with output price</span>
+          <strong>{health.coverage.offersWithPriceSources}%</strong>
+          <span>Offers with a dated source for standard pricing</span>
         </div>
         <div>
           <strong>{health.coverage.modelsWithContextWindow}%</strong>
           <span>Models with context</span>
         </div>
         <div>
-          <strong>{health.coverage.modelsWithVerifiedCapability}%</strong>
-          <span>Models with a verified capability</span>
+          <strong>{health.coverage.modelsWithMaxOutput}%</strong>
+          <span>Models with a published output limit</span>
+        </div>
+        <div>
+          <strong>{health.coverage.modelsWithCapabilitiesListed}%</strong>
+          <span>Models with at least one capability listed</span>
+        </div>
+        <div>
+          <strong>{health.coverage.modelsWithFieldEvidence}%</strong>
+          <span>Models with field-to-source evidence maps</span>
         </div>
       </div>
       <div className="catalog-health-footer">
         <span>
-          {health.freshness.freshSources}/{health.totals.sources} sources fresh as of{' '}
-          {formatDate(health.dataAsOf)}
+          Source snapshot as of {formatDate(health.dataAsOf)}
+          {health.snapshotAgeDays !== null && ` · ${health.snapshotAgeDays} days old`}
         </span>
         <Badge tone={health.benchmarkStatus === 'empty' ? 'gold' : 'mint'}>
           {health.benchmarkStatus === 'empty'

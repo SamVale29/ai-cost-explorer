@@ -18,11 +18,14 @@ export type CatalogHealth = {
   coverage: {
     offersWithStandardInputPrice: number;
     offersWithStandardOutputPrice: number;
-    offersWithSources: number;
+    offersWithPublicStandardPrices: number;
+    offersWithPriceSources: number;
     modelsWithContextWindow: number;
     modelsWithMaxOutput: number;
-    modelsWithVerifiedCapability: number;
+    modelsWithCapabilitiesListed: number;
+    modelsWithFieldEvidence: number;
   };
+  snapshotAgeDays: number | null;
   freshness: {
     freshSources: number;
     agingSources: number;
@@ -45,15 +48,18 @@ function freshness(
   const asOf = Date.parse(dataAsOf);
   if (Number.isNaN(date) || Number.isNaN(asOf)) return 'unknown';
   const days = Math.max(0, Math.floor((asOf - date) / 86_400_000));
+  if (date > asOf + 86_400_000) return 'unknown';
   if (days <= 30) return 'fresh';
   if (days <= 60) return 'aging';
   return 'stale';
 }
 
-export function calculateCatalogHealth(catalog: Catalog): CatalogHealth {
+export function calculateCatalogHealth(catalog: Catalog, now = new Date()): CatalogHealth {
   const asOf = new Date(`${catalog.dataAsOf}T23:59:59.999Z`);
   const standardRules = catalog.offers.map((offer) =>
-    choosePricingRule(offer.pricing, 'standard', 0, asOf),
+    offer.availability.status === 'retired'
+      ? null
+      : choosePricingRule(offer.pricing, 'standard', 0, asOf),
   );
   const sourcesByFreshness = catalog.sources.reduce(
     (counts, source) => {
@@ -63,9 +69,13 @@ export function calculateCatalogHealth(catalog: Catalog): CatalogHealth {
     },
     { freshSources: 0, agingSources: 0, staleSources: 0, unknownSources: 0 },
   );
-  const modelsWithVerifiedCapability = catalog.models.filter((model) =>
+  const modelsWithCapabilitiesListed = catalog.models.filter((model) =>
     Object.values(model.capabilities).some((value) => value !== null && value !== undefined),
   ).length;
+  const snapshotTime = Date.parse(`${catalog.dataAsOf}T23:59:59.999Z`);
+  const snapshotAgeDays = Number.isNaN(snapshotTime)
+    ? null
+    : Math.floor((now.getTime() - snapshotTime) / 86_400_000);
 
   return {
     schemaVersion: 'v1',
@@ -93,8 +103,12 @@ export function calculateCatalogHealth(catalog: Catalog): CatalogHealth {
         ).length,
         catalog.offers.length,
       ),
-      offersWithSources: countPercent(
-        catalog.offers.filter((offer) => offer.sources.length > 0).length,
+      offersWithPublicStandardPrices: countPercent(
+        standardRules.filter((rule) => rule?.inputPrice != null && rule.outputPrice != null).length,
+        catalog.offers.length,
+      ),
+      offersWithPriceSources: countPercent(
+        standardRules.filter((rule) => (rule?.sources.length ?? 0) > 0).length,
         catalog.offers.length,
       ),
       modelsWithContextWindow: countPercent(
@@ -109,11 +123,17 @@ export function calculateCatalogHealth(catalog: Catalog): CatalogHealth {
         ).length,
         catalog.models.length,
       ),
-      modelsWithVerifiedCapability: countPercent(
-        modelsWithVerifiedCapability,
+      modelsWithCapabilitiesListed: countPercent(
+        modelsWithCapabilitiesListed,
+        catalog.models.length,
+      ),
+      modelsWithFieldEvidence: countPercent(
+        catalog.models.filter((model) => Object.keys(model.evidenceByField ?? {}).length > 0)
+          .length,
         catalog.models.length,
       ),
     },
+    snapshotAgeDays: snapshotAgeDays !== null && snapshotAgeDays < 0 ? null : snapshotAgeDays,
     freshness: sourcesByFreshness,
     benchmarkStatus: catalog.benchmarks.length === 0 ? 'empty' : 'populated',
   };

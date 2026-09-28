@@ -82,4 +82,38 @@ describe('catalog data validation', () => {
       'offer example-offer: missing provider missing-provider',
     ]);
   });
+
+  it('rejects normalized provider and API ID collisions', () => {
+    const invalid = dataSet();
+    const duplicate = {
+      ...invalid.offers[0],
+      id: 'example-offer-duplicate',
+      apiModelId: ' EXAMPLE-MODEL ',
+    };
+    invalid.offers.push(duplicate);
+
+    expect(validateDataSet(invalid)).toContain(
+      'offer example-offer-duplicate: API model identity example:example-model: already belongs to example-offer; add an explicit apiVariant only when the provider documents a commercial variant',
+    );
+  });
+
+  it('allows an API ID collision only when the commercial variant is explicit', () => {
+    const invalid = dataSet();
+    const duplicate = Object.assign(
+      { ...invalid.offers[0], id: 'example-offer-variant' },
+      { apiVariant: 'regional-commercial-plan' },
+    );
+    invalid.offers.push(duplicate as (typeof invalid.offers)[number]);
+
+    expect(validateDataSet(invalid)).toEqual([]);
+  });
+
+  it('requires a retired offer replacement to resolve to a catalog offer', () => {
+    const invalid = dataSet();
+    Object.assign(invalid.offers[0].availability, { replacementOfferId: 'missing-offer' });
+
+    expect(validateDataSet(invalid)).toContain(
+      'offer example-offer: missing replacement offer missing-offer',
+    );
+  });
 });

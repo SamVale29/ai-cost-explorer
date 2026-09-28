@@ -1,4 +1,4 @@
-import type { OfferView } from '../types';
+import { offerCapabilities, type OfferView } from '../types';
 import { standardRule } from './pricing';
 
 export type ParetoPoint = {
@@ -43,33 +43,33 @@ export function scoreOffers(
       const contextScore = offer.model.contextWindowTokens
         ? offer.model.contextWindowTokens / maxContext
         : null;
+      const capabilities = offerCapabilities(offer);
       const resourceValues = [
-        offer.model.capabilities.functionCalling,
-        offer.model.capabilities.structuredOutputs,
-        offer.model.capabilities.promptCaching,
+        capabilities.functionCalling,
+        capabilities.structuredOutputs,
+        capabilities.promptCaching,
       ];
       const knownResourceValues = resourceValues.filter(
         (value): value is boolean => value !== null && value !== undefined,
       );
       const resourceScore =
-        knownResourceValues.length === 0
+        knownResourceValues.length !== resourceValues.length
           ? null
           : knownResourceValues.filter(Boolean).length / knownResourceValues.length;
-      const knownScores = [costScore, contextScore, resourceScore].filter(
-        (value): value is number => value !== null,
-      );
-      const weightedScores: Array<[number, number]> = [];
-      if (costScore !== null && weights.cost > 0) weightedScores.push([costScore, weights.cost]);
-      if (contextScore !== null && weights.context > 0)
-        weightedScores.push([contextScore, weights.context]);
-      if (resourceScore !== null && weights.resources > 0)
-        weightedScores.push([resourceScore, weights.resources]);
-      const denominator = weightedScores.reduce((sum, [, weight]) => sum + weight, 0);
+      const selectedScores: Array<[number | null, number]> = [];
+      if (weights.cost > 0) selectedScores.push([costScore, weights.cost]);
+      if (weights.context > 0) selectedScores.push([contextScore, weights.context]);
+      if (weights.resources > 0) selectedScores.push([resourceScore, weights.resources]);
+      const denominator = selectedScores.reduce((sum, [, weight]) => sum + weight, 0);
       const score =
-        denominator === 0
+        denominator === 0 || selectedScores.some(([value]) => value === null)
           ? null
-          : weightedScores.reduce((sum, [value, weight]) => sum + value * weight, 0) / denominator;
-      return { offer, score, knownFields: knownScores.length };
+          : selectedScores.reduce((sum, [value, weight]) => sum + (value ?? 0) * weight, 0) /
+            denominator;
+      const knownFields = [costScore, contextScore, resourceScore].filter(
+        (value): value is number => value !== null,
+      ).length;
+      return { offer, score, knownFields };
     })
     .sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
 }

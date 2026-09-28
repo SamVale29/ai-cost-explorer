@@ -27,7 +27,7 @@
 
 .catalog-health-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   gap: 8px;
   margin-top: 19px;
 }

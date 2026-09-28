@@ -1,31 +1,472 @@
 [
-{"url":"https://developers.openai.com/api/docs/pricing","title":"OpenAI API pricing","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Short and long context prices for the GPT-5.6 family, including cache writes."},
-{"url":"https://developers.openai.com/api/docs/models/gpt-5.6-luna","title":"OpenAI GPT-5.6 Luna model pricing","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-09-23","notes":"Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."},
-{"url":"https://developers.openai.com/api/docs/models/gpt-4.1","title":"GPT-4.1 model card","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-08-02","notes":"Input, cached input, output, context and tool support."},
-{"url":"https://platform.claude.com/docs/en/about-claude/pricing","title":"Claude API pricing","publisher":"Anthropic","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"First-party API pricing, cache writes, cache hits and batch pricing; Sonnet 5 remains at its introductory rate."},
-{"url":"https://ai.google.dev/gemini-api/docs/pricing","title":"Gemini Developer API pricing","publisher":"Google","sourceType":"official-pricing","checkedAt":"2026-08-06","notes":"Current paid-tier, batch, flex and priority prices."},
-{"url":"https://docs.mistral.ai/models/model-cards/mistral-small-4-0-26-03","title":"Mistral Small 4 model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-06","notes":"Model card with context, price and capabilities."},
-{"url":"https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04","title":"Mistral Medium 3.5 model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-06","notes":"Model card with context, price and capabilities."},
-{"url":"https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12","title":"Mistral Large 3 model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02","notes":"Model card with context, price and capabilities."},
-{"url":"https://docs.mistral.ai/models/ministral-3-3b-25-12","title":"Ministral 3 3B model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02","notes":"Model card with context, price and capabilities."},
-{"url":"https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12","title":"Ministral 3 14B model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02","notes":"Model card with context, price and capabilities."},
-{"url":"https://docs.mistral.ai/models/model-cards/codestral-25-08","title":"Codestral model card","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-08-02","notes":"Code model card with context and token prices."},
-{"url":"https://docs.cohere.com/docs/command-a","title":"Command A model card","publisher":"Cohere","sourceType":"official-pricing","checkedAt":"2026-08-06","notes":"Input/output price, context, max output and capabilities."},
-{"url":"https://docs.cohere.com/v2/docs/command-r-plus","title":"Command R+ model card","publisher":"Cohere","sourceType":"official-pricing","checkedAt":"2026-08-02","notes":"Input/output price, context and tool-use details."},
-{"url":"https://docs.cohere.com/docs/command-r","title":"Command R model card","publisher":"Cohere","sourceType":"official-pricing","checkedAt":"2026-08-02","notes":"Input/output price, context and tool-use details."},
-{"url":"https://docs.cohere.com/v1/docs/command-r7b","title":"Command R7B model card","publisher":"Cohere","sourceType":"official-pricing","checkedAt":"2026-08-02","notes":"Input/output price, context and tool-use details."},
-{"url":"https://docs.cohere.com/docs/command-a-plus","title":"Command A+ model card","publisher":"Cohere","sourceType":"official-documentation","checkedAt":"2026-08-02","notes":"Current model ID, context and availability. Production price is not published on the model page."},
-{"url":"https://docs.x.ai/developers/pricing","title":"xAI API pricing","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Current token, long-context and Batch API pricing for Grok models."},
-{"url":"https://api-docs.deepseek.com/quick_start/pricing/","title":"DeepSeek current models and time-of-use pricing","publisher":"DeepSeek","sourceType":"official-pricing","checkedAt":"2026-09-23","notes":"Peak hours 01:00–04:00 and 06:00–10:00 UTC Monday–Friday, excluding Chinese public holidays; other hours off-peak. Legacy deepseek-v4-flash now routes to DeepSeek-V4.1-Flash, so historical Flash pricing is not usable for new requests."},
-{"url":"https://console.groq.com/docs/models","title":"GroqCloud supported models","publisher":"Groq","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Groq now lists Llama 3.1 8B and Llama 3.3 70B as Enterprise / Contact Sales; public token prices are not verified."},
-{"url":"https://docs.together.ai/docs/serverless/models","title":"Together AI serverless model catalog","publisher":"Together AI","sourceType":"official-pricing","checkedAt":"2026-09-23","notes":"Qwen3.7 Max standard row reviewed; remaining rows retain their individual verification dates."},
-{"url":"https://docs.together.ai/docs/inference/pricing","title":"Together AI inference pricing","publisher":"Together AI","sourceType":"official-documentation","checkedAt":"2026-08-02","notes":"Billing units and 50% batch discount for eligible serverless models."},
-{"url":"https://docs.x.ai/developers/models","title":"xAI API model catalog","publisher":"xAI","sourceType":"official-documentation","checkedAt":"2026-08-02","notes":"Model-level context and tool support details."},
-{"url":"https://api-docs.deepseek.com/news/news260424","title":"DeepSeek V4 release","publisher":"DeepSeek","sourceType":"official-release","checkedAt":"2026-08-02","notes":"V4 model availability, 1M context and API model IDs."},
-{"url":"https://developers.openai.com/api/docs/models/gpt-6-astra","title":"GPT-6 Astra model card","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Model ID, modalities, context window, max output and token pricing."},
-{"url":"https://docs.x.ai/developers/grok-4-6","title":"Grok 4.6 model page","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Model ID, 500k context, modalities and capabilities."},
-{"url":"https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309","title":"Grok 4.20 Multi-Agent model page","publisher":"xAI","sourceType":"official-pricing","checkedAt":"2026-09-19","notes":"Model ID, 1M context, modalities and Batch API availability."},
-{"url":"https://developers.openai.com/api/docs/guides/conversation-state","title":"OpenAI context window semantics","publisher":"OpenAI","sourceType":"official-documentation","checkedAt":"2026-09-23","notes":"Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."},
-{"url":"https://developers.openai.com/api/docs/models/gpt-5.6-terra","title":"OpenAI GPT-5.6 Terra model pricing","publisher":"OpenAI","sourceType":"official-pricing","checkedAt":"2026-09-23","notes":"Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."},
-{"url":"https://docs.mistral.ai/inference/pricing","title":"Mistral inference pricing tables","publisher":"Mistral AI","sourceType":"official-pricing","checkedAt":"2026-09-23","notes":"Standard token pricing verified in the labeled input/cached input/output tables; regional inference is not selected."}
+  {
+    "url": "https://developers.openai.com/api/docs/pricing",
+    "title": "OpenAI API pricing",
+    "publisher": "OpenAI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "GPT-6 short/long context and cache rates reviewed."
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+    "title": "OpenAI GPT-5.6 Luna model pricing",
+    "publisher": "OpenAI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-23",
+    "notes": "Model page standard input 0.2, cached input 0.02, output 1.2 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/models/gpt-4.1",
+    "title": "GPT-4.1 model card",
+    "publisher": "OpenAI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02",
+    "notes": "Input, cached input, output, context and tool support."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "title": "Claude API pricing",
+    "publisher": "Anthropic",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Current model prices, cache and batch rates reviewed."
+  },
+  {
+    "url": "https://ai.google.dev/gemini-api/docs/pricing",
+    "title": "Gemini Developer API pricing",
+    "publisher": "Google",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Introductory, standard, cache and batch token rates reviewed."
+  },
+  {
+    "url": "https://docs.mistral.ai/models/model-cards/mistral-small-4-0-26-03",
+    "title": "Mistral Small 4 model card",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-06",
+    "notes": "Model card with context, price and capabilities."
+  },
+  {
+    "url": "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04",
+    "title": "Mistral Medium 3.5 model card",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-06",
+    "notes": "Model card with context, price and capabilities."
+  },
+  {
+    "url": "https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12",
+    "title": "Mistral Large 3 model card",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02",
+    "notes": "Model card with context, price and capabilities."
+  },
+  {
+    "url": "https://docs.mistral.ai/models/ministral-3-3b-25-12",
+    "title": "Ministral 3 3B model card",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02",
+    "notes": "Model card with context, price and capabilities."
+  },
+  {
+    "url": "https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12",
+    "title": "Ministral 3 14B model card",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02",
+    "notes": "Model card with context, price and capabilities."
+  },
+  {
+    "url": "https://docs.mistral.ai/models/model-cards/codestral-25-08",
+    "title": "Codestral model card",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02",
+    "notes": "Code model card with context and token prices."
+  },
+  {
+    "url": "https://docs.cohere.com/docs/command-a",
+    "title": "Command A model card",
+    "publisher": "Cohere",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Command A API ID, text modality, limits and published rate reviewed."
+  },
+  {
+    "url": "https://docs.cohere.com/v2/docs/command-r-plus",
+    "title": "Command R+ model card",
+    "publisher": "Cohere",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02",
+    "notes": "Input/output price, context and tool-use details."
+  },
+  {
+    "url": "https://docs.cohere.com/docs/command-r",
+    "title": "Command R model card",
+    "publisher": "Cohere",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02",
+    "notes": "Input/output price, context and tool-use details."
+  },
+  {
+    "url": "https://docs.cohere.com/v1/docs/command-r7b",
+    "title": "Command R7B model card",
+    "publisher": "Cohere",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02",
+    "notes": "Input/output price, context and tool-use details."
+  },
+  {
+    "url": "https://docs.cohere.com/docs/command-a-plus",
+    "title": "Command A+ model card",
+    "publisher": "Cohere",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-08-02",
+    "notes": "Current model ID, context and availability. Production price is not published on the model page."
+  },
+  {
+    "url": "https://docs.x.ai/developers/pricing",
+    "title": "xAI API pricing",
+    "publisher": "xAI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Grok token and context-tier pricing reviewed."
+  },
+  {
+    "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "title": "DeepSeek current models and time-of-use pricing",
+    "publisher": "DeepSeek",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "V4.1 Flash alias, retired IDs and peak/off-peak rates reviewed."
+  },
+  {
+    "url": "https://console.groq.com/docs/models",
+    "title": "GroqCloud supported models",
+    "publisher": "Groq",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Supported IDs, prices, limits and enterprise access reviewed."
+  },
+  {
+    "url": "https://docs.together.ai/docs/serverless/models",
+    "title": "Together AI serverless model catalog",
+    "publisher": "Together AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Model IDs, contexts, prices, cache rates, modalities and tools reviewed."
+  },
+  {
+    "url": "https://docs.together.ai/docs/inference/pricing",
+    "title": "Together AI inference pricing",
+    "publisher": "Together AI",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-08-02",
+    "notes": "Billing units and 50% batch discount for eligible serverless models."
+  },
+  {
+    "url": "https://docs.x.ai/developers/models",
+    "title": "xAI API model catalog",
+    "publisher": "xAI",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-08-02",
+    "notes": "Model-level context and tool support details."
+  },
+  {
+    "url": "https://api-docs.deepseek.com/news/news260424",
+    "title": "DeepSeek V4 release",
+    "publisher": "DeepSeek",
+    "sourceType": "official-release",
+    "checkedAt": "2026-08-02",
+    "notes": "V4 model availability, 1M context and API model IDs."
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+    "title": "GPT-6 Astra model card",
+    "publisher": "OpenAI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-19",
+    "notes": "Model ID, modalities, context window, max output and token pricing."
+  },
+  {
+    "url": "https://docs.x.ai/developers/grok-4-6",
+    "title": "Grok 4.6 model page",
+    "publisher": "xAI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-19",
+    "notes": "Model ID, 500k context, modalities and capabilities."
+  },
+  {
+    "url": "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309",
+    "title": "Grok 4.20 Multi-Agent model page",
+    "publisher": "xAI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-19",
+    "notes": "Model ID, 1M context, modalities and Batch API availability."
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+    "title": "OpenAI context window semantics",
+    "publisher": "OpenAI",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-23",
+    "notes": "Context window includes input and output. Output workload must include reasoning tokens when applicable; this check does not reverify other model fields."
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+    "title": "OpenAI GPT-5.6 Terra model pricing",
+    "publisher": "OpenAI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-23",
+    "notes": "Model page standard input 2, cached input 0.2, output 12 USD/1M; >272K input uses 2x input and 1.5x output; cache writes 1.25x uncached input. Cached long-context multiplier not explicitly stated; kept unknown."
+  },
+  {
+    "url": "https://docs.mistral.ai/inference/pricing",
+    "title": "Mistral inference pricing",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Mistral API token rates reviewed."
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/models",
+    "title": "OpenAI API model catalog",
+    "publisher": "OpenAI",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Current model IDs, limits, modalities and capabilities reviewed."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/models/overview",
+    "title": "Claude models overview",
+    "publisher": "Anthropic",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Current Claude model IDs, limits and availability reviewed."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+    "title": "Claude Fable 5.1 model pricing",
+    "publisher": "Anthropic",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Per-model input, output, cache and Batch API rates reviewed."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5",
+    "title": "Claude Opus 5.5 model pricing",
+    "publisher": "Anthropic",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Per-model input, output, cache and Batch API rates reviewed."
+  },
+  {
+    "url": "https://ai.google.dev/gemini-api/docs/models",
+    "title": "Gemini API models",
+    "publisher": "Google",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Current model IDs, limits, modalities and eligibility reviewed."
+  },
+  {
+    "url": "https://ai.google.dev/gemini-api/docs/whats-new-gemini-3.5",
+    "title": "Gemini 3.5 Flash release notes",
+    "publisher": "Google",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Gemini 3.5 Flash model ID, GA status and limits reviewed."
+  },
+  {
+    "url": "https://docs.x.ai/developers/models/grok-4.7",
+    "title": "Grok 4.7 model page",
+    "publisher": "xAI",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Grok 4.7 API ID, context, modalities and features reviewed."
+  },
+  {
+    "url": "https://docs.x.ai/developers/release-notes",
+    "title": "xAI API release notes",
+    "publisher": "xAI",
+    "sourceType": "official-release",
+    "checkedAt": "2026-09-27",
+    "notes": "Grok 4.7 launch, threshold and pricing reviewed."
+  },
+  {
+    "url": "https://api-docs.deepseek.com/updates/",
+    "title": "DeepSeek API release notes",
+    "publisher": "DeepSeek",
+    "sourceType": "official-release",
+    "checkedAt": "2026-09-27",
+    "notes": "Current model aliases and service notices reviewed."
+  },
+  {
+    "url": "https://docs.mistral.ai/models/zai-glm-5-3",
+    "title": "Z.ai GLM 5.3 on Mistral",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Third-party preview status, context, output, cache and rates reviewed."
+  },
+  {
+    "url": "https://docs.mistral.ai/models/zai-glm-5-2",
+    "title": "Z.ai GLM 5.2 on Mistral",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Third-party preview status, context, output, cache and rates reviewed."
+  },
+  {
+    "url": "https://docs.mistral.ai/models/ministral-3-8b-25-12",
+    "title": "Ministral 3 8B model card",
+    "publisher": "Mistral AI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Model ID, vision, context, features and token rates reviewed."
+  },
+  {
+    "url": "https://docs.cohere.com/v2/docs/models",
+    "title": "Cohere model overview",
+    "publisher": "Cohere",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Command IDs, limits, statuses and modalities reviewed."
+  },
+  {
+    "url": "https://docs.cohere.com/docs/command-a-translate",
+    "title": "Command A Translate model card",
+    "publisher": "Cohere",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Translate model ID, context and output limits reviewed."
+  },
+  {
+    "url": "https://docs.cohere.com/v1/docs/command-a-reasoning",
+    "title": "Command A Reasoning model card",
+    "publisher": "Cohere",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Reasoning model ID, context, output and features reviewed."
+  },
+  {
+    "url": "https://docs.cohere.com/docs/command-a-vision",
+    "title": "Command A Vision model card",
+    "publisher": "Cohere",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Vision model ID, image input, limits and production access reviewed."
+  },
+  {
+    "url": "https://api-docs.deepseek.com/quick_start/pricing",
+    "title": "DeepSeek API models and pricing",
+    "publisher": "DeepSeek",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02"
+  },
+  {
+    "url": "https://console.groq.com/docs/batch",
+    "title": "Groq Batch API",
+    "publisher": "Groq",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-08-02"
+  },
+  {
+    "url": "https://docs.mistral.ai/models",
+    "title": "Mistral model catalog",
+    "publisher": "Mistral AI",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Reviewed current provider model inventory."
+  },
+  {
+    "url": "https://console.groq.com/docs/reasoning",
+    "title": "Groq reasoning guide",
+    "publisher": "Groq",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Reasoning controls and supported model IDs reviewed for Qwen 3.6 27B."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/models/fable-5/overview",
+    "title": "Claude Fable 5 model pricing",
+    "publisher": "Anthropic",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Per-model input, output, cache and Batch API rates reviewed."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/models/opus-5/overview",
+    "title": "Claude Opus 5 model pricing",
+    "publisher": "Anthropic",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Per-model input, output, cache and Batch API rates reviewed."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/models/sonnet-5/overview",
+    "title": "Claude Sonnet 5 model pricing",
+    "publisher": "Anthropic",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Per-model input, output, cache and Batch API rates reviewed."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/models/sonnet-4-6/overview",
+    "title": "Claude Sonnet 4.6 model pricing",
+    "publisher": "Anthropic",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Per-model input, output, cache and Batch API rates reviewed."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/models/haiku-4-5/overview",
+    "title": "Claude Haiku 4.5 model pricing",
+    "publisher": "Anthropic",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Per-model input, output, cache and Batch API rates reviewed."
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/models/opus-5-5/overview",
+    "title": "Claude Opus 5.5 model overview and pricing",
+    "publisher": "Anthropic",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Per-model input, output, cache and Batch API rates reviewed."
+  },
+  {
+    "url": "https://console.groq.com/docs/model/qwen/qwen3.8-27b",
+    "title": "Groq Qwen 3.8 27B model pricing",
+    "publisher": "Groq",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "API ID, preview status, modalities, limits and token prices reviewed."
+  },
+  {
+    "url": "https://console.groq.com/docs/model/qwen/qwen3.6-27b",
+    "title": "Groq Qwen 3.6 27B model pricing",
+    "publisher": "Groq",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "API ID, preview status, image input and model limits reviewed; model pricing details load dynamically."
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+    "title": "GPT-4.1 Mini model card",
+    "publisher": "OpenAI",
+    "sourceType": "official-pricing",
+    "checkedAt": "2026-09-27",
+    "notes": "Model ID, capabilities, limits and standard input/cache/output prices reviewed."
+  },
+  {
+    "url": "https://console.groq.com/docs/deprecations",
+    "title": "Groq model deprecation history",
+    "publisher": "Groq",
+    "sourceType": "official-documentation",
+    "checkedAt": "2026-09-27",
+    "notes": "Qwen 3.6 shutdown date and Qwen 3.8 replacement reviewed."
+  }
 ]

@@ -212,6 +212,188 @@ describe('pricing watch semantic evidence', () => {
     expect(countPricingSignals(body, signals)).toBe(6);
   });
 
+  it('reads Anthropic model-card standard, cache, and batch pricing', () => {
+    const signals = [
+      signal({
+        modelName: 'Claude Fable 5.1',
+        apiModelId: 'claude-fable-5-1',
+        component: 'input',
+        value: 10,
+      }),
+      signal({
+        modelName: 'Claude Fable 5.1',
+        apiModelId: 'claude-fable-5-1',
+        component: 'output',
+        value: 50,
+      }),
+      signal({
+        modelName: 'Claude Fable 5.1',
+        apiModelId: 'claude-fable-5-1',
+        component: 'cachedInput',
+        value: 0.25,
+      }),
+      signal({
+        modelName: 'Claude Fable 5.1',
+        apiModelId: 'claude-fable-5-1',
+        component: 'cacheWrite',
+        value: 12.5,
+      }),
+      signal({
+        modelName: 'Claude Fable 5.1',
+        apiModelId: 'claude-fable-5-1',
+        mode: 'batch',
+        value: 5,
+      }),
+      signal({
+        modelName: 'Claude Fable 5.1',
+        apiModelId: 'claude-fable-5-1',
+        mode: 'batch',
+        component: 'cachedInput',
+        value: 0.125,
+      }),
+      signal({
+        modelName: 'Claude Fable 5.1',
+        apiModelId: 'claude-fable-5-1',
+        mode: 'batch',
+        component: 'cacheWrite',
+        value: 6.25,
+      }),
+      signal({
+        modelName: 'Claude Fable 5.1',
+        apiModelId: 'claude-fable-5-1',
+        mode: 'batch',
+        component: 'output',
+        value: 25,
+      }),
+    ];
+    const body =
+      '<h1>Claude Fable 5.1 Latest</h1><dt>Input pricing</dt><dd>$10 / MTok</dd><dt>Output pricing</dt><dd>$50 / MTok</dd><dt>5m cache write</dt><dd>$12.50 / MTok</dd><dt>Cache read</dt><dd>$0.25 / MTok</dd><dt>Batch API</dt><dd>50% discount on input and output</dd>';
+
+    expect(
+      countPricingSignals(
+        body,
+        signals,
+        'https://platform.claude.com/docs/en/models/fable-5-1/overview',
+      ),
+    ).toBe(8);
+  });
+
+  it('parses OpenAI standard and Batch rows from pricing-page data', () => {
+    const signals = [
+      signal({ modelName: 'GPT-4.1', apiModelId: 'gpt-4.1', value: 2 }),
+      signal({
+        modelId: 'gpt-4-1-mini',
+        modelName: 'GPT-4.1 Mini',
+        apiModelId: 'gpt-4.1-mini',
+        component: 'output',
+        value: 1.6,
+      }),
+      signal({
+        modelName: 'GPT-4.1',
+        apiModelId: 'gpt-4.1',
+        mode: 'batch',
+        component: 'output',
+        value: 4,
+      }),
+      signal({
+        modelId: 'gpt-4-1-mini',
+        modelName: 'GPT-4.1 Mini',
+        apiModelId: 'gpt-4.1-mini',
+        mode: 'batch',
+        value: 0.2,
+      }),
+    ];
+    const body =
+      '<div data-content-switcher-pane="true" data-value="standard"><script>&quot;rows&quot;:[1,[[1,[[0,&quot;gpt-4.1&quot;],[0,2],[0,0.5],[0,8]]],[1,[[0,&quot;gpt-4.1-mini&quot;],[0,0.4],[0,0.1],[0,1.6]]]]]</script></div><div data-content-switcher-pane="true" data-value="batch"><script>&quot;rows&quot;:[1,[[1,[[0,&quot;gpt-4.1&quot;],[0,1],[0,&quot;-&quot;],[0,4]]],[1,[[0,&quot;gpt-4.1-mini&quot;],[0,0.2],[0,&quot;-&quot;],[0,0.8]]]]]</script></div>';
+
+    expect(
+      countPricingSignals(body, signals, 'https://developers.openai.com/api/docs/pricing'),
+    ).toBe(4);
+  });
+
+  it('matches time-limited prices to the correct effective date', () => {
+    const signals = [
+      signal({ value: 0.75, effectiveUntil: '2026-12-31' }),
+      signal({ ruleId: 'model-a-standard-next', value: 1.5, effectiveFrom: '2027-01-01' }),
+    ];
+    const body =
+      '<h2>Model A</h2><h3>Standard</h3><table><tr><th>Model</th><th>Input price</th></tr><tr><td>Model A</td><td>$0.75 through December 31, 2026.<br>$1.50 starting January 1, 2027.</td></tr></table>';
+
+    expect(countPricingSignals(body, signals)).toBe(2);
+    expect(
+      pricingSignalEvidence(body, [signals[0], { ...signals[0], value: 1.5 }]).map(
+        ({ status }) => status,
+      ),
+    ).toEqual(['present', 'missing']);
+  });
+
+  it('reads explicit free input and output cells as zero-priced', () => {
+    const signals = [signal({ value: 0 }), signal({ component: 'output', value: 0 })];
+    const body =
+      '<table><tr><th>Model</th><th>Input pricing (per 1M tokens)</th><th>Output pricing (per 1M tokens)</th></tr><tr><td>Model A</td><td>Free</td><td>Free</td></tr></table>';
+
+    expect(countPricingSignals(body, signals)).toBe(2);
+  });
+
+  it('reads Groq model rows with input and output prices in one cell', () => {
+    const signals = [
+      signal({
+        modelName: 'Llama Prompt Guard 2 22M',
+        apiModelId: 'meta-llama/llama-prompt-guard-2-22m',
+        value: 0.03,
+      }),
+      signal({
+        modelName: 'Llama Prompt Guard 2 22M',
+        apiModelId: 'meta-llama/llama-prompt-guard-2-22m',
+        component: 'output',
+        value: 0.03,
+      }),
+    ];
+    const body =
+      '<table><tr><th>Model ID</th><th>Speed</th><th>Price per 1M tokens</th></tr><tr><td><div><span>Llama Prompt Guard 2 22M</span><span>meta-llama/llama-prompt-guard-2-22m</span></div></td><td>-</td><td><span>$0.03 <span>input</span></span><span>$0.03 <span>output</span></span></td></tr></table>';
+
+    expect(countPricingSignals(body, signals, 'https://console.groq.com/docs/models')).toBe(2);
+  });
+
+  it('reads token prices from an individual Groq model page', () => {
+    const signals = [
+      signal({ modelName: 'Qwen3.8 27B', apiModelId: 'qwen/qwen3.8-27b', value: 0.8 }),
+      signal({
+        modelName: 'Qwen3.8 27B',
+        apiModelId: 'qwen/qwen3.8-27b',
+        component: 'output',
+        value: 4,
+      }),
+    ];
+    const body =
+      '<h1>Qwen/Qwen3.8-27B</h1><code>qwen/qwen3.8-27b</code><h2>PRICING</h2><div>Input</div><div>$0.80</div><div>Output</div><div>$4.00</div><h2>LIMITS</h2>';
+
+    expect(
+      countPricingSignals(body, signals, 'https://console.groq.com/docs/model/qwen/qwen3.8-27b'),
+    ).toBe(2);
+  });
+
+  it('checks Groq batch rates against the official model list and half-price policy', () => {
+    const signals = [
+      signal({
+        apiModelId: 'openai/gpt-oss-20b',
+        mode: 'batch',
+        value: 0.0375,
+      }),
+    ];
+    const body =
+      '<p>Batch processing lets you run workloads with a 50% cost discount compared to synchronous APIs.</p><p>Model ID</p><code>openai/gpt-oss-20b</code>';
+
+    expect(countPricingSignals(body, signals, 'https://console.groq.com/docs/batch')).toBe(1);
+    expect(
+      countPricingSignals(
+        body.replace('50%', '40%'),
+        signals,
+        'https://console.groq.com/docs/batch',
+      ),
+    ).toBe(0);
+  });
+
   it('binds a multi-value cell to the signal modality', () => {
     const signals = [
       signal({ inputModality: 'text' }),

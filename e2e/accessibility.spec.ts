@@ -35,20 +35,56 @@ test('mobile navigation and calculator controls expose accessible state', async 
   }
 });
 
-test('methodology passes automated color contrast checks in both themes', async ({ page }) => {
-  await page.goto('./methodology');
-  const themeButton = page.getByRole('button', { name: /Switch to .* theme/ }).first();
-  await expect(themeButton).toBeVisible();
-
+test('primary routes pass automated color contrast checks in both themes', async ({ page }) => {
+  test.setTimeout(120_000);
+  const routes = [
+    './',
+    './explore',
+    './compare',
+    './calculator',
+    './value',
+    './history',
+    './model/claude-sonnet-5',
+    './methodology',
+  ];
   for (const theme of ['dark', 'light'] as const) {
+    await page.goto('./methodology');
+    await expect(page.locator('.page-frame h1').first()).toBeVisible();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', /^(dark|light)$/);
+    const themeButton = page.getByRole('button', { name: `Switch to ${theme} theme` }).first();
     const currentTheme = await page.locator('html').getAttribute('data-theme');
-    if (currentTheme !== theme)
-      await page
-        .getByRole('button', { name: `Switch to ${theme} theme` })
-        .first()
-        .click();
-
-    const results = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
-    expect(results.violations, `${theme} theme contrast violations`).toEqual([]);
+    if (currentTheme !== theme) await themeButton.click();
+    for (const route of routes) {
+      await page.goto(route);
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+      await page.addStyleTag({
+        content:
+          ':root, :root * { animation-duration: 0s !important; transition-duration: 0s !important; }',
+      });
+      await expect(page.locator('.page-frame h1').first()).toBeVisible();
+      const results = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
+      expect(results.violations, `${theme} theme contrast violations on ${route}`).toEqual([]);
+    }
   }
+});
+
+test('mobile explorer filters trap focus and return it to the opener on Escape', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./explore');
+
+  const openFilters = page.getByRole('button', { name: /Filters/ });
+  await openFilters.click();
+  const dialog = page.getByRole('dialog', { name: 'Filter catalog' });
+  await expect(dialog).toBeVisible();
+  await expect(page.getByLabel('Search model, provider or API ID')).toBeFocused();
+  await dialog.locator('input[type="checkbox"]').last().focus();
+  await page.keyboard.press('Tab');
+  await expect(dialog.getByRole('button', { name: 'Clear all' })).toBeFocused();
+
+  await page.keyboard.press('Escape');
+  await expect(dialog).toHaveCount(0);
+  await expect(openFilters).toHaveAttribute('aria-expanded', 'false');
+  await expect(openFilters).toBeFocused();
 });

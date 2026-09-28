@@ -18,7 +18,7 @@ export function parseExplorerUrl(search: string): ExplorerUrlState {
     search: params.get('q') ?? '',
     providers: params.get('provider')?.split(',').filter(Boolean) ?? [],
     organization: params.get('org') ?? '',
-    status: params.get('status') ?? '',
+    status: params.get('status') ?? 'active',
     capabilities: params.get('cap')?.split(',').filter(Boolean) ?? [],
     recentOnly: params.get('recent') === '1',
     minInput: params.get('minIn') ? Number(params.get('minIn')) : undefined,

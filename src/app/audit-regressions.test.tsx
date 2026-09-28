@@ -45,6 +45,7 @@ test('storage rejection is visible and still permits session export', async () =
       <App />
     </MemoryRouter>,
   );
+  fireEvent.click(await screen.findByText('Saved workloads · 0'));
   await screen.findByLabelText('Scenario name');
   fireEvent.change(screen.getByLabelText('Scenario name'), { target: { value: 'Audit scenario' } });
   fireEvent.click(screen.getByRole('button', { name: 'Save current' }));
@@ -78,4 +79,30 @@ test('history distinguishes observed changes and retirement', async () => {
   );
   expect(screen.getAllByText('Price change').length).toBeGreaterThan(0);
   expect(screen.getAllByText('Offer retired').length).toBeGreaterThan(0);
+});
+
+test('model details disclose account eligibility and independent verification dates', async () => {
+  render(
+    <MemoryRouter initialEntries={['/model/gemini-2-5-flash']}>
+      <App />
+    </MemoryRouter>,
+  );
+  await screen.findByRole('heading', { name: 'Gemini 2.5 Flash', level: 1 });
+  expect(screen.getByText('Existing users only')).toBeTruthy();
+  expect(
+    screen.getByText(/availability is limited to accounts that used the family before/i),
+  ).toBeTruthy();
+  expect(screen.getByText(/Pricing checked/)).toBeTruthy();
+  expect(screen.getByText(/availability checked/)).toBeTruthy();
+});
+
+test('retired model detail marks its rate as historical and links the replacement', async () => {
+  render(
+    <MemoryRouter initialEntries={['/model/deepseek-v4-flash']}>
+      <App />
+    </MemoryRouter>,
+  );
+  await screen.findByRole('heading', { name: 'DeepSeek V4 Flash', level: 1 });
+  expect(screen.getByText('Historical · $0.14')).toBeTruthy();
+  expect(screen.getByRole('link', { name: 'Replaced by DeepSeek V4.1 Flash' })).toBeTruthy();
 });

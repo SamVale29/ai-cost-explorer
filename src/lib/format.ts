@@ -19,6 +19,16 @@ export function formatCurrency(value: number | null | undefined, digits = 2): st
   }).format(value);
 }
 
+/** Formats a published rate without rounding it to cents. Totals still use formatCurrency. */
+export function formatUnitPrice(value: number): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 8,
+  }).format(value);
+}
+
 export function formatCompactNumber(value: number | null | undefined): string {
   if (value === null || value === undefined || !Number.isFinite(value)) return 'Not verified';
   return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(
@@ -29,6 +39,11 @@ export function formatCompactNumber(value: number | null | undefined): string {
 export function formatTokens(value: number | null | undefined): string {
   if (value === null || value === undefined || !Number.isFinite(value)) return 'Not verified';
   return `${formatCompactNumber(value)} tokens`;
+}
+
+export function formatExactTokens(value: number | null | undefined): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return 'Not verified';
+  return `${numberFormat.format(value)} tokens`;
 }
 
 export function formatDate(value: string | null | undefined): string {

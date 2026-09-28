@@ -50,6 +50,7 @@ export type Model = {
     webSearch?: boolean | null;
     computerUse?: boolean | null;
   };
+  evidenceByField?: Record<string, SourceReference[]>;
   sources: SourceReference[];
   lastVerifiedAt: string;
 };
@@ -68,6 +69,7 @@ export type PricingRule = {
   currency: 'USD';
   unit: PricingUnit;
   mode: PricingMode;
+  priceStatus?: 'public' | 'contact-sales' | 'not-published' | 'unit-unsupported';
   inputPrice?: number | null;
   outputPrice?: number | null;
   cachedInputPrice?: number | null;
@@ -89,10 +91,19 @@ export type Offer = {
   modelId: string;
   providerId: string;
   apiModelId: string;
+  apiVariant?: string;
   availability: {
     status: Status;
     regions?: string[];
+    accountEligibility?: 'public' | 'existing-users' | 'allowlisted' | 'enterprise';
+    notes?: string;
+    replacementOfferId?: string;
   };
+  modalities?: Model['modalities'];
+  capabilities?: Partial<Model['capabilities']>;
+  evidenceByField?: Record<string, SourceReference[]>;
+  availabilityVerifiedAt?: string;
+  pricingVerifiedAt?: string;
   pricing: PricingRule[];
   rateLimits?: {
     requestsPerMinute?: number | null;
@@ -156,6 +167,14 @@ export type OfferView = Offer & {
   provider: Provider;
   organization: Organization;
 };
+
+export function offerModalities(offer: OfferView): Model['modalities'] {
+  return offer.modalities ?? offer.model.modalities;
+}
+
+export function offerCapabilities(offer: OfferView): Model['capabilities'] {
+  return { ...offer.model.capabilities, ...offer.capabilities };
+}
 
 export type Staleness = 'fresh' | 'aging' | 'stale' | 'unknown';
 

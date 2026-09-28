@@ -35,6 +35,7 @@ const pricingMode = z.enum([
   'off-peak',
 ]);
 const pricingUnit = z.enum(['per_million_tokens', 'per_request', 'per_second', 'per_image']);
+const accountEligibility = z.enum(['public', 'existing-users', 'allowlisted', 'enterprise']);
 
 export const sourceReferenceSchema = z
   .object({
@@ -48,6 +49,10 @@ export const sourceReferenceSchema = z
     notes: z.string().optional(),
   })
   .strict();
+
+const evidenceByFieldSchema = z
+  .record(z.string().min(1), z.array(sourceReferenceSchema).min(1))
+  .optional();
 
 const capabilitiesSchema = z
   .object({
@@ -105,6 +110,7 @@ export const modelSchema = z
     maxOutputTokens: FINITE_NON_NEGATIVE.nullable().optional(),
     modalities: modalitiesSchema,
     capabilities: capabilitiesSchema,
+    evidenceByField: evidenceByFieldSchema,
     sources: z.array(sourceReferenceSchema).min(1),
     lastVerifiedAt: DATE_VALUE,
   })
@@ -132,6 +138,9 @@ export const pricingRuleSchema = z
     currency: z.literal('USD'),
     unit: pricingUnit,
     mode: pricingMode,
+    priceStatus: z
+      .enum(['public', 'contact-sales', 'not-published', 'unit-unsupported'])
+      .optional(),
     inputPrice: priceField,
     outputPrice: priceField,
     cachedInputPrice: priceField,
@@ -175,7 +184,21 @@ export const offerSchema = z
     modelId: NON_EMPTY,
     providerId: NON_EMPTY,
     apiModelId: NON_EMPTY,
-    availability: z.object({ status, regions: z.array(NON_EMPTY).optional() }).strict(),
+    apiVariant: NON_EMPTY.optional(),
+    availability: z
+      .object({
+        status,
+        regions: z.array(NON_EMPTY).optional(),
+        accountEligibility: accountEligibility.optional(),
+        notes: z.string().optional(),
+        replacementOfferId: NON_EMPTY.optional(),
+      })
+      .strict(),
+    modalities: modalitiesSchema.optional(),
+    capabilities: capabilitiesSchema.partial().optional(),
+    evidenceByField: evidenceByFieldSchema,
+    availabilityVerifiedAt: DATE_VALUE.optional(),
+    pricingVerifiedAt: DATE_VALUE.optional(),
     pricing: z.array(pricingRuleSchema).min(1),
     rateLimits: z
       .object({
@@ -284,6 +307,7 @@ function validateRelations(data: ParsedDataSet): string[] {
   const providerIds = new Set(data.providers.map((item) => item.id));
   const modelIds = new Set(data.models.map((item) => item.id));
   const offerIds = new Set(data.offers.map((item) => item.id));
+  const apiIdentities = new Map<string, string>();
   const sourceUrls = new Set<string>();
   for (const source of data.sources) {
     if (sourceUrls.has(source.url)) errors.push(`sources: duplicate URL ${source.url}`);
@@ -297,6 +321,28 @@ function validateRelations(data: ParsedDataSet): string[] {
       errors.push(`offer ${offer.id}: missing model ${offer.modelId}`);
     if (!providerIds.has(offer.providerId))
       errors.push(`offer ${offer.id}: missing provider ${offer.providerId}`);
+    const normalizedApiId = offer.apiModelId.trim().replaceAll('\\', '/').toLowerCase();
+    const normalizedVariant = offer.apiVariant?.trim().toLowerCase() ?? '';
+    const apiIdentity = `${offer.providerId}:${normalizedApiId}:${normalizedVariant}`;
+    const priorOfferId = apiIdentities.get(apiIdentity);
+    if (priorOfferId)
+      errors.push(
+        `offer ${offer.id}: API model identity ${apiIdentity} already belongs to ${priorOfferId}; add an explicit apiVariant only when the provider documents a commercial variant`,
+      );
+    else apiIdentities.set(apiIdentity, offer.id);
+    if (offer.availability.replacementOfferId) {
+      const replacement = data.offers.find(
+        (candidate) => candidate.id === offer.availability.replacementOfferId,
+      );
+      if (!replacement || !offerIds.has(offer.availability.replacementOfferId))
+        errors.push(
+          `offer ${offer.id}: missing replacement offer ${offer.availability.replacementOfferId}`,
+        );
+      else if (replacement.availability.status === 'retired')
+        errors.push(`offer ${offer.id}: replacement offer ${replacement.id} is also retired`);
+      else if (replacement.id === offer.id)
+        errors.push(`offer ${offer.id}: offer cannot replace itself`);
+    }
   }
   for (const benchmark of data.benchmarks)
     if (!offerIds.has(benchmark.offerId))
