@@ -17,20 +17,9 @@ afterEach(() => {
 });
 const shared =
   '/calculator?in=1000&out=200&cache=0&write=0&req=1000&days=30&retry=0&batch=0&users=10&convos=2&messages=3&offers=offer-cohere-command-r7b&mode=monthly';
-
-// Re-selecting the highlighted preset applies its workload; no field or subtotal may move.
-function expectHighlightedPresetInFields(container: HTMLElement) {
-  const workload = () => [
-    ...[...container.querySelectorAll<HTMLInputElement>('.number-field input')].map(
-      (field) => field.value,
-    ),
-    ...[...container.querySelectorAll('.result-price')].map((price) => price.textContent),
-  ];
-  const before = workload();
-  expect(before.length).toBeGreaterThan(8);
-  fireEvent.click(container.querySelector('.preset-card.active')!);
-  expect(workload()).toEqual(before);
-}
+const workloadFields = () =>
+  screen.getAllByRole('spinbutton').map((field) => (field as HTMLInputElement).value);
+const presetCard = (name: RegExp) => screen.getByRole('button', { name });
 
 test('legacy shares show actual volume and edits immediately change the estimate', async () => {
   const { container } = render(
@@ -50,39 +39,58 @@ test('legacy shares show actual volume and edits immediately change the estimate
   expect(screen.getByRole('button', { name: 'annual' }).getAttribute('aria-pressed')).toBe('true');
 });
 
-test('first load fills the fields with the highlighted preset workload', async () => {
-  const { container } = render(
+test('the default workload matches the highlighted preset, including after reset', async () => {
+  render(
     <MemoryRouter initialEntries={['/calculator']}>
       <App />
     </MemoryRouter>,
   );
   await screen.findByRole('heading', { name: 'Inference subtotal by offer' });
-  expect(container.querySelector('.preset-card.active')!.textContent).toContain(
-    'Customer support chatbot',
-  );
-  const value = (label: RegExp) => (screen.getByLabelText(label) as HTMLInputElement).value;
-  expect(value(/Input tokens \/ request/)).toBe('1800');
-  expect(value(/Output tokens \/ request/)).toBe('420');
-  expect(value(/Cached input tokens/)).toBe('900');
-  expect(value(/Requests \/ day/)).toBe('50000');
-  expectHighlightedPresetInFields(container);
+  const support = presetCard(/Customer support chatbot/);
+  expect(support.className).toContain('active');
+  const defaultWorkload = workloadFields();
+  // Promotional material quotes this exact opening workload.
+  expect(defaultWorkload).toEqual(['1800', '420', '900', '0', '50000', '30', '3', '0']);
+  fireEvent.click(support);
+  expect(workloadFields()).toEqual(defaultWorkload);
+
+  fireEvent.change(screen.getByLabelText(/Requests \/ day/), { target: { value: '999' } });
+  expect(support.className).not.toContain('active');
+  fireEvent.click(screen.getByText('Saved workloads · 0'));
+  fireEvent.click(await screen.findByRole('button', { name: 'Reset' }));
+  expect(support.className).toContain('active');
+  expect(workloadFields()).toEqual(defaultWorkload);
 });
 
-test('reset returns to the highlighted preset workload', async () => {
-  const { container } = render(
+test('offers-only links preselect exactly those offers on the default workload', async () => {
+  const defaults = render(
     <MemoryRouter initialEntries={['/calculator']}>
       <App />
     </MemoryRouter>,
   );
   await screen.findByRole('heading', { name: 'Inference subtotal by offer' });
-  fireEvent.change(screen.getByLabelText(/Requests \/ day/), { target: { value: '7' } });
-  expect(container.querySelector('.preset-card.active')!.textContent).toContain('Custom workload');
-  fireEvent.click(screen.getByText('Saved workloads · 0'));
-  fireEvent.click(screen.getByRole('button', { name: 'Reset' }));
-  expect(container.querySelector('.preset-card.active')!.textContent).toContain(
-    'Customer support chatbot',
+  const defaultWorkload = workloadFields();
+  defaults.unmount();
+
+  const { container } = render(
+    <MemoryRouter
+      initialEntries={['/calculator?offers=offer-openai-gpt-6-sol,offer-mistral-large-3']}
+    >
+      <App />
+    </MemoryRouter>,
   );
-  expectHighlightedPresetInFields(container);
+  await screen.findByRole('heading', { name: 'Inference subtotal by offer' });
+  const checked = screen
+    .getAllByRole('checkbox', { checked: true })
+    .map((box) => box.closest('.offer-pick-row')?.querySelector('strong')?.textContent);
+  expect(checked.sort()).toEqual(['GPT-6 Sol', 'Mistral Large 3']);
+  const cards = [...container.querySelectorAll('.result-card')].map(
+    (card) => card.querySelector('.result-model')?.textContent,
+  );
+  expect(cards.sort()).toEqual(['GPT-6 Sol', 'Mistral Large 3']);
+  expect(presetCard(/Customer support chatbot/).className).toContain('active');
+  expect(presetCard(/Custom workload/).className).not.toContain('active');
+  expect(workloadFields()).toEqual(defaultWorkload);
 });
 
 test('storage rejection is visible and still permits session export', async () => {

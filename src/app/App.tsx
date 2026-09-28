@@ -73,7 +73,11 @@ import {
   storeSavedScenarios,
   type SavedScenario,
 } from '../lib/scenarios';
-import { parseCalculatorUrl, serializeCalculatorUrl } from '../lib/calculator-url-state';
+import {
+  parseCalculatorOfferIds,
+  parseCalculatorUrl,
+  serializeCalculatorUrl,
+} from '../lib/calculator-url-state';
 import { parseExplorerUrl, serializeExplorerUrl, type ExplorerUrlState } from '../lib/url-state';
 import {
   offerCapabilities,
@@ -1930,19 +1934,22 @@ const BASE_CALCULATOR_INPUT: CalculatorInput = {
   retryRate: 0.03,
   batchRate: 0,
 };
-const PRESETS: Array<{ id: string; label: string; description: string; input: CalculatorInput }> = [
-  {
-    id: 'support',
-    label: 'Customer support chatbot',
-    description: 'Short context, high daily volume',
-    input: {
-      ...BASE_CALCULATOR_INPUT,
-      inputTokens: 1800,
-      outputTokens: 420,
-      cachedInputTokens: 900,
-      requestsPerDay: 50000,
-    },
+type CalculatorPreset = { id: string; label: string; description: string; input: CalculatorInput };
+// The simulator opens and resets on this preset, so its highlighted card matches the fields.
+const DEFAULT_PRESET: CalculatorPreset = {
+  id: 'support',
+  label: 'Customer support chatbot',
+  description: 'Short context, high daily volume',
+  input: {
+    ...BASE_CALCULATOR_INPUT,
+    inputTokens: 1800,
+    outputTokens: 420,
+    cachedInputTokens: 900,
+    requestsPerDay: 50000,
   },
+};
+const PRESETS: CalculatorPreset[] = [
+  DEFAULT_PRESET,
   {
     id: 'rag',
     label: 'RAG assistant',
@@ -2009,8 +2016,6 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     input: BASE_CALCULATOR_INPUT,
   },
 ];
-// The simulator opens and resets on this preset, so its highlighted card matches the fields.
-const DEFAULT_PRESET = PRESETS.find((item) => item.id === 'support')!;
 
 type ScenarioShelfProps = {
   scenarios: SavedScenario[];
@@ -2190,11 +2195,10 @@ function CalculatorPage() {
     () => initialUrlState?.input ?? DEFAULT_PRESET.input,
   );
   const [preset, setPreset] = useState(() => (initialUrlState ? 'custom' : DEFAULT_PRESET.id));
-  const [selectedIds, setSelectedIds] = useState<string[]>(
-    () =>
-      initialUrlState?.selectedOfferIds.filter((id) => offers.some((offer) => offer.id === id)) ??
-      defaultOfferIds,
-  );
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
+    const linkedIds = initialUrlState?.selectedOfferIds ?? parseCalculatorOfferIds(location.search);
+    return linkedIds?.filter((id) => offers.some((offer) => offer.id === id)) ?? defaultOfferIds;
+  });
   const [offerSearch, setOfferSearch] = useState('');
   const [offerProvider, setOfferProvider] = useState('');
   const [mode, setMode] = useState<'request' | 'daily' | 'monthly' | 'annual'>(
