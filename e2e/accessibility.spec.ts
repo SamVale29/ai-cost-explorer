@@ -56,6 +56,11 @@ test('primary routes pass automated color contrast checks in both themes', async
     if (currentTheme !== theme) await themeButton.click();
     for (const route of routes) {
       await page.goto(route);
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+      await page.addStyleTag({
+        content:
+          ':root, :root * { animation-duration: 0s !important; transition-duration: 0s !important; }',
+      });
       await expect(page.locator('.page-frame h1').first()).toBeVisible();
       const results = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
       expect(results.violations, `${theme} theme contrast violations on ${route}`).toEqual([]);
