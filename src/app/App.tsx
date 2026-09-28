@@ -63,6 +63,7 @@ import { paretoFrontier, scoreOffers, type ParetoPoint } from '../lib/pareto';
 import { getPriceVerificationDate, standardRule } from '../lib/pricing';
 import { readStoredTheme, storeTheme, type Theme } from '../lib/theme';
 import { AppErrorBoundary } from './AppErrorBoundary';
+import { AxisTitle, FrontierChart, HistoryTimeline } from './charts';
 import { GITHUB_URL } from './config';
 import {
   limitSavedScenarios,
@@ -733,6 +734,8 @@ function OfferTableRow({
 
 // Below this width the catalog filters open as a modal drawer so the table keeps the full width.
 const FILTER_DRAWER_QUERY = '(max-width: 1160px)';
+// Phones page the card list instead of rendering ~15,000px of cards at once.
+const CARD_PAGE_SIZE = 20;
 
 function ExplorerPage() {
   const { offers, catalog } = useCatalog();
@@ -899,6 +902,10 @@ function ExplorerPage() {
         : Number(av) - Number(bv);
     return sort.direction === 'asc' ? comparison : -comparison;
   });
+  // The card page resets whenever filters or sorting change the result set.
+  const listKey = JSON.stringify([filters, sort]);
+  const [cardPage, setCardPage] = useState({ key: listKey, count: CARD_PAGE_SIZE });
+  const visibleCards = cardPage.key === listKey ? cardPage.count : CARD_PAGE_SIZE;
   const toggleSelected = (id: string) =>
     setSelected((current) =>
       current.includes(id)
@@ -1339,7 +1346,7 @@ function ExplorerPage() {
               </table>
             </div>
             <div className="explorer-mobile-list">
-              {sorted.map((offer) => (
+              {sorted.slice(0, visibleCards).map((offer) => (
                 <ExplorerCard
                   key={offer.id}
                   offer={offer}
@@ -1347,6 +1354,31 @@ function ExplorerPage() {
                   onSelect={() => toggleSelected(offer.id)}
                 />
               ))}
+              {sorted.length > visibleCards && (
+                <div className="load-more">
+                  <span>
+                    Showing <strong>{visibleCards}</strong> of {sorted.length} offers
+                  </span>
+                  <div>
+                    <button
+                      className="button button-ghost"
+                      type="button"
+                      onClick={() =>
+                        setCardPage({ key: listKey, count: visibleCards + CARD_PAGE_SIZE })
+                      }
+                    >
+                      Show {Math.min(CARD_PAGE_SIZE, sorted.length - visibleCards)} more
+                    </button>
+                    <button
+                      className="button button-ghost"
+                      type="button"
+                      onClick={() => setCardPage({ key: listKey, count: sorted.length })}
+                    >
+                      Show all
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             {sorted.length === 0 && (
               <EmptyState
@@ -2866,10 +2898,6 @@ function HistoryPage() {
       offer && (!provider || offer.providerId === provider) && (!model || offer.modelId === model)
     );
   });
-  const values = visible.map(
-    (event) => event.currentPricing.find((rule) => rule.mode === 'standard')?.inputPrice ?? 0,
-  );
-  const max = Math.max(...values, 1);
   return (
     <>
       <PageHeader
@@ -2921,7 +2949,7 @@ function HistoryPage() {
           <div className="chart-heading">
             <div>
               <span className="eyebrow">INPUT PRICE · USD / 1M</span>
-              <h2>Known observations</h2>
+              <h2>Observed prices by offer</h2>
             </div>
             <Badge tone="blue">{visible.length} events</Badge>
           </div>
@@ -2931,43 +2959,8 @@ function HistoryPage() {
               description="Clear the provider or model filter to see the initial project snapshots."
             />
           ) : (
-            <div
-              className="history-bars"
-              role="img"
-              aria-label="Bar chart of known input price observations"
-            >
-              {visible.map((event) => {
-                const offer = findOffer(offers, event.offerId);
-                const price =
-                  event.currentPricing.find((rule) => rule.mode === 'standard')?.inputPrice ?? null;
-                return (
-                  <div className="history-bar-item" key={event.id}>
-                    <div className="history-bar-value">
-                      {price === null ? '—' : formatCurrency(price, 3)}
-                    </div>
-                    <div className="history-bar-track">
-                      <div
-                        className="history-bar-fill"
-                        style={{ height: `${Math.max(8, ((price ?? 0) / max) * 100)}%` }}
-                      />
-                    </div>
-                    <span>{offer?.model.name ?? event.offerId}</span>
-                    <small>{formatDate(event.detectedAt)}</small>
-                  </div>
-                );
-              })}
-            </div>
+            <HistoryTimeline events={visible} offers={offers} endDate={catalog.dataAsOf} />
           )}
-          <div className="chart-legend">
-            <span>
-              <i className="legend-swatch mint" />
-              Current known value
-            </span>
-            <span>
-              <i className="legend-line" />
-              No line is drawn before first observation
-            </span>
-          </div>
         </section>
         <section className="event-list-card table-card">
           <div className="chart-heading">
@@ -3032,6 +3025,7 @@ function ValuePage() {
   const [yAxis, setYAxis] = useState<'output' | 'context' | 'input'>('context');
   const [required, setRequired] = useState<string[]>([]);
   const [weights, setWeights] = useState({ cost: 50, context: 30, resources: 20 });
+  const [scale, setScale] = useState<'log' | 'linear'>('log');
   const candidates = offers
     .filter(isOfferAvailable)
     .filter((offer) =>
@@ -3055,12 +3049,6 @@ function ValuePage() {
       (point): point is { offer: OfferView; x: number; y: number } =>
         point.x !== null && point.y !== null,
     );
-  const xValues = raw.map((item) => item.x);
-  const yValues = raw.map((item) => item.y);
-  const xMin = Math.min(...xValues, 0);
-  const xMax = Math.max(...xValues, 1);
-  const yMin = Math.min(...yValues, 0);
-  const yMax = Math.max(...yValues, 1);
   const points: ParetoPoint[] = raw.map((item) => ({
     offer: item.offer,
     x: xAxis === 'context' ? -item.x : item.x,
@@ -3080,8 +3068,6 @@ function ValuePage() {
     setRequired((current) =>
       current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
     );
-  const chartX = (value: number) => ((value - xMin) / Math.max(1, xMax - xMin)) * 92 + 4;
-  const chartY = (value: number) => 96 - ((value - yMin) / Math.max(1, yMax - yMin)) * 88;
   return (
     <>
       <PageHeader
@@ -3118,6 +3104,22 @@ function ValuePage() {
               <option value="input">Input price</option>
             </select>
           </label>
+        </div>
+        <div className="scale-control">
+          <span className="field-label">Scale</span>
+          <div className="mode-toggle" role="group" aria-label="Axis scale">
+            {(['log', 'linear'] as const).map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={scale === item ? 'active' : ''}
+                aria-pressed={scale === item}
+                onClick={() => setScale(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="value-filter-group">
           <span className="field-label">Required resources</span>
@@ -3161,6 +3163,9 @@ function ValuePage() {
             <div>
               <span className="eyebrow">PARETO FRONTIER</span>
               <h2>{raw.length} offers with known axes</h2>
+              <p className="chart-hint">
+                Hover or focus a point for its values; select it to open the model.
+              </p>
             </div>
             <div className="frontier-legend">
               <span>
@@ -3175,42 +3180,17 @@ function ValuePage() {
           </div>
           <div className="scatter-wrap">
             <div className="axis-y-label">
-              {yAxis === 'context'
-                ? 'Context window'
-                : yAxis === 'output'
-                  ? 'Output price'
-                  : 'Input price'}
+              <AxisTitle axis={yAxis} />
             </div>
-            <svg
-              viewBox="0 0 100 100"
-              role="img"
-              aria-label="Pareto frontier scatter plot"
-              className="scatter-plot"
-            >
-              <line x1="4" y1="96" x2="96" y2="96" className="axis-line" />
-              <line x1="4" y1="8" x2="4" y2="96" className="axis-line" />
-              {raw.map((point) => (
-                <g
-                  key={point.offer.id}
-                  className={
-                    frontierIds.has(point.offer.id) ? 'scatter-point frontier' : 'scatter-point'
-                  }
-                  tabIndex={0}
-                  aria-label={`${point.offer.model.name} via ${point.offer.provider.name}`}
-                >
-                  <title>
-                    {point.offer.model.name} via {point.offer.provider.name}
-                  </title>
-                  <circle
-                    cx={chartX(point.x)}
-                    cy={chartY(point.y)}
-                    r={frontierIds.has(point.offer.id) ? 1.8 : 1.2}
-                  />
-                </g>
-              ))}
-            </svg>
+            <FrontierChart
+              points={raw}
+              frontierIds={frontierIds}
+              xAxis={xAxis}
+              yAxis={yAxis}
+              scale={scale}
+            />
             <div className="axis-x-label">
-              {xAxis === 'context' ? 'Context window' : 'Input price'}
+              <AxisTitle axis={xAxis} />
             </div>
           </div>
           <div className="scatter-note">
