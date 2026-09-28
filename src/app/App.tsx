@@ -73,7 +73,11 @@ import {
   storeSavedScenarios,
   type SavedScenario,
 } from '../lib/scenarios';
-import { parseCalculatorUrl, serializeCalculatorUrl } from '../lib/calculator-url-state';
+import {
+  parseCalculatorOfferIds,
+  parseCalculatorUrl,
+  serializeCalculatorUrl,
+} from '../lib/calculator-url-state';
 import { parseExplorerUrl, serializeExplorerUrl, type ExplorerUrlState } from '../lib/url-state';
 import {
   offerCapabilities,
@@ -1919,7 +1923,7 @@ function ComparePage() {
   );
 }
 
-const DEFAULT_CALCULATOR_INPUT: CalculatorInput = {
+const BASE_CALCULATOR_INPUT: CalculatorInput = {
   inputTokens: 5000,
   outputTokens: 1200,
   cachedInputTokens: 1500,
@@ -1929,25 +1933,27 @@ const DEFAULT_CALCULATOR_INPUT: CalculatorInput = {
   retryRate: 0.03,
   batchRate: 0,
 };
-const PRESETS: Array<{ id: string; label: string; description: string; input: CalculatorInput }> = [
-  {
-    id: 'support',
-    label: 'Customer support chatbot',
-    description: 'Short context, high daily volume',
-    input: {
-      ...DEFAULT_CALCULATOR_INPUT,
-      inputTokens: 1800,
-      outputTokens: 420,
-      cachedInputTokens: 900,
-      requestsPerDay: 50000,
-    },
+type CalculatorPreset = { id: string; label: string; description: string; input: CalculatorInput };
+const DEFAULT_PRESET: CalculatorPreset = {
+  id: 'support',
+  label: 'Customer support chatbot',
+  description: 'Short context, high daily volume',
+  input: {
+    ...BASE_CALCULATOR_INPUT,
+    inputTokens: 1800,
+    outputTokens: 420,
+    cachedInputTokens: 900,
+    requestsPerDay: 50000,
   },
+};
+const PRESETS: CalculatorPreset[] = [
+  DEFAULT_PRESET,
   {
     id: 'rag',
     label: 'RAG assistant',
     description: 'Retrieved context with cache reuse',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 12000,
       outputTokens: 900,
       cachedInputTokens: 5000,
@@ -1959,7 +1965,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'Coding agent',
     description: 'Longer context and larger outputs',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 28000,
       outputTokens: 5000,
       cachedInputTokens: 18000,
@@ -1971,7 +1977,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'Document extraction',
     description: 'Multimodal or structured output',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 18000,
       outputTokens: 2400,
       requestsPerDay: 8000,
@@ -1982,7 +1988,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'Content generation',
     description: 'Output-heavy creative workloads',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 2500,
       outputTokens: 3500,
       requestsPerDay: 9000,
@@ -1993,7 +1999,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'Batch classification',
     description: 'Asynchronous volume discount',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 3200,
       outputTokens: 250,
       requestsPerDay: 100000,
@@ -2005,7 +2011,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     id: 'custom',
     label: 'Custom workload',
     description: 'Set every assumption yourself',
-    input: DEFAULT_CALCULATOR_INPUT,
+    input: BASE_CALCULATOR_INPUT,
   },
 ];
 
@@ -2184,14 +2190,13 @@ function CalculatorPage() {
     .slice(0, 6)
     .map((offer) => offer.id);
   const [input, setInput] = useState<CalculatorInput>(
-    () => initialUrlState?.input ?? DEFAULT_CALCULATOR_INPUT,
+    () => initialUrlState?.input ?? DEFAULT_PRESET.input,
   );
-  const [preset, setPreset] = useState(() => (initialUrlState ? 'custom' : 'support'));
-  const [selectedIds, setSelectedIds] = useState<string[]>(
-    () =>
-      initialUrlState?.selectedOfferIds.filter((id) => offers.some((offer) => offer.id === id)) ??
-      defaultOfferIds,
-  );
+  const [preset, setPreset] = useState(() => (initialUrlState ? 'custom' : DEFAULT_PRESET.id));
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
+    const linkedIds = initialUrlState?.selectedOfferIds ?? parseCalculatorOfferIds(location.search);
+    return linkedIds?.filter((id) => offers.some((offer) => offer.id === id)) ?? defaultOfferIds;
+  });
   const [offerSearch, setOfferSearch] = useState('');
   const [offerProvider, setOfferProvider] = useState('');
   const [mode, setMode] = useState<'request' | 'daily' | 'monthly' | 'annual'>(
@@ -2336,8 +2341,8 @@ function CalculatorPage() {
     }
   };
   const resetCalculator = () => {
-    setInput({ ...DEFAULT_CALCULATOR_INPUT });
-    setPreset('support');
+    setInput({ ...DEFAULT_PRESET.input });
+    setPreset(DEFAULT_PRESET.id);
     setSelectedIds(defaultOfferIds);
     setMode('monthly');
     setScenarioNotice('Calculator reset to the default workload.');
