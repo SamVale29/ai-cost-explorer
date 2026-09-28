@@ -1919,7 +1919,8 @@ function ComparePage() {
   );
 }
 
-const DEFAULT_CALCULATOR_INPUT: CalculatorInput = {
+// Shared assumptions every preset builds on, and the starting point of a custom workload.
+const BASE_CALCULATOR_INPUT: CalculatorInput = {
   inputTokens: 5000,
   outputTokens: 1200,
   cachedInputTokens: 1500,
@@ -1935,7 +1936,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'Customer support chatbot',
     description: 'Short context, high daily volume',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 1800,
       outputTokens: 420,
       cachedInputTokens: 900,
@@ -1947,7 +1948,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'RAG assistant',
     description: 'Retrieved context with cache reuse',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 12000,
       outputTokens: 900,
       cachedInputTokens: 5000,
@@ -1959,7 +1960,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'Coding agent',
     description: 'Longer context and larger outputs',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 28000,
       outputTokens: 5000,
       cachedInputTokens: 18000,
@@ -1971,7 +1972,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'Document extraction',
     description: 'Multimodal or structured output',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 18000,
       outputTokens: 2400,
       requestsPerDay: 8000,
@@ -1982,7 +1983,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'Content generation',
     description: 'Output-heavy creative workloads',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 2500,
       outputTokens: 3500,
       requestsPerDay: 9000,
@@ -1993,7 +1994,7 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     label: 'Batch classification',
     description: 'Asynchronous volume discount',
     input: {
-      ...DEFAULT_CALCULATOR_INPUT,
+      ...BASE_CALCULATOR_INPUT,
       inputTokens: 3200,
       outputTokens: 250,
       requestsPerDay: 100000,
@@ -2005,9 +2006,11 @@ const PRESETS: Array<{ id: string; label: string; description: string; input: Ca
     id: 'custom',
     label: 'Custom workload',
     description: 'Set every assumption yourself',
-    input: DEFAULT_CALCULATOR_INPUT,
+    input: BASE_CALCULATOR_INPUT,
   },
 ];
+// The simulator opens and resets on this preset, so its highlighted card matches the fields.
+const DEFAULT_PRESET = PRESETS.find((item) => item.id === 'support')!;
 
 type ScenarioShelfProps = {
   scenarios: SavedScenario[];
@@ -2184,9 +2187,9 @@ function CalculatorPage() {
     .slice(0, 6)
     .map((offer) => offer.id);
   const [input, setInput] = useState<CalculatorInput>(
-    () => initialUrlState?.input ?? DEFAULT_CALCULATOR_INPUT,
+    () => initialUrlState?.input ?? DEFAULT_PRESET.input,
   );
-  const [preset, setPreset] = useState(() => (initialUrlState ? 'custom' : 'support'));
+  const [preset, setPreset] = useState(() => (initialUrlState ? 'custom' : DEFAULT_PRESET.id));
   const [selectedIds, setSelectedIds] = useState<string[]>(
     () =>
       initialUrlState?.selectedOfferIds.filter((id) => offers.some((offer) => offer.id === id)) ??
@@ -2336,8 +2339,8 @@ function CalculatorPage() {
     }
   };
   const resetCalculator = () => {
-    setInput({ ...DEFAULT_CALCULATOR_INPUT });
-    setPreset('support');
+    setInput({ ...DEFAULT_PRESET.input });
+    setPreset(DEFAULT_PRESET.id);
     setSelectedIds(defaultOfferIds);
     setMode('monthly');
     setScenarioNotice('Calculator reset to the default workload.');
